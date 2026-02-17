@@ -80,7 +80,7 @@ h2 { font-size: 2.3rem; }
 h3 { font-size: 1.7rem; }
 
 /* ================================
-   HERO BANNER
+   HERO BANNER (NO TEXT)
 ================================ */
 .hero-banner {
   width: 100%;
@@ -93,29 +93,7 @@ h3 { font-size: 1.7rem; }
   border-bottom: 3px solid #2a2a2a;
 }
 
-.hero-overlay {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  color: #ffffff;
-  text-shadow: 0 0 14px #000;
-}
-
-.hero-overlay h1 {
-  font-size: 3.8rem;
-  margin: 0;
-  letter-spacing: 3px;
-  font-weight: 900;
-}
-
-.hero-overlay p {
-  font-size: 1.45rem;
-  margin-top: 12px;
-  opacity: 0.95;
-  font-weight: 700;
-}
+/* Removed .hero-overlay completely */
 
 /* ================================
    HERO BOX (WEAPON BACKGROUND)
@@ -229,14 +207,6 @@ footer {
   h1 { font-size: 2.4rem; }
   h2 { font-size: 1.9rem; }
   h3 { font-size: 1.5rem; }
-
-  .hero-overlay h1 {
-    font-size: 2.6rem;
-  }
-
-  .hero-overlay p {
-    font-size: 1.2rem;
-  }
 
   nav a {
     font-size: 1.1rem;
