@@ -4,7 +4,8 @@
 body {
   margin: 0;
   font-family: "Cinzel", serif;
-  background: #0b0c0f;
+  background: url('images/background.png') no-repeat center center fixed;
+  background-size: cover;
   color: #e8e3d3;
 }
 
@@ -152,3 +153,4 @@ footer {
   height: auto;
   filter: drop-shadow(0 0 8px #3a2f1f);
 }
+
