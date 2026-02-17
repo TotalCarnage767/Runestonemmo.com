@@ -1,0 +1,93 @@
+body {
+  margin: 0;
+  font-family: "Cinzel", serif;
+  background: #0b0c0f;
+  color: #e8e3d3;
+}
+
+header {
+  background: #14161c;
+  padding: 12px 20px;
+  border-bottom: 2px solid #3a2f1f;
+}
+
+nav a {
+  color: #e8e3d3;
+  margin-right: 20px;
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+nav a:hover {
+  color: #d4b06a;
+}
+
+main {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+h1, h2, h3 {
+  color: #d4b06a;
+  text-shadow: 0 0 6px #3a2f1f;
+}
+
+.hero {
+  text-align: center;
+  padding: 60px 20px;
+  background: linear-gradient(#14161c, #0b0c0f);
+  border: 2px solid #3a2f1f;
+  border-radius: 6px;
+}
+
+.subtitle {
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+.buttons {
+  margin-top: 20px;
+}
+
+.button {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 12px 20px;
+  background: #d4b06a;
+  color: #0b0c0f;
+  text-decoration: none;
+  font-weight: 700;
+  border-radius: 4px;
+}
+
+.button.secondary {
+  background: transparent;
+  border: 2px solid #d4b06a;
+  color: #d4b06a;
+}
+
+ul {
+  margin-left: 20px;
+  line-height: 1.6;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background: #14161c;
+  margin-top: 40px;
+  border-top: 2px solid #3a2f1f;
+}
+
+.logo-container {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.logo {
+  width: 180px;        /* adjust size as needed */
+  height: auto;
+  filter: drop-shadow(0 0 8px #3a2f1f);
+}
