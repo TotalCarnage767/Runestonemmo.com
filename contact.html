@@ -8,42 +8,43 @@
 
 <body>
 
-<!-- MAIN CONTAINER -->
-<div class="container" style="max-width: 700px; margin: 60px auto; padding: 40px; background: rgba(0,0,0,0.4); border-radius: 8px; border: 1px solid rgba(255,255,255,0.08);">
+<div class="contact-overlay">
 
-  <!-- RAVEN IMAGE -->
-  <img src="/images/send-a-raven.png"
-       alt="Raven delivering a message"
-       style="width:100%; border-radius:6px; margin-bottom:25px;">
+  <!-- LARGE RAVEN IMAGE (banner-sized) -->
+  <img src="/images/send-a-raven.png" 
+       alt="Raven delivering a message" 
+       class="raven-bg">
 
-  <h1>Send a Raven</h1>
+  <!-- OVERLAY PANEL ON RIGHT SIDE -->
+  <div class="contact-panel">
 
-  <p>
-    Should you seek answers, guidance, or wish to deliver word to the Deep Halls,
-    a raven stands ready. Inscribe your message below, and it shall take wing
-    toward the Runestone Keep.
-  </p>
+    <h1>Send a Raven</h1>
 
-  <form action="https://formspree.io/f/meelkpdq" method="POST" class="contact-form">
+    <p>
+      Should you seek answers, guidance, or wish to deliver word to the Deep Halls,
+      a raven stands ready. Inscribe your message below, and it shall take wing
+      toward the Runestone Keep.
+    </p>
 
-    <!-- Redirect to success page -->
-    <input type="hidden" name="_redirect" value="https://runestonemmo.com/success.html">
+    <form action="https://formspree.io/f/meelkpdq" method="POST" class="contact-form">
 
-    <label>Your Name</label>
-    <input type="text" name="name" required>
+      <input type="hidden" name="_redirect" value="https://runestonemmo.com/success.html">
 
-    <label>Your Email</label>
-    <input type="email" name="email" required>
+      <label>Your Name</label>
+      <input type="text" name="name" required>
 
-    <label>Your Message</label>
-    <textarea name="message" rows="6" required></textarea>
+      <label>Your Email</label>
+      <input type="email" name="email" required>
 
-    <button type="submit" class="button">Send the Raven</button>
-  </form>
+      <label>Your Message</label>
+      <textarea name="message" rows="6" required></textarea>
 
+      <button type="submit" class="button">Send the Raven</button>
+    </form>
+
+  </div>
 </div>
 
-<!-- FOOTER -->
 <footer>
   <p>RunestoneMMO — Forged in the Deep Halls</p>
   <p>
