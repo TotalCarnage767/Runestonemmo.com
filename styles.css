@@ -90,4 +90,39 @@ footer {
   width: 180px;        /* adjust size as needed */
   height: auto;
   filter: drop-shadow(0 0 8px #3a2f1f);
+
+}
+
+/* Hero Banner */
+.hero-banner {
+    width: 100%;
+    height: 450px; /* Adjust height as needed */
+    background-image: url('images/banner.jpg'); /* Replace with your actual filename */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    border-bottom: 3px solid #2a2a2a;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #e0e0e0;
+    text-shadow: 0 0 10px #000;
+}
+
+.hero-overlay h1 {
+    font-size: 3rem;
+    margin: 0;
+    letter-spacing: 2px;
+}
+
+.hero-overlay p {
+    font-size: 1.2rem;
+    margin-top: 10px;
+    opacity: 0.9;
 }
