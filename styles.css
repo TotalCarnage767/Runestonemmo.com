@@ -7,6 +7,21 @@ body {
   background: url('images/background.png') no-repeat center center fixed;
   background-size: cover;
   color: #e8e3d3;
+  position: relative;
+  z-index: 0;
+}
+
+/* Dark overlay for readability */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.55); /* adjust darkness here */
+  pointer-events: none;
+  z-index: -1;
 }
 
 /* ================================
@@ -82,7 +97,6 @@ h1, h2, h3 {
 
 /* ================================
    HERO BOX (OLD SECTION)
-   — Keeping in case you reuse it
 ================================ */
 .hero {
   text-align: center;
@@ -153,4 +167,3 @@ footer {
   height: auto;
   filter: drop-shadow(0 0 8px #3a2f1f);
 }
-
