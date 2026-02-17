@@ -28,10 +28,10 @@ body::before {
    HEADER & NAVIGATION
 ================================ */
 header {
-  background: rgba(20, 22, 28, 0.65); /* semi-transparent */
+  background: rgba(20, 22, 28, 0.65);
   padding: 12px 20px;
   border-bottom: 2px solid #3a2f1f;
-  backdrop-filter: blur(2px); /* subtle glass effect */
+  backdrop-filter: blur(2px);
 }
 
 nav a {
@@ -97,14 +97,38 @@ h1, h2, h3 {
 }
 
 /* ================================
-   HERO BOX (OLD SECTION)
+   HERO BOX (WEAPON BACKGROUND)
 ================================ */
 .hero {
   text-align: center;
   padding: 60px 20px;
-  background: linear-gradient(#14161c, #0b0c0f);
+
+  /* NEW weapon background */
+  background: url('images/weaponbg.png') no-repeat center center;
+  background-size: cover;
+
   border: 2px solid #3a2f1f;
   border-radius: 6px;
+
+  /* Darken for readability */
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 0;
+}
+
+.hero * {
+  position: relative;
+  z-index: 1;
 }
 
 .subtitle {
@@ -150,7 +174,7 @@ ul {
 footer {
   text-align: center;
   padding: 20px;
-  background: rgba(20, 22, 28, 0.65); /* semi-transparent */
+  background: rgba(20, 22, 28, 0.65);
   margin-top: 40px;
   border-top: 2px solid #3a2f1f;
   backdrop-filter: blur(2px);
