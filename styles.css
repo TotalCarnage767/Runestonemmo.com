@@ -50,31 +50,22 @@ h1, h2, h3 {
   font-weight: 900;
   letter-spacing: 2px;
 
-  /* Deep stone-carved effect */
   text-shadow:
-    /* Outer rune glow */
     0 0 12px rgba(226, 193, 120, 0.55),
     0 0 22px rgba(226, 193, 120, 0.35),
-
-    /* Hard chiseled edges */
     -2px -2px 2px rgba(0,0,0,0.9),
     2px 2px 2px rgba(0,0,0,0.9),
-
-    /* Inner bevel highlight */
     inset 0 0 6px rgba(255,255,255,0.25),
-
-    /* Stone grain texture */
     0 1px 0 rgba(255,255,255,0.08),
     0 -1px 0 rgba(0,0,0,0.4);
 }
 
-/* Size tuning */
 h1 { font-size: 3.2rem; }
 h2 { font-size: 2.4rem; }
 h3 { font-size: 1.75rem; }
 
 /* ================================
-   HERO BANNER (NEW TALL ARTWORK)
+   HERO BANNER
 ================================ */
 .hero-banner {
   width: 100%;
@@ -87,7 +78,6 @@ h3 { font-size: 1.75rem; }
   position: relative;
 }
 
-/* Stone divider under banner */
 .hero-banner::after {
   content: "";
   display: block;
@@ -99,22 +89,17 @@ h3 { font-size: 1.75rem; }
 }
 
 /* ================================
-   HERO BOX (WEAPON BACKGROUND)
+   HERO BOX
 ================================ */
 .hero {
   text-align: center;
   padding: 80px 20px;
-
   background: url('images/weaponbg.png') no-repeat center center;
   background-size: cover;
-
   border: 2px solid #3a2f1f;
   border-radius: 6px;
-
   position: relative;
   overflow: hidden;
-
-  /* Animated rune glow */
   box-shadow: 0 0 18px rgba(226, 193, 120, 0.35);
   animation: runeGlow 4s ease-in-out infinite;
 }
@@ -165,8 +150,6 @@ h3 { font-size: 1.75rem; }
   font-size: 1.15rem;
   border-radius: 4px;
   text-shadow: 0 0 4px rgba(0,0,0,0.4);
-
-  /* Rune pulse hover animation */
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -188,6 +171,52 @@ ul {
   margin-left: 20px;
   line-height: 1.8;
   font-size: 1.2rem;
+}
+
+/* ================================
+   CONTACT FORM (NEW FIXES)
+================================ */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+}
+
+.contact-form label {
+  font-weight: 700;
+  color: #e2c178;
+  margin-bottom: 4px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(0,0,0,0.45);
+  color: #f5efdd;
+  font-size: 1.1rem;
+  font-family: "Cinzel", serif;
+}
+
+.contact-form textarea {
+  min-height: 180px;
+  resize: vertical;
+}
+
+/* Rune glow on focus */
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: #e2c178;
+  box-shadow: 0 0 12px rgba(226,193,120,0.45);
+}
+
+.contact-form .button {
+  margin-top: 10px;
+  align-self: flex-start;
 }
 
 /* ================================
@@ -225,4 +254,3 @@ footer {
     background-position: center top;
   }
 }
-
