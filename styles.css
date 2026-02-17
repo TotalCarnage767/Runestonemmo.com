@@ -7,7 +7,7 @@ body {
   background: url('images/background.png') no-repeat center center fixed;
   background-size: cover;
   color: #f5efdd;
-  font-size: 1.15rem; /* bigger base text */
+  font-size: 1.15rem;
   line-height: 1.75;
   position: relative;
   z-index: 0;
@@ -63,15 +63,14 @@ main {
    HEADINGS — RUNE GLOW + STONE CARVE
 ================================ */
 h1, h2, h3 {
-  color: #e2c178; /* tuned dwarven gold */
+  color: #e2c178;
   font-weight: 900;
   letter-spacing: 2px;
 
-  /* Stone-carved effect */
   text-shadow:
-    0 0 10px rgba(226, 193, 120, 0.55), /* rune glow */
+    0 0 10px rgba(226, 193, 120, 0.55),
     0 0 18px rgba(226, 193, 120, 0.35),
-    2px 2px 2px #000, /* carved shadow */
+    2px 2px 2px #000,
     inset 0 0 4px rgba(255,255,255,0.2);
 }
 
@@ -80,20 +79,17 @@ h2 { font-size: 2.3rem; }
 h3 { font-size: 1.7rem; }
 
 /* ================================
-   HERO BANNER (NO TEXT)
+   HERO BANNER (NEW TALL ARTWORK)
 ================================ */
 .hero-banner {
   width: 100%;
-  height: 450px;
-  background-image: url('images/banner.png');
+  height: 750px; /* TALLER FOR FULL ARTWORK */
+  background-image: url('images/banner.png'); /* Replace with your new banner */
   background-size: cover;
-  background-position: center;
+  background-position: center top; /* Shows more of the ruins */
   background-repeat: no-repeat;
-  position: relative;
   border-bottom: 3px solid #2a2a2a;
 }
-
-/* Removed .hero-overlay completely */
 
 /* ================================
    HERO BOX (WEAPON BACKGROUND)
@@ -183,20 +179,6 @@ footer {
 }
 
 /* ================================
-   LOGO
-================================ */
-.logo-container {
-  text-align: center;
-  padding: 20px 0;
-}
-
-.logo {
-  width: 200px;
-  height: auto;
-  filter: drop-shadow(0 0 12px #000);
-}
-
-/* ================================
    MOBILE SCALING
 ================================ */
 @media (max-width: 768px) {
@@ -216,5 +198,10 @@ footer {
   .button {
     padding: 14px 20px;
     font-size: 1.05rem;
+  }
+
+  .hero-banner {
+    height: 500px; /* Mobile-friendly height */
+    background-position: center top;
   }
 }
