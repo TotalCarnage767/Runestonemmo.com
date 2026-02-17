@@ -1,464 +1,420 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <title>RunestoneCore – Features</title>
-    <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <title>RunestoneCore — The Heart of the Mountain</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
-<section class="hero">
+<!-- ============================
+     HEADER (EMPTY — MATCHES SITE)
+============================= -->
+<header></header>
+
+<!-- ============================
+     HERO BANNER (MATCHES SITE)
+============================= -->
+<div class="hero-banner"></div>
+
+<!-- ============================
+     MAIN CONTENT
+============================= -->
+<main>
+
+  <!-- HERO INTRO BOX -->
+  <section class="hero">
     <h1>RunestoneCore</h1>
-    <p>The Engine That Powers Every System, Every Module, Every Adventure.</p>
-</section>
+    <p class="subtitle">The Engine That Powers Every System, Every Module, Every Adventure.</p>
 
-<section>
-    <h2>Overview</h2>
     <p>
-        RunestoneCore is the foundational module of the RunestoneMMO ecosystem — a modular, extensible,
-        enterprise‑grade engine providing all essential MMO infrastructure: economy, moderation, menus,
-        scoreboards, cooldowns, attributes, world rules, storage, logging, and developer APIs.
-        Every other RunestoneMMO module plugs into Core’s lifecycle, registries, and APIs.
+      RunestoneCore is the foundational module of the RunestoneMMO ecosystem — a modular, extensible,
+      enterprise‑grade engine providing all essential MMO infrastructure: economy, moderation, menus,
+      scoreboards, cooldowns, attributes, world rules, storage, logging, and developer APIs.
     </p>
-</section>
 
-<section>
+    <div class="buttons">
+      <a href="index.html" class="button">Return to the Mountain Gate</a>
+      <a href="https://discord.gg/4ZAzaWGV" class="button secondary">Enter the Guild Hall</a>
+    </div>
+  </section>
+
+  <!-- ============================
+       CORE SYSTEMS
+  ============================= -->
+  <section>
     <h2>Unified Configuration & Storage</h2>
     <ul>
-        <li>Single unified <code>config.yml</code> controlling all systems</li>
-        <li>YAML or SQLite storage</li>
-        <li>Auto‑save & backup intervals</li>
-        <li>Data compression</li>
-        <li>Performance monitoring</li>
-        <li>Debug logging</li>
-        <li>Centralized storage abstraction layer</li>
+      <li>Single unified <code>config.yml</code> controlling all systems</li>
+      <li>YAML or SQLite storage</li>
+      <li>Auto‑save & backup intervals</li>
+      <li>Data compression</li>
+      <li>Performance monitoring</li>
+      <li>Debug logging</li>
+      <li>Centralized storage abstraction layer</li>
     </ul>
-</section>
+  </section>
 
-<section>
+  <section>
     <h2>Economy Systems</h2>
     <p>A complete MMO economy engine with multi‑currency support, banking, taxation, auctions, shops, and a server treasury.</p>
 
     <h3>Currencies</h3>
     <ul>
-        <li>Unlimited currencies</li>
-        <li>Custom symbols, decimals, starting balances</li>
-        <li>Exchange rates & conversion fees</li>
-        <li>Vault integration (highest priority)</li>
+      <li>Unlimited currencies</li>
+      <li>Custom symbols, decimals, starting balances</li>
+      <li>Exchange rates & conversion fees</li>
+      <li>Vault integration</li>
     </ul>
 
     <h3>Banking</h3>
     <ul>
-        <li>Shared bank accounts</li>
-        <li>Deposit/withdraw</li>
-        <li>Interest system with configurable rates</li>
-        <li>Interest tax</li>
-        <li>Treasury routing</li>
-        <li>Balance limits</li>
+      <li>Shared bank accounts</li>
+      <li>Deposit/withdraw</li>
+      <li>Interest system</li>
+      <li>Interest tax</li>
+      <li>Treasury routing</li>
+      <li>Balance limits</li>
     </ul>
 
-    <h3>Taxes</h3>
+    <h3>Auctions & Shops</h3>
     <ul>
-        <li>Payment tax</li>
-        <li>Auction tax</li>
-        <li>Shop tax</li>
-        <li>Interest tax</li>
+      <li>GUI auction house</li>
+      <li>Listing fees & taxes</li>
+      <li>Expiration system</li>
+      <li>Player‑owned shops</li>
+      <li>GUI shop editor</li>
     </ul>
 
     <h3>Exchange System</h3>
     <ul>
-        <li>Convert currencies</li>
-        <li>Configurable rates</li>
-        <li>Optional fees</li>
-        <li>Rounding rules</li>
+      <li>Convert currencies</li>
+      <li>Configurable rates & fees</li>
+      <li>Rounding rules</li>
     </ul>
 
     <h3>Transaction History</h3>
     <ul>
-        <li>Per‑player logs</li>
-        <li>Admin view/clear</li>
-        <li>Configurable max entries</li>
+      <li>Per‑player logs</li>
+      <li>Admin view/clear</li>
     </ul>
+  </section>
 
-    <h3>Auction House</h3>
-    <ul>
-        <li>GUI‑based auction browser</li>
-        <li>Listing fees</li>
-        <li>Expiration system</li>
-        <li>Listing limits</li>
-        <li>Cooldowns</li>
-        <li>Admin controls</li>
-    </ul>
-
-    <h3>Player Shops</h3>
-    <ul>
-        <li>Player‑owned shops</li>
-        <li>GUI editor</li>
-        <li>Price limits</li>
-        <li>Shop limits</li>
-        <li>Shop taxes</li>
-    </ul>
-
-    <h3>Treasury</h3>
-    <ul>
-        <li>Optional server treasury</li>
-        <li>Per‑currency starting amounts</li>
-        <li>Tax routing</li>
-    </ul>
-</section>
-
-<section>
+  <section>
     <h2>Player Data & Attributes</h2>
     <h3>Player Profiles</h3>
     <ul>
-        <li>Persistent player data</li>
-        <li>Playtime, stats, attributes</li>
-        <li>Addon‑expandable fields</li>
+      <li>Persistent player data</li>
+      <li>Playtime, stats, attributes</li>
+      <li>Addon‑expandable fields</li>
     </ul>
 
     <h3>Attribute System</h3>
     <ul>
-        <li>Buffs, debuffs, temporary effects</li>
-        <li>Expiration & cleanup</li>
-        <li>Max attribute limits</li>
-        <li>Health caps & safety toggles</li>
-        <li>Auto‑save intervals</li>
+      <li>Buffs, debuffs, temporary effects</li>
+      <li>Expiration & cleanup</li>
+      <li>Max attribute limits</li>
+      <li>Health caps & safety toggles</li>
     </ul>
-</section>
+  </section>
 
-<section>
+  <section>
     <h2>Scoreboard System</h2>
     <ul>
-        <li>Custom sidebar scoreboards</li>
-        <li>Dynamic placeholders</li>
-        <li>Scoreboard API</li>
-        <li>Scheduled updates</li>
-        <li>Combat scoreboard</li>
-        <li>Menu scoreboard</li>
-        <li>Overrides external scoreboard plugins</li>
+      <li>Custom sidebar scoreboards</li>
+      <li>Dynamic placeholders</li>
+      <li>Combat & menu scoreboards</li>
+      <li>Overrides external scoreboard plugins</li>
     </ul>
-</section>
+  </section>
 
-<section>
+  <section>
     <h2>Menu & GUI Framework</h2>
     <ul>
-        <li>MenuBuilder API</li>
-        <li>Themes, click handlers, layout tools</li>
-        <li>Used by Auctions, Shops, and future modules</li>
-        <li>Timeout & cleanup system</li>
-        <li>Max menus per player</li>
-        <li>Auto‑close on logout</li>
+      <li>MenuBuilder API</li>
+      <li>Themes, click handlers, layout tools</li>
+      <li>Timeout & cleanup system</li>
+      <li>Max menus per player</li>
+      <li>Auto‑close on logout</li>
     </ul>
-</section>
+  </section>
 
-<section>
+  <section>
     <h2>Cooldown System</h2>
     <ul>
-        <li>Global & per‑player cooldowns</li>
-        <li>Cleanup tasks</li>
-        <li>Debug logging</li>
-        <li>Used by chat, auctions, shops, etc.</li>
+      <li>Global & per‑player cooldowns</li>
+      <li>Cleanup tasks</li>
+      <li>Debug logging</li>
     </ul>
-</section>
+  </section>
 
-<section>
+  <section>
     <h2>Mob Health Bars</h2>
     <ul>
-        <li>Boss‑bar style mob HP</li>
-        <li>Configurable color, style, range</li>
-        <li>Hide‑when‑full option</li>
-        <li>Player HP bars optional</li>
+      <li>Boss‑bar style mob HP</li>
+      <li>Configurable color, style, range</li>
+      <li>Hide‑when‑full option</li>
+      <li>Player HP bars optional</li>
     </ul>
-</section>
+  </section>
 
-<section>
+  <section>
     <h2>Moderation & Staff Systems</h2>
 
     <h3>Punishments</h3>
     <ul>
-        <li>Kick, Ban, Temp‑Ban</li>
-        <li>Mute, Temp‑Mute</li>
-        <li>Warn</li>
-        <li>Pardon</li>
+      <li>Kick, Ban, Temp‑Ban</li>
+      <li>Mute, Temp‑Mute</li>
+      <li>Warn</li>
+      <li>Pardon</li>
     </ul>
 
     <h3>Jailing</h3>
     <ul>
-        <li>Jail locations</li>
-        <li>Escape prevention</li>
-        <li>Timed jails</li>
-        <li>Record retention</li>
+      <li>Jail locations</li>
+      <li>Escape prevention</li>
+      <li>Timed jails</li>
     </ul>
 
     <h3>Reports</h3>
     <ul>
-        <li>Player reporting</li>
-        <li>Staff notifications</li>
-        <li>Claim / resolve / dismiss</li>
-        <li>Report history</li>
+      <li>Player reporting</li>
+      <li>Staff notifications</li>
+      <li>Claim / resolve / dismiss</li>
     </ul>
 
     <h3>Staff Notes</h3>
     <ul>
-        <li>Add notes to player profiles</li>
-        <li>View full history</li>
+      <li>Add notes to player profiles</li>
+      <li>View full history</li>
     </ul>
 
     <h3>Staff Chat</h3>
     <ul>
-        <li>Private staff channel</li>
-        <li>Toggleable</li>
-        <li>Send/receive permissions</li>
+      <li>Private staff channel</li>
+      <li>Toggleable</li>
     </ul>
 
     <h3>Chat Control</h3>
     <ul>
-        <li>Slowmode</li>
-        <li>Lock/unlock</li>
-        <li>Clear chat</li>
-        <li>Blacklist</li>
-        <li>Anti‑spam</li>
-        <li>Anti‑advertising</li>
+      <li>Slowmode</li>
+      <li>Lock/unlock</li>
+      <li>Clear chat</li>
+      <li>Anti‑spam & anti‑advertising</li>
     </ul>
 
     <h3>Player Control</h3>
     <ul>
-        <li>Freeze</li>
-        <li>God mode</li>
-        <li>Inventory view</li>
-        <li>Teleport control</li>
+      <li>Freeze</li>
+      <li>God mode</li>
+      <li>Inventory view</li>
+      <li>Teleport control</li>
     </ul>
 
     <h3>Server Control</h3>
     <ul>
-        <li>Maintenance mode</li>
-        <li>Whitelist</li>
-        <li>Broadcast system</li>
-        <li>Alerts</li>
-        <li>Audit logging</li>
+      <li>Maintenance mode</li>
+      <li>Whitelist</li>
+      <li>Broadcast system</li>
+      <li>Audit logging</li>
     </ul>
-</section>
+  </section>
 
-<section>
+  <section>
     <h2>World Rules & Gameplay Settings</h2>
 
     <h3>Global Rules</h3>
     <ul>
-        <li>Fall damage</li>
-        <li>Fire spread</li>
-        <li>Explosions</li>
-        <li>Mob griefing</li>
-        <li>Mob spawning</li>
-        <li>Hunger</li>
-        <li>Natural regen</li>
+      <li>Fall damage</li>
+      <li>Fire spread</li>
+      <li>Explosions</li>
+      <li>Mob griefing</li>
+      <li>Mob spawning</li>
+      <li>Hunger</li>
+      <li>Natural regen</li>
     </ul>
 
     <h3>Player Rules</h3>
     <ul>
-        <li>Elytra</li>
-        <li>Ender pearls</li>
-        <li>Totems</li>
-        <li>Teleportation</li>
-        <li>Creative flight</li>
+      <li>Elytra</li>
+      <li>Ender pearls</li>
+      <li>Totems</li>
+      <li>Teleportation</li>
+      <li>Creative flight</li>
     </ul>
 
     <h3>MMO Zones</h3>
     <ul>
-        <li>Safezones</li>
-        <li>No‑death worlds</li>
-        <li>No‑XP worlds</li>
-        <li>Combat‑restricted worlds</li>
+      <li>Safezones</li>
+      <li>No‑death worlds</li>
+      <li>No‑XP worlds</li>
+      <li>Combat‑restricted worlds</li>
     </ul>
 
     <h3>Sleep System</h3>
     <ul>
-        <li>One‑player sleep</li>
-        <li>Vote‑sleep</li>
-        <li>Weather reset</li>
-        <li>Announcements</li>
+      <li>One‑player sleep</li>
+      <li>Vote‑sleep</li>
+      <li>Weather reset</li>
+      <li>Announcements</li>
     </ul>
-</section>
+  </section>
 
-<section>
-    <h2>Automatic Tasks</h2>
-    <ul>
-        <li>Bank interest</li>
-        <li>Auction expiration</li>
-        <li>Menu cleanup</li>
-        <li>Scoreboard updates</li>
-        <li>Cooldown cleanup</li>
-        <li>Moderation cleanup</li>
-        <li>Attribute cleanup</li>
-        <li>Audit log pruning</li>
-    </ul>
-</section>
-
-<section>
-    <h2>Module Interactions & APIs</h2>
-    <ul>
-        <li>EconomyAPI</li>
-        <li>AttributeAPI</li>
-        <li>CooldownAPI</li>
-        <li>ScoreboardAPI</li>
-        <li>Menu API</li>
-        <li>VaultHook</li>
-        <li>CoreConfig</li>
-    </ul>
-</section>
-
-<section>
+  <section>
     <h2>RPG Systems Not Included (Yet)</h2>
-    <p>Based on the IDE audit, the following systems are not implemented in Core and will be added in future modules:</p>
+    <p>These systems are planned for future modules and are not part of RunestoneCore:</p>
 
-    <h3>Missing Combat Systems</h3>
+    <h3>Combat Systems</h3>
     <ul>
-        <li>No custom damage engine</li>
-        <li>No RPG combat math</li>
-        <li>No critical hits or armor formulas</li>
-        <li>No combat feedback</li>
+      <li>No custom damage engine</li>
+      <li>No RPG combat math</li>
+      <li>No critical hits or armor formulas</li>
     </ul>
 
-    <h3>Missing Progression Systems</h3>
+    <h3>Progression Systems</h3>
     <ul>
-        <li>No leveling system</li>
-        <li>No skill points</li>
-        <li>No classes</li>
-        <li>No abilities</li>
+      <li>No leveling system</li>
+      <li>No skill points</li>
+      <li>No classes or abilities</li>
     </ul>
 
-    <h3>Missing Content Systems</h3>
+    <h3>Content Systems</h3>
     <ul>
-        <li>No quest framework</li>
-        <li>No custom items</li>
-        <li>No item rarities</li>
-        <li>No item stat system</li>
+      <li>No quest framework</li>
+      <li>No custom items or rarities</li>
     </ul>
 
-    <h3>Missing Social Systems</h3>
+    <h3>Social Systems</h3>
     <ul>
-        <li>No parties</li>
-        <li>No clans/guilds</li>
-        <li>No chat channels</li>
+      <li>No parties</li>
+      <li>No clans/guilds</li>
+      <li>No chat channels</li>
     </ul>
 
-    <h3>Missing Persistence</h3>
+    <h3>Persistence</h3>
     <ul>
-        <li>Attributes not saved persistently</li>
-        <li>Cooldowns not saved persistently</li>
-        <li>No MySQL/PostgreSQL support</li>
+      <li>Attributes not saved persistently</li>
+      <li>Cooldowns not saved persistently</li>
+      <li>No MySQL/PostgreSQL support</li>
     </ul>
+  </section>
 
-    <h3>Incomplete Features</h3>
-    <ul>
-        <li>Auction search/filter</li>
-        <li>Player shop item detail view</li>
-        <li>Attribute save/restore methods</li>
-    </ul>
-</section>
-
-<section>
+  <section>
     <h2>Complete Command List</h2>
 
     <h3>Economy Commands</h3>
     <ul>
-        <li><code>/balance</code> — View your balance (alias: <code>/bal</code>)</li>
-        <li><code>/pay &lt;player&gt; &lt;amount&gt;</code> — Send money</li>
-        <li><code>/eco &lt;subcommand&gt;</code> — Admin economy management</li>
-        <li><code>/bank &lt;subcommand&gt;</code> — Bank account management</li>
-        <li><code>/exchange &lt;from&gt; &lt;to&gt; &lt;amount&gt;</code> — Convert currencies</li>
-        <li><code>/ah &lt;subcommand&gt;</code> — Auction house (alias: <code>/auction</code>)</li>
-        <li><code>/baltop</code> — Balance leaderboard</li>
-        <li><code>/ledger</code> — Transaction history</li>
-        <li><code>/shop &lt;subcommand&gt;</code> — Player shops (alias: <code>/rshop</code>)</li>
-        <li><code>/market &lt;subcommand&gt;</code> — Market dashboard</li>
+      <li><code>/balance</code> — View your balance (alias: <code>/bal</code>)</li>
+      <li><code>/pay &lt;player&gt; &lt;amount&gt;</code> — Send money</li>
+      <li><code>/eco &lt;subcommand&gt;</code> — Admin economy management</li>
+      <li><code>/bank &lt;subcommand&gt;</code> — Bank account management</li>
+      <li><code>/exchange &lt;from&gt; &lt;to&gt; &lt;amount&gt;</code> — Convert currencies</li>
+      <li><code>/ah &lt;subcommand&gt;</code> — Auction house</li>
+      <li><code>/baltop</code> — Balance leaderboard</li>
+      <li><code>/ledger</code> — Transaction history</li>
+      <li><code>/shop &lt;subcommand&gt;</code> — Player shops</li>
+      <li><code>/market &lt;subcommand&gt;</code> — Market dashboard</li>
     </ul>
 
     <h3>Moderation Commands</h3>
     <ul>
-        <li><code>/kick</code></li>
-        <li><code>/ban</code></li>
-        <li><code>/tempban</code></li>
-        <li><code>/mute</code></li>
-        <li><code>/tempmute</code></li>
-        <li><code>/warn</code></li>
-        <li><code>/pardon</code></li>
-        <li><code>/history</code></li>
+      <li><code>/kick</code></li>
+      <li><code>/ban</code></li>
+      <li><code>/tempban</code></li>
+      <li><code>/mute</code></li>
+      <li><code>/tempmute</code></li>
+      <li><code>/warn</code></li>
+      <li><code>/pardon</code></li>
+      <li><code>/history</code></li>
     </ul>
 
     <h3>Jail Commands</h3>
     <ul>
-        <li><code>/jail</code></li>
-        <li><code>/unjail</code></li>
-        <li><code>/setjail</code></li>
-        <li><code>/deljail</code></li>
-        <li><code>/jails</code></li>
+      <li><code>/jail</code></li>
+      <li><code>/unjail</code></li>
+      <li><code>/setjail</code></li>
+      <li><code>/deljail</code></li>
+      <li><code>/jails</code></li>
     </ul>
 
     <h3>Report System</h3>
     <ul>
-        <li><code>/report &lt;player&gt; &lt;reason&gt;</code></li>
+      <li><code>/report &lt;player&gt; &lt;reason&gt;</code></li>
     </ul>
 
     <h3>Staff Notes</h3>
     <ul>
-        <li><code>/note add</code></li>
-        <li><code>/note history</code></li>
+      <li><code>/note add</code></li>
+      <li><code>/note history</code></li>
     </ul>
 
     <h3>Staff Chat</h3>
     <ul>
-        <li><code>/staffchat</code></li>
+      <li><code>/staffchat</code></li>
     </ul>
 
     <h3>Chat Control</h3>
     <ul>
-        <li><code>/chatcontrol lock</code></li>
-        <li><code>/chatcontrol unlock</code></li>
-        <li><code>/chatcontrol clear</code></li>
-        <li><code>/chatcontrol slow</code></li>
-        <li><code>/chatcontrol slowoff</code></li>
-        <li><code>/chatcontrol reload</code></li>
+      <li><code>/chatcontrol lock</code></li>
+      <li><code>/chatcontrol unlock</code></li>
+      <li><code>/chatcontrol clear</code></li>
+      <li><code>/chatcontrol slow</code></li>
+      <li><code>/chatcontrol slowoff</code></li>
+      <li><code>/chatcontrol reload</code></li>
     </ul>
 
     <h3>Player Control</h3>
     <ul>
-        <li><code>/freeze</code></li>
-        <li><code>/unfreeze</code></li>
-        <li><code>/god</code></li>
-        <li><code>/vanish</code></li>
-        <li><code>/invsee</code></li>
-        <li><code>/tp</code></li>
+      <li><code>/freeze</code></li>
+      <li><code>/unfreeze</code></li>
+      <li><code>/god</code></li>
+      <li><code>/vanish</code></li>
+      <li><code>/invsee</code></li>
+      <li><code>/tp</code></li>
     </ul>
 
     <h3>Server Control</h3>
     <ul>
-        <li><code>/maintenance</code></li>
-        <li><code>/broadcast</code></li>
-        <li><code>/alert</code></li>
-        <li><code>/audit</code></li>
+      <li><code>/maintenance</code></li>
+      <li><code>/broadcast</code></li>
+      <li><code>/alert</code></li>
+      <li><code>/audit</code></li>
     </ul>
 
     <h3>World Rules</h3>
     <ul>
-        <li><code>/worldrules reload</code></li>
+      <li><code>/worldrules reload</code></li>
     </ul>
 
     <h3>Market Dashboard</h3>
     <ul>
-        <li><code>/market refresh</code></li>
+      <li><code>/market refresh</code></li>
     </ul>
 
     <h3>Scoreboard</h3>
     <ul>
-        <li><code>/scoreboard</code></li>
+      <li><code>/scoreboard</code></li>
     </ul>
 
     <h3>Core Admin</h3>
     <ul>
-        <li><code>/core reload</code></li>
+      <li><code>/core reload</code></li>
     </ul>
-</section>
+  </section>
+
+</main>
+
+<!-- ============================
+     FOOTER
+============================= -->
+<footer>
+  <p>RunestoneMMO — Forged in the Deep Halls</p>
+  <p>
+    <a href="https://discord.gg/4ZAzaWGV" target="_blank">Guild Hall</a> •
+    <a href="mailto:youremail@example.com">Send a Raven</a>
+  </p>
+</footer>
 
 </body>
 </html>
