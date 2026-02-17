@@ -293,4 +293,54 @@ footer {
     height: 500px;
     background-position: center top;
   }
+
+/* ================================
+   CONTACT PAGE OVERLAY LAYOUT
+================================ */
+.contact-overlay {
+  position: relative;
+  max-width: 1400px;
+  margin: 60px auto;
 }
+
+/* Large banner-sized raven image */
+.raven-bg {
+  width: 100%;
+  height: 750px; /* same height as homepage banner */
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 8px;
+
+  /* crop off Klingai watermark */
+  clip-path: inset(0 0 120px 0);
+}
+
+/* Form panel overlay */
+.contact-panel {
+  position: absolute;
+  top: 50%;
+  right: 60px;
+  transform: translateY(-50%);
+  width: 38%;
+  padding: 32px;
+  background: rgba(0,0,0,0.55);
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.12);
+  backdrop-filter: blur(4px);
+}
+
+/* Mobile fallback */
+@media (max-width: 900px) {
+  .contact-panel {
+    position: static;
+    transform: none;
+    width: 100%;
+    margin-top: -40px;
+  }
+
+  .raven-bg {
+    height: 500px;
+    clip-path: inset(0 0 80px 0);
+  }
+}
+
