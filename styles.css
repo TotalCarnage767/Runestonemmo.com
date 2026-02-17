@@ -6,7 +6,8 @@ body {
   font-family: "Cinzel", serif;
   background: url('images/background.png') no-repeat center center fixed;
   background-size: cover;
-  color: #e8e3d3;
+  color: #f2ecdc; /* brighter text */
+  font-size: 1.05rem; /* slightly larger base text */
   position: relative;
   z-index: 0;
 }
@@ -19,7 +20,7 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(0, 0, 0, 0.60); /* slightly darker for contrast */
   pointer-events: none;
   z-index: -1;
 }
@@ -28,18 +29,19 @@ body::before {
    HEADER & NAVIGATION
 ================================ */
 header {
-  background: rgba(20, 22, 28, 0.65);
-  padding: 12px 20px;
+  background: rgba(20, 22, 28, 0.70);
+  padding: 14px 22px;
   border-bottom: 2px solid #3a2f1f;
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(3px);
 }
 
 nav a {
-  color: #e8e3d3;
-  margin-right: 20px;
+  color: #f5e9c8;
+  margin-right: 22px;
   text-decoration: none;
-  font-weight: 700;
-  letter-spacing: 1px;
+  font-weight: 800; /* heavier */
+  letter-spacing: 1.2px;
+  font-size: 1.1rem; /* larger */
 }
 
 nav a:hover {
@@ -56,9 +58,14 @@ main {
 }
 
 h1, h2, h3 {
-  color: #d4b06a;
-  text-shadow: 0 0 6px #3a2f1f;
+  color: #e6c47a;
+  text-shadow: 0 0 8px #000; /* stronger glow */
+  font-weight: 900; /* bolder */
 }
+
+h1 { font-size: 2.4rem; }
+h2 { font-size: 1.9rem; }
+h3 { font-size: 1.5rem; }
 
 /* ================================
    HERO BANNER
@@ -80,20 +87,22 @@ h1, h2, h3 {
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  color: #e0e0e0;
-  text-shadow: 0 0 10px #000;
+  color: #ffffff;
+  text-shadow: 0 0 12px #000;
 }
 
 .hero-overlay h1 {
-  font-size: 3rem;
+  font-size: 3.4rem; /* bigger */
   margin: 0;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
+  font-weight: 900;
 }
 
 .hero-overlay p {
-  font-size: 1.2rem;
-  margin-top: 10px;
-  opacity: 0.9;
+  font-size: 1.35rem;
+  margin-top: 12px;
+  opacity: 0.95;
+  font-weight: 600;
 }
 
 /* ================================
@@ -101,16 +110,14 @@ h1, h2, h3 {
 ================================ */
 .hero {
   text-align: center;
-  padding: 60px 20px;
+  padding: 70px 20px;
 
-  /* NEW weapon background */
   background: url('images/weaponbg.png') no-repeat center center;
   background-size: cover;
 
   border: 2px solid #3a2f1f;
   border-radius: 6px;
 
-  /* Darken for readability */
   position: relative;
   overflow: hidden;
 }
@@ -122,7 +129,7 @@ h1, h2, h3 {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(0, 0, 0, 0.55); /* darker for readability */
   z-index: 0;
 }
 
@@ -133,24 +140,26 @@ h1, h2, h3 {
 
 .subtitle {
   font-style: italic;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  font-size: 1.2rem;
 }
 
 /* ================================
    BUTTONS
 ================================ */
 .buttons {
-  margin-top: 20px;
+  margin-top: 25px;
 }
 
 .button {
   display: inline-block;
-  margin-right: 10px;
-  padding: 12px 20px;
+  margin-right: 12px;
+  padding: 14px 22px;
   background: #d4b06a;
   color: #0b0c0f;
   text-decoration: none;
-  font-weight: 700;
+  font-weight: 800;
+  font-size: 1.05rem;
   border-radius: 4px;
 }
 
@@ -165,7 +174,8 @@ h1, h2, h3 {
 ================================ */
 ul {
   margin-left: 20px;
-  line-height: 1.6;
+  line-height: 1.7;
+  font-size: 1.1rem;
 }
 
 /* ================================
@@ -173,11 +183,12 @@ ul {
 ================================ */
 footer {
   text-align: center;
-  padding: 20px;
-  background: rgba(20, 22, 28, 0.65);
+  padding: 22px;
+  background: rgba(20, 22, 28, 0.70);
   margin-top: 40px;
   border-top: 2px solid #3a2f1f;
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(3px);
+  font-size: 1.1rem;
 }
 
 /* ================================
@@ -189,7 +200,7 @@ footer {
 }
 
 .logo {
-  width: 180px;
+  width: 190px;
   height: auto;
-  filter: drop-shadow(0 0 8px #3a2f1f);
+  filter: drop-shadow(0 0 10px #000);
 }
