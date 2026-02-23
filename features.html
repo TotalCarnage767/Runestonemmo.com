@@ -20,8 +20,9 @@
 
     <p>
       RunestoneCore is the foundational module of the RunestoneMMO ecosystem — a modular, extensible,
-      enterprise‑grade engine providing all essential MMO infrastructure: economy, moderation, menus,
-      scoreboards, cooldowns, attributes, world rules, storage, logging, and developer APIs.
+      MMO‑grade engine providing the essential infrastructure: economy, auctions, shops, moderation,
+      scoreboards, cooldowns, attributes, world rules, daily rewards, combat scaffolding, storage, and APIs.
+      It boots through a deterministic <code>CoreBootstrap</code> sequence, ensuring each subsystem is initialized in order.
     </p>
 
     <div class="buttons">
@@ -30,171 +31,144 @@
     </div>
   </section>
 
-  <!-- ============================
-       CORE SYSTEMS — CARD GRID
-  ============================= -->
+  <!-- CORE SYSTEMS -->
   <section>
     <h2>Core Systems</h2>
 
     <div class="card-grid">
 
       <div class="card">
-        <h3>Unified Configuration & Storage</h3>
+        <h3>Configuration & Lifecycle</h3>
         <ul>
-          <li>Single unified <code>config.yml</code></li>
-          <li>YAML or SQLite storage</li>
-          <li>Auto‑save & backup intervals</li>
-          <li>Data compression</li>
-          <li>Performance monitoring</li>
-          <li>Debug logging</li>
+          <li>Multi‑file YAML configuration (config, economy, combat, attributes, daily rewards, cooldowns, moderation, messages, playerdata, mob health)</li>
+          <li>Routed config access (economy, auction, shops, treasury, etc.) via <code>ConfigManager</code></li>
+          <li>Subsystem lifecycle with <code>CoreSubsystem</code> and <code>SubsystemManager</code> (init + shutdown)</li>
+          <li>Task and listener registries to prevent orphaned schedulers and duplicate listeners</li>
+          <li>Adventure‑based messaging with MiniMessage formatting and category prefixes</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Economy Engine</h3>
+        <h3>Player Data & Profiles</h3>
         <ul>
-          <li>Multi‑currency support</li>
-          <li>Banking & interest</li>
-          <li>Taxes & treasury</li>
-          <li>Currency exchange</li>
-          <li>Transaction history</li>
-          <li>Vault integration</li>
+          <li><code>CorePlayer</code> model with join info, playtime, titles, toggles, preferences, attributes map</li>
+          <li>Legacy/general level &amp; experience, plus dedicated combat XP</li>
+          <li>Wallet and bank balances across multiple currencies</li>
+          <li>Daily rewards state (cycle day, streaks, completion)</li>
+          <li>Async load/save with merge logic and caching</li>
+          <li>YAML or SQLite storage backends (config‑driven)</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Economy Platform</h3>
+        <ul>
+          <li>Multi‑currency registry with primary and secondary currencies</li>
+          <li>Wallet economy with events, logging, and per‑player currency files</li>
+          <li>Bank accounts with interest, tax integration, and commands</li>
+          <li>Tax rules for payments, bank interest, auctions, and shops</li>
+          <li>Currency exchange with configurable rates and fees</li>
+          <li>Server treasury for routed taxes and admin sinks/sources</li>
+          <li>Dynamic pricing framework (config‑gated)</li>
+          <li>Ledger and transaction logging for auditability</li>
+          <li>Vault bridge to expose balances to external plugins</li>
         </ul>
       </div>
 
       <div class="card">
         <h3>Auctions & Player Shops</h3>
         <ul>
-          <li>GUI auction house</li>
-          <li>Listing fees & taxes</li>
-          <li>Expiration system</li>
-          <li>Player‑owned shops</li>
-          <li>GUI shop editor</li>
+          <li>GUI auction house with escrow and expiration tasks</li>
+          <li>Listing validation, fees, cooldowns, and offline delivery queue</li>
+          <li>Player shops with listings, stock, taxes, and persistence</li>
+          <li>Shop creation and basic editor flows</li>
+          <li>Integrated with economy, taxes, ledger, and logging</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Player Data & Attributes</h3>
+        <h3>Daily Rewards</h3>
         <ul>
-          <li>Persistent player profiles</li>
-          <li>Attributes & temporary effects</li>
-          <li>Cleanup & expiration</li>
-          <li>Health caps & safety toggles</li>
+          <li>Calendar‑based daily reward cycles with streaks and streak weeks</li>
+          <li>Timezone‑aware eligibility checks</li>
+          <li>Per‑day rewards (currency, items, commands)</li>
+          <li>Optional week completion bonuses and loot‑table‑style rewards</li>
+          <li><code>/daily claim</code> and <code>/daily status</code> commands</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Scoreboards</h3>
+        <h3>Combat & Attributes</h3>
         <ul>
-          <li>Custom sidebar scoreboards</li>
-          <li>Dynamic placeholders</li>
-          <li>Combat & menu scoreboards</li>
-          <li>Overrides external plugins</li>
+          <li>Combat XP system with XP curves and level‑up events</li>
+          <li>Damage engine with attack, defense, toughness, crit chance/damage, and biome multipliers</li>
+          <li>Minimum damage floors, particles, and sounds for feedback</li>
+          <li>Mob attribute application on spawn from combat and attribute configs</li>
+          <li>Attribute manager for per‑entity stats and scaled player attributes</li>
+          <li>Hooks for future buffs/debuffs and temporary attributes</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Menu & GUI Framework</h3>
+        <h3>Scoreboards & Menus</h3>
         <ul>
-          <li>MenuBuilder API</li>
-          <li>Click handlers & themes</li>
-          <li>Timeout & cleanup</li>
-          <li>Auto‑close on logout</li>
+          <li>Config‑driven scoreboards with conditions (combat, menus, worlds, regions, permissions, thresholds)</li>
+          <li>Optional override of external scoreboard plugins</li>
+          <li>Menu framework for building GUI menus with cleanup and lifecycle awareness</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Cooldown System</h3>
+        <h3>Cooldowns & Mob Health</h3>
         <ul>
-          <li>Global & per‑player cooldowns</li>
-          <li>Cleanup tasks</li>
-          <li>Debug logging</li>
+          <li>Global and per‑player cooldown registry</li>
+          <li>Centralized cleanup via task registry</li>
+          <li>Mob health bars using bossbars with configurable styles and caps</li>
+          <li>Per‑player scan caps for performance safety</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Mob Health Bars</h3>
+        <h3>Moderation & World Rules</h3>
         <ul>
-          <li>Boss‑bar style HP</li>
-          <li>Configurable color & style</li>
-          <li>Hide‑when‑full option</li>
-          <li>Player HP bars optional</li>
+          <li>Punishments (ban, mute, warn, etc.) with storage and events</li>
+          <li>Reports, staff notes, player state tracking, and cleanup tasks</li>
+          <li>Staff chat, chat control (lock, slowmode, filters), and channel routing</li>
+          <li>Jail system with locations, escape radius, and retention</li>
+          <li>Vanish, god mode, freeze, teleport, and inventory view tools</li>
+          <li>Maintenance mode, audit trail, and staff alerts</li>
+          <li>World rules for gameplay toggles, safe zones, and restricted worlds</li>
+          <li>Sleep system with one‑player or percentage‑based night skipping</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Moderation Suite</h3>
+        <h3>Tasks, Logging & APIs</h3>
         <ul>
-          <li>Punishments (ban, mute, warn)</li>
-          <li>Jailing system</li>
-          <li>Reports & staff notes</li>
-          <li>Staff chat</li>
-          <li>Chat control</li>
-          <li>Freeze, vanish, god mode</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>World Rules</h3>
-        <ul>
-          <li>Global gameplay toggles</li>
-          <li>Player ability rules</li>
-          <li>Safezones & restricted worlds</li>
-          <li>Sleep system</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Automatic Tasks</h3>
-        <ul>
-          <li>Bank interest</li>
-          <li>Auction expiration</li>
-          <li>Menu cleanup</li>
-          <li>Scoreboard updates</li>
-          <li>Cooldown cleanup</li>
-          <li>Moderation cleanup</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Developer APIs</h3>
-        <ul>
-          <li>EconomyAPI</li>
-          <li>AttributeAPI</li>
-          <li>CooldownAPI</li>
-          <li>ScoreboardAPI</li>
-          <li>Menu API</li>
-          <li>CoreConfig</li>
+          <li>Central task registry and listener registry</li>
+          <li>Scheduled tasks for bank interest, auction expiration, scoreboards, moderation cleanup, and more</li>
+          <li>Economy and moderation logging, plus audit trail for staff actions</li>
+          <li>Public APIs: RunestoneCoreAPI, RunestoneEconomyAPI, event bus, and more</li>
         </ul>
       </div>
 
     </div>
   </section>
 
-  <!-- ============================
-       MISSING RPG SYSTEMS — CARDS
-  ============================= -->
+  <!-- MISSING RPG SYSTEMS -->
   <section>
     <h2>RPG Systems Not Included (Yet)</h2>
-    <p>These systems are planned for future modules and are not part of RunestoneCore:</p>
+    <p>These systems are planned for future modules and are not part of RunestoneCore itself:</p>
 
     <div class="card-grid">
 
       <div class="card">
-        <h3>Combat Systems</h3>
+        <h3>XP & Progression</h3>
         <ul>
-          <li>No custom damage engine</li>
-          <li>No RPG combat math</li>
-          <li>No critical hits or armor formulas</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Progression Systems</h3>
-        <ul>
-          <li>No leveling system</li>
-          <li>No skill points</li>
-          <li>No classes or abilities</li>
+          <li>No unified XP service for all skills (RunestoneXPService is defined but not implemented)</li>
+          <li>No global leveling system for non‑combat skills</li>
+          <li>No skill trees or point allocation</li>
+          <li>No class or specialization framework</li>
         </ul>
       </div>
 
@@ -202,123 +176,93 @@
         <h3>Content Systems</h3>
         <ul>
           <li>No quest framework</li>
-          <li>No custom items or rarities</li>
+          <li>No achievements or title unlock systems beyond basic titles</li>
+          <li>No unified loot table engine shared across modules</li>
+          <li>No custom item stat system or rarity tiers</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Social Systems</h3>
+        <h3>Social & Villages</h3>
         <ul>
-          <li>No parties</li>
-          <li>No clans/guilds</li>
-          <li>No chat channels</li>
+          <li>No Villages system (planned as the primary social grouping module)</li>
+          <li>No town/village claiming, protections, or treasuries in Core</li>
+          <li>No social ranks or village diplomacy in Core</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Persistence</h3>
+        <h3>Persistence & Scaling</h3>
         <ul>
-          <li>Attributes not persistent</li>
-          <li>Cooldowns not persistent</li>
-          <li>No MySQL/PostgreSQL support</li>
+          <li>Attributes and cooldowns are not yet fully persistent across restarts</li>
+          <li>No MySQL/PostgreSQL storage implementation</li>
+          <li>No multi‑server sync or proxy‑aware scaling layer</li>
         </ul>
       </div>
 
     </div>
   </section>
 
-  <!-- ============================
-       COMMAND LIST — CARDS
-  ============================= -->
+  <!-- COMMAND LIST -->
   <section>
     <h2>Command List</h2>
 
     <div class="card-grid">
 
       <div class="card">
-        <h3>Economy</h3>
+        <h3>Economy & Market</h3>
         <ul>
-          <li>/balance</li>
-          <li>/pay</li>
-          <li>/eco</li>
-          <li>/bank</li>
-          <li>/exchange</li>
-          <li>/ah</li>
-          <li>/baltop</li>
-          <li>/ledger</li>
-          <li>/shop</li>
-          <li>/market</li>
+          <li>/balance, /rbalance, /bal, /rbal</li>
+          <li>/pay, /rpay</li>
+          <li>/eco, /reco</li>
+          <li>/bank, /rbank</li>
+          <li>/exchange, /rexchange</li>
+          <li>/auction, /ah, /rauction, /rah</li>
+          <li>/shop, /rshop</li>
+          <li>/baltop, /rbaltop</li>
+          <li>/ledger, /rledger</li>
+          <li>/market, /rmarket</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Moderation</h3>
+        <h3>Daily & Skills</h3>
         <ul>
-          <li>/kick</li>
-          <li>/ban</li>
-          <li>/tempban</li>
-          <li>/mute</li>
-          <li>/tempmute</li>
-          <li>/warn</li>
-          <li>/pardon</li>
-          <li>/history</li>
+          <li>/daily, /rdaily</li>
+          <li>/skills, /rskills (future integration with XP/skills modules)</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Jailing</h3>
+        <h3>Moderation & Staff Tools</h3>
         <ul>
-          <li>/jail</li>
-          <li>/unjail</li>
-          <li>/setjail</li>
-          <li>/deljail</li>
-          <li>/jails</li>
+          <li>/mod, /rmod, /rmoderation</li>
+          <li>/chatcontrol, /rchatcontrol</li>
+          <li>/maintenance, /rmaintenance</li>
+          <li>/broadcast, /rbroadcast</li>
+          <li>/freeze, /rfreeze</li>
+          <li>/unfreeze, /runfreeze</li>
+          <li>/jail, /rjail</li>
+          <li>/invsee, /rinvsee</li>
+          <li>/vanish, /rvanish</li>
+          <li>/god, /rgod</li>
+          <li>/tp, /rtp</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Staff Tools</h3>
+        <h3>World Rules & Scoreboards</h3>
         <ul>
-          <li>/note</li>
-          <li>/staffchat</li>
-          <li>/chatcontrol</li>
-          <li>/freeze</li>
-          <li>/unfreeze</li>
-          <li>/god</li>
-          <li>/vanish</li>
-          <li>/invsee</li>
-          <li>/tp</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Server Control</h3>
-        <ul>
-          <li>/maintenance</li>
-          <li>/broadcast</li>
-          <li>/alert</li>
-          <li>/audit</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>World Rules</h3>
-        <ul>
-          <li>/worldrules reload</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Scoreboard</h3>
-        <ul>
-          <li>/scoreboard</li>
+          <li>/worldrules (and reload variants, depending on configuration)</li>
+          <li>/scoreboard, /rscoreboard, /rsb</li>
         </ul>
       </div>
 
       <div class="card">
         <h3>Core Admin</h3>
         <ul>
-          <li>/core reload</li>
+          <li>/runestone reload</li>
+          <li>/core, /runestonecore, /rcore, /rrunestonecore (aliases)</li>
         </ul>
       </div>
 
@@ -332,7 +276,7 @@
   <p>
     <a href="https://discord.gg/4ZAzaWGV" target="_blank">Guild Hall</a> •
     <a href="/contact.html">Send a Raven</a> •
-    <a href="/terms.html">Terms & Licensing</a>
+    <a href="/terms.html">Terms &amp; Licensing</a>
   </p>
 </footer>
 
