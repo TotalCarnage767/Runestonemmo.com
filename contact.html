@@ -2,55 +2,111 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Send a Raven — RunestoneMMO</title>
+  <title>RunestoneMMO — Forged in Stone and Flame</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
 
 <body>
 
-<div class="contact-overlay">
+<header></header>
+<div class="hero-banner"></div>
 
-  <!-- LARGE RAVEN IMAGE (full width, no right-side crop) -->
-  <img src="/images/send-a-raven.png"
-       alt="Raven delivering a message"
-       class="raven-bg">
+<main>
 
-  <!-- OVERLAY FORM PANEL -->
-  <div class="contact-panel">
-
-    <h1>Send a Raven</h1>
+  <!-- INTRO HERO BOX -->
+  <section class="hero">
+    <h1>RunestoneMMO</h1>
+    <p class="subtitle">Forged in stone. Tempered in flame. Built for legends.</p>
 
     <p>
-      Should you seek answers, guidance, or wish to deliver word to the Deep Halls,
-      a raven stands ready. Inscribe your message below, and it shall take wing
-      toward the Runestone Keep.
+      RunestoneMMO is a grand modular RPG framework for Minecraft, wrought with the craftsmanship of ancient halls.
+      At its heart stands <strong>RunestoneCore</strong> — a deterministic, subsystem‑driven engine that boots economy,
+      moderation, world rules, combat scaffolding, and more in a precise order at runtime.
+      Minecraft Java 1.21.11 • Paper • JDK 21 • Modular Plugin Architecture
     </p>
 
-    <form action="https://formspree.io/f/meelkpdq" method="POST" class="contact-form">
+    <div class="buttons">
+      <a href="https://discord.gg/4ZAzaWGV" class="button">Enter the Guild Hall</a>
+      <a href="/features.html" class="button secondary">Study the Tomes</a>
+      <a href="/roadmap_development.html" class="button secondary">Roadmap &amp; Development</a>
+      <a href="/terms.html" class="button secondary">Terms &amp; Licensing</a>
+    </div>
+  </section>
 
-      <input type="hidden" name="_redirect" value="https://runestonemmo.com/success.html">
+  <!-- WHAT IS RUNESTONEMMO -->
+  <section>
+    <h2>What Is RunestoneMMO?</h2>
+    <p>
+      RunestoneMMO is a realm‑shaping MMO platform for servers seeking deeper lore, richer progression,
+      and mechanics worthy of a true fantasy world. It is designed as a <strong>shared core</strong> that future
+      modules can stand upon — combat, professions, villages, quests, and world content all plug into the same spine.
+    </p>
+    <p>
+      The first pillar, <strong>RunestoneCore</strong>, already provides multi‑currency economy, auctions, player shops,
+      moderation, scoreboards, attributes, daily rewards, world rules, sleep logic, mob health bars, and a robust
+      player data model — all wired through a clean subsystem lifecycle.
+    </p>
+    <p><strong>RunestoneMMO is a long‑term project — the forge is active, and the mountain is still being carved.</strong></p>
+  </section>
 
-      <label>Your Name</label>
-      <input type="text" name="name" required>
+  <!-- RUNESTONECORE -->
+  <section>
+    <h2>RunestoneCore — The Heart of the Mountain</h2>
+    <p>
+      RunestoneCore is the ancient engine that binds the world together. Within its runes lie the systems that shape kingdoms:
+    </p>
 
-      <label>Your Email</label>
-      <input type="email" name="email" required>
+    <ul>
+      <li>Multi‑currency economy with banking, taxes, exchange, treasury, and ledgers</li>
+      <li>Auctions and player‑forged shops with escrow, taxes, and offline delivery queues</li>
+      <li>Warden tools: moderation, reports, jailing, maintenance mode, audit trail, staff alerts</li>
+      <li>Core player profiles with balances, combat XP, titles, toggles, preferences, and daily reward state</li>
+      <li>Attribute and combat scaffolding: damage math, crits, biome scaling, mob attribute application</li>
+      <li>Custom scoreboards with conditions for combat, menus, worlds, regions, and permissions</li>
+      <li>Rune‑crafted menu framework and cooldown registry</li>
+      <li>Mob health bars and world rules (safe zones, death rules, gameplay toggles, sleep system)</li>
+      <li>Task and listener registries, lifecycle subsystem manager, and Adventure‑based messaging</li>
+      <li>Vault economy bridge for compatibility with existing plugins</li>
+    </ul>
 
-      <label>Your Message</label>
-      <textarea name="message" rows="6" required></textarea>
+    <p><strong>RunestoneCore is the platform. The RPG layer is what comes next.</strong></p>
+  </section>
 
-      <button type="submit" class="button">Send the Raven</button>
-    </form>
+  <!-- FUTURE ADDONS -->
+  <section>
+    <h2>Future Modules — From the Forge</h2>
+    <ul>
+      <li><strong>XP &amp; Skills Engine</strong> — a unified RunestoneXPService for all professions and combat</li>
+      <li><strong>Professions</strong> — mining, smithing, gathering, artisan crafts</li>
+      <li><strong>Villages</strong> — player‑founded settlements with claiming, protections, upgrades, diplomacy, and treasuries</li>
+      <li><strong>Oregen</strong> — riches beneath the stone</li>
+      <li><strong>Treecapitator</strong> — fell the forest with dwarven might</li>
+      <li><strong>Quest &amp; Content Systems</strong> — quests, achievements, titles, loot tables, and world drops</li>
+      <li><strong>Exploration &amp; World Events</strong> — elites, bosses, dungeons, seasonal cycles</li>
+      <li><strong>Network &amp; Scaling</strong> — SQL storage, multi‑server sync, proxy compatibility</li>
+    </ul>
+    <p><strong>All social grouping will be built around Villages — there are no clans, guilds, or alliances.</strong></p>
+  </section>
 
-  </div>
-</div>
+  <!-- STATUS -->
+  <section>
+    <h2>State of the Forge</h2>
+    <p>
+      The forges burn bright. Core subsystems are wired and hardened: economy, moderation, auctions, shops,
+      combat scaffolding, attributes, daily rewards, world rules, and scoreboards are already alive in RunestoneCore.
+      The next great push focuses on XP services, loot tables, villages, and content modules.
+    </p>
+    <p><strong>Follow the journey in the Guild Hall and on the Roadmap.</strong></p>
+  </section>
+
+</main>
 
 <footer>
   <p>RunestoneMMO — Forged in the Deep Halls</p>
   <p>
     <a href="https://discord.gg/4ZAzaWGV" target="_blank">Guild Hall</a> •
     <a href="/contact.html">Send a Raven</a> •
-    <a href="/terms.html">Terms & Licensing</a>
+    <a href="/terms.html">Terms &amp; Licensing</a>
   </p>
 </footer>
 
