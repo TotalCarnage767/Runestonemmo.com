@@ -26,6 +26,7 @@
 
     <div class="buttons">
       <a href="/" class="button">Return to the Mountain Gate</a>
+      <a href="/downloads/RunestoneCore-latest.jar" class="button secondary" download>Download RunestoneCore</a>
       <a href="/features.html" class="button secondary">Study the Tomes</a>
     </div>
   </section>
@@ -35,8 +36,8 @@
     <h2>Current State of Development</h2>
     <p>
       RunestoneCore is a powerful engine with many systems already implemented — economy, auctions, shops,
-      moderation, combat scaffolding, attributes, daily rewards, world rules, and more. The true MMO layer
-      (unified XP, skills, professions, villages, quests, and world content) is still being forged.
+      moderation, combat scaffolding, attributes, daily rewards, world rules, scoreboards, teleports, and more.
+      The true MMO layer (unified XP, skills, professions, villages, quests, and world content) is still being forged.
     </p>
 
     <div class="card-grid">
@@ -44,7 +45,7 @@
       <div class="card">
         <h3>Fully Implemented</h3>
         <ul>
-          <li>Multi‑currency economy (wallets, bank, taxes, exchange, treasury, ledger)</li>
+          <li>Multi-currency economy (wallets, bank, taxes, exchange, treasury, ledger)</li>
           <li>Auctions with escrow, expiration, and offline delivery</li>
           <li>Player shops (core flows and persistence)</li>
           <li>Daily rewards with streaks and calendar logic</li>
@@ -53,12 +54,16 @@
           <li>Attribute platform for players and mobs</li>
           <li>Moderation suite (punishments, reports, notes, jail, maintenance, audit trail)</li>
           <li>Chat control and staff chat</li>
-          <li>Scoreboard system with conditions and overrides</li>
-          <li>Menu framework</li>
-          <li>Cooldown system</li>
+          <li>Scoreboard system with layouts and conditions</li>
+          <li>Menu framework + cleanup/lifecycle</li>
+          <li>Cooldown system (disk-backed, config-driven)</li>
           <li>Mob health bars</li>
           <li>World rules and regions (rectangular zones)</li>
           <li>Sleep system</li>
+          <li>Teleport suite: homes, spawn, back, TPA</li>
+          <li>Teleport costs (mana-based rules) + resource system hooks</li>
+          <li>Items subsystem + drop tables (config-driven)</li>
+          <li>Holograms support (config-driven)</li>
           <li>Vault economy integration</li>
           <li>Core player data model and async persistence</li>
         </ul>
@@ -68,15 +73,15 @@
         <h3>Partially Implemented</h3>
         <ul>
           <li>Auction filters and search UX</li>
-          <li>Shop editor quality‑of‑life actions</li>
+          <li>Shop editor quality-of-life actions (rename/description visibility and prompt safeguards)</li>
           <li>Market dashboard metrics and visualization</li>
-          <li>Dynamic pricing profiles and tuning</li>
+          <li>Dynamic pricing profiles and tuning (framework present; typically disabled by config)</li>
           <li>Report management tooling and staff flows</li>
           <li>Audit logging expansion and views</li>
           <li>Region integrations beyond basic rectangles</li>
-          <li>Offline delivery as a generalized service (currently auction‑specific)</li>
-          <li>Performance and autosave settings (config present, subsystem not fully realized)</li>
-          <li>Permissions config block (no dedicated permissions subsystem)</li>
+          <li>Offline delivery as a generalized service (currently auction-first)</li>
+          <li>Placeholder expansion wiring (PlaceholderAPI present; expansion coverage still being built)</li>
+          <li>HUD/UI polish for resources (mode support exists; layout/stacking refinement ongoing)</li>
         </ul>
       </div>
 
@@ -87,15 +92,15 @@
           <li>Global leveling and skill progression systems</li>
           <li>Professions (mining, smithing, gathering, artisan)</li>
           <li>Classes and specializations</li>
-          <li>Ability systems and advanced cooldowns</li>
+          <li>Ability systems and advanced cooldown tiers</li>
           <li>Quest framework and achievements</li>
-          <li>Custom items, item stats, and rarities</li>
+          <li>Custom items with stats, rarities, and affixes</li>
           <li>Unified loot table engine shared across modules</li>
           <li>Villages (social/town system — replaces guilds/clans)</li>
           <li>Exploration systems, elites, bosses, dungeons, and world events</li>
-          <li>Persistent attributes and cooldowns across restarts</li>
+          <li>Full persistence for temporary attributes and advanced combat states across restarts</li>
           <li>MySQL/PostgreSQL support</li>
-          <li>Multi‑server sync and proxy compatibility</li>
+          <li>Multi-server sync and proxy compatibility</li>
         </ul>
       </div>
 
@@ -117,14 +122,15 @@
         <h3>Phase 1 — Core Completion</h3>
         <ul>
           <li>Finish auction filters and search</li>
-          <li>Complete shop editor UX and safeguards</li>
+          <li>Complete shop editor UX and safeguards (rename, description, prompt safety)</li>
           <li>Finalize market dashboard metrics and displays</li>
           <li>Harden maintenance mode and staff alerts</li>
           <li>Improve report management flows</li>
           <li>Expand audit logging coverage and views</li>
-          <li>Clarify and wire performance/autosave behavior</li>
-          <li>Introduce a generalized DeliveryService for offline rewards</li>
           <li>Refine region handling as a shared RegionService</li>
+          <li>Introduce a generalized DeliveryService for offline rewards</li>
+          <li>Polish resource HUD and costs (mana/stamina UX and configuration)</li>
+          <li>Expand PlaceholderAPI coverage for economy/combat/market stats</li>
         </ul>
       </div>
 
@@ -133,7 +139,7 @@
         <ul>
           <li>Implement <strong>RunestoneXPService</strong> as the unified XP/Level API</li>
           <li>Skill registry (skill IDs mapped to data and curves)</li>
-          <li>Shared XP gain and level‑up events for all modules</li>
+          <li>Shared XP gain and level-up events for all modules</li>
           <li>Scoreboard and placeholder integration for levels and XP</li>
           <li>Migration path from legacy/general XP to the unified service</li>
         </ul>
@@ -145,7 +151,7 @@
           <li>Refine damage formulas and scaling rules</li>
           <li>Implement temporary attributes and buff/debuff durations</li>
           <li>Improve combat feedback (actionbars, indicators, sounds)</li>
-          <li>De‑duplicate legacy combat XP managers and finalize the authoritative path</li>
+          <li>De-duplicate legacy combat paths and finalize the authoritative route</li>
         </ul>
       </div>
 
@@ -178,7 +184,7 @@
           <li>Exploration systems and discovery rewards</li>
           <li>Elites and world bosses</li>
           <li>Dungeons and instanced encounters</li>
-          <li>Server‑wide world events</li>
+          <li>Server-wide world events</li>
           <li>Seasonal cycles and soft resets</li>
         </ul>
       </div>
@@ -187,8 +193,8 @@
         <h3>Phase 7 — Network & Scaling</h3>
         <ul>
           <li>MySQL/PostgreSQL storage implementation</li>
-          <li>Multi‑server sync for player data and economies</li>
-          <li>Proxy compatibility and network‑aware features</li>
+          <li>Multi-server sync for player data and economies</li>
+          <li>Proxy compatibility and network-aware features</li>
           <li>Async data pipelines and performance tuning</li>
         </ul>
       </div>
@@ -215,6 +221,9 @@
           <li>Scoreboards and menus</li>
           <li>Cooldowns and mob health bars</li>
           <li>World rules, regions, and sleep system</li>
+          <li>Teleports: homes, spawn, back, TPA</li>
+          <li>Resources + mana cost hooks</li>
+          <li>Items, drop tables, and holograms</li>
           <li>Vault integration</li>
           <li>Core player data and persistence</li>
         </ul>
@@ -224,16 +233,16 @@
         <h3>Missing</h3>
         <ul>
           <li>Unified XP/Level service for all skills</li>
-          <li>Non‑combat leveling and skill systems</li>
+          <li>Non-combat leveling and skill systems</li>
           <li>Professions and class frameworks</li>
           <li>Quest and achievement systems</li>
-          <li>Custom items, stats, and rarities</li>
-          <li>Loot table engine</li>
+          <li>Custom items with stats and rarities</li>
+          <li>Unified loot table engine across modules</li>
           <li>Villages and village diplomacy</li>
           <li>Exploration, dungeons, and world events</li>
-          <li>Persistent attributes and cooldowns</li>
+          <li>Advanced persistence for temporary combat/attribute states</li>
           <li>MySQL/PostgreSQL support</li>
-          <li>Multi‑server sync and proxy support</li>
+          <li>Multi-server sync and proxy support</li>
         </ul>
       </div>
 
