@@ -19,7 +19,14 @@
         <p class="subtitle">A Living RPG Realm Forged on RunestoneCore</p>
 
         <div class="buttons">
-            <a class="button" href="#">Join the Adventure</a>
+            <a class="button" onclick="copyIP()">Copy Server IP</a>
+
+<script>
+function copyIP() {
+    navigator.clipboard.writeText("your-ip-here");
+    alert("Server IP copied to clipboard!");
+}
+</script>
         </div>
 
         <p style="margin-top: 18px; font-size: 1.25rem;">
