@@ -56,8 +56,8 @@
           <li>Dedicated combat XP and progression state</li>
           <li>Wallet and bank balances across multiple currencies</li>
           <li>Daily rewards state (cycle day, streaks, completion)</li>
-          <li>Async load/save with merge logic and caching</li>
-          <li>YAML storage backend (config-driven; database backends planned)</li>
+          <li>Async-safe load/save with caching and merge logic</li>
+          <li>Disk-backed storage (YAML). Database backends planned</li>
         </ul>
       </div>
 
@@ -102,7 +102,7 @@
         <h3>Combat & Attributes</h3>
         <ul>
           <li>Combat XP system with XP curves and level-up events</li>
-          <li>Damage engine with attack, defense, toughness, crit chance/damage, and biome multipliers</li>
+          <li>Damage engine with attack, defense, toughness, crit chance/damage, and multipliers</li>
           <li>Minimum damage floors, particles, and sounds for feedback</li>
           <li>Mob attribute application on spawn from combat and attribute configs</li>
           <li>Attribute manager for per-entity stats and scaled player attributes</li>
@@ -111,10 +111,21 @@
       </div>
 
       <div class="card">
+        <h3>Claims & Towns / Territories</h3>
+        <ul>
+          <li>Land claims with protection listeners (break/place, containers, redstone, explosions, PvP, mob grief, fire spread)</li>
+          <li>Trust lists, flags, and safe enforcement rules</li>
+          <li>Towns / Territories v1: chunk-based towns with membership, ranks, treasury, and claim rules</li>
+          <li>Adjacency and buffer rules for controlled expansion</li>
+          <li>Protection listeners that integrate with the Claims layer</li>
+        </ul>
+      </div>
+
+      <div class="card">
         <h3>Scoreboards & Menus</h3>
         <ul>
           <li>Config-driven scoreboards with multiple layouts and conditions (combat, menus, worlds, regions, permissions, thresholds)</li>
-          <li>Optional override of external scoreboard plugins</li>
+          <li>Scoreboard manager with performance-safe update scheduling</li>
           <li>Menu framework for building GUI menus with cleanup and lifecycle awareness</li>
         </ul>
       </div>
@@ -123,7 +134,7 @@
         <h3>Resources & HUD</h3>
         <ul>
           <li>Resource pools (mana/stamina) with listener hooks for costs and regeneration</li>
-          <li>Resource HUD support (bossbar mode) for clean, compact display</li>
+          <li>BossBar/ActionBar UI channels designed to avoid display conflicts</li>
           <li>Teleport cost integration (mana costs via configurable rules)</li>
         </ul>
       </div>
@@ -150,11 +161,11 @@
       </div>
 
       <div class="card">
-        <h3>Items, Drops & VillageCraft</h3>
+        <h3>Items, Drops & Holograms</h3>
         <ul>
           <li>Config-driven item definitions with usage gating hooks</li>
           <li>Drop tables subsystem for controllable rewards</li>
-          <li>VillageCraft hooks for server crafting extensions</li>
+          <li>Optional item bridging patterns for custom content ecosystems (config-driven)</li>
           <li>Holograms support (config-driven)</li>
         </ul>
       </div>
@@ -179,7 +190,7 @@
           <li>Central task registry and listener registry</li>
           <li>Scheduled tasks for bank interest, auction expiration, scoreboards, moderation cleanup, and more</li>
           <li>Economy and moderation logging, plus audit trail for staff actions</li>
-          <li>Public APIs: RunestoneCoreAPI, RunestoneEconomyAPI, event bus, and more</li>
+          <li>Public APIs: RunestoneCoreAPI, RunestoneEconomyAPI, event bus, skill registry, XP service</li>
         </ul>
       </div>
 
@@ -194,12 +205,12 @@
     <div class="card-grid">
 
       <div class="card">
-        <h3>XP & Progression</h3>
+        <h3>Progression Content</h3>
         <ul>
-          <li>No unified XP service for all skills (RunestoneXPService is defined but not implemented)</li>
-          <li>No global leveling system for non-combat skills</li>
+          <li>No built-in gathering/crafting skill content is shipped inside Core</li>
           <li>No skill trees or point allocation</li>
           <li>No class or specialization framework</li>
+          <li>No perks/abilities system (intentionally deferred)</li>
         </ul>
       </div>
 
@@ -208,17 +219,17 @@
         <ul>
           <li>No quest framework</li>
           <li>No achievements or title unlock systems beyond basic titles/tags</li>
-          <li>No unified loot table engine shared across modules</li>
-          <li>No custom item stat system or rarity tiers</li>
+          <li>No unified content-authoring tools for NPCs, storylines, or world events</li>
+          <li>No dungeon/boss encounter framework baked into Core</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Social & Villages</h3>
+        <h3>Social Expansion</h3>
         <ul>
-          <li>No Villages system (planned as the primary social grouping module)</li>
-          <li>No town/village claiming, protections, or treasuries in Core</li>
-          <li>No social ranks or village diplomacy in Core</li>
+          <li>No village upgrade trees beyond the current settlement direction</li>
+          <li>No diplomacy/war layer beyond current territory rules</li>
+          <li>No player-run market district tooling baked into Core</li>
         </ul>
       </div>
 
@@ -261,7 +272,7 @@
         <h3>Daily & Skills</h3>
         <ul>
           <li>/daily, /rdaily</li>
-          <li>/skills, /rskills (future integration with XP/skills modules)</li>
+          <li>/skills, /rskills</li>
         </ul>
       </div>
 
@@ -318,7 +329,7 @@
 <footer>
   <p>RunestoneMMO — Forged in the Deep Halls</p>
   <p>
-    <a href="https://discord.gg/4ZAzaWGV" target="_blank">Guild Hall</a> •
+    <a href="https://discord.gg/4ZAzaWGV" target="_blank" rel="noopener">Guild Hall</a> •
     <a href="/contact.html">Send a Raven</a> •
     <a href="/terms.html">Terms &amp; Licensing</a>
   </p>
@@ -326,4 +337,3 @@
 
 </body>
 </html>
-
