@@ -36,8 +36,8 @@
     <h2>Current State of Development</h2>
     <p>
       RunestoneCore is a powerful engine with many systems already implemented — economy, auctions, shops,
-      moderation, combat scaffolding, attributes, daily rewards, world rules, scoreboards, teleports, and more.
-      The true MMO layer (unified XP, skills, professions, villages, quests, and world content) is still being forged.
+      moderation, combat scaffolding, attributes, daily rewards, world rules, scoreboards, teleports, claims,
+      towns/territories, and more. The MMO layer is actively expanding through modular progression and content systems.
     </p>
 
     <div class="card-grid">
@@ -49,7 +49,7 @@
           <li>Auctions with escrow, expiration, and offline delivery</li>
           <li>Player shops (core flows and persistence)</li>
           <li>Daily rewards with streaks and calendar logic</li>
-          <li>Combat XP and damage engine (crit, armor, biome scaling, floors)</li>
+          <li>Combat XP and damage engine (crit, armor, scaling, floors)</li>
           <li>Mob attribute application on spawn</li>
           <li>Attribute platform for players and mobs</li>
           <li>Moderation suite (punishments, reports, notes, jail, maintenance, audit trail)</li>
@@ -65,7 +65,10 @@
           <li>Items subsystem + drop tables (config-driven)</li>
           <li>Holograms support (config-driven)</li>
           <li>Vault economy integration</li>
-          <li>Core player data model and async persistence</li>
+          <li>Core player data model and async-safe persistence</li>
+          <li>Land claims and protections</li>
+          <li>Towns / Territories v1 (membership, ranks, treasury, claim rules, protection)</li>
+          <li>Unified XP/Level API bridge (skill-aware XP service + skill registry integration)</li>
         </ul>
       </div>
 
@@ -82,23 +85,22 @@
           <li>Offline delivery as a generalized service (currently auction-first)</li>
           <li>Placeholder expansion wiring (PlaceholderAPI present; expansion coverage still being built)</li>
           <li>HUD/UI polish for resources (mode support exists; layout/stacking refinement ongoing)</li>
+          <li>Claims/Towns feature expansion (GUI flows, upgrades/perks, diplomacy layers)</li>
+          <li>Balancing passes for progression values (XP tables, pacing, costs)</li>
         </ul>
       </div>
 
       <div class="card">
         <h3>Missing / Not Yet Implemented</h3>
         <ul>
-          <li>Unified XP/Level service (RunestoneXPService implementation)</li>
-          <li>Global leveling and skill progression systems</li>
-          <li>Professions (mining, smithing, gathering, artisan)</li>
+          <li>Quest framework and achievements</li>
           <li>Classes and specializations</li>
           <li>Ability systems and advanced cooldown tiers</li>
-          <li>Quest framework and achievements</li>
           <li>Custom items with stats, rarities, and affixes</li>
-          <li>Unified loot table engine shared across modules</li>
-          <li>Villages (social/town system — replaces guilds/clans)</li>
-          <li>Exploration systems, elites, bosses, dungeons, and world events</li>
-          <li>Full persistence for temporary attributes and advanced combat states across restarts</li>
+          <li>Unified content-authoring tools (NPCs, quest chains, world event scripting)</li>
+          <li>Villages module (expanded social system beyond territories)</li>
+          <li>Exploration systems: elites, bosses, dungeons, and world events</li>
+          <li>Full persistence for advanced combat states and temporary buffs across restarts</li>
           <li>MySQL/PostgreSQL support</li>
           <li>Multi-server sync and proxy compatibility</li>
         </ul>
@@ -137,11 +139,11 @@
       <div class="card">
         <h3>Phase 2 — XP &amp; Progression Core</h3>
         <ul>
-          <li>Implement <strong>RunestoneXPService</strong> as the unified XP/Level API</li>
-          <li>Skill registry (skill IDs mapped to data and curves)</li>
+          <li>Unify XP/Level logic behind a single API (skill-aware XP service + registry)</li>
           <li>Shared XP gain and level-up events for all modules</li>
           <li>Scoreboard and placeholder integration for levels and XP</li>
-          <li>Migration path from legacy/general XP to the unified service</li>
+          <li>Skill display consistency across commands and UI</li>
+          <li>Balancing + tuning pass for XP pacing and progression feel</li>
         </ul>
       </div>
 
@@ -155,12 +157,46 @@
         </ul>
       </div>
 
+      <div class="card">
+        <h3>Phase 4 — Content Systems</h3>
+        <ul>
+          <li>Quest framework (objectives, rewards, conditions)</li>
+          <li>Achievements and title unlocks</li>
+          <li>Loot table expansion + content-driven drop routing</li>
+          <li>World events framework (timers, triggers, announcements)</li>
+          <li>Admin content tooling (authoring flow and safety)</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Phase 5 — World &amp; Adventure</h3>
+        <ul>
+          <li>Elites, bosses, and dungeon encounters</li>
+          <li>Exploration expansions (biome discovery rewards, landmarks, points of interest)</li>
+          <li>Seasonal cycles and realm events</li>
+          <li>Progression loops tied into economy and world content</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Phase 6 — Scaling & Persistence</h3>
+        <ul>
+          <li>MySQL/PostgreSQL backends</li>
+          <li>Multi-server sync and proxy-aware compatibility</li>
+          <li>Performance hardening and profiling targets</li>
+          <li>Long-term persistence for advanced combat/progression states</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
 </main>
 
 <footer>
   <p>RunestoneMMO — Forged in the Deep Halls</p>
   <p>
-    <a href="https://discord.gg/4ZAzaWGV" target="_blank">Guild Hall</a> •
+    <a href="https://discord.gg/4ZAzaWGV" target="_blank" rel="noopener">Guild Hall</a> •
     <a href="/contact.html">Send a Raven</a> •
     <a href="/terms.html">Terms &amp; Licensing</a>
   </p>
