@@ -2,192 +2,104 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RunestoneMMO — Roadmap & Development</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
 
 <body>
 
-<header></header>
+<header>
+  <div class="topbar">
+    <a class="brand" href="/index.html">RunestoneMMO</a>
+
+    <nav class="top-links">
+      <a class="top-link" href="/features.html">RunestoneCore</a>
+      <a class="top-link" href="/runestoneskills.html">RunestoneSkills</a>
+      <a class="top-link" href="/roadmap_development.html">Roadmap</a>
+      <a class="top-link" href="/serverpage.html">Server</a>
+      <a class="top-link" href="/terms.html">Terms</a>
+    </nav>
+  </div>
+</header>
+
 <div class="hero-banner"></div>
 
 <main>
 
-  <!-- HERO INTRO -->
   <section class="hero">
-    <h1>RunestoneMMO Roadmap</h1>
-    <p class="subtitle">Forged in Stone. Tempered in Flame. Built for Legends.</p>
+    <h1>Roadmap &amp; Development</h1>
+    <p class="subtitle">The forge is active — but no public roadmap entries are posted at this time.</p>
 
     <p>
-      This page chronicles the ongoing development of RunestoneMMO — what is complete, what is being carved,
-      and what great systems lie ahead in the deep halls of the forge. RunestoneCore already powers many live
-      systems; the RPG and content layers are the next great chapters.
+      This page will be used for future public development notes, milestone tracking, and project direction updates
+      for the RunestoneMMO ecosystem.
     </p>
 
     <div class="buttons">
-      <a href="/" class="button">Return to the Mountain Gate</a>
-      <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneMMO" class="button secondary" target="_blank" rel="noopener">Download RunestoneCore</a>
-      <a href="/features.html" class="button secondary">Study the Tomes</a>
+      <a href="/index.html" class="button">Return Home</a>
+      <a href="/features.html" class="button secondary">View RunestoneCore</a>
+      <a href="/runestoneskills.html" class="button secondary">View RunestoneSkills</a>
     </div>
   </section>
 
-  <!-- CURRENT STATE -->
-  <section>
-    <h2>Current State of Development</h2>
+  <section class="card">
+    <h2>Current Status</h2>
     <p>
-      RunestoneCore is a powerful engine with many systems already implemented — economy, auctions, shops,
-      moderation, combat scaffolding, attributes, daily rewards, world rules, scoreboards, teleports, claims,
-      towns/territories, and more. The MMO layer is actively expanding through modular progression and content systems.
+      There are currently <strong>no public roadmap items posted</strong> on this page.
+    </p>
+    <p>
+      Until further notice, this section is being held as a placeholder for future development phases,
+      patch direction, feature milestones, and larger project planning.
+    </p>
+    <p>
+      When new roadmap information is ready to be shared, it will be added here.
+    </p>
+  </section>
+
+  <section class="cta-section">
+    <h2>While the Roadmap Is Quiet</h2>
+    <p>
+      You can still explore the active parts of the project through the main site pages and official links below.
     </p>
 
-    <div class="card-grid">
+    <div class="cta-grid">
+      <article class="cta-card">
+        <h3>RunestoneCore</h3>
+        <p>Explore the main platform systems, infrastructure, and core feature set.</p>
+        <a href="/features.html" class="button">Open RunestoneCore Page</a>
+      </article>
 
-      <div class="card">
-        <h3>Fully Implemented</h3>
-        <ul>
-          <li>Multi-currency economy (wallets, bank, taxes, exchange, treasury, ledger)</li>
-          <li>Auctions with escrow, expiration, and offline delivery</li>
-          <li>Player shops (core flows and persistence)</li>
-          <li>Daily rewards with streaks and calendar logic</li>
-          <li>Combat XP and damage engine (crit, armor, scaling, floors)</li>
-          <li>Mob attribute application on spawn</li>
-          <li>Attribute platform for players and mobs</li>
-          <li>Moderation suite (punishments, reports, notes, jail, maintenance, audit trail)</li>
-          <li>Chat control and staff chat</li>
-          <li>Scoreboard system with layouts and conditions</li>
-          <li>Menu framework + cleanup/lifecycle</li>
-          <li>Cooldown system (disk-backed, config-driven)</li>
-          <li>Mob health bars</li>
-          <li>World rules and regions (rectangular zones)</li>
-          <li>Sleep system</li>
-          <li>Teleport suite: homes, spawn, back, TPA</li>
-          <li>Teleport costs (mana-based rules) + resource system hooks</li>
-          <li>Items subsystem + drop tables (config-driven)</li>
-          <li>Holograms support (config-driven)</li>
-          <li>Vault economy integration</li>
-          <li>Core player data model and async-safe persistence</li>
-          <li>Land claims and protections</li>
-          <li>Towns / Territories v1 (membership, ranks, treasury, claim rules, protection)</li>
-          <li>Unified XP/Level API bridge (skill-aware XP service + skill registry integration)</li>
-        </ul>
-      </div>
+      <article class="cta-card">
+        <h3>RunestoneSkills</h3>
+        <p>See the dedicated skills module page for progression systems and profession features.</p>
+        <a href="/runestoneskills.html" class="button secondary">Open RunestoneSkills Page</a>
+      </article>
 
-      <div class="card">
-        <h3>Partially Implemented</h3>
-        <ul>
-          <li>Auction filters and search UX</li>
-          <li>Shop editor quality-of-life actions (rename/description visibility and prompt safeguards)</li>
-          <li>Market dashboard metrics and visualization</li>
-          <li>Dynamic pricing profiles and tuning (framework present; typically disabled by config)</li>
-          <li>Report management tooling and staff flows</li>
-          <li>Audit logging expansion and views</li>
-          <li>Region integrations beyond basic rectangles</li>
-          <li>Offline delivery as a generalized service (currently auction-first)</li>
-          <li>Placeholder expansion wiring (PlaceholderAPI present; expansion coverage still being built)</li>
-          <li>HUD/UI polish for resources (mode support exists; layout/stacking refinement ongoing)</li>
-          <li>Claims/Towns feature expansion (GUI flows, upgrades/perks, diplomacy layers)</li>
-          <li>Balancing passes for progression values (XP tables, pacing, costs)</li>
-        </ul>
-      </div>
+      <article class="cta-card">
+        <h3>Discord Community</h3>
+        <p>Follow current project discussion, announcements, and future updates as they happen.</p>
+        <a href="https://discord.gg/BNkJDU6qE4" class="button secondary" target="_blank" rel="noopener">Join the Discord</a>
+      </article>
 
-      <div class="card">
-        <h3>Missing / Not Yet Implemented</h3>
-        <ul>
-          <li>Quest framework and achievements</li>
-          <li>Classes and specializations</li>
-          <li>Ability systems and advanced cooldown tiers</li>
-          <li>Custom items with stats, rarities, and affixes</li>
-          <li>Unified content-authoring tools (NPCs, quest chains, world event scripting)</li>
-          <li>Villages module (expanded social system beyond territories)</li>
-          <li>Exploration systems: elites, bosses, dungeons, and world events</li>
-          <li>Full persistence for advanced combat states and temporary buffs across restarts</li>
-          <li>MySQL/PostgreSQL support</li>
-          <li>Multi-server sync and proxy compatibility</li>
-        </ul>
-      </div>
-
+      <article class="cta-card">
+        <h3>RunestoneMMO Hangar</h3>
+        <p>View the main project page and public releases for the wider ecosystem.</p>
+        <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneMMO" class="button secondary" target="_blank" rel="noopener">Open Hangar Page</a>
+      </article>
     </div>
   </section>
 
-  <!-- ROADMAP PHASES -->
-  <section>
-    <h2>Development Roadmap</h2>
+  <section class="card">
+    <h2>Future Updates</h2>
     <p>
-      The forge burns bright. Below is the planned order of development for RunestoneMMO’s major systems.
-      Each phase builds upon the last, expanding the world into a full RPG experience while keeping
-      RunestoneCore stable and modular.
+      This page is reserved for future roadmap publication. Once development milestones are ready to be shared publicly,
+      they will appear here in a clearer phased format.
     </p>
 
-    <div class="card-grid">
-
-      <div class="card">
-        <h3>Phase 1 — Core Completion</h3>
-        <ul>
-          <li>Finish auction filters and search</li>
-          <li>Complete shop editor UX and safeguards (rename, description, prompt safety)</li>
-          <li>Finalize market dashboard metrics and displays</li>
-          <li>Harden maintenance mode and staff alerts</li>
-          <li>Improve report management flows</li>
-          <li>Expand audit logging coverage and views</li>
-          <li>Refine region handling as a shared RegionService</li>
-          <li>Introduce a generalized DeliveryService for offline rewards</li>
-          <li>Polish resource HUD and costs (mana/stamina UX and configuration)</li>
-          <li>Expand PlaceholderAPI coverage for economy/combat/market stats</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Phase 2 — XP &amp; Progression Core</h3>
-        <ul>
-          <li>Unify XP/Level logic behind a single API (skill-aware XP service + registry)</li>
-          <li>Shared XP gain and level-up events for all modules</li>
-          <li>Scoreboard and placeholder integration for levels and XP</li>
-          <li>Skill display consistency across commands and UI</li>
-          <li>Balancing + tuning pass for XP pacing and progression feel</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Phase 3 — Combat & Attributes Polish</h3>
-        <ul>
-          <li>Refine damage formulas and scaling rules</li>
-          <li>Implement temporary attributes and buff/debuff durations</li>
-          <li>Improve combat feedback (actionbars, indicators, sounds)</li>
-          <li>De-duplicate legacy combat paths and finalize the authoritative route</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Phase 4 — Content Systems</h3>
-        <ul>
-          <li>Quest framework (objectives, rewards, conditions)</li>
-          <li>Achievements and title unlocks</li>
-          <li>Loot table expansion + content-driven drop routing</li>
-          <li>World events framework (timers, triggers, announcements)</li>
-          <li>Admin content tooling (authoring flow and safety)</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Phase 5 — World &amp; Adventure</h3>
-        <ul>
-          <li>Elites, bosses, and dungeon encounters</li>
-          <li>Exploration expansions (biome discovery rewards, landmarks, points of interest)</li>
-          <li>Seasonal cycles and realm events</li>
-          <li>Progression loops tied into economy and world content</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Phase 6 — Scaling & Persistence</h3>
-        <ul>
-          <li>MySQL/PostgreSQL backends</li>
-          <li>Multi-server sync and proxy-aware compatibility</li>
-          <li>Performance hardening and profiling targets</li>
-          <li>Long-term persistence for advanced combat/progression states</li>
-        </ul>
-      </div>
-
+    <div class="button-row-left">
+      <a href="https://runestonemmo.com/" class="button secondary" target="_blank" rel="noopener">Main Website</a>
+      <a href="https://www.patreon.com/cw/RunestoneMMO" class="button secondary" target="_blank" rel="noopener">Support Development</a>
     </div>
   </section>
 
@@ -196,9 +108,10 @@
 <footer>
   <p>RunestoneMMO — Forged in the Deep Halls</p>
   <p>
-    <a href="https://discord.gg/4ZAzaWGV" target="_blank" rel="noopener">Guild Hall</a> •
-    <a href="/contact.html">Send a Raven</a> •
-    <a href="/terms.html">Terms &amp; Licensing</a>
+    <a href="https://discord.gg/BNkJDU6qE4" target="_blank" rel="noopener">Discord</a> •
+    <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneMMO" target="_blank" rel="noopener">RunestoneMMO Hangar</a> •
+    <a href="/features.html">RunestoneCore</a> •
+    <a href="/runestoneskills.html">RunestoneSkills</a>
   </p>
 </footer>
 
