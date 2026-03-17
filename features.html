@@ -2,325 +2,364 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RunestoneCore — The Heart of the Mountain</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
 
 <body>
 
-<header></header>
+<header>
+  <div class="topbar">
+    <a class="brand" href="/index.html">RunestoneMMO</a>
+
+    <nav class="top-links">
+      <a class="top-link" href="/features.html">RunestoneCore</a>
+      <a class="top-link" href="/runestoneskills.html">RunestoneSkills</a>
+      <a class="top-link" href="/roadmap_development.html">Roadmap</a>
+      <a class="top-link" href="/serverpage.html">Server</a>
+      <a class="top-link" href="/terms.html">Terms</a>
+    </nav>
+  </div>
+</header>
+
 <div class="hero-banner"></div>
 
 <main>
 
-  <!-- HERO INTRO -->
   <section class="hero">
     <h1>RunestoneCore</h1>
-    <p class="subtitle">The Engine That Powers Every System, Every Module, Every Adventure.</p>
+    <p class="subtitle">The engine beneath the mountain — powering systems, structure, and server-wide progression.</p>
 
     <p>
-      RunestoneCore is the foundational module of the RunestoneMMO ecosystem — a modular, extensible,
-      MMO-grade engine providing the essential infrastructure: economy, auctions, shops, moderation,
-      scoreboards, cooldowns, attributes, world rules, daily rewards, combat scaffolding, storage, and APIs.
-      It boots through a deterministic <code>CoreBootstrap</code> sequence, ensuring each subsystem is initialized in order.
+      RunestoneCore is the foundation of the RunestoneMMO ecosystem: a modular MMO-grade core built for
+      economy, player systems, moderation, combat scaffolding, attributes, scoreboards, travel, claims,
+      towns, rewards, and extensible future modules.
     </p>
 
     <div class="buttons">
-      <a href="/" class="button">Return to the Mountain Gate</a>
-      <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneMMO" class="button secondary" target="_blank" rel="noopener">Download RunestoneCore</a>
-      <a href="https://discord.gg/4ZAzaWGV" class="button secondary">Enter the Guild Hall</a>
+      <a href="/index.html" class="button">Return Home</a>
+      <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneMMO" class="button secondary" target="_blank" rel="noopener">View on Hangar</a>
+      <a href="https://discord.gg/BNkJDU6qE4" class="button secondary" target="_blank" rel="noopener">Join the Discord</a>
     </div>
   </section>
 
-  <!-- CORE SYSTEMS -->
+  <section class="cta-section">
+    <h2>Official Core Links</h2>
+    <p>
+      Follow active development, explore the project ecosystem, and navigate directly to the dedicated module pages.
+    </p>
+
+    <div class="cta-grid">
+      <article class="cta-card">
+        <h3>RunestoneCore / RunestoneMMO Hangar</h3>
+        <p>The main distribution page for the core platform and the wider project.</p>
+        <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneMMO" class="button" target="_blank" rel="noopener">Open Hangar Page</a>
+      </article>
+
+      <article class="cta-card">
+        <h3>RunestoneSkills</h3>
+        <p>Profession systems, gathering, and skill progression live on their own dedicated page.</p>
+        <a href="/runestoneskills.html" class="button secondary">Open RunestoneSkills Page</a>
+      </article>
+
+      <article class="cta-card">
+        <h3>Discord Community</h3>
+        <p>See updates, testing progress, patch notes, and the active development journey.</p>
+        <a href="https://discord.gg/BNkJDU6qE4" class="button secondary" target="_blank" rel="noopener">Enter the Guild Hall</a>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <h2>What RunestoneCore Is</h2>
+    <p>
+      RunestoneCore is the shared platform layer for the RunestoneMMO project. It is designed to give servers a strong,
+      extensible base for persistent gameplay systems without forcing every future feature into one monolithic plugin.
+    </p>
+    <p>
+      The goal is simple: one professional core that can support economy, progression, moderation, travel, UI,
+      combat scaffolding, and future modules cleanly. RunestoneSkills, future quest systems, content systems,
+      and other expansions are built on top of this spine — not mixed directly into it.
+    </p>
+  </section>
+
   <section>
     <h2>Core Systems</h2>
 
     <div class="card-grid">
 
       <div class="card">
-        <h3>Configuration & Lifecycle</h3>
+        <h3>Configuration &amp; Lifecycle</h3>
         <ul>
-          <li>Multi-file YAML configuration (config, economy, combat, attributes, daily rewards, cooldowns, moderation, messages, playerdata, mob health, scoreboards, menus, teleport, resources)</li>
-          <li>Routed config access (economy, auction, shops, treasury, etc.) via <code>ConfigManager</code></li>
-          <li>Subsystem lifecycle with <code>CoreSubsystem</code> and <code>SubsystemManager</code> (init + shutdown)</li>
-          <li>Task and listener registries to prevent orphaned schedulers and duplicate listeners</li>
-          <li>Adventure-based messaging with MiniMessage formatting and category prefixes</li>
+          <li>Multi-file YAML configuration for core systems and subsystem tuning</li>
+          <li>Central routed access through configuration managers</li>
+          <li>Deterministic bootstrap and shutdown flow for subsystem safety</li>
+          <li>Central task and listener registration to reduce duplication and orphaned behavior</li>
+          <li>Adventure / MiniMessage-driven output and formatting support</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Player Data & Profiles</h3>
+        <h3>Player Data &amp; Profiles</h3>
         <ul>
-          <li><code>CorePlayer</code> model with join info, playtime, titles/tags, toggles, preferences, attributes map</li>
-          <li>Dedicated combat XP and progression state</li>
-          <li>Wallet and bank balances across multiple currencies</li>
-          <li>Daily rewards state (cycle day, streaks, completion)</li>
-          <li>Async-safe load/save with caching and merge logic</li>
-          <li>Disk-backed storage (YAML). Database backends planned</li>
+          <li>Persistent player profiles with preferences, toggles, titles, and progression state</li>
+          <li>Combat XP and related progression support</li>
+          <li>Multi-currency wallet and bank storage</li>
+          <li>Daily reward tracking and completion state</li>
+          <li>Async-safe load / save flow with cache-aware handling</li>
         </ul>
       </div>
 
       <div class="card">
         <h3>Economy Platform</h3>
         <ul>
-          <li>Multi-currency registry with primary and secondary currencies</li>
-          <li>Wallet economy with events, logging, and per-player currency files</li>
-          <li>Bank accounts with interest, tax integration, and commands</li>
-          <li>Tax rules for payments, bank interest, auctions, and shops</li>
-          <li>Currency exchange with configurable rates and fees</li>
-          <li>Server treasury for routed taxes and admin sinks/sources</li>
-          <li>Dynamic pricing framework (config-gated)</li>
-          <li>Ledger and transaction logging for auditability</li>
-          <li>Vault bridge to expose balances to external plugins</li>
+          <li>Multi-currency economy design</li>
+          <li>Wallet balances, bank balances, and server treasury support</li>
+          <li>Tax routing and configurable economy sinks</li>
+          <li>Exchange support between currencies</li>
+          <li>Ledger / history systems for tracking transactions</li>
+          <li>Vault compatibility for wider plugin integration</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Auctions & Player Shops</h3>
+        <h3>Auctions, Shops &amp; Market Flow</h3>
         <ul>
-          <li>GUI auction house with escrow and expiration tasks</li>
-          <li>Listing validation, fees, cooldowns, and offline delivery queue</li>
-          <li>Player shops with listings, stock, taxes, and persistence</li>
-          <li>Shop creation and editor flows (including description support)</li>
-          <li>Integrated with economy, taxes, ledger, and logging</li>
+          <li>Auction house support with listing and expiry flow</li>
+          <li>Player shop systems and shop creation flow</li>
+          <li>Shop editing and description support</li>
+          <li>Market dashboard style overview systems</li>
+          <li>Integrated economy and logging behavior</li>
         </ul>
       </div>
 
       <div class="card">
         <h3>Daily Rewards</h3>
         <ul>
-          <li>Calendar-based daily reward cycles with streaks and streak weeks</li>
-          <li>Timezone-aware eligibility checks</li>
-          <li>Per-day rewards (currency, items, commands)</li>
-          <li>Optional loot-table-style weekly/daily reward routing (config-driven)</li>
-          <li><code>/daily claim</code> and <code>/daily status</code> commands</li>
+          <li>Daily reward claims and status tracking</li>
+          <li>Calendar / streak oriented reward flow</li>
+          <li>Support for currency, items, and command rewards</li>
+          <li>Designed for configurable progression-oriented reward tables</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Combat & Attributes</h3>
+        <h3>Combat &amp; Attributes</h3>
         <ul>
-          <li>Combat XP system with XP curves and level-up events</li>
-          <li>Damage engine with attack, defense, toughness, crit chance/damage, and multipliers</li>
-          <li>Minimum damage floors, particles, and sounds for feedback</li>
-          <li>Mob attribute application on spawn from combat and attribute configs</li>
-          <li>Attribute manager for per-entity stats and scaled player attributes</li>
-          <li>Hooks for future buffs/debuffs and temporary attributes</li>
+          <li>Combat XP support and combat progression hooks</li>
+          <li>Attribute scaffolding for attack, defense, toughness, crits, and scaling</li>
+          <li>Mob attribute application support</li>
+          <li>Combat-facing systems designed to support future RPG expansion</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Claims & Towns / Territories</h3>
+        <h3>Claims &amp; Protection</h3>
         <ul>
-          <li>Land claims with protection listeners (break/place, containers, redstone, explosions, PvP, mob grief, fire spread)</li>
-          <li>Trust lists, flags, and safe enforcement rules</li>
-          <li>Towns / Territories v1: chunk-based towns with membership, ranks, treasury, and claim rules</li>
-          <li>Adjacency and buffer rules for controlled expansion</li>
-          <li>Protection listeners that integrate with the Claims layer</li>
+          <li>Personal land claim system</li>
+          <li>Protection logic for building, containers, and related interactions</li>
+          <li>Trust / flag style territory control</li>
+          <li>Protection-aware world interaction rules</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Scoreboards & Menus</h3>
+        <h3>Towns &amp; Territories</h3>
         <ul>
-          <li>Config-driven scoreboards with multiple layouts and conditions (combat, menus, worlds, regions, permissions, thresholds)</li>
-          <li>Scoreboard manager with performance-safe update scheduling</li>
-          <li>Menu framework for building GUI menus with cleanup and lifecycle awareness</li>
+          <li>Town creation and structured settlement support</li>
+          <li>Rank, membership, treasury, and claim-based territory rules</li>
+          <li>Expansion logic designed around controlled chunk growth</li>
+          <li>Integrated direction for future settlement gameplay</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Resources & HUD</h3>
+        <h3>Scoreboards &amp; Menus</h3>
         <ul>
-          <li>Resource pools (mana/stamina) with listener hooks for costs and regeneration</li>
-          <li>BossBar/ActionBar UI channels designed to avoid display conflicts</li>
-          <li>Teleport cost integration (mana costs via configurable rules)</li>
+          <li>Config-driven scoreboards with multiple layouts</li>
+          <li>Conditional displays for context-specific UI behavior</li>
+          <li>Menu framework for structured GUI systems</li>
+          <li>Active refinement toward cleaner persistence and display flow</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Teleport & Travel</h3>
+        <h3>Resources &amp; HUD Systems</h3>
         <ul>
-          <li>TPA system with request/accept/deny flow and safety checks</li>
-          <li>Teleport toggle support (<code>/tptoggle</code>)</li>
-          <li>Homes system (persistent homes configuration and manager)</li>
-          <li>Back command support for returning to previous locations</li>
-          <li>Spawn system support for returning players to the realm gate</li>
+          <li>Mana and stamina resource support</li>
+          <li>BossBar / ActionBar oriented HUD channels</li>
+          <li>Teleport mana-cost integration and resource hooks</li>
+          <li>Designed to support wider RPG resource systems later</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Cooldowns & Mob Health</h3>
+        <h3>Travel &amp; Teleportation</h3>
         <ul>
-          <li>Global and per-player cooldown registry</li>
-          <li>Centralized cleanup via task registry</li>
-          <li>Mob health bars using bossbars with configurable styles and caps</li>
-          <li>Per-player scan caps for performance safety</li>
+          <li>Home system support</li>
+          <li>Teleport request flow</li>
+          <li>Spawn return flow</li>
+          <li>Back-location support</li>
+          <li>Utility travel systems for both players and staff</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Items, Drops & Holograms</h3>
+        <h3>Moderation &amp; World Rules</h3>
         <ul>
-          <li>Config-driven item definitions with usage gating hooks</li>
-          <li>Drop tables subsystem for controllable rewards</li>
-          <li>Optional item bridging patterns for custom content ecosystems (config-driven)</li>
-          <li>Holograms support (config-driven)</li>
+          <li>Staff moderation utilities and punishment flow</li>
+          <li>Chat control and server-side management tools</li>
+          <li>Maintenance mode and broadcast systems</li>
+          <li>World-rule control, gameplay toggles, and administrative enforcement</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Moderation & World Rules</h3>
+        <h3>Tasks, Logging &amp; APIs</h3>
         <ul>
-          <li>Punishments (ban, mute, warn, etc.) with storage and events</li>
-          <li>Reports, staff notes, player state tracking, and cleanup tasks</li>
-          <li>Staff chat, chat control (lock, slowmode, filters), and channel routing</li>
-          <li>Jail system with locations, escape radius, and retention</li>
-          <li>Vanish, god mode, freeze, teleport, and inventory view tools</li>
-          <li>Maintenance mode, audit trail, and staff alerts</li>
-          <li>World rules for gameplay toggles, safe zones, and restricted worlds</li>
-          <li>Sleep system with one-player or percentage-based night skipping</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Tasks, Logging & APIs</h3>
-        <ul>
-          <li>Central task registry and listener registry</li>
-          <li>Scheduled tasks for bank interest, auction expiration, scoreboards, moderation cleanup, and more</li>
-          <li>Economy and moderation logging, plus audit trail for staff actions</li>
-          <li>Public APIs: RunestoneCoreAPI, RunestoneEconomyAPI, event bus, skill registry, XP service</li>
+          <li>Central task and cleanup patterns for scheduled systems</li>
+          <li>Logging support for economy and staff actions</li>
+          <li>Public-facing APIs and integration points for future modules</li>
+          <li>Built to serve as the long-term backbone of the wider project</li>
         </ul>
       </div>
 
     </div>
   </section>
 
-  <!-- MISSING RPG SYSTEMS -->
   <section>
-    <h2>RPG Systems Not Included (Yet)</h2>
-    <p>These systems are planned for future modules and are not part of RunestoneCore itself:</p>
+    <h2>What This Page Does Not Cover</h2>
+    <p>
+      RunestoneCore is the backbone of the project, but not every gameplay system belongs on this page.
+      Dedicated profession and progression content belongs to the RunestoneSkills module and its own page.
+    </p>
 
     <div class="card-grid">
-
       <div class="card">
-        <h3>Progression Content</h3>
+        <h3>Not the Skills Module</h3>
         <ul>
-          <li>No built-in gathering/crafting skill content is shipped inside Core</li>
-          <li>No skill trees or point allocation</li>
-          <li>No class or specialization framework</li>
-          <li>No perks/abilities system (intentionally deferred)</li>
+          <li>Mining, Forestry, Fishing, Smithing, Foraging, and other skill systems are documented separately</li>
+          <li>Profession-specific balance and progression loops belong on the RunestoneSkills page</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Content Systems</h3>
+        <h3>Not the Full Content Layer</h3>
         <ul>
-          <li>No quest framework</li>
-          <li>No achievements or title unlock systems beyond basic titles/tags</li>
-          <li>No unified content-authoring tools for NPCs, storylines, or world events</li>
-          <li>No dungeon/boss encounter framework baked into Core</li>
+          <li>Quest frameworks, large content systems, and world-event layers are still future expansion areas</li>
+          <li>RunestoneCore is meant to power those systems, not replace their dedicated modules</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Social Expansion</h3>
+        <h3>Not the Final Network Scale Layer</h3>
         <ul>
-          <li>No village upgrade trees beyond the current settlement direction</li>
-          <li>No diplomacy/war layer beyond current territory rules</li>
-          <li>No player-run market district tooling baked into Core</li>
+          <li>The platform direction is long-term and still expanding</li>
+          <li>Broader scaling, deeper persistence options, and future network-ready layers remain part of the roadmap</li>
         </ul>
       </div>
-
-      <div class="card">
-        <h3>Persistence & Scaling</h3>
-        <ul>
-          <li>Cooldowns and economy data persist via disk-backed storage</li>
-          <li>Attributes are primarily runtime-driven and configurable; broader persistence is planned</li>
-          <li>No MySQL/PostgreSQL storage implementation</li>
-          <li>No multi-server sync or proxy-aware scaling layer</li>
-        </ul>
-      </div>
-
     </div>
   </section>
 
-  <!-- COMMAND LIST -->
   <section>
-    <h2>Command List</h2>
+    <h2>Primary Command Categories</h2>
+    <p>
+      This list focuses on the current primary command roots instead of older draft alias sets.
+    </p>
 
     <div class="card-grid">
 
       <div class="card">
-        <h3>Economy & Market</h3>
+        <h3>Economy &amp; Market</h3>
         <ul>
-          <li>/balance, /rbalance, /bal, /rbal</li>
-          <li>/pay, /rpay</li>
-          <li>/eco, /reco</li>
-          <li>/bank, /rbank</li>
-          <li>/exchange, /rexchange</li>
-          <li>/auction, /ah, /rauction, /rah</li>
-          <li>/shop, /rshop</li>
-          <li>/baltop, /rbaltop</li>
-          <li>/ledger, /rledger</li>
-          <li>/market, /rmarket</li>
+          <li>/balance and /bal</li>
+          <li>/pay</li>
+          <li>/bank</li>
+          <li>/exchange</li>
+          <li>/eco</li>
+          <li>/ledger</li>
+          <li>/ah and /auction</li>
+          <li>/shop</li>
+          <li>/market</li>
+          <li>/baltop</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Daily & Skills</h3>
+        <h3>Daily, UI &amp; Utility</h3>
         <ul>
-          <li>/daily, /rdaily</li>
-          <li>/skills, /rskills</li>
+          <li>/daily</li>
+          <li>/skills</li>
+          <li>/scoreboard</li>
+          <li>/channel</li>
+          <li>/playtime</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Travel & Teleports</h3>
+        <h3>Homes &amp; Travel</h3>
         <ul>
-          <li>/tpa (and accept/deny variants, depending on configuration)</li>
+          <li>/home</li>
+          <li>/sethome</li>
+          <li>/delhome</li>
+          <li>/tpa</li>
+          <li>/tpahere</li>
+          <li>/tpaccept</li>
+          <li>/tpdeny</li>
           <li>/tptoggle</li>
-          <li>/home (and set/del variants, depending on configuration)</li>
-          <li>/back</li>
           <li>/spawn</li>
+          <li>/back</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Moderation & Staff Tools</h3>
+        <h3>Claims, Towns &amp; Social Systems</h3>
         <ul>
-          <li>/mod, /rmod, /rmoderation</li>
-          <li>/chatcontrol, /rchatcontrol</li>
-          <li>/maintenance, /rmaintenance</li>
-          <li>/broadcast, /rbroadcast</li>
-          <li>/freeze, /rfreeze</li>
-          <li>/unfreeze, /runfreeze</li>
-          <li>/jail, /rjail</li>
-          <li>/invsee, /rinvsee</li>
-          <li>/vanish, /rvanish</li>
-          <li>/god, /rgod</li>
-          <li>/tp, /rtp</li>
+          <li>/claim</li>
+          <li>/town and /village</li>
+          <li>/party, /team, and /teams</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>World Rules & Scoreboards</h3>
+        <h3>Moderation &amp; Staff</h3>
         <ul>
-          <li>/worldrules (and reload variants, depending on configuration)</li>
-          <li>/scoreboard, /rscoreboard, /rsb</li>
+          <li>/mod and /moderation</li>
+          <li>/chatcontrol</li>
+          <li>/maintenance</li>
+          <li>/broadcast</li>
+          <li>/freeze and /unfreeze</li>
+          <li>/jail</li>
+          <li>/vanish</li>
+          <li>/god</li>
+          <li>/tp</li>
+          <li>/invsee</li>
         </ul>
       </div>
 
       <div class="card">
         <h3>Core Admin</h3>
         <ul>
-          <li>/runestone reload</li>
-          <li>/runestonecore reload</li>
-          <li>/core, /runestonecore, /rcore, /rrunestonecore (aliases)</li>
+          <li>/runestone</li>
+          <li>/core</li>
+          <li>/runestonecore</li>
+          <li>/devflat</li>
         </ul>
       </div>
 
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>RunestoneSkills Has Its Own Page</h2>
+    <p>
+      Profession systems, skill features, progression paths, and module-specific details are documented separately
+      so RunestoneCore can stay focused on the platform layer.
+    </p>
+
+    <div class="button-row-left">
+      <a href="/runestoneskills.html" class="button">Visit RunestoneSkills</a>
     </div>
   </section>
 
@@ -329,8 +368,9 @@
 <footer>
   <p>RunestoneMMO — Forged in the Deep Halls</p>
   <p>
-    <a href="https://discord.gg/4ZAzaWGV" target="_blank" rel="noopener">Guild Hall</a> •
-    <a href="/contact.html">Send a Raven</a> •
+    <a href="https://discord.gg/BNkJDU6qE4" target="_blank" rel="noopener">Discord</a> •
+    <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneMMO" target="_blank" rel="noopener">RunestoneMMO Hangar</a> •
+    <a href="/runestoneskills.html">RunestoneSkills Page</a> •
     <a href="/terms.html">Terms &amp; Licensing</a>
   </p>
 </footer>
