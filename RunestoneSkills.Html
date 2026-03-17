@@ -2,41 +2,97 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RunestoneSkills — The Crafts of the Deep Halls</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
 
 <body>
 
-<header></header>
+<header>
+  <div class="topbar">
+    <a class="brand" href="/index.html">RunestoneMMO</a>
+
+    <nav class="top-links">
+      <a class="top-link" href="/features.html">RunestoneCore</a>
+      <a class="top-link" href="/runestoneskills.html">RunestoneSkills</a>
+      <a class="top-link" href="/roadmap_development.html">Roadmap</a>
+      <a class="top-link" href="/serverpage.html">Server</a>
+      <a class="top-link" href="/terms.html">Terms</a>
+    </nav>
+  </div>
+</header>
+
 <div class="hero-banner"></div>
 
 <main>
 
-  <!-- HERO INTRO -->
   <section class="hero">
     <h1>RunestoneSkills</h1>
-    <p class="subtitle">Progression for Gatherers, Crafters, and Wanderers — Forged to Fit the Core.</p>
+    <p class="subtitle">Progression for gatherers, crafters, and wanderers — forged to fit the Core.</p>
 
     <p>
-      RunestoneSkills is the official progression addon for the RunestoneMMO ecosystem.
-      It adds MMO-style skill leveling for gathering, crafting, and exploration — while integrating cleanly into the
-      same APIs, XP curve rules, placeholders, and UI/scoreboard layer used by RunestoneCore.
+      RunestoneSkills is the official skills addon for the RunestoneMMO ecosystem. It adds MMO-style progression
+      for gathering, crafting, exploration, and world interaction while integrating directly into RunestoneCore’s
+      skill registry, XP flow, UI layer, and wider progression systems.
     </p>
 
     <p>
-      Minecraft Java 1.21.11 • Paper • JDK 21 • Modular Addon Architecture
+      Minecraft Java 1.21.11 • Paper • Java 21 • Modular addon architecture
     </p>
 
     <div class="buttons">
-      <a href="/" class="button">Return to the Mountain Gate</a>
-      <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneSkills" class="button secondary" target="_blank" rel="noopener">Download RunestoneSkills</a>
-      <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneMMO" class="button secondary" target="_blank" rel="noopener">Download RunestoneCore</a>
-      <a href="https://discord.gg/4ZAzaWGV" class="button secondary">Enter the Guild Hall</a>
+      <a href="/index.html" class="button">Return Home</a>
+      <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneSkills" class="button secondary" target="_blank" rel="noopener">View RunestoneSkills on Hangar</a>
+      <a href="https://discord.gg/BNkJDU6qE4" class="button secondary" target="_blank" rel="noopener">Join the Discord</a>
     </div>
   </section>
 
-  <!-- COMPATIBILITY -->
+  <section class="cta-section">
+    <h2>Official Skills Links</h2>
+    <p>
+      Follow development, get the latest addon builds, and move between the skills module and the core platform cleanly.
+    </p>
+
+    <div class="cta-grid">
+      <article class="cta-card">
+        <h3>RunestoneSkills on Hangar</h3>
+        <p>Download the skills addon and follow progression-focused patch updates.</p>
+        <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneSkills" class="button" target="_blank" rel="noopener">Open Hangar Page</a>
+      </article>
+
+      <article class="cta-card">
+        <h3>RunestoneCore Page</h3>
+        <p>RunestoneSkills is built on top of RunestoneCore and depends on the shared platform layer.</p>
+        <a href="/features.html" class="button secondary">Open RunestoneCore Page</a>
+      </article>
+
+      <article class="cta-card">
+        <h3>Discord Community</h3>
+        <p>Track balancing updates, testing progress, new skills work, and module expansion plans.</p>
+        <a href="https://discord.gg/BNkJDU6qE4" class="button secondary" target="_blank" rel="noopener">Enter the Guild Hall</a>
+      </article>
+
+      <article class="cta-card">
+        <h3>Support Development</h3>
+        <p>Help support continued work on progression systems, balancing, new modules, and server content.</p>
+        <a href="https://www.patreon.com/cw/RunestoneMMO" class="button secondary" target="_blank" rel="noopener">Support on Patreon</a>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <h2>What RunestoneSkills Is</h2>
+    <p>
+      RunestoneSkills is the progression layer of the RunestoneMMO ecosystem. It is designed to make professions,
+      gathering, crafting, and exploration feel like part of a larger MMO framework instead of isolated mechanics.
+    </p>
+    <p>
+      The module registers its skills into RunestoneCore so players can view them through the shared skills display,
+      while server owners tune each skill independently through dedicated configuration files.
+    </p>
+  </section>
+
   <section>
     <h2>Compatibility</h2>
 
@@ -54,65 +110,63 @@
         <h3>Dependencies</h3>
         <ul>
           <li><strong>Required:</strong> RunestoneCore</li>
-          <li><strong>Optional:</strong> Oraxen (item support templates)</li>
-          <li><strong>Optional:</strong> PlaceholderAPI (for wider placeholder coverage; core placeholders still work)</li>
+          <li><strong>Optional:</strong> Oraxen</li>
+          <li>Built to plug into Core’s skill registry, XP handling, and UI flow</li>
         </ul>
       </div>
 
       <div class="card">
         <h3>Design Goals</h3>
         <ul>
-          <li>Config-driven progression (YAML-first tuning)</li>
+          <li>Config-driven tuning per skill</li>
           <li>Anti-exploit safeguards by default</li>
-          <li>Performance-minded (rate limits, lightweight checks)</li>
-          <li>Clean Core integration (XP service + skill registry + scoreboard placeholders)</li>
+          <li>Performance-minded event handling</li>
+          <li>Clean integration with Core instead of duplicating systems</li>
         </ul>
       </div>
     </div>
   </section>
 
-  <!-- WHAT IT ADDS -->
   <section>
     <h2>What RunestoneSkills Adds</h2>
 
     <div class="card-grid">
       <div class="card">
-        <h3>Skill Progression (Modular)</h3>
+        <h3>Skill Progression</h3>
         <ul>
-          <li>Multiple skills with separate configs and tuning</li>
-          <li>Unified level rules shared with RunestoneCore systems</li>
-          <li>XP gain events and level-up behavior routed through Core APIs</li>
+          <li>Multiple skills with independent configs and progression tuning</li>
+          <li>Shared level display flow through the broader RunestoneMMO ecosystem</li>
+          <li>Unified registration into the Core skills registry</li>
+          <li>Designed for long-term expansion without fragmenting progression systems</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Anti-Exploit Safeguards</h3>
+        <h3>Anti-Exploit Protection</h3>
         <ul>
-          <li>Placed block tracking (player-placed = 0 XP where applicable)</li>
-          <li>Cooldowns / minimum intervals (per skill, tuneable)</li>
-          <li>Optional rate limits (per-player XP caps)</li>
-          <li>Correct-tool validation (pickaxe/axe/etc.) where applicable</li>
-          <li>Validation checks (maturity, natural-only, right-click harvest rules)</li>
+          <li>Placed block tracking where applicable</li>
+          <li>Natural-only validation in skills that require it</li>
+          <li>Correct-tool checks for skill actions such as mining and forestry</li>
+          <li>Cooldowns, rate limits, and validation-first behavior to reduce abuse</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>UI & Display</h3>
+        <h3>Display &amp; Integration</h3>
         <ul>
-          <li><code>/skills</code> shows all registered skills</li>
-          <li>Scoreboard placeholder support for skill levels and progress</li>
-          <li>Designed to coexist with RunestoneCore’s scoreboard system and layouts</li>
+          <li><code>/skills</code> displays registered skills through the shared Core-facing layer</li>
+          <li>Stable skill IDs for UI, placeholders, and future expansion</li>
+          <li>Built to coexist cleanly with Core scoreboards and future skills UI upgrades</li>
         </ul>
       </div>
     </div>
   </section>
 
-  <!-- CONFIGURATION -->
   <section>
     <h2>Configuration</h2>
     <p>
-      RunestoneSkills is configured through separate skill YAML files. Each skill can be enabled/disabled and tuned independently.
-      Files generate into <code>plugins/RunestoneSkills/</code>.
+      RunestoneSkills is built around per-skill configuration. Each major skill has its own YAML file, allowing
+      balancing and tuning without forcing all progression systems into one config.
     </p>
 
     <div class="card-grid">
@@ -125,40 +179,40 @@
           <li><code>hunting.yml</code></li>
           <li><code>farming.yml</code></li>
           <li><code>cooking.yml</code></li>
-          <li><code>smithing.yml</code></li>
           <li><code>exploration.yml</code></li>
           <li><code>foraging.yml</code></li>
+          <li><code>smithing.yml</code></li>
         </ul>
       </div>
 
       <div class="card">
         <h3>Tuneables You Control</h3>
         <ul>
-          <li>XP values (per material, per source)</li>
-          <li>Max level per skill</li>
-          <li>Cooldowns / rate limits</li>
+          <li>XP values by material, action, or source</li>
+          <li>Per-skill max levels</li>
           <li>Tool requirements and validation rules</li>
-          <li>Optional Oraxen XP mappings (template sections)</li>
+          <li>Intervals, rate limits, and exploit-prevention behavior</li>
+          <li>Skill enable / disable state by config</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Balancing Notes</h3>
+        <h3>Admin Workflow</h3>
         <ul>
-          <li>Configs are intended to be re-tuned frequently during development</li>
-          <li>Deleting a live skill YAML regenerates defaults from the jar (safe during early balancing)</li>
-          <li>Long-term: missing-key merges can be added to preserve edits while gaining new keys</li>
+          <li>Configs generate into <code>plugins/RunestoneSkills/</code></li>
+          <li>Early balancing can be handled by editing individual skill files</li>
+          <li>Prefer proper restarts for major tuning changes</li>
+          <li>Admin control is exposed through <code>/runestoneskills reload</code></li>
         </ul>
       </div>
     </div>
   </section>
 
-  <!-- SKILLS INCLUDED -->
   <section>
     <h2>Skills Included</h2>
     <p>
-      Each skill is implemented as a focused subsystem: it listens for relevant events, validates actions, applies anti-exploit rules,
-      and grants XP through the unified progression API surface.
+      Each skill is implemented as its own focused subsystem: it listens for relevant actions, validates them,
+      applies anti-exploit rules, and grants XP through the shared progression flow.
     </p>
 
     <div class="card-grid">
@@ -166,193 +220,171 @@
       <div class="card">
         <h3>Mining</h3>
         <ul>
-          <li>XP for mining blocks with the correct tool (pickaxe validation)</li>
-          <li>Config-driven XP tables per block/material</li>
-          <li>Placed-block protection (anti-farm)</li>
-          <li>Optional override generation (tag-based) for coverage, plus manual tuning</li>
+          <li>XP for valid mined materials with correct-tool support</li>
+          <li>Config-driven XP mappings</li>
+          <li>Placed-block anti-farm protections</li>
+          <li>Designed for controllable progression pacing</li>
         </ul>
       </div>
 
       <div class="card">
         <h3>Forestry</h3>
         <ul>
-          <li>XP for cutting <strong>natural</strong> trees only</li>
-          <li>Axe validation + natural-only rules</li>
-          <li>Placed-log tracking to prevent farm loops</li>
-          <li>Config-driven XP per wood/log type</li>
+          <li>Tree-cutting progression with natural-tree protections</li>
+          <li>Axe validation and anti-abuse logic</li>
+          <li>Placed-log protection and traversal safeguards</li>
+          <li>Ongoing balancing and edge-case refinement for awkward tree structures</li>
         </ul>
       </div>
 
       <div class="card">
         <h3>Fishing</h3>
         <ul>
-          <li>Catch-based XP (configurable tables)</li>
+          <li>Catch-based XP progression</li>
+          <li>Config-driven pacing and reward flow</li>
           <li>Anti-abuse intervals and filters</li>
-          <li>Tuneable progression pacing</li>
         </ul>
       </div>
 
       <div class="card">
         <h3>Hunting</h3>
         <ul>
-          <li>XP for passive mob kills (config-driven per entity)</li>
-          <li>Anti-abuse filters (spawn/circumstance rules, tuneable)</li>
-          <li>Designed for clean integration with economy and drops</li>
+          <li>Passive-mob-focused progression flow</li>
+          <li>Entity-based tuning and filtering</li>
+          <li>Designed to stay configurable and server-balance friendly</li>
         </ul>
       </div>
 
       <div class="card">
         <h3>Farming</h3>
         <ul>
-          <li>XP for harvesting crops and plants (maturity/validity checks)</li>
-          <li>Config-driven XP per crop</li>
-          <li>Optional crop-trample prevention (config-driven)</li>
+          <li>Crop and plant harvesting progression</li>
+          <li>Maturity and validity checks</li>
+          <li>Config-driven harvest tuning</li>
         </ul>
       </div>
 
       <div class="card">
         <h3>Cooking</h3>
         <ul>
-          <li>XP for cooking/crafting food outputs (config-driven)</li>
-          <li>Supports common cooking sources and recipes (tuneable)</li>
-          <li>Anti-spam controls (intervals/rate limits)</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Smithing</h3>
-        <ul>
-          <li>XP for crafting weapons/tools/armor (config-driven lists)</li>
-          <li>XP for smithing upgrades (smithing table outputs)</li>
-          <li>XP for relevant smelting outputs (ingots/scrap, tuneable)</li>
-          <li>Oraxen template sections for weapons/tools/armor/smelting categories</li>
+          <li>Food crafting and cooking progression</li>
+          <li>Config-driven outputs and pacing</li>
+          <li>Anti-spam timing controls</li>
         </ul>
       </div>
 
       <div class="card">
         <h3>Exploration</h3>
         <ul>
-          <li>Background travel XP (tuneable)</li>
-          <li>Biome discovery XP (tuneable per biome)</li>
-          <li>Landmarks framework for future world points of interest</li>
-          <li>Anti-exploit rules to prevent macro loops and abuse</li>
+          <li>Background travel XP</li>
+          <li>Biome discovery progression</li>
+          <li>Designed to support discovery-oriented world play</li>
+          <li>Built with anti-loop and anti-macro intent</li>
         </ul>
       </div>
 
       <div class="card">
         <h3>Foraging</h3>
         <ul>
-          <li>Wild vegetation gathering (mushrooms, flowers, grass/ferns, vines, moss/lichen, etc.)</li>
-          <li>Berry harvesting via right-click rules (no breaking the plant)</li>
-          <li>Natural-only + placed protection for anti-farm</li>
-          <li>Config-driven XP per vegetation type</li>
+          <li>Wild vegetation and natural-gathering progression</li>
+          <li>Berry and plant interaction rules</li>
+          <li>Natural-only protections to limit farming abuse</li>
+          <li>Config-driven plant and vegetation XP tuning</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Smithing</h3>
+        <ul>
+          <li>Weapons, tools, armor, upgrades, and related progression hooks</li>
+          <li>Crafting and smithing-table support</li>
+          <li>Smelting-related progression tuning where configured</li>
+          <li>Built for continued expansion alongside RunestoneMMO item systems</li>
         </ul>
       </div>
 
     </div>
   </section>
 
-  <!-- PLACEHOLDERS -->
   <section>
-    <h2>Scoreboard & Placeholder Support</h2>
+    <h2>Commands &amp; Skill Display</h2>
     <p>
-      RunestoneSkills registers skills into the Core skill registry. This allows commands and scoreboards to display consistent
-      level and progress information using stable placeholders.
+      RunestoneSkills integrates into the Core display layer rather than trying to duplicate a separate player-facing command system.
     </p>
 
     <div class="card-grid">
       <div class="card">
-        <h3>Core Skill Placeholders</h3>
+        <h3>Player-Facing Display</h3>
         <ul>
-          <li><code>%skills_&lt;id&gt;_level%</code></li>
-          <li><code>%skills_&lt;id&gt;_progress%</code></li>
-          <li><code>%skills_&lt;id&gt;_xp_into_level%</code></li>
-          <li><code>%skills_&lt;id&gt;_xp_to_next%</code></li>
-        </ul>
-        <p>
-          Example IDs: <code>mining</code>, <code>forestry</code>, <code>fishing</code>, <code>hunting</code>,
-          <code>farming</code>, <code>cooking</code>, <code>smithing</code>, <code>exploration</code>, <code>foraging</code>.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>Command Display</h3>
-        <ul>
-          <li><code>/skills</code> displays all registered skills and their progression</li>
-          <li>Designed to keep output consistent across combat and non-combat skills</li>
+          <li><code>/skills</code> shows registered skills and progression through the shared RunestoneMMO display flow</li>
+          <li>Enabled skills appear through Core once registered</li>
+          <li>Skill presentation is designed to remain consistent across the ecosystem</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>UI Philosophy</h3>
+        <h3>Plugin Admin Command</h3>
         <ul>
-          <li>Scoreboards are best for a compact overview</li>
-          <li>GUI skill menus are ideal for full detail (XP totals, bars, categories, icons)</li>
-          <li>RunestoneSkills is built so UI upgrades can be layered on safely</li>
+          <li><code>/runestoneskills reload</code></li>
+          <li>Permission: <code>runestone.skills.admin</code></li>
+          <li>Used for administration and configuration workflow</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>UI Direction</h3>
+        <ul>
+          <li>Compact overview through shared displays</li>
+          <li>Room for future expanded GUI skill views</li>
+          <li>Stable skill IDs for future UI, placeholder, and scoreboard growth</li>
         </ul>
       </div>
     </div>
   </section>
 
-  <!-- COMMANDS -->
   <section>
-    <h2>Commands</h2>
-    <p>
-      RunestoneSkills is designed to integrate through Core’s command and display layer.
-      Available commands may vary depending on server configuration and enabled subsystems.
-    </p>
-
-    <div class="card-grid">
-      <div class="card">
-        <h3>Player Commands</h3>
-        <ul>
-          <li><code>/skills</code> — show skill levels and progress</li>
-          <li><code>/rskills</code> — alias (if enabled via Core command aliasing)</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Admin / Tuning Workflow</h3>
-        <ul>
-          <li>Skill values are tuned through the YAML files in <code>plugins/RunestoneSkills/</code></li>
-          <li>Restart recommended during active tuning (safe lifecycle)</li>
-          <li>Optional plugin reload command may be enabled depending on build/version</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- PERFORMANCE -->
-  <section>
-    <h2>Performance & Safety</h2>
+    <h2>Performance &amp; Safety</h2>
 
     <div class="card-grid">
       <div class="card">
         <h3>Performance Minded</h3>
         <ul>
-          <li>Validation-first checks to avoid expensive work</li>
-          <li>Optional rate limit caps for XP gain</li>
-          <li>Config-driven intervals to prevent spam events</li>
+          <li>Validation-first event handling</li>
+          <li>Skill-specific pacing and timing controls</li>
+          <li>Built to avoid unnecessary heavy processing</li>
         </ul>
       </div>
 
       <div class="card">
         <h3>Exploit Resistance</h3>
         <ul>
-          <li>Placed tracking for blocks that should not grant XP when placed</li>
-          <li>Natural-only checks in gathering skills where needed</li>
-          <li>Tool checks for mining/forestry</li>
+          <li>Placed-block protections where needed</li>
+          <li>Natural-only logic for appropriate gathering skills</li>
+          <li>Tool checks and action validation for cleaner progression</li>
         </ul>
       </div>
 
       <div class="card">
         <h3>Modular Expansion</h3>
         <ul>
-          <li>Designed so future modules can register additional skills safely</li>
-          <li>Skill IDs remain stable for placeholders and UI integrations</li>
-          <li>Progression logic stays consistent across the ecosystem</li>
+          <li>Built so more skills can be added cleanly over time</li>
+          <li>Stable registration model for future modules</li>
+          <li>Designed to grow with the wider RunestoneMMO project</li>
         </ul>
       </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Built to Work With RunestoneCore</h2>
+    <p>
+      RunestoneSkills is not meant to stand alone — it is meant to extend the Core. Economy, scoreboards, UI,
+      future questing, future professions, and long-term progression all become stronger when skills live on the same shared foundation.
+    </p>
+
+    <div class="button-row-left">
+      <a href="/features.html" class="button">Visit RunestoneCore</a>
+      <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneMMO" class="button secondary" target="_blank" rel="noopener">RunestoneCore on Hangar</a>
     </div>
   </section>
 
@@ -361,8 +393,9 @@
 <footer>
   <p>RunestoneMMO — Forged in the Deep Halls</p>
   <p>
-    <a href="https://discord.gg/4ZAzaWGV" target="_blank" rel="noopener">Guild Hall</a> •
-    <a href="/contact.html">Send a Raven</a> •
+    <a href="https://discord.gg/BNkJDU6qE4" target="_blank" rel="noopener">Discord</a> •
+    <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneSkills" target="_blank" rel="noopener">RunestoneSkills Hangar</a> •
+    <a href="/features.html">RunestoneCore Page</a> •
     <a href="/terms.html">Terms &amp; Licensing</a>
   </p>
 </footer>
