@@ -260,7 +260,26 @@ function copyIP() {
     alert("Copy failed. Server IP: 135.148.10.227:23921");
   });
 }
-</script>
 
-</body>
-</html>
+function toggleMenu() {
+  const nav = document.getElementById("mobileNav");
+  const button = document.querySelector(".menu-toggle");
+  nav.classList.toggle("open");
+  button.setAttribute("aria-expanded", nav.classList.contains("open") ? "true" : "false");
+}
+
+document.addEventListener("click", function (event) {
+  const nav = document.getElementById("mobileNav");
+  const button = document.querySelector(".menu-toggle");
+
+  if (!nav || !button) return;
+
+  const clickedInsideNav = nav.contains(event.target);
+  const clickedButton = button.contains(event.target);
+
+  if (!clickedInsideNav && !clickedButton) {
+    nav.classList.remove("open");
+    button.setAttribute("aria-expanded", "false");
+  }
+});
+</script>
