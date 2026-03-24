@@ -459,34 +459,91 @@ footer a:hover {
 ================================ */
 
 @media (max-width: 768px) {
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
   .topbar {
     flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
   }
 
   .brand {
     text-align: center;
+    font-size: 1.8rem;
   }
 
   .top-links {
     display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    gap: 8px;
-    padding-bottom: 4px;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-
-  .top-links::-webkit-scrollbar {
-    display: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    overflow-x: visible;
+    padding-bottom: 0;
   }
 
   .top-link {
-    flex: 0 0 auto;
+    flex: 0 1 auto;
     white-space: nowrap;
     padding: 8px 12px;
     font-size: 0.95rem;
+  }
+
+  main {
+    margin: 24px auto 50px;
+    padding: 0 14px;
+  }
+
+  h1 {
+    font-size: 2.2rem;
+  }
+
+  h2 {
+    font-size: 1.7rem;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+  }
+
+  .hero-banner {
+    height: 260px;
+    background-position: center;
+  }
+
+  .hero {
+    padding: 28px 18px;
+  }
+
+  .buttons,
+  .button-row-left {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .button,
+  .button.secondary {
+    width: 100%;
+  }
+
+  .card,
+  .cta-card {
+    padding: 20px;
+  }
+
+  .contact-panel {
+    position: static;
+    transform: none;
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .raven-bg {
+    height: 320px;
+    clip-path: none;
   }
 }
