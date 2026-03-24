@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RunestoneSkills — Professions of the Realm</title>
+  <title>RunestoneSkills — The Professions & Progression Plugin of RunestoneMMO</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
 
@@ -13,12 +13,17 @@
   <div class="topbar">
     <a class="brand" href="/index.html">Runestone Vale</a>
 
-    <nav class="top-links">
-      <a href="/credits.html">Credits</a> •
+    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleMenu()">
+      ☰
+    </button>
+
+    <nav class="top-links" id="mobileNav">
+      <a class="top-link" href="/index.html">Home</a>
       <a class="top-link" href="/features.html">Server-Features</a>
       <a class="top-link" href="/RunestoneCore.html">RunestoneCore</a>
       <a class="top-link" href="/RunestoneSkills.html">RunestoneSkills</a>
       <a class="top-link" href="/roadmap_development.html">Roadmap</a>
+      <a class="top-link" href="/credits.html">Credits</a>
       <a class="top-link" href="/terms.html">Terms</a>
     </nav>
   </div>
@@ -30,61 +35,63 @@
 
   <section class="hero">
     <h1>RunestoneSkills</h1>
-    <p class="subtitle">The professions and progression layer shaping life inside Runestone Vale.</p>
+    <p class="subtitle">The professions and progression plugin of RunestoneMMO — built to make the realm feel lived in.</p>
 
     <p>
-      RunestoneSkills is the official skills and professions addon of the RunestoneMMO ecosystem.
-      It is the progression layer that helps turn gathering, crafting, exploration, and world interaction
-      into something deeper than simple vanilla repetition.
+      RunestoneSkills is the official professions and progression addon of the RunestoneMMO ecosystem.
+      It is the system layer that turns gathering, crafting, discovery, and long-term skill growth into a real part of the world
+      instead of leaving them as shallow background mechanics.
     </p>
 
     <p>
-      Built on top of RunestoneCore, RunestoneSkills is designed to make progression feel like part of a living realm —
-      not a disconnected numbers grind. Every skill is meant to support the world, its economy, its resources,
-      and the long-term journey of the player inside it.
+      Built on top of RunestoneCore, RunestoneSkills is designed to make progression feel connected to the realm itself.
+      Skills are not meant to exist as isolated minigames or detached XP bars — they are meant to feed the economy,
+      resource flow, world identity, player goals, and the long-term life of Runestone Vale.
+    </p>
+
+    <p>
+      In simple terms: <strong>RunestoneCore is the foundation beneath the realm, and RunestoneSkills is the progression layer that gives the realm a living craft, trade, and gathering identity.</strong>
     </p>
 
     <div class="buttons">
-      <a href="/index.html" class="button">Back to Runestone Vale</a>
-      <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneSkills" class="button secondary" target="_blank" rel="noopener">View on Hangar</a>
+      <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneSkills" class="button" target="_blank" rel="noopener">View on Hangar</a>
       <a href="https://discord.gg/BNkJDU6qE4" class="button secondary" target="_blank" rel="noopener">Join the Discord</a>
+      <a href="/index.html" class="button secondary">Back to Runestone Vale</a>
     </div>
 
     <p style="margin-top: 18px; font-size: 1.15rem;">
       <strong>Platform:</strong> Minecraft Java Edition • Paper 1.21.11 • Java 21<br>
+      <strong>Requires:</strong> RunestoneCore<br>
       <strong>Built For:</strong> Long-term profession progression inside the RunestoneMMO ecosystem
     </p>
   </section>
 
   <section class="cta-section">
-    <h2>Official Skills Links</h2>
+    <h2>What RunestoneSkills Powers</h2>
     <p>
-      Follow development, check releases, and explore the professions layer beside the wider RunestoneMMO project.
+      RunestoneSkills exists to give the server a deeper progression identity.
+      It is built to make professions matter, make resource loops feel intentional, and give players meaningful long-term paths through the world.
     </p>
 
     <div class="cta-grid">
       <article class="cta-card">
-        <h3>RunestoneSkills on Hangar</h3>
-        <p>Follow releases, updates, and progression-focused development for the skills addon.</p>
-        <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneSkills" class="button" target="_blank" rel="noopener">Open Hangar Page</a>
+        <h3>Profession Progression</h3>
+        <p>Gives the realm multiple long-term skill paths designed to feel like part of one connected world.</p>
       </article>
 
       <article class="cta-card">
-        <h3>RunestoneCore</h3>
-        <p>RunestoneSkills is built on top of RunestoneCore and depends on the wider platform beneath it.</p>
-        <a href="/RunestoneCore.html" class="button secondary">Open RunestoneCore</a>
+        <h3>Resource Identity</h3>
+        <p>Turns gathering and crafting into meaningful systems with stronger purpose inside the economy and world.</p>
       </article>
 
       <article class="cta-card">
-        <h3>Runestone Vale</h3>
-        <p>See the live realm where these professions are tested, balanced, and shaped into real gameplay.</p>
-        <a href="/index.html" class="button secondary">Enter the Realm</a>
+        <h3>Realm Integration</h3>
+        <p>Skills are designed to support trade, crafting, exploration, custom resources, and future content systems.</p>
       </article>
 
       <article class="cta-card">
-        <h3>Support Development</h3>
-        <p>Help support continued work on new skills, balancing, progression depth, and future content.</p>
-        <a href="https://www.patreon.com/cw/RunestoneMMO" class="button secondary" target="_blank" rel="noopener">Support on Patreon</a>
+        <h3>Expandable Structure</h3>
+        <p>Built so new professions and deeper progression systems can be added without breaking the larger framework.</p>
       </article>
     </div>
   </section>
@@ -92,21 +99,188 @@
   <section>
     <h2>What RunestoneSkills Is</h2>
     <p>
-      RunestoneSkills is the progression layer of the RunestoneMMO ecosystem. It is designed to give players
-      a stronger sense of long-term growth through professions, resource gathering, crafting, and exploration.
+      RunestoneSkills is not just an XP addon. It is the profession and progression layer of the RunestoneMMO platform.
+      Its job is to make the player’s effort in the world feel meaningful over time — whether that effort comes through Mining,
+      Smithing, Forestry, Fishing, Exploration, or future profession paths added later.
     </p>
+
     <p>
-      Rather than treating each skill like a separate minigame, the goal is to make them feel like pieces of the same world.
-      Mining feeds resources into crafting. Exploration supports discovery. Forestry and Fishing strengthen the economy.
-      Smithing turns gathered materials into meaningful advancement.
+      The goal is not to create random disconnected jobs. The goal is to create a world where professions reinforce one another.
+      Mining supports Smithing. Forestry supports material flow and world economy. Fishing provides another non-combat path forward.
+      Exploration rewards movement and discovery. Together, those systems make the realm feel larger and more alive.
     </p>
+
     <p>
-      In short, RunestoneSkills exists to make player progression feel like part of the realm itself.
+      RunestoneSkills exists to make progression feel like part of the culture of the realm, not just a numbers system hidden behind it.
     </p>
   </section>
 
   <section>
-    <h2>Compatibility</h2>
+    <h2>Core Design Goals</h2>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <h3>Connected Progression</h3>
+        <ul>
+          <li>Skills are meant to support one another instead of existing in isolation</li>
+          <li>Gathering, refining, crafting, and discovery all reinforce the larger world</li>
+          <li>Built for a cohesive MMO-style progression experience</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Long-Term Realm Identity</h3>
+        <ul>
+          <li>Designed for a persistent world, not a throwaway progression loop</li>
+          <li>Built to support trade, settlement, exploration, and player investment</li>
+          <li>Focused on giving the server a stronger fantasy MMORPG identity</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Config-Driven Tuning</h3>
+        <ul>
+          <li>Profession pacing can be balanced per skill</li>
+          <li>XP flow and system behavior can be tuned independently</li>
+          <li>Built for long-term admin control instead of hardcoded rigidity</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Anti-Exploit Direction</h3>
+        <ul>
+          <li>Natural-only logic where needed</li>
+          <li>Placed-block protections where appropriate</li>
+          <li>Validation-first handling to protect progression value over time</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>Live Professions in the Plugin</h2>
+    <p>
+      RunestoneSkills is built around professions that feel useful, immersive, and worthy of long-term investment.
+      These are not filler mechanics — they are part of how the realm breathes.
+    </p>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <h3>Mining</h3>
+        <ul>
+          <li>Profession-based mining progression tied to resource gathering</li>
+          <li>Supports custom ore direction including Runestone Ore and Firestone Ore</li>
+          <li>Built to connect directly into crafting and the wider economy</li>
+          <li>Designed to make resource gathering feel like real progression</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Smithing</h3>
+        <ul>
+          <li>Turns gathered resources into meaningful refinement and crafting progression</li>
+          <li>Built as a natural companion system to Mining</li>
+          <li>Supports the long-term value of materials and crafted output</li>
+          <li>Intended to deepen the fantasy forge identity of the realm</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Forestry</h3>
+        <ul>
+          <li>Profession-based tree gathering and woodcutting progression</li>
+          <li>Natural-tree focused logic with anti-abuse safeguards</li>
+          <li>Designed to reward real gathering instead of cheesy farm loops</li>
+          <li>Supports crafting, economy, and future world growth</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Fishing</h3>
+        <ul>
+          <li>Catch-based progression for a different style of player advancement</li>
+          <li>Supports profession diversity beyond standard mining and crafting loops</li>
+          <li>Designed to help non-combat play feel valuable</li>
+          <li>Adds more life and economic variety to the realm</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Exploration</h3>
+        <ul>
+          <li>Rewards movement, travel, and discovering the world</li>
+          <li>Built to make the map itself feel worth journeying through</li>
+          <li>Encourages interaction with the realm beyond static grinding</li>
+          <li>Supports the identity of Runestone Vale as a world to wander, not just farm</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Future Profession Growth</h3>
+        <ul>
+          <li>RunestoneSkills is built for expansion beyond the current live professions</li>
+          <li>New profession paths can be added cleanly over time</li>
+          <li>The long-term goal is a deeper fantasy MMORPG profession ecosystem</li>
+          <li>The forge is still active</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>What the Plugin Adds to the Realm</h2>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <h3>Profession-Based Progression</h3>
+        <ul>
+          <li>Multiple skill paths with independent balancing and tuning</li>
+          <li>Long-term growth designed around a living realm</li>
+          <li>Progression that supports player identity and specialization</li>
+          <li>Built so the system can expand without becoming fragmented</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Custom Resource Flow</h3>
+        <ul>
+          <li>Custom resource loops beyond basic vanilla material progression</li>
+          <li>Mining and Smithing directly reinforce one another</li>
+          <li>Raw drops and refined variants deepen material identity</li>
+          <li>Gathering is designed to feel purposeful, not disposable</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Progression Protection</h3>
+        <ul>
+          <li>Natural-only logic where appropriate</li>
+          <li>Placed-block protections to reduce abuse</li>
+          <li>Validation-first progression handling</li>
+          <li>Designed to protect the long-term value of leveling and professions</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Shared Realm Integration</h3>
+        <ul>
+          <li>Built to work alongside the wider RunestoneMMO framework</li>
+          <li>Designed to fit naturally with economy, UI, custom resources, and future systems</li>
+          <li>Profession growth is meant to feel embedded in the world</li>
+          <li>Supports a stronger overall player experience</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>Compatibility &amp; Structure</h2>
 
     <div class="card-grid">
 
@@ -124,137 +298,16 @@
         <ul>
           <li><strong>Required:</strong> RunestoneCore</li>
           <li><strong>Optional:</strong> Oraxen</li>
-          <li>Built to register cleanly into the wider RunestoneMMO framework</li>
+          <li>Built to register cleanly into the wider RunestoneMMO platform</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Design Goals</h3>
+        <h3>Architecture Direction</h3>
         <ul>
-          <li>Config-driven tuning per skill</li>
-          <li>Anti-exploit safeguards where needed</li>
-          <li>Clean integration with the wider platform</li>
-          <li>Built for expansion over time</li>
-        </ul>
-      </div>
-
-    </div>
-  </section>
-
-  <section>
-    <h2>Live Professions in the Realm</h2>
-    <p>
-      RunestoneSkills is focused on making professions feel meaningful, immersive, and connected to the wider world.
-      These skills are part of the living identity of Runestone Vale rather than just a list of XP bars.
-    </p>
-
-    <div class="card-grid">
-
-      <div class="card">
-        <h3>Mining</h3>
-        <ul>
-          <li>Gather valuable resources through profession-based mining progression</li>
-          <li>Custom ore direction including Runestone Ore and Firestone Ore</li>
-          <li>Supports raw ore drops and ingot progression variants</li>
-          <li>Mining is designed to connect directly into the wider crafting pipeline</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Smithing</h3>
-        <ul>
-          <li>Transforms gathered materials into meaningful crafting progression</li>
-          <li>Built to support tools, equipment, and long-term resource value</li>
-          <li>Intended to feel like the natural companion to Mining</li>
-          <li>Part of the deeper fantasy progression identity of the realm</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Forestry</h3>
-        <ul>
-          <li>Profession-based woodcutting and tree gathering progression</li>
-          <li>Natural-tree focused logic with anti-abuse safeguards</li>
-          <li>Built to reward gathering without encouraging cheesy farming loops</li>
-          <li>Supports the realm’s economy, crafting, and future expansion</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Fishing</h3>
-        <ul>
-          <li>Catch-based progression designed around the life of the realm</li>
-          <li>Supports resource variety and profession diversity</li>
-          <li>Built to give non-combat players another meaningful path forward</li>
-          <li>Useful for long-term economy and world immersion</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Exploration</h3>
-        <ul>
-          <li>Rewards movement, travel, and the experience of discovering the world</li>
-          <li>Supports the feeling of a large realm worth journeying through</li>
-          <li>Encourages players to interact with the world beyond static grinding</li>
-          <li>Designed to make wandering the realm feel valuable</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Future Profession Growth</h3>
-        <ul>
-          <li>RunestoneSkills is built for expansion beyond the current professions</li>
-          <li>New skills can be added cleanly over time without breaking the larger structure</li>
-          <li>The long-term vision is a deeper fantasy MMORPG profession ecosystem</li>
-          <li>The forge is still active</li>
-        </ul>
-      </div>
-
-    </div>
-  </section>
-
-  <section>
-    <h2>What RunestoneSkills Adds</h2>
-
-    <div class="card-grid">
-
-      <div class="card">
-        <h3>Profession Progression</h3>
-        <ul>
-          <li>Multiple skills with independent balancing and tuning</li>
-          <li>Long-term progression designed for realm-based gameplay</li>
-          <li>Shared integration into the wider RunestoneMMO ecosystem</li>
-          <li>Built so progression can grow without becoming fragmented</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Custom Resource Flow</h3>
-        <ul>
-          <li>Custom resource loops that go beyond vanilla material progression</li>
-          <li>Mining and Smithing support one another directly</li>
-          <li>Raw drops and refined variants help deepen resource identity</li>
-          <li>Built to make gathering feel purposeful</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Anti-Exploit Direction</h3>
-        <ul>
-          <li>Natural-only logic where appropriate</li>
-          <li>Placed-block protections where needed</li>
-          <li>Validation-first progression handling</li>
-          <li>Designed to protect the long-term value of skill progression</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Shared Display Integration</h3>
-        <ul>
-          <li>Skills are built to work alongside shared displays and player-facing UI</li>
-          <li>Designed to feel cohesive with the rest of the realm</li>
-          <li>Future-friendly for expanding menus, scoreboards, and progression views</li>
-          <li>Progression should feel like part of the world, not detached from it</li>
+          <li>Profession systems designed to remain modular and expandable</li>
+          <li>Built to support future skills without destroying older structure</li>
+          <li>Focused on long-term maintainability and progression cohesion</li>
         </ul>
       </div>
 
@@ -264,41 +317,36 @@
   <section>
     <h2>Configuration &amp; Tuning</h2>
     <p>
-      RunestoneSkills is designed so each major profession can be balanced independently. That allows the realm to tune pacing,
-      XP flow, and resource progression without shoving every skill into one bloated config file.
+      RunestoneSkills is designed so major professions can be balanced independently.
+      That gives the realm tighter control over pacing, XP flow, and progression feel without cramming everything into one oversized config.
     </p>
 
     <div class="card-grid">
 
       <div class="card">
-        <h3>Skill Config Files</h3>
+        <h3>Per-Skill Control</h3>
         <ul>
-          <li><code>mining.yml</code></li>
-          <li><code>forestry.yml</code></li>
-          <li><code>fishing.yml</code></li>
-          <li><code>exploration.yml</code></li>
-          <li><code>smithing.yml</code></li>
-          <li>And future files for future professions</li>
+          <li>XP pacing can be tuned by profession</li>
+          <li>Behavior can be adjusted per skill instead of globally forcing everything together</li>
+          <li>Useful for balancing a live realm as it evolves</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Admin Control</h3>
+        <h3>Admin Flexibility</h3>
         <ul>
-          <li>XP values by action, material, or source</li>
-          <li>Per-skill pacing and progression tuning</li>
-          <li>Validation rules and anti-exploit behavior</li>
-          <li>Enable / disable control for supported systems</li>
+          <li>Supports independent system tuning for different professions</li>
+          <li>Lets the server refine progression as the world grows</li>
+          <li>Built for long-term development rather than one-time setup</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Workflow</h3>
+        <h3>Future-Friendly Structure</h3>
         <ul>
-          <li>Configs generate into <code>plugins/RunestoneSkills/</code></li>
-          <li>Balance each skill independently without breaking the full module</li>
-          <li>Use restarts or reload workflows carefully for major adjustments</li>
-          <li>Built to support long-term admin tuning as the realm evolves</li>
+          <li>Organized so future professions can fit the same design language</li>
+          <li>Helps prevent progression systems from becoming messy over time</li>
+          <li>Designed with expansion in mind from the start</li>
         </ul>
       </div>
 
@@ -306,64 +354,34 @@
   </section>
 
   <section>
-    <h2>Why It Matters</h2>
+    <h2>Why RunestoneSkills Matters</h2>
     <p>
-      A realm feels stronger when progression has identity. RunestoneSkills gives players more reasons to gather,
-      craft, trade, explore, and stay invested over time. It helps turn the world into a place where effort matters
-      and professions feel like part of the world’s culture instead of simple background mechanics.
+      A realm feels stronger when progression has purpose. RunestoneSkills gives players more reasons to gather, craft,
+      explore, trade, and invest in the world over time. It helps turn effort into identity.
     </p>
+
     <p>
-      It also matters for the wider project, because a deeper skills layer makes every other system stronger:
-      economy, custom resources, future quests, world exploration, and long-term realm growth all benefit from
-      a better profession foundation.
+      That matters for players because it makes the world feel more rewarding. It matters for the wider project because
+      stronger professions strengthen everything around them — economy, custom resources, future quests, exploration loops,
+      town identity, and long-term realm growth all benefit from better progression foundations.
+    </p>
+
+    <p>
+      RunestoneSkills is what helps the realm feel worked, lived in, and built by hands that matter.
     </p>
   </section>
 
   <section>
-    <h2>Still Being Forged</h2>
-
-    <div class="card-grid">
-
-      <div class="card">
-        <h3>More Professions</h3>
-        <ul>
-          <li>Future room for new gathering and crafting paths</li>
-          <li>Expansion built into the structure of the addon</li>
-          <li>Designed to grow without fragmenting the progression system</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Deeper Custom Content</h3>
-        <ul>
-          <li>More custom resources, materials, and profession loops over time</li>
-          <li>Stronger integration with Oraxen-backed content direction</li>
-          <li>More opportunities for realm identity through progression</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Stronger Realm Integration</h3>
-        <ul>
-          <li>Skills are meant to keep tying deeper into the life of Runestone Vale</li>
-          <li>Economy, world systems, and progression are all meant to reinforce one another</li>
-          <li>The end goal is a fuller fantasy MMORPG survival experience</li>
-        </ul>
-      </div>
-
-    </div>
-  </section>
-
-  <section class="card">
     <h2>Built to Work With RunestoneCore</h2>
     <p>
-      RunestoneSkills is not meant to stand alone. It extends RunestoneCore and helps deepen the realm through professions,
-      progression, and long-term player growth. Core provides the foundation — Skills gives that foundation a living progression layer.
+      RunestoneSkills is not meant to stand alone. It extends RunestoneCore and deepens the world through professions,
+      progression, and long-term player growth. Core provides the framework — Skills gives that framework a living craft,
+      gathering, and advancement layer.
     </p>
 
     <div class="button-row-left">
       <a href="/RunestoneCore.html" class="button">Explore RunestoneCore</a>
-      <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneMMO" class="button secondary" target="_blank" rel="noopener">RunestoneCore on Hangar</a>
+      <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneMMO" class="button secondary" target="_blank" rel="noopener">RunestoneMMO on Hangar</a>
     </div>
   </section>
 
@@ -371,7 +389,7 @@
     <h2>Forge Your Path</h2>
     <p>
       From Mining and Smithing to Forestry, Fishing, and Exploration, RunestoneSkills is where the professions of the realm take shape.
-      Follow the addon, track its development, and watch the progression layer of Runestone Vale continue to grow.
+      Follow the addon, track its growth, and watch the progression layer of Runestone Vale continue to deepen over time.
     </p>
 
     <div class="button-row-left">
@@ -396,6 +414,30 @@
     <a href="/terms.html">Terms &amp; Licensing</a>
   </p>
 </footer>
+
+<script>
+function toggleMenu() {
+  const nav = document.getElementById("mobileNav");
+  const button = document.querySelector(".menu-toggle");
+  nav.classList.toggle("open");
+  button.setAttribute("aria-expanded", nav.classList.contains("open") ? "true" : "false");
+}
+
+document.addEventListener("click", function (event) {
+  const nav = document.getElementById("mobileNav");
+  const button = document.querySelector(".menu-toggle");
+
+  if (!nav || !button) return;
+
+  const clickedInsideNav = nav.contains(event.target);
+  const clickedButton = button.contains(event.target);
+
+  if (!clickedInsideNav && !clickedButton) {
+    nav.classList.remove("open");
+    button.setAttribute("aria-expanded", "false");
+  }
+});
+</script>
 
 </body>
 </html>
