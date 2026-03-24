@@ -474,45 +474,61 @@ footer a:hover {
 /* ================================
    MOBILE
 ================================ */
-
 @media (max-width: 768px) {
-  header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-
   .topbar {
-    flex-direction: column;
+    position: relative;
+    flex-direction: row;
     align-items: center;
+    justify-content: space-between;
     gap: 12px;
-    padding: 12px 14px;
   }
 
   .brand {
-    text-align: center;
+    text-align: left;
     font-size: 1.8rem;
   }
 
-  .top-links {
-    display: flex;
-    flex-wrap: wrap;
+  .menu-toggle {
+    display: inline-flex;
+    align-items: center;
     justify-content: center;
+  }
+
+  .top-links {
+    display: none;
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 20px;
+    left: 20px;
+    flex-direction: column;
     gap: 10px;
-    overflow-x: visible;
-    padding-bottom: 0;
+    padding: 14px;
+    background: rgba(10, 12, 16, 0.96);
+    border: 1px solid rgba(226, 193, 120, 0.18);
+    border-radius: 14px;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(10px);
+  }
+
+  .top-links.open {
+    display: flex;
   }
 
   .top-link {
-    flex: 0 1 auto;
-    white-space: nowrap;
-    padding: 8px 12px;
-    font-size: 0.95rem;
+    display: block;
+    width: 100%;
+    text-align: center;
+    white-space: normal;
+    padding: 12px 14px;
+    font-size: 1rem;
   }
 
   main {
-    margin: 24px auto 50px;
     padding: 0 14px;
+  }
+
+  .hero-banner {
+    height: 260px;
   }
 
   h1 {
@@ -520,20 +536,11 @@ footer a:hover {
   }
 
   h2 {
-    font-size: 1.7rem;
+    font-size: 1.8rem;
   }
 
   h3 {
-    font-size: 1.2rem;
-  }
-
-  .hero-banner {
-    height: 260px;
-    background-position: center;
-  }
-
-  .hero {
-    padding: 28px 18px;
+    font-size: 1.25rem;
   }
 
   .buttons,
@@ -545,11 +552,6 @@ footer a:hover {
   .button,
   .button.secondary {
     width: 100%;
-  }
-
-  .card,
-  .cta-card {
-    padding: 20px;
   }
 
   .contact-panel {
