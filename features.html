@@ -13,7 +13,11 @@
   <div class="topbar">
     <a class="brand" href="/index.html">Runestone Vale</a>
 
-    <nav class="top-links">
+    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleMenu()">
+      ☰
+    </button>
+
+    <nav class="top-links" id="mobileNav">
       <a class="top-link" href="/index.html">Home</a>
       <a class="top-link" href="/features.html">Server-Features</a>
       <a class="top-link" href="/RunestoneCore.html">RunestoneCore</a>
@@ -80,284 +84,71 @@
 
       <article class="cta-card">
         <h3>Long-Term Direction</h3>
-        <p>The world is being actively forged toward a deeper fantasy MMORPG experience over time.</p>
+        <p>The server is shaped for a deeper future, not just a temporary survival cycle.</p>
       </article>
     </div>
   </section>
 
   <section>
-    <h2>The Pillars of Runestone Vale</h2>
+    <h2>Core Realm Pillars</h2>
 
     <div class="card-grid">
-
       <div class="card">
         <h3>Skills &amp; Professions</h3>
         <ul>
           <li>Mining, Forestry, Fishing, Exploration, Smithing, and more</li>
-          <li>Profession-based progression built for long-term growth</li>
-          <li>Gathering and crafting systems designed to feel rewarding and expandable</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Custom Resources</h3>
-        <ul>
-          <li>Custom ore progression including Runestone Ore and Firestone Ore</li>
-          <li>Raw ore drop variants and ingot progression paths</li>
-          <li>Mining and Smithing designed to support one another</li>
+          <li>Profession-based progression built through RunestoneSkills</li>
+          <li>Custom systems designed to feel rewarding and expandable</li>
         </ul>
       </div>
 
       <div class="card">
         <h3>Economy &amp; Trade</h3>
         <ul>
-          <li>Player-facing economy with room for growth and specialization</li>
-          <li>Banking, exchange, treasury, and trade direction</li>
-          <li>Built to support meaningful progression instead of simple item hoarding</li>
+          <li>Multi-currency economy foundation</li>
+          <li>Auctions, shops, banks, exchange, treasury, and ledgers</li>
+          <li>Trade-driven progression that supports a living realm</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Claims &amp; Protection</h3>
+        <h3>Claims &amp; Settlements</h3>
         <ul>
-          <li>Land protection and territory-friendly structure</li>
-          <li>Built to support settlements, trusted access, and realm expansion</li>
-          <li>Protection systems designed to keep building meaningful</li>
+          <li>Land protections and trusted access systems</li>
+          <li>Towns and territory direction for organized expansion</li>
+          <li>Built to support a realm shaped by its players</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Exploration &amp; Immersion</h3>
+        <h3>Custom Ores &amp; Progression</h3>
         <ul>
-          <li>A fantasy world intended to reward travel, discovery, and progression</li>
-          <li>Immersive presentation through custom UI, scoreboards, and visual systems</li>
-          <li>Designed to feel like a realm, not just a map</li>
+          <li>Runestone Ore and Firestone Ore integrated into Mining progression</li>
+          <li>Raw ore drops and ingot progression variants</li>
+          <li>Mining and Smithing designed to feel connected instead of separate</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Future Realm Growth</h3>
+        <h3>Immersive Presentation</h3>
         <ul>
-          <li>NPC bridge direction, deeper world interactions, and future quest support</li>
-          <li>Custom content expansion built into the long-term vision</li>
-          <li>Ongoing development shaped around world cohesion and player experience</li>
+          <li>Custom scoreboards, HUD layers, and player-facing UI</li>
+          <li>Mob health bars and fantasy-themed presentation</li>
+          <li>A world built to feel cohesive, stylized, and memorable</li>
         </ul>
       </div>
-
-    </div>
-  </section>
-
-  <section>
-    <h2>Live Gameplay Direction</h2>
-    <p>
-      The goal of Runestone Vale is to create a world where different playstyles can all matter.
-      Gatherers, builders, traders, explorers, and long-term players should all feel like they have a place in the realm.
-    </p>
-    <p>
-      That means progression is not only about combat or raw item grind. It is also about professions,
-      discovery, economy, land, crafting, reputation, and the growing role a player takes within the world itself.
-    </p>
-    <p>
-      Every update is aimed at making those systems feel more connected, more immersive, and more meaningful.
-    </p>
-  </section>
-
-  <section>
-    <h2>Server Systems in the Realm</h2>
-
-    <div class="card-grid">
-
-      <div class="card">
-        <h3>Custom Core Systems</h3>
-        <ul>
-          <li><strong>RunestoneCore</strong> powers the deeper framework of the realm</li>
-          <li>Economy, player systems, travel, claims, menus, scoreboards, and shared logic live here</li>
-          <li>Acts as the central engine behind the wider RunestoneMMO ecosystem</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Progression Systems</h3>
-        <ul>
-          <li><strong>RunestoneSkills</strong> powers professions and long-term advancement</li>
-          <li>Designed to support gathering, crafting, progression, and world interaction</li>
-          <li>Built to expand as the realm grows</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Custom Content</h3>
-        <ul>
-          <li><strong>Oraxen</strong> supports custom items, blocks, textures, and resource-pack content</li>
-          <li>Helps give the realm its own visual identity and custom resource progression</li>
-          <li>Supports the custom fantasy feel of the world</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Protection &amp; Building Support</h3>
-        <ul>
-          <li><strong>WorldGuard</strong> helps protect key areas and define important regions</li>
-          <li><strong>WorldEdit</strong> supports world shaping, terrain work, and large-scale building</li>
-          <li>Together they help maintain and forge the realm itself</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>NPC &amp; World Interaction</h3>
-        <ul>
-          <li><strong>Citizens</strong> supports NPC-driven interaction and world presentation</li>
-          <li>Works alongside the growing NPC / Citizens bridge direction in the project</li>
-          <li>Supports future realm features such as guides, interaction, and quest content</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Access &amp; Permissions</h3>
-        <ul>
-          <li><strong>LuckPerms</strong> handles permissions and server role structure</li>
-          <li><strong>Vault</strong> provides compatibility for economy and service hooks</li>
-          <li>These systems help hold the administrative structure together cleanly</li>
-        </ul>
-      </div>
-
     </div>
   </section>
 
   <section class="card">
-    <h2>Cross-Platform &amp; Compatibility Support</h2>
+    <h2>Built for Players Who Want More</h2>
     <p>
-      Runestone Vale is being built to be more accessible and more stable across different client situations,
-      while still preserving the core Java server experience.
+      Runestone Vale is meant for players who want a stronger sense of place, progression, and permanence.
+      It is built not as a throwaway survival map, but as part of a single growing world.
     </p>
-
-    <div class="card-grid">
-
-      <div class="card">
-        <h3>Java &amp; Bedrock Access</h3>
-        <ul>
-          <li><strong>Geyser-Spigot</strong> helps open the realm to Bedrock players</li>
-          <li><strong>Floodgate</strong> supports Bedrock-friendly account bridging</li>
-          <li>This helps broaden access to the world without abandoning the core Paper platform</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Version Compatibility</h3>
-        <ul>
-          <li><strong>ViaVersion</strong>, <strong>ViaBackwards</strong>, and <strong>ViaRewind</strong> help support version flexibility</li>
-          <li>These systems improve compatibility for players joining from different client versions</li>
-          <li>Useful for keeping the community more accessible while development continues</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Presentation Hooks</h3>
-        <ul>
-          <li><strong>PlaceholderAPI</strong> supports dynamic placeholder-driven display content</li>
-          <li>Helps feed scoreboards, UI layers, and server-facing presentation systems</li>
-          <li>Supports a more polished and informative player experience</li>
-        </ul>
-      </div>
-
-    </div>
-  </section>
-
-  <section>
-    <h2>Core Plugin Stack</h2>
     <p>
-      The realm is supported by a focused core stack of plugins and systems that help shape world control,
-      custom content, permissions, compatibility, and the larger RunestoneMMO framework.
-    </p>
-
-    <div class="card-grid">
-
-      <div class="card">
-        <h3>Realm Foundation</h3>
-        <ul>
-          <li>RunestoneCore</li>
-          <li>RunestoneSkills</li>
-          <li>Vault</li>
-          <li>LuckPerms</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Custom Content &amp; NPCs</h3>
-        <ul>
-          <li>Oraxen</li>
-          <li>Citizens</li>
-          <li>PlaceholderAPI</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>World Management</h3>
-        <ul>
-          <li>WorldGuard</li>
-          <li>WorldEdit</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Compatibility &amp; Access</h3>
-        <ul>
-          <li>ViaVersion</li>
-          <li>ViaBackwards</li>
-          <li>ViaRewind</li>
-          <li>Geyser-Spigot</li>
-          <li>Floodgate</li>
-        </ul>
-      </div>
-
-    </div>
-  </section>
-
-  <section>
-    <h2>Still Being Forged</h2>
-    <p>
-      Runestone Vale is already playable, but the world is still actively being carved into something deeper.
-      New layers of progression, interaction, and world identity are still being added and refined.
-    </p>
-
-    <div class="card-grid">
-
-      <div class="card">
-        <h3>Realm Expansion</h3>
-        <ul>
-          <li>Deeper settlement and town direction</li>
-          <li>More world identity and region-based growth</li>
-          <li>Stronger player impact on the shape of the realm</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>NPC &amp; Quest Direction</h3>
-        <ul>
-          <li>Growing Citizens / NPC bridge support</li>
-          <li>Future opportunities for guides, factions, quests, and story-driven interaction</li>
-          <li>A more alive and reactive world over time</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Progression Depth</h3>
-        <ul>
-          <li>Expanded professions and progression layers</li>
-          <li>More custom items, resources, and content loops</li>
-          <li>Continued refinement of the MMORPG survival experience</li>
-        </ul>
-      </div>
-
-    </div>
-  </section>
-
-  <section class="card">
-    <h2>Step Into the Realm</h2>
-    <p>
-      Runestone Vale is where all of these systems come together — not as scattered features,
-      but as part of a single growing world. If you want a fantasy survival realm with long-term direction,
-      custom progression, and a stronger sense of identity, this is where the journey begins.
+      If you want a fantasy survival realm with long-term direction, custom progression, and a stronger sense of identity,
+      this is where the journey begins.
     </p>
 
     <div class="button-row-left">
@@ -391,6 +182,28 @@ function copyIP() {
     alert("Copy failed. Server IP: 135.148.10.227:23921");
   });
 }
+
+function toggleMenu() {
+  const nav = document.getElementById("mobileNav");
+  const button = document.querySelector(".menu-toggle");
+  nav.classList.toggle("open");
+  button.setAttribute("aria-expanded", nav.classList.contains("open") ? "true" : "false");
+}
+
+document.addEventListener("click", function (event) {
+  const nav = document.getElementById("mobileNav");
+  const button = document.querySelector(".menu-toggle");
+
+  if (!nav || !button) return;
+
+  const clickedInsideNav = nav.contains(event.target);
+  const clickedButton = button.contains(event.target);
+
+  if (!clickedInsideNav && !clickedButton) {
+    nav.classList.remove("open");
+    button.setAttribute("aria-expanded", "false");
+  }
+});
 </script>
 
 </body>
