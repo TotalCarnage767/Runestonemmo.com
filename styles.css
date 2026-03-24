@@ -101,7 +101,24 @@ header {
   border-color: rgba(226, 193, 120, 0.28);
   background: rgba(226, 193, 120, 0.08);
 }
+.menu-toggle {
+  display: none;
+  background: rgba(0, 0, 0, 0.34);
+  color: var(--gold);
+  border: 1px solid rgba(226, 193, 120, 0.38);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow:
+    0 6px 18px rgba(0,0,0,0.24),
+    0 0 0 1px rgba(226,193,120,0.08) inset;
+}
 
+.menu-toggle:hover {
+  background: rgba(226, 193, 120, 0.08);
+}
 /* ================================
    MAIN CONTENT
 ================================ */
