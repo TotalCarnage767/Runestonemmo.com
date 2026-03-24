@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RunestoneCore — The Heart of the Mountain</title>
+  <title>Runestone Vale — Server Features</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
 
@@ -11,13 +11,13 @@
 
 <header>
   <div class="topbar">
-    <a class="brand" href="/index.html">RunestoneMMO</a>
+    <a class="brand" href="/index.html">Runestone Vale</a>
 
     <nav class="top-links">
-      <a class="top-link" href="/features.html">Core-Features</a>
+      <a class="top-link" href="/features.html">Server-Features</a>
+      <a class="top-link" href="/RunestoneCore.html">RunestoneCore</a>
       <a class="top-link" href="/RunestoneSkills.html">RunestoneSkills</a>
       <a class="top-link" href="/roadmap_development.html">Roadmap</a>
-      <a class="top-link" href="/ServerPage.html">Server</a>
       <a class="top-link" href="/terms.html">Terms</a>
     </nav>
   </div>
@@ -28,200 +28,117 @@
 <main>
 
   <section class="hero">
-    <h1>RunestoneCore</h1>
-    <p class="subtitle">The engine beneath the mountain — powering systems, structure, and server-wide progression.</p>
+    <h1>Server Features</h1>
+    <p class="subtitle">What makes Runestone Vale more than a basic survival server.</p>
 
     <p>
-      RunestoneCore is the foundation of the RunestoneMMO ecosystem: a modular MMO-grade core built for
-      economy, player systems, moderation, combat scaffolding, attributes, scoreboards, travel, claims,
-      towns, rewards, and extensible future modules.
+      Runestone Vale is built as a custom fantasy MMORPG-style realm where progression, economy,
+      exploration, professions, custom content, and server systems are designed to work together as one world.
+    </p>
+
+    <p>
+      Instead of feeling like a loose collection of plugins and commands, the goal is to make the realm feel cohesive —
+      a place where systems support the world, and the world supports long-term player progression.
     </p>
 
     <div class="buttons">
-      <a href="/index.html" class="button">Return Home</a>
-      <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneMMO" class="button secondary" target="_blank" rel="noopener">View on Hangar</a>
-      <a href="https://discord.gg/BNkJDU6qE4" class="button secondary" target="_blank" rel="noopener">Join the Discord</a>
+      <a class="button" href="javascript:void(0)" onclick="copyIP()">Copy Server IP</a>
+      <a class="button secondary" href="/index.html">Back to Home</a>
+      <a class="button secondary" href="https://discord.gg/BNkJDU6qE4" target="_blank" rel="noopener">Join the Discord</a>
     </div>
+
+    <p style="margin-top: 18px; font-size: 1.15rem;">
+      <strong>Server IP:</strong> <em>135.148.10.227:23921</em><br>
+      <strong>Platform:</strong> Minecraft Java Edition • Paper 1.21.11
+    </p>
   </section>
 
   <section class="cta-section">
-    <h2>Official Core Links</h2>
+    <h2>What Makes the Realm Different</h2>
     <p>
-      Follow active development, explore the project ecosystem, and navigate directly to the dedicated module pages.
+      Runestone Vale is not built around short-term survival or disposable gameplay loops.
+      It is designed to feel like a long-term realm with identity, direction, and systems worth investing in.
     </p>
 
     <div class="cta-grid">
       <article class="cta-card">
-        <h3>RunestoneCore / RunestoneMMO Hangar</h3>
-        <p>The main distribution page for the core platform and the wider project.</p>
-        <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneMMO" class="button" target="_blank" rel="noopener">Open Hangar Page</a>
+        <h3>Fantasy MMORPG Identity</h3>
+        <p>A realm-first experience with atmosphere, progression, economy, and worldbuilding at the center.</p>
       </article>
 
       <article class="cta-card">
-        <h3>RunestoneSkills</h3>
-        <p>Profession systems, gathering, and skill progression live on their own dedicated page.</p>
-        <a href="/runestoneskills.html" class="button secondary">Open RunestoneSkills Page</a>
+        <h3>Custom Progression</h3>
+        <p>Skills, professions, resources, and advancement systems designed specifically for the world.</p>
       </article>
 
       <article class="cta-card">
-        <h3>Discord Community</h3>
-        <p>See updates, testing progress, patch notes, and the active development journey.</p>
-        <a href="https://discord.gg/BNkJDU6qE4" class="button secondary" target="_blank" rel="noopener">Enter the Guild Hall</a>
+        <h3>Connected Systems</h3>
+        <p>Economy, claims, UI, custom resources, and professions are built to feel like parts of one realm.</p>
+      </article>
+
+      <article class="cta-card">
+        <h3>Long-Term Direction</h3>
+        <p>The world is being actively forged toward a deeper fantasy MMORPG experience over time.</p>
       </article>
     </div>
   </section>
 
   <section>
-    <h2>What RunestoneCore Is</h2>
-    <p>
-      RunestoneCore is the shared platform layer for the RunestoneMMO project. It is designed to give servers a strong,
-      extensible base for persistent gameplay systems without forcing every future feature into one monolithic plugin.
-    </p>
-    <p>
-      The goal is simple: one professional core that can support economy, progression, moderation, travel, UI,
-      combat scaffolding, and future modules cleanly. RunestoneSkills, future quest systems, content systems,
-      and other expansions are built on top of this spine — not mixed directly into it.
-    </p>
-  </section>
-
-  <section>
-    <h2>Core Systems</h2>
+    <h2>The Pillars of Runestone Vale</h2>
 
     <div class="card-grid">
 
       <div class="card">
-        <h3>Configuration &amp; Lifecycle</h3>
+        <h3>Skills &amp; Professions</h3>
         <ul>
-          <li>Multi-file YAML configuration for core systems and subsystem tuning</li>
-          <li>Central routed access through configuration managers</li>
-          <li>Deterministic bootstrap and shutdown flow for subsystem safety</li>
-          <li>Central task and listener registration to reduce duplication and orphaned behavior</li>
-          <li>Adventure / MiniMessage-driven output and formatting support</li>
+          <li>Mining, Forestry, Fishing, Exploration, Smithing, and more</li>
+          <li>Profession-based progression built for long-term growth</li>
+          <li>Gathering and crafting systems designed to feel rewarding and expandable</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Player Data &amp; Profiles</h3>
+        <h3>Custom Resources</h3>
         <ul>
-          <li>Persistent player profiles with preferences, toggles, titles, and progression state</li>
-          <li>Combat XP and related progression support</li>
-          <li>Multi-currency wallet and bank storage</li>
-          <li>Daily reward tracking and completion state</li>
-          <li>Async-safe load / save flow with cache-aware handling</li>
+          <li>Custom ore progression including Runestone Ore and Firestone Ore</li>
+          <li>Raw ore drop variants and ingot progression paths</li>
+          <li>Mining and Smithing designed to support one another</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Economy Platform</h3>
+        <h3>Economy &amp; Trade</h3>
         <ul>
-          <li>Multi-currency economy design</li>
-          <li>Wallet balances, bank balances, and server treasury support</li>
-          <li>Tax routing and configurable economy sinks</li>
-          <li>Exchange support between currencies</li>
-          <li>Ledger / history systems for tracking transactions</li>
-          <li>Vault compatibility for wider plugin integration</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Auctions, Shops &amp; Market Flow</h3>
-        <ul>
-          <li>Auction house support with listing and expiry flow</li>
-          <li>Player shop systems and shop creation flow</li>
-          <li>Shop editing and description support</li>
-          <li>Market dashboard style overview systems</li>
-          <li>Integrated economy and logging behavior</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Daily Rewards</h3>
-        <ul>
-          <li>Daily reward claims and status tracking</li>
-          <li>Calendar / streak oriented reward flow</li>
-          <li>Support for currency, items, and command rewards</li>
-          <li>Designed for configurable progression-oriented reward tables</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Combat &amp; Attributes</h3>
-        <ul>
-          <li>Combat XP support and combat progression hooks</li>
-          <li>Attribute scaffolding for attack, defense, toughness, crits, and scaling</li>
-          <li>Mob attribute application support</li>
-          <li>Combat-facing systems designed to support future RPG expansion</li>
+          <li>Player-facing economy with room for growth and specialization</li>
+          <li>Banking, exchange, treasury, and trade direction</li>
+          <li>Built to support meaningful progression instead of simple item hoarding</li>
         </ul>
       </div>
 
       <div class="card">
         <h3>Claims &amp; Protection</h3>
         <ul>
-          <li>Personal land claim system</li>
-          <li>Protection logic for building, containers, and related interactions</li>
-          <li>Trust / flag style territory control</li>
-          <li>Protection-aware world interaction rules</li>
+          <li>Land protection and territory-friendly structure</li>
+          <li>Built to support settlements, trusted access, and realm expansion</li>
+          <li>Protection systems designed to keep building meaningful</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Towns &amp; Territories</h3>
+        <h3>Exploration &amp; Immersion</h3>
         <ul>
-          <li>Town creation and structured settlement support</li>
-          <li>Rank, membership, treasury, and claim-based territory rules</li>
-          <li>Expansion logic designed around controlled chunk growth</li>
-          <li>Integrated direction for future settlement gameplay</li>
+          <li>A fantasy world intended to reward travel, discovery, and progression</li>
+          <li>Immersive presentation through custom UI, scoreboards, and visual systems</li>
+          <li>Designed to feel like a realm, not just a map</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Scoreboards &amp; Menus</h3>
+        <h3>Future Realm Growth</h3>
         <ul>
-          <li>Config-driven scoreboards with multiple layouts</li>
-          <li>Conditional displays for context-specific UI behavior</li>
-          <li>Menu framework for structured GUI systems</li>
-          <li>Active refinement toward cleaner persistence and display flow</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Resources &amp; HUD Systems</h3>
-        <ul>
-          <li>Mana and stamina resource support</li>
-          <li>BossBar / ActionBar oriented HUD channels</li>
-          <li>Teleport mana-cost integration and resource hooks</li>
-          <li>Designed to support wider RPG resource systems later</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Travel &amp; Teleportation</h3>
-        <ul>
-          <li>Home system support</li>
-          <li>Teleport request flow</li>
-          <li>Spawn return flow</li>
-          <li>Back-location support</li>
-          <li>Utility travel systems for both players and staff</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Moderation &amp; World Rules</h3>
-        <ul>
-          <li>Staff moderation utilities and punishment flow</li>
-          <li>Chat control and server-side management tools</li>
-          <li>Maintenance mode and broadcast systems</li>
-          <li>World-rule control, gameplay toggles, and administrative enforcement</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Tasks, Logging &amp; APIs</h3>
-        <ul>
-          <li>Central task and cleanup patterns for scheduled systems</li>
-          <li>Logging support for economy and staff actions</li>
-          <li>Public-facing APIs and integration points for future modules</li>
-          <li>Built to serve as the long-term backbone of the wider project</li>
+          <li>NPC bridge direction, deeper world interactions, and future quest support</li>
+          <li>Custom content expansion built into the long-term vision</li>
+          <li>Ongoing development shaped around world cohesion and player experience</li>
         </ul>
       </div>
 
@@ -229,122 +146,76 @@
   </section>
 
   <section>
-    <h2>What This Page Does Not Cover</h2>
+    <h2>Live Gameplay Direction</h2>
     <p>
-      RunestoneCore is the backbone of the project, but not every gameplay system belongs on this page.
-      Dedicated profession and progression content belongs to the RunestoneSkills module and its own page.
+      The goal of Runestone Vale is to create a world where different playstyles can all matter.
+      Gatherers, builders, traders, explorers, and long-term players should all feel like they have a place in the realm.
     </p>
-
-    <div class="card-grid">
-      <div class="card">
-        <h3>Not the Skills Module</h3>
-        <ul>
-          <li>Mining, Forestry, Fishing, Smithing, Foraging, and other skill systems are documented separately</li>
-          <li>Profession-specific balance and progression loops belong on the RunestoneSkills page</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Not the Full Content Layer</h3>
-        <ul>
-          <li>Quest frameworks, large content systems, and world-event layers are still future expansion areas</li>
-          <li>RunestoneCore is meant to power those systems, not replace their dedicated modules</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Not the Final Network Scale Layer</h3>
-        <ul>
-          <li>The platform direction is long-term and still expanding</li>
-          <li>Broader scaling, deeper persistence options, and future network-ready layers remain part of the roadmap</li>
-        </ul>
-      </div>
-    </div>
+    <p>
+      That means progression is not only about combat or raw item grind. It is also about professions,
+      discovery, economy, land, crafting, reputation, and the growing role a player takes within the world itself.
+    </p>
+    <p>
+      Every update is aimed at making those systems feel more connected, more immersive, and more meaningful.
+    </p>
   </section>
 
   <section>
-    <h2>Primary Command Categories</h2>
-    <p>
-      This list focuses on the current primary command roots instead of older draft alias sets.
-    </p>
+    <h2>Server Systems in the Realm</h2>
 
     <div class="card-grid">
 
       <div class="card">
-        <h3>Economy &amp; Market</h3>
+        <h3>Custom Core Systems</h3>
         <ul>
-          <li>/balance and /bal</li>
-          <li>/pay</li>
-          <li>/bank</li>
-          <li>/exchange</li>
-          <li>/eco</li>
-          <li>/ledger</li>
-          <li>/ah and /auction</li>
-          <li>/shop</li>
-          <li>/market</li>
-          <li>/baltop</li>
+          <li><strong>RunestoneCore</strong> powers the deeper framework of the realm</li>
+          <li>Economy, player systems, travel, claims, menus, scoreboards, and shared logic live here</li>
+          <li>Acts as the central engine behind the wider RunestoneMMO ecosystem</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Daily, UI &amp; Utility</h3>
+        <h3>Progression Systems</h3>
         <ul>
-          <li>/daily</li>
-          <li>/skills</li>
-          <li>/scoreboard</li>
-          <li>/channel</li>
-          <li>/playtime</li>
+          <li><strong>RunestoneSkills</strong> powers professions and long-term advancement</li>
+          <li>Designed to support gathering, crafting, progression, and world interaction</li>
+          <li>Built to expand as the realm grows</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Homes &amp; Travel</h3>
+        <h3>Custom Content</h3>
         <ul>
-          <li>/home</li>
-          <li>/sethome</li>
-          <li>/delhome</li>
-          <li>/tpa</li>
-          <li>/tpahere</li>
-          <li>/tpaccept</li>
-          <li>/tpdeny</li>
-          <li>/tptoggle</li>
-          <li>/spawn</li>
-          <li>/back</li>
+          <li><strong>Oraxen</strong> supports custom items, blocks, textures, and resource-pack content</li>
+          <li>Helps give the realm its own visual identity and custom resource progression</li>
+          <li>Supports the custom fantasy feel of the world</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Claims, Towns &amp; Social Systems</h3>
+        <h3>Protection &amp; Building Support</h3>
         <ul>
-          <li>/claim</li>
-          <li>/town and /village</li>
-          <li>/party, /team, and /teams</li>
+          <li><strong>WorldGuard</strong> helps protect key areas and define important regions</li>
+          <li><strong>WorldEdit</strong> supports world shaping, terrain work, and large-scale building</li>
+          <li>Together they help maintain and forge the realm itself</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Moderation &amp; Staff</h3>
+        <h3>NPC &amp; World Interaction</h3>
         <ul>
-          <li>/mod and /moderation</li>
-          <li>/chatcontrol</li>
-          <li>/maintenance</li>
-          <li>/broadcast</li>
-          <li>/freeze and /unfreeze</li>
-          <li>/jail</li>
-          <li>/vanish</li>
-          <li>/god</li>
-          <li>/tp</li>
-          <li>/invsee</li>
+          <li><strong>Citizens</strong> supports NPC-driven interaction and world presentation</li>
+          <li>Works alongside the growing NPC / Citizens bridge direction in the project</li>
+          <li>Supports future realm features such as guides, interaction, and quest content</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Core Admin</h3>
+        <h3>Access &amp; Permissions</h3>
         <ul>
-          <li>/runestone</li>
-          <li>/core</li>
-          <li>/runestonecore</li>
-          <li>/devflat</li>
+          <li><strong>LuckPerms</strong> handles permissions and server role structure</li>
+          <li><strong>Vault</strong> provides compatibility for economy and service hooks</li>
+          <li>These systems help hold the administrative structure together cleanly</li>
         </ul>
       </div>
 
@@ -352,28 +223,173 @@
   </section>
 
   <section class="card">
-    <h2>RunestoneSkills Has Its Own Page</h2>
+    <h2>Cross-Platform &amp; Compatibility Support</h2>
     <p>
-      Profession systems, skill features, progression paths, and module-specific details are documented separately
-      so RunestoneCore can stay focused on the platform layer.
+      Runestone Vale is being built to be more accessible and more stable across different client situations,
+      while still preserving the core Java server experience.
+    </p>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <h3>Java &amp; Bedrock Access</h3>
+        <ul>
+          <li><strong>Geyser-Spigot</strong> helps open the realm to Bedrock players</li>
+          <li><strong>Floodgate</strong> supports Bedrock-friendly account bridging</li>
+          <li>This helps broaden access to the world without abandoning the core Paper platform</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Version Compatibility</h3>
+        <ul>
+          <li><strong>ViaVersion</strong>, <strong>ViaBackwards</strong>, and <strong>ViaRewind</strong> help support version flexibility</li>
+          <li>These systems improve compatibility for players joining from different client versions</li>
+          <li>Useful for keeping the community more accessible while development continues</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Presentation Hooks</h3>
+        <ul>
+          <li><strong>PlaceholderAPI</strong> supports dynamic placeholder-driven display content</li>
+          <li>Helps feed scoreboards, UI layers, and server-facing presentation systems</li>
+          <li>Supports a more polished and informative player experience</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>Core Plugin Stack</h2>
+    <p>
+      The realm is supported by a focused core stack of plugins and systems that help shape world control,
+      custom content, permissions, compatibility, and the larger RunestoneMMO framework.
+    </p>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <h3>Realm Foundation</h3>
+        <ul>
+          <li>RunestoneCore</li>
+          <li>RunestoneSkills</li>
+          <li>Vault</li>
+          <li>LuckPerms</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Custom Content &amp; NPCs</h3>
+        <ul>
+          <li>Oraxen</li>
+          <li>Citizens</li>
+          <li>PlaceholderAPI</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>World Management</h3>
+        <ul>
+          <li>WorldGuard</li>
+          <li>WorldEdit</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Compatibility &amp; Access</h3>
+        <ul>
+          <li>ViaVersion</li>
+          <li>ViaBackwards</li>
+          <li>ViaRewind</li>
+          <li>Geyser-Spigot</li>
+          <li>Floodgate</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>Still Being Forged</h2>
+    <p>
+      Runestone Vale is already playable, but the world is still actively being carved into something deeper.
+      New layers of progression, interaction, and world identity are still being added and refined.
+    </p>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <h3>Realm Expansion</h3>
+        <ul>
+          <li>Deeper settlement and town direction</li>
+          <li>More world identity and region-based growth</li>
+          <li>Stronger player impact on the shape of the realm</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>NPC &amp; Quest Direction</h3>
+        <ul>
+          <li>Growing Citizens / NPC bridge support</li>
+          <li>Future opportunities for guides, factions, quests, and story-driven interaction</li>
+          <li>A more alive and reactive world over time</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Progression Depth</h3>
+        <ul>
+          <li>Expanded professions and progression layers</li>
+          <li>More custom items, resources, and content loops</li>
+          <li>Continued refinement of the MMORPG survival experience</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Step Into the Realm</h2>
+    <p>
+      Runestone Vale is where all of these systems come together — not as scattered features,
+      but as part of a single growing world. If you want a fantasy survival realm with long-term direction,
+      custom progression, and a stronger sense of identity, this is where the journey begins.
     </p>
 
     <div class="button-row-left">
-      <a href="/runestoneskills.html" class="button">Visit RunestoneSkills</a>
+      <a class="button" href="javascript:void(0)" onclick="copyIP()">Copy Server IP</a>
+      <a class="button secondary" href="/RunestoneCore.html">Explore RunestoneCore</a>
+      <a class="button secondary" href="/RunestoneSkills.html">Explore RunestoneSkills</a>
+      <a class="button secondary" href="https://discord.gg/BNkJDU6qE4" target="_blank" rel="noopener">Join the Discord</a>
     </div>
   </section>
 
 </main>
 
 <footer>
-  <p>RunestoneMMO — Forged in the Deep Halls</p>
+  <p>Runestone Vale — A realm built to last.</p>
   <p>
-    <a href="https://discord.gg/BNkJDU6qE4" target="_blank" rel="noopener">Discord</a> •
-    <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneMMO" target="_blank" rel="noopener">RunestoneMMO Hangar</a> •
-    <a href="/runestoneskills.html">RunestoneSkills Page</a> •
-    <a href="/terms.html">Terms &amp; Licensing</a>
+    <a href="/index.html">Home</a> •
+    <a href="/features.html">Server-Features</a> •
+    <a href="/RunestoneCore.html">RunestoneCore</a> •
+    <a href="/RunestoneSkills.html">RunestoneSkills</a> •
+    <a href="/roadmap_development.html">Roadmap</a> •
+    <a href="/terms.html">Terms &amp; Licensing</a> •
+    <a href="https://discord.gg/BNkJDU6qE4" target="_blank" rel="noopener">Discord</a>
   </p>
 </footer>
+
+<script>
+function copyIP() {
+  navigator.clipboard.writeText("135.148.10.227:23921").then(function () {
+    alert("Server IP copied to clipboard!");
+  }).catch(function () {
+    alert("Copy failed. Server IP: 135.148.10.227:23921");
+  });
+}
+</script>
 
 </body>
 </html>
