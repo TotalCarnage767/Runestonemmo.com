@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RunestoneCore — The Heart of the Mountain</title>
+  <title>RunestoneCore — The Core Engine of RunestoneMMO</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
 
@@ -13,12 +13,17 @@
   <div class="topbar">
     <a class="brand" href="/index.html">Runestone Vale</a>
 
-    <nav class="top-links">
-      <a href="/credits.html">Credits</a>
+    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleMenu()">
+      ☰
+    </button>
+
+    <nav class="top-links" id="mobileNav">
+      <a class="top-link" href="/index.html">Home</a>
       <a class="top-link" href="/features.html">Server-Features</a>
       <a class="top-link" href="/RunestoneCore.html">RunestoneCore</a>
       <a class="top-link" href="/RunestoneSkills.html">RunestoneSkills</a>
       <a class="top-link" href="/roadmap_development.html">Roadmap</a>
+      <a class="top-link" href="/credits.html">Credits</a>
       <a class="top-link" href="/terms.html">Terms</a>
     </nav>
   </div>
@@ -30,18 +35,23 @@
 
   <section class="hero">
     <h1>RunestoneCore</h1>
-    <p class="subtitle">The heart of the mountain — the core engine forging the systems beneath Runestone Vale.</p>
+    <p class="subtitle">The core engine of RunestoneMMO — the foundation beneath the realm.</p>
 
     <p>
-      RunestoneCore is the foundational plugin powering the wider RunestoneMMO ecosystem.
-      It is the system layer that binds economy, player progression scaffolding, travel, moderation,
-      scoreboards, claims, towns, menus, and world rules into one shared framework.
+      RunestoneCore is the main foundation plugin of the RunestoneMMO ecosystem.
+      It is the shared system layer that powers the deeper structure of the server:
+      economy, player data, scoreboards, claims, towns, travel systems, moderation tools,
+      menus, utility commands, world rules, and the framework future systems are built on.
     </p>
 
     <p>
-      Rather than relying on a pile of disconnected plugins and mismatched mechanics, RunestoneCore is built
-      as a unified backbone — a central engine designed to make a custom MMORPG realm feel cohesive,
-      expandable, and worth building long-term.
+      Instead of relying on a pile of unrelated plugins stitched together with loose configuration,
+      RunestoneCore is built to act as a unified backbone. The goal is to make the server feel like one world,
+      not a collection of disconnected mechanics.
+    </p>
+
+    <p>
+      In simple terms: <strong>Runestone Vale is the realm players step into, and RunestoneCore is the engine room beneath it.</strong>
     </p>
 
     <div class="buttons">
@@ -51,39 +61,36 @@
     </div>
 
     <p style="margin-top: 18px; font-size: 1.1rem;">
-      <strong>Platform:</strong> Minecraft Java Edition • Paper 1.21.11 • JDK 21 • Gradle Modular Architecture
+      <strong>Platform:</strong> Minecraft Java Edition • Paper 1.21.11 • Java 21 • Gradle Multi-Module Architecture
     </p>
   </section>
 
   <section class="cta-section">
-    <h2>Official Links</h2>
+    <h2>What RunestoneCore Powers</h2>
     <p>
-      The core project, the live realm it powers, the progression module beside it, and the places to follow development.
+      RunestoneCore exists to provide the shared infrastructure a custom MMORPG-style realm actually needs.
+      It is not meant to be a small helper plugin. It is meant to be the stable core that lets the whole project grow cleanly.
     </p>
 
     <div class="cta-grid">
       <article class="cta-card">
-        <h3>RunestoneCore on Hangar</h3>
-        <p>Follow releases, updates, and plugin development for the core engine of the RunestoneMMO ecosystem.</p>
-        <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneMMO" class="button" target="_blank" rel="noopener">Open RunestoneCore</a>
+        <h3>Core Engine</h3>
+        <p>The main systems layer beneath Runestone Vale and the wider RunestoneMMO ecosystem.</p>
       </article>
 
       <article class="cta-card">
-        <h3>Runestone Vale</h3>
-        <p>See the live realm where RunestoneCore’s systems are tested, balanced, and shaped into a real world.</p>
-        <a href="/index.html" class="button secondary">Enter Runestone Vale</a>
+        <h3>Framework for Expansion</h3>
+        <p>Built so future systems like professions, NPCs, quests, towns, and progression can grow on one shared base.</p>
       </article>
 
       <article class="cta-card">
-        <h3>RunestoneSkills</h3>
-        <p>Explore the professions and progression layer built on top of RunestoneCore.</p>
-        <a href="/RunestoneSkills.html" class="button secondary">Explore RunestoneSkills</a>
+        <h3>Realm Cohesion</h3>
+        <p>Keeps economy, UI, commands, player data, protections, and utilities feeling like parts of one world.</p>
       </article>
 
       <article class="cta-card">
-        <h3>Discord Community</h3>
-        <p>Follow development, patch updates, testing progress, and the wider RunestoneMMO journey.</p>
-        <a href="https://discord.gg/BNkJDU6qE4" class="button secondary" target="_blank" rel="noopener">Enter the Guild Hall</a>
+        <h3>Live World Backbone</h3>
+        <p>Acts as the operating foundation behind the real playable realm of Runestone Vale.</p>
       </article>
     </div>
   </section>
@@ -91,81 +98,105 @@
   <section>
     <h2>What RunestoneCore Is</h2>
     <p>
-      RunestoneCore is not just another utility plugin. It is the shared foundation for a fantasy MMORPG-style server ecosystem.
-      It handles the deeper systems that must work together cleanly if a realm is going to feel believable, stable, and expandable.
+      RunestoneCore is the central plugin of the RunestoneMMO project. It is designed to replace a scattered plugin stack
+      with a more cohesive MMO-ready foundation. It handles the systems that should belong to the same architecture:
+      economy, claims, towns, menus, teleportation, scoreboards, moderation tools, persistent data, and shared utilities.
     </p>
+
     <p>
-      Economy, moderation, player data, UI, world rules, claims, territory systems, and progression scaffolding all live here
-      so that future modules do not feel bolted on. The goal is to create a true core — one foundation strong enough to support
-      professions, combat, towns, quests, exploration systems, and long-term content growth.
+      This matters because servers become stronger when their systems are designed to work together on purpose.
+      A realm feels better when its menus, commands, protections, currencies, interfaces, and supporting systems
+      all follow the same logic instead of fighting each other.
     </p>
+
     <p>
-      In simple terms: <strong>Runestone Vale is the world players enter, and RunestoneCore is the engine making that world function.</strong>
+      RunestoneCore is built with the idea that the foundation should be solid first —
+      so the world above it can become deeper, cleaner, and more expandable over time.
     </p>
   </section>
 
   <section>
-    <h2>Core Systems</h2>
+    <h2>Main Systems Inside RunestoneCore</h2>
 
     <div class="card-grid">
 
       <div class="card">
-        <h3>Economy &amp; Trade</h3>
+        <h3>Economy &amp; Currency Systems</h3>
         <ul>
           <li>Multi-currency economy foundation</li>
-          <li>Banking, exchange, treasury, and ledgers</li>
-          <li>Auctions, player shops, and economy routing</li>
-          <li>Vault bridge compatibility for server ecosystems</li>
+          <li>Vault integration for compatibility with wider server ecosystems</li>
+          <li>Balances, exchange systems, treasury support, and transaction direction</li>
+          <li>Built to support long-term trade, progression, and world value flow</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Player Data &amp; Profiles</h3>
+        <h3>Player Data &amp; Persistence</h3>
         <ul>
-          <li>Persistent player data and account state</li>
-          <li>Balances, progression scaffolding, and profile systems</li>
-          <li>Titles, toggles, preferences, and long-term identity</li>
-          <li>Designed for future expansion instead of disposable save logic</li>
+          <li>Persistent player data storage</li>
+          <li>Long-term account state and profile information</li>
+          <li>System support for progression scaffolding, settings, and server identity</li>
+          <li>Foundation meant for expansion instead of temporary patchwork saves</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Claims &amp; Settlements</h3>
+        <h3>Claims, Land Control &amp; Protection</h3>
         <ul>
-          <li>Land claims and protection systems</li>
-          <li>Trust controls, block rules, and access management</li>
-          <li>Towns / territories direction with treasury and membership structure</li>
-          <li>Built to support player-driven settlement growth</li>
+          <li>Land claim support and protection logic</li>
+          <li>Trust and access control direction</li>
+          <li>Built to protect player effort inside a long-term world</li>
+          <li>Supports the idea of a realm shaped by settlement, not just loose survival</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>UI &amp; Presentation</h3>
+        <h3>Towns &amp; Territory Direction</h3>
         <ul>
-          <li>Custom scoreboards and player-facing UI layers</li>
-          <li>Action bar / boss bar style presentation support</li>
-          <li>Mob health bars and immersive realm-facing display systems</li>
-          <li>Menu framework and shared interface utilities</li>
+          <li>Town-based world structure and grouped land control</li>
+          <li>Shared treasury and membership direction</li>
+          <li>Framework for larger settlement identity and expansion</li>
+          <li>Designed as part of the long-term MMO world plan</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Travel &amp; Utility Systems</h3>
+        <h3>Scoreboards, UI &amp; Presentation</h3>
         <ul>
-          <li>Home, teleport, and travel utility systems</li>
-          <li>Command aliases for faster everyday usage</li>
-          <li>Shared command registration and cleaner player flow</li>
-          <li>Infrastructure meant to reduce friction for both players and staff</li>
+          <li>Custom scoreboard support</li>
+          <li>Action-bar, boss-bar, and interface direction</li>
+          <li>Mob health bar and player-facing display systems</li>
+          <li>Shared visual layer to make the realm feel more polished and immersive</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Moderation &amp; Administration</h3>
+        <h3>Menus &amp; Shared Interface Framework</h3>
         <ul>
-          <li>Staff-facing control systems and server safeguards</li>
-          <li>Maintenance direction, alerts, and operational tools</li>
-          <li>Framework for reports, enforcement, and management expansion</li>
-          <li>Built for long-term realm stewardship, not short-term patchwork</li>
+          <li>Reusable menu systems for cleaner in-game interaction</li>
+          <li>Safer GUI handling and centralized behavior</li>
+          <li>Built to reduce one-off menu logic across the ecosystem</li>
+          <li>Supports future features with a cleaner user experience</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Travel, Homes &amp; Utility Commands</h3>
+        <ul>
+          <li>Teleport and home system direction</li>
+          <li>Quality-of-life command support</li>
+          <li>Cleaner everyday player flow</li>
+          <li>Infrastructure meant to make the realm smoother to actually live in</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Moderation &amp; Server Stewardship</h3>
+        <ul>
+          <li>Admin-side support systems and server control direction</li>
+          <li>Framework for staff tools, maintenance flow, and realm management</li>
+          <li>Built to support long-term ownership and moderation</li>
+          <li>Focused on stability, control, and future expansion</li>
         </ul>
       </div>
 
@@ -173,105 +204,72 @@
   </section>
 
   <section>
-    <h2>Recent Additions to the Forge</h2>
+    <h2>Why RunestoneCore Matters</h2>
     <p>
-      RunestoneCore continues to grow not just in scale, but in cohesion. Recent work has focused on improving usability,
-      compatibility, and the role of the core engine inside the live realm.
+      Most servers grow by stacking unrelated plugins together until the whole thing becomes messy,
+      inconsistent, and difficult to expand. RunestoneCore is meant to solve that problem.
     </p>
 
-    <div class="card-grid">
-
-      <div class="card">
-        <h3>NPC / Citizens Bridge</h3>
-        <ul>
-          <li>New bridge direction for Citizens / NPC integration</li>
-          <li>Helps connect server-side NPC functionality into the broader RunestoneCore environment</li>
-          <li>Expands future potential for quests, guides, world interactions, and server storytelling</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Command Alias Improvements</h3>
-        <ul>
-          <li>Faster command access through added aliases</li>
-          <li>Quality-of-life improvements for player and admin command flow</li>
-          <li>Designed to make the server feel smoother in everyday use</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Ongoing Realm Integration</h3>
-        <ul>
-          <li>RunestoneCore remains the shared base for Runestone Vale and future module growth</li>
-          <li>New systems are being added with compatibility and expansion in mind</li>
-          <li>The aim is a stronger MMO framework, not a pile of isolated features</li>
-        </ul>
-      </div>
-
-    </div>
-  </section>
-
-  <section class="card">
-    <h2>Why It Matters</h2>
     <p>
-      Most servers pile together unrelated plugins and hope the result feels complete. RunestoneCore exists to do the opposite.
-      It is meant to be the common language between systems — the part that makes economy, travel, UI, moderation, claims,
-      and future progression mechanics feel like pieces of the same world.
-    </p>
-    <p>
-      That matters for players because a realm feels better when its systems agree with each other. It matters for development
-      because building new modules becomes cleaner, safer, and more consistent over time.
-    </p>
-    <p>
-      RunestoneCore is the part of the project that lets RunestoneMMO grow without collapsing under its own weight.
+      It gives the project a shared language. Economy connects properly to UI. Protections connect properly to land systems.
+      Menus, commands, scoreboards, travel, and player data follow the same architectural direction.
+      That creates a stronger player experience and a much healthier foundation for future development.
     </p>
 
-    <div class="button-row-left">
-      <a class="button secondary" href="/RunestoneSkills.html">See the Skills Layer</a>
-      <a class="button secondary" href="/features.html">View Server-Features</a>
-      <a class="button secondary" href="/roadmap_development.html">Open the Roadmap</a>
-    </div>
-  </section>
-
-  <section>
-    <h2>Built for the Wider Ecosystem</h2>
     <p>
-      RunestoneCore is the first pillar of the wider RunestoneMMO vision. It is built to support a growing family of modules,
-      not just a single isolated feature set. RunestoneSkills already expands the progression side of that vision, and future
-      content can stand on the same foundation without feeling disconnected.
-    </p>
-    <p>
-      The long-term aim is a deeper fantasy MMORPG platform — one where economy, professions, territory, NPC systems,
-      quest content, exploration, and world-building all belong to the same forged structure.
+      This matters for players because the world feels more polished and more believable.
+      It matters for development because future systems can be added without constantly fighting old structure.
     </p>
   </section>
 
   <section>
-    <h2>State of the Forge</h2>
+    <h2>Built for the RunestoneMMO Ecosystem</h2>
     <p>
-      The mountain is active. RunestoneCore now carries a growing body of living systems across the realm:
-      economy, claims, moderation, scoreboards, towns direction, UI, utility commands, integration layers,
-      and the shared logic that holds the project together.
+      RunestoneCore is not only for one isolated feature set. It is the first major pillar of the wider RunestoneMMO vision.
+      It is built to support a growing family of connected systems and modules.
     </p>
+
     <p>
-      With Runestone Vale now leading the front of the site, RunestoneCore stands here as the deeper foundation beneath it —
-      the engine room behind the world players see.
+      RunestoneSkills already expands the professions and progression side of that vision, and future systems
+      such as quests, NPC integrations, territory depth, exploration features, and broader MMO mechanics
+      are intended to grow on the same core instead of being bolted on from the outside.
     </p>
+
     <p>
-      <strong>This is where the deeper systems of the realm are forged.</strong>
+      The aim is a stronger fantasy MMORPG platform where the world can expand without losing cohesion.
+    </p>
+  </section>
+
+  <section>
+    <h2>State of the Project</h2>
+    <p>
+      RunestoneCore is actively serving as the shared foundation behind Runestone Vale.
+      It already holds together major systems direction across the realm and continues to grow in depth,
+      usability, and internal cohesion.
+    </p>
+
+    <p>
+      Ongoing development continues to strengthen how the project feels in real use —
+      not just in isolated features, but in how all parts of the world connect.
+      As the wider RunestoneMMO ecosystem expands, RunestoneCore remains the mountain beneath it.
+    </p>
+
+    <p>
+      <strong>This is the deep foundation of the realm — the place where the server stops being a plugin stack and starts becoming a real world.</strong>
     </p>
   </section>
 
   <section class="card">
     <h2>Explore the Core</h2>
     <p>
-      From economy and claims to UI, moderation, travel, and future NPC integration, RunestoneCore is the backbone of the project.
-      Explore the core engine, follow its updates, and see the framework beneath the realm.
+      RunestoneCore is the backbone of the RunestoneMMO ecosystem and the engine beneath Runestone Vale.
+      Follow its development, explore its role in the wider project, and see the foundation the realm is being built on.
     </p>
 
     <div class="button-row-left">
       <a class="button" href="https://hangar.papermc.io/TotalCarnage767/RunestoneMMO" target="_blank" rel="noopener">Open on Hangar</a>
-      <a class="button secondary" href="/index.html">Back to the Realm</a>
+      <a class="button secondary" href="/RunestoneSkills.html">See RunestoneSkills</a>
+      <a class="button secondary" href="/features.html">View Server-Features</a>
       <a class="button secondary" href="https://discord.gg/BNkJDU6qE4" target="_blank" rel="noopener">Join the Discord</a>
     </div>
   </section>
@@ -279,18 +277,42 @@
 </main>
 
 <footer>
-  <p>RunestoneCore — The heart of the mountain beneath Runestone Vale.</p>
+  <p>RunestoneCore — The core engine beneath Runestone Vale.</p>
   <p>
     <a href="/index.html">Home</a> •
     <a href="/features.html">Server-Features</a> •
     <a href="/RunestoneCore.html">RunestoneCore</a> •
     <a href="/RunestoneSkills.html">RunestoneSkills</a> •
     <a href="/roadmap_development.html">Roadmap</a> •
-    <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneMMO" target="_blank" rel="noopener">RunestoneCore Hangar</a> •
+    <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneMMO" target="_blank" rel="noopener">RunestoneMMO Hangar</a> •
     <a href="https://discord.gg/BNkJDU6qE4" target="_blank" rel="noopener">Discord</a> •
     <a href="/terms.html">Terms &amp; Licensing</a>
   </p>
 </footer>
+
+<script>
+function toggleMenu() {
+  const nav = document.getElementById("mobileNav");
+  const button = document.querySelector(".menu-toggle");
+  nav.classList.toggle("open");
+  button.setAttribute("aria-expanded", nav.classList.contains("open") ? "true" : "false");
+}
+
+document.addEventListener("click", function (event) {
+  const nav = document.getElementById("mobileNav");
+  const button = document.querySelector(".menu-toggle");
+
+  if (!nav || !button) return;
+
+  const clickedInsideNav = nav.contains(event.target);
+  const clickedButton = button.contains(event.target);
+
+  if (!clickedInsideNav && !clickedButton) {
+    nav.classList.remove("open");
+    button.setAttribute("aria-expanded", "false");
+  }
+});
+</script>
 
 </body>
 </html>
