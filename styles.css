@@ -457,64 +457,36 @@ footer a:hover {
 /* ================================
    MOBILE
 ================================ */
-@media (max-width: 900px) {
-  .contact-panel {
-    position: static;
-    transform: none;
-    width: 100%;
-    margin-top: -40px;
-  }
-
-  .raven-bg {
-    height: 500px;
-    clip-path: inset(0 0 80px 0);
-    object-position: center top;
-  }
-}
 
 @media (max-width: 768px) {
-  body {
-    font-size: 1rem;
-  }
-
-  main {
-    margin-top: 26px;
-  }
-
-  h1 { font-size: 2.35rem; }
-  h2 { font-size: 1.9rem; }
-  h3 { font-size: 1.35rem; }
-
-  .hero-banner {
-    height: 430px;
-    background-position: center top;
-  }
-
-  .hero {
-    padding: 40px 18px;
-  }
-
-  .buttons,
-  .button-row-left,
-  .top-links {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .button,
-  .button.secondary,
-  .top-link {
-    width: 100%;
-    text-align: center;
-  }
-
   .topbar {
     flex-direction: column;
     align-items: stretch;
+    gap: 10px;
   }
 
-  .card,
-  .cta-card {
-    padding: 22px;
+  .brand {
+    text-align: center;
+  }
+
+  .top-links {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 8px;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .top-links::-webkit-scrollbar {
+    display: none;
+  }
+
+  .top-link {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    padding: 8px 12px;
+    font-size: 0.95rem;
   }
 }
