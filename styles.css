@@ -23,9 +23,12 @@ body {
   margin: 0;
   color: var(--text);
   font-family: Georgia, "Times New Roman", serif;
+
+  /* UPDATED: use background.png */
   background:
     linear-gradient(rgba(4, 8, 14, 0.82), rgba(4, 8, 14, 0.92)),
-    url("/images/raven-bg.jpg") center/cover fixed no-repeat;
+    url("/images/background.png") center/cover fixed no-repeat;
+
   line-height: 1.65;
 }
 
@@ -109,12 +112,13 @@ header {
   background: rgba(226, 193, 120, 0.08);
 }
 
+/* UPDATED: use banner.png */
 .hero-banner {
   width: 100%;
   height: 420px;
   background:
     linear-gradient(rgba(7, 10, 16, 0.18), rgba(7, 10, 16, 0.5)),
-    url("/images/hero-banner.jpg") center/cover no-repeat;
+    url("/images/banner.png") center/cover no-repeat;
   border-bottom: 1px solid var(--line);
 }
 
@@ -182,6 +186,11 @@ h1 {
 h2 {
   font-size: clamp(1.7rem, 3.3vw, 2.45rem);
   margin-bottom: 12px;
+
+  /* UPDATED: weaponbg.png for header plates */
+  background: url("/images/weaponbg.png") center/contain no-repeat;
+  padding: 28px 20px;
+  border-radius: 12px;
 }
 
 h3 {
@@ -249,11 +258,12 @@ ul {
   box-shadow: var(--shadow);
 }
 
+/* UPDATED: raven-bg replaced with background.png */
 .raven-bg {
   height: 420px;
   background:
     linear-gradient(rgba(4, 8, 14, 0.38), rgba(4, 8, 14, 0.72)),
-    url("/images/raven-bg.jpg") center/cover no-repeat;
+    url("/images/background.png") center/cover no-repeat;
   border-radius: var(--radius);
   border: 1px solid var(--line);
 }
@@ -279,9 +289,7 @@ footer a:hover {
   text-decoration: underline;
 }
 
-/* ================================
-   MOBILE
-================================ */
+/* MOBILE */
 @media (max-width: 768px) {
   .topbar {
     position: relative;
