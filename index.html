@@ -5,6 +5,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Runestone Vale — Home of the Realm</title>
   <link rel="stylesheet" href="/styles.css">
+
+  <style>
+    /* Full‑page background */
+    body {
+      background: url("/images/background.png") no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    /* Banner at top */
+    .hero-banner {
+      width: 100%;
+      height: 260px;
+      background: url("/images/banner.png") no-repeat center center;
+      background-size: cover;
+      margin-bottom: 32px;
+    }
+
+    /* Description header boxes (weaponbg.png) */
+    section.card,
+    section.card h2,
+    section h2 {
+      background: url("/images/weaponbg.png") no-repeat center center;
+      background-size: cover;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    /* Ensure text stays readable on textured backgrounds */
+    section.card h2,
+    section h2 {
+      background-blend-mode: multiply;
+    }
+  </style>
 </head>
 
 <body>
@@ -29,6 +62,7 @@
   </div>
 </header>
 
+<!-- NEW: Banner image -->
 <div class="hero-banner"></div>
 
 <main>
@@ -170,7 +204,7 @@
     <a href="https://discord.gg/BNkJDU6qE4" target="_blank" rel="noopener">Discord</a> •
     <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneMMO" target="_blank" rel="noopener">RunestoneMMO</a> •
     <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneSkills" target="_blank" rel="noopener">RunestoneSkills</a> •
-    <a href="/terms.html">Terms &amp; Licensing</a>
+    <a href="/terms.html">Terms & Licensing</a>
   </p>
 </footer>
 
