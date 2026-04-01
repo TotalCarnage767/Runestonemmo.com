@@ -11,14 +11,19 @@
 
 <header>
   <div class="topbar">
-    <a class="brand" href="/index.html">RunestoneMMO</a>
+    <a class="brand" href="/index.html">Runestone Vale</a>
 
-    <nav class="top-links">
-      <a href="/credits.html">Credits</a>
-      <a class="top-link" href="/features.html">Core-Features</a>
+    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleMenu()">
+      ☰
+    </button>
+
+    <nav class="top-links" id="mobileNav">
+      <a class="top-link" href="/index.html">Home</a>
+      <a class="top-link" href="/features.html">Server-Features</a>
+      <a class="top-link" href="/RunestoneCore.html">RunestoneCore</a>
       <a class="top-link" href="/RunestoneSkills.html">RunestoneSkills</a>
       <a class="top-link" href="/roadmap_development.html">Roadmap</a>
-      <a class="top-link" href="/ServerPage.html">Server</a>
+      <a class="top-link" href="/credits.html">Credits</a>
       <a class="top-link" href="/terms.html">Terms</a>
     </nav>
   </div>
@@ -30,91 +35,396 @@
 
   <section class="hero">
     <h1>Roadmap &amp; Development</h1>
-    <p class="subtitle">The forge is active — but no public roadmap entries are posted at this time.</p>
+    <p class="subtitle">The forge is active. Runestone Vale is already playable, but the larger MMORPG vision is still being carved into the mountain.</p>
 
     <p>
-      This page will be used for future public development notes, milestone tracking, and project direction updates
-      for the RunestoneMMO ecosystem.
+      This page exists to show the current development direction of <strong>Runestone Vale</strong> and the wider <strong>RunestoneMMO</strong> project.
+      The server already has a real custom foundation, but the long-term goal is much bigger than a standard survival experience.
+    </p>
+
+    <p>
+      The vision is a <strong>persistent fantasy MMORPG realm</strong> built on connected systems:
+      stronger progression, better world identity, deeper travel and utility, player settlement direction,
+      richer NPC and quest content, stronger discovery, and a world that feels increasingly alive over time.
+    </p>
+
+    <p>
+      This is not meant to be a fake roadmap full of random promises. It is meant to reflect the actual direction the project is being built toward:
+      a grounded, mountain-forged world where systems support one another and players help shape the realm early.
     </p>
 
     <div class="buttons">
       <a href="/index.html" class="button">Return Home</a>
-      <a href="/features.html" class="button secondary">View RunestoneCore</a>
-      <a href="/runestoneskills.html" class="button secondary">View RunestoneSkills</a>
+      <a href="/RunestoneCore.html" class="button secondary">View RunestoneCore</a>
+      <a href="/RunestoneSkills.html" class="button secondary">View RunestoneSkills</a>
     </div>
-  </section>
 
-  <section class="card">
-    <h2>Current Status</h2>
-    <p>
-      There are currently <strong>no public roadmap items posted</strong> on this page.
-    </p>
-    <p>
-      Until further notice, this section is being held as a placeholder for future development phases,
-      patch direction, feature milestones, and larger project planning.
-    </p>
-    <p>
-      When new roadmap information is ready to be shared, it will be added here.
+    <p style="margin-top: 18px; font-size: 1.1rem;">
+      <strong>Current Live Target:</strong> Minecraft Java Edition • Paper 1.21.11 • Java 21
     </p>
   </section>
 
   <section class="cta-section">
-    <h2>While the Roadmap Is Quiet</h2>
+    <h2>Roadmap Philosophy</h2>
     <p>
-      You can still explore the active parts of the project through the main site pages and official links below.
+      RunestoneMMO is being built around a simple idea: the realm should feel like one connected world,
+      not a pile of disconnected systems fighting each other.
     </p>
 
     <div class="cta-grid">
       <article class="cta-card">
-        <h3>RunestoneCore</h3>
-        <p>Explore the main platform systems, infrastructure, and core feature set.</p>
-        <a href="/features.html" class="button">Open RunestoneCore Page</a>
+        <h3>Foundation First</h3>
+        <p>The core systems need to be strong enough that future content can grow cleanly instead of collapsing under patchwork structure.</p>
       </article>
 
       <article class="cta-card">
-        <h3>RunestoneSkills</h3>
-        <p>See the dedicated skills module page for progression systems and profession features.</p>
-        <a href="/runestoneskills.html" class="button secondary">Open RunestoneSkills Page</a>
+        <h3>World Before Gimmicks</h3>
+        <p>The project is aimed at building a believable realm with atmosphere, identity, and useful systems rather than shallow one-off features.</p>
       </article>
 
       <article class="cta-card">
-        <h3>Discord Community</h3>
-        <p>Follow current project discussion, announcements, and future updates as they happen.</p>
-        <a href="https://discord.gg/BNkJDU6qE4" class="button secondary" target="_blank" rel="noopener">Join the Discord</a>
+        <h3>Player Experience Matters</h3>
+        <p>Onboarding, utility, travel, survival flow, and clarity are all part of the roadmap — not just endgame dreams.</p>
       </article>
 
       <article class="cta-card">
-        <h3>RunestoneMMO Hangar</h3>
-        <p>View the main project page and public releases for the wider ecosystem.</p>
-        <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneMMO" class="button secondary" target="_blank" rel="noopener">Open Hangar Page</a>
+        <h3>Built to Expand</h3>
+        <p>The goal is not just a playable server for today, but a stable platform that can support much deeper content tomorrow.</p>
       </article>
     </div>
   </section>
 
   <section class="card">
-    <h2>Future Updates</h2>
+    <h2>Current Development Direction</h2>
     <p>
-      This page is reserved for future roadmap publication. Once development milestones are ready to be shared publicly,
-      they will appear here in a clearer phased format.
+      Runestone Vale already has a real live base: starter flow, Login Hub utility, graves, travel tools,
+      progression support, combat and attribute systems, custom assets, and the core structure beneath the server.
+      The next stage is about turning that solid base into a deeper world.
+    </p>
+
+    <p>
+      Right now, development is moving in the direction of <strong>stronger world depth</strong>, <strong>more meaningful progression loops</strong>,
+      <strong>better NPC and quest use</strong>, <strong>town and settlement identity</strong>, and <strong>content that gives players stronger reasons to travel, build, gather, and stay</strong>.
+    </p>
+  </section>
+
+  <section>
+    <h2>Active / Near-Term Priorities</h2>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <h3>Quest Content & NPC Direction</h3>
+        <p>
+          One of the biggest near-term goals is expanding real quest content and stronger NPC interaction.
+          The broader direction already exists, but the world needs more actual questing, guided content,
+          dialogue, objectives, and reasons for NPCs to matter beyond standing in place.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>RunestoneNPCs Direction</h3>
+        <p>
+          The project has clear interest in a stronger dedicated NPC layer for the wider ecosystem.
+          This means deeper NPC interaction, future quest hooks, better world integration,
+          and stronger support for making towns, hubs, and future content feel more alive.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Towns & Settlement Identity</h3>
+        <p>
+          Claims and broader territory direction are part of the long-term plan, but town gameplay still needs more weight.
+          Upgrades, perks, settlement identity, town growth, and stronger reasons for players to group together remain important development targets.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Discovery & Landmark Content</h3>
+        <p>
+          Exploration should feel like more than walking for XP. The realm needs more meaningful landmarks,
+          discovery moments, hidden places, and world-linked reasons to roam farther from safe ground.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>More World Content</h3>
+        <p>
+          The core systems are increasingly real, but the realm also needs more handcrafted world identity:
+          more memorable locations, stronger themed areas, more places with purpose,
+          and more reasons for players to feel like they are moving through a living setting instead of empty terrain.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Economy & Player Value Loops</h3>
+        <p>
+          The economy direction exists, but stronger player-facing value loops are still important:
+          better trade relevance, more reasons for specialization, stronger market identity,
+          and deeper links between gathering, crafting, progression, and world systems.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>Current Core-Side Growth Areas</h2>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <h3>Login Hub Expansion</h3>
+        <p>
+          The Login Hub Compass already shows the direction clearly: fewer confusing command walls, more connected player utility.
+          More important systems can still be brought into the hub over time so the realm feels smoother to live in.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Player Utility & Daily Flow</h3>
+        <p>
+          First-login experience, starter flow, travel, graves, and recurring player systems are already improving.
+          This direction will continue so the server feels cleaner, more approachable, and more immersive in everyday use.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Combat & Attribute Stability</h3>
+        <p>
+          Combat behavior, health syncing, and custom scaling have already been receiving major attention.
+          Continued refinement here matters because combat feel can shape the entire quality of the realm experience.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Graves, Recovery & Clarity</h3>
+        <p>
+          Better recovery flow and clearer death information are now part of the server direction.
+          That kind of polish matters because survival worlds feel stronger when loss is understandable instead of frustrating chaos.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Shared Menu / GUI Direction</h3>
+        <p>
+          More of the server is gradually being moved toward cleaner GUI-driven access rather than throwing every action into raw commands.
+          That direction is likely to continue as utility expands.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Broader System Cohesion</h3>
+        <p>
+          One of the biggest ongoing goals is not just “add more features,” but make sure travel, utility, progression,
+          recovery, economy, and future content all feel like parts of one realm instead of separate systems glued together.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>Current Skills-Side Growth Areas</h2>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <h3>Deeper Profession Loops</h3>
+        <p>
+          The profession backbone is live, but the long-term goal is deeper loops between gathering, refining, crafting,
+          economy, travel, and world content so professions feel even more central to the life of the realm.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>More Skill-Connected Content</h3>
+        <p>
+          RunestoneSkills grows stronger as more of the world is built around it.
+          That means future value in quests, towns, rewards, trade, and world events tied more directly to profession growth.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Discovery Integration</h3>
+        <p>
+          Exploration and broader profession systems still have room to connect more naturally to landmarks, hidden areas,
+          world progression, and reasons to travel the map beyond routine grinding.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Crafting & Item Identity</h3>
+        <p>
+          The project benefits from continuing to deepen how materials, custom items, crafting paths, and profession rewards
+          feel inside the economy and the fantasy identity of the server.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>More Profession Depth</h3>
+        <p>
+          The plugin is built to expand, which means more tuning, more depth, and more meaningful live content can continue to be layered on over time.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Stronger Long-Term Progression Identity</h3>
+        <p>
+          Skills should increasingly shape how players build their identity in the realm — not just what they grind,
+          but what role they play in the broader world.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Longer-Term Vision</h2>
+    <p>
+      The bigger vision for Runestone Vale and RunestoneMMO goes beyond utility polish and system hardening.
+      The long-term goal is a stronger <strong>fantasy MMORPG platform</strong> built around world identity, progression, settlement,
+      NPC interaction, discovery, and a more believable lived-in realm.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Deeper Questing</h3>
+        <p>Not just NPC decorations, but real quest content with objectives, progression, and stronger world meaning.</p>
+      </div>
+
+      <div class="card">
+        <h3>Living Settlements</h3>
+        <p>Towns, player communities, and future settlement systems with more identity, purpose, and long-term relevance.</p>
+      </div>
+
+      <div class="card">
+        <h3>Stronger Exploration</h3>
+        <p>A world that rewards roaming, discovering, uncovering, and interacting with the map beyond pure survival grind.</p>
+      </div>
+
+      <div class="card">
+        <h3>Broader MMORPG Identity</h3>
+        <p>A realm that feels less like a random plugin server and more like a real fantasy world with roles, systems, and memory.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>What Is Not the Goal</h2>
+    <p>
+      This project is not trying to become a server stuffed with random features that do not belong together.
+      The goal is not shallow chaos, gimmick spam, or throwing every idea into the world just because it is possible.
+    </p>
+
+    <p>
+      The goal is a stronger realm with real identity:
+      something more grounded, more connected, more memorable, and more worth staying in over time.
+    </p>
+  </section>
+
+  <section class="cta-section">
+    <h2>How the Community Can Help</h2>
+    <p>
+      Early players and community members matter a lot during this stage of the project.
+      Some of the best support is not just hype — it is useful feedback, real testing, world involvement, and helping shape the direction of the realm while it is still growing.
+    </p>
+
+    <div class="cta-grid">
+      <article class="cta-card">
+        <h3>Testing</h3>
+        <p>Help find rough edges, balance issues, and usability problems while the systems are still being refined.</p>
+      </article>
+
+      <article class="cta-card">
+        <h3>Building</h3>
+        <p>Help strengthen the world itself with themed construction, town ideas, landmark design, and stronger visual identity.</p>
+      </article>
+
+      <article class="cta-card">
+        <h3>Feedback</h3>
+        <p>Share what feels good, what feels confusing, and what kinds of content would make the world stronger.</p>
+      </article>
+
+      <article class="cta-card">
+        <h3>Long-Term Presence</h3>
+        <p>Early community members help define the tone, memory, and social identity of a world before it reaches its final form.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Development Transparency</h2>
+    <p>
+      This roadmap is meant to show direction, not lock the project into fake corporate milestone dates.
+      Some systems may move faster than others. Some features may change shape as the world matures.
+      The important part is that the development direction is real, the foundation already exists, and the realm is actively growing.
+    </p>
+
+    <p>
+      Runestone Vale is not waiting to become something someday — it is already becoming that world now.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>Follow the Project</h2>
+    <p>
+      You can follow the active parts of the project through the main site pages and official links below.
+      This is the best way to keep up with progress as the realm continues to grow.
     </p>
 
     <div class="button-row-left">
-      <a href="https://runestonemmo.com/" class="button secondary" target="_blank" rel="noopener">Main Website</a>
-      <a href="https://www.patreon.com/cw/RunestoneMMO" class="button secondary" target="_blank" rel="noopener">Support Development</a>
+      <a href="/RunestoneCore.html" class="button">View RunestoneCore</a>
+      <a href="/RunestoneSkills.html" class="button secondary">View RunestoneSkills</a>
+      <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneMMO" class="button secondary" target="_blank" rel="noopener">RunestoneMMO Hangar</a>
+      <a href="https://discord.gg/BNkJDU6qE4" class="button secondary" target="_blank" rel="noopener">Join the Discord</a>
     </div>
   </section>
 
 </main>
 
 <footer>
-  <p>RunestoneMMO — Forged in the Deep Halls</p>
+  <p>RunestoneMMO — Forged in the Deep Halls.</p>
+  <p>
+    <a href="/index.html">Home</a> •
+    <a href="/features.html">Server-Features</a> •
+    <a href="/RunestoneCore.html">RunestoneCore</a> •
+    <a href="/RunestoneSkills.html">RunestoneSkills</a> •
+    <a href="/roadmap_development.html">Roadmap</a> •
+    <a href="/credits.html">Credits</a> •
+    <a href="/terms.html">Terms</a>
+  </p>
   <p>
     <a href="https://discord.gg/BNkJDU6qE4" target="_blank" rel="noopener">Discord</a> •
     <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneMMO" target="_blank" rel="noopener">RunestoneMMO Hangar</a> •
-    <a href="/features.html">RunestoneCore</a> •
-    <a href="/runestoneskills.html">RunestoneSkills</a>
+    <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneSkills" target="_blank" rel="noopener">RunestoneSkills Hangar</a> •
+    <a href="https://www.patreon.com/cw/RunestoneMMO" target="_blank" rel="noopener">Patreon</a>
   </p>
 </footer>
+
+<script>
+function toggleMenu() {
+  const nav = document.getElementById("mobileNav");
+  const button = document.querySelector(".menu-toggle");
+  nav.classList.toggle("open");
+  button.setAttribute("aria-expanded", nav.classList.contains("open") ? "true" : "false");
+}
+
+document.addEventListener("click", function (event) {
+  const nav = document.getElementById("mobileNav");
+  const button = document.querySelector(".menu-toggle");
+
+  if (!nav || !button) return;
+
+  const clickedInsideNav = nav.contains(event.target);
+  const clickedButton = button.contains(event.target);
+
+  if (!clickedInsideNav && !clickedButton) {
+    nav.classList.remove("open");
+    button.setAttribute("aria-expanded", "false");
+  }
+});
+</script>
 
 </body>
 </html>
