@@ -13,7 +13,11 @@
   <div class="topbar">
     <a class="brand" href="/index.html">Runestone Vale</a>
 
-    <nav class="top-links">
+    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleMenu()">
+      ☰
+    </button>
+
+    <nav class="top-links" id="mobileNav">
       <a class="top-link" href="/index.html">Home</a>
       <a class="top-link" href="/features.html">Server-Features</a>
       <a class="top-link" href="/RunestoneCore.html">RunestoneCore</a>
@@ -70,13 +74,13 @@
       </article>
 
       <article class="cta-card">
-        <h3>Staff &amp; Helpers</h3>
-        <p>The people helping keep the world organized, supported, and alive.</p>
+        <h3>Core Contributors</h3>
+        <p>The people helping strengthen the world through development, support, and long-term involvement.</p>
       </article>
 
       <article class="cta-card">
-        <h3>Supporters &amp; Donors</h3>
-        <p>The people helping the project endure through support and belief in the vision.</p>
+        <h3>Support &amp; Belief</h3>
+        <p>The people whose effort, trust, and presence help keep the forge alive.</p>
       </article>
     </div>
   </section>
@@ -112,176 +116,21 @@
         <h3>TakoSensei - .wildcarnival987</h3>
         <p><strong>Role:</strong> Co-Developer / Core Contributor / Project Support / Head Builder</p>
         <p>
-          Building, development, balance guidance,
-          major support, design direction, long-term project involvement.
+          Building, development, balance guidance, major support, design direction,
+          and long-term project involvement across the realm and wider project vision.
         </p>
       </div>
 
       <div class="card">
-        <h3> Tr1cky - 0xy0xy </h3>
+        <h3>Tr1cky - 0xy0xy</h3>
         <p><strong>Role:</strong> Co-Developer / Core Contributor / Project Support</p>
         <p>
-          Moderation, development, balance guidance,
-          major support, design direction, long-term project involvement.
+          Moderation, development, balance guidance, major support, design direction,
+          and long-term project involvement helping strengthen the project over time.
         </p>
       </div>
 
     </div>
-  </section>
-
-  <section>
-    <h2>Staff of the Realm</h2>
-    <p>
-      The staff help guide the community, support the players, maintain order, and protect the integrity of the realm.
-    </p>
-
-    <div class="card-grid">
-
-      <div class="card">
-        <h3>Staff Member Name</h3>
-        <p><strong>Role:</strong> Administrator</p>
-        <p>
-          Helped with server management, community leadership, staff duties, moderation, and keeping the realm steady.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>Staff Member Name</h3>
-        <p><strong>Role:</strong> Moderator</p>
-        <p>
-          Supported the players, helped with moderation, and contributed to the day-to-day life of the server.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>Staff Member Name</h3>
-        <p><strong>Role:</strong> Staff / Helper</p>
-        <p>
-          Add more staff here as needed — moderators, admins, support staff, community helpers, or trusted keepers of the realm.
-        </p>
-      </div>
-
-    </div>
-  </section>
-
-  <section>
-    <h2>Builders &amp; World Creators</h2>
-    <p>
-      Realms are remembered by the places they leave in the mind — halls, roads, strongholds, villages, mountains,
-      ruins, and the details that make a world feel alive. These are the hands that helped shape those places.
-    </p>
-
-    <div class="card-grid">
-
-      <div class="card">
-        <h3>Builder Name</h3>
-        <p><strong>Role:</strong> Builder / World Designer</p>
-        <p>
-          Helped create the architecture, terrain, structures, or atmosphere that gave Runestone Vale part of its visual identity.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>Builder Name</h3>
-        <p><strong>Role:</strong> Builder / Creator</p>
-        <p>
-          Contributed to shaping important locations, landmarks, settlements, or world detail across the realm.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>Builder Name</h3>
-        <p><strong>Role:</strong> Environment / World Support</p>
-        <p>
-          Use this section for anyone who helped craft the physical world players walk through.
-        </p>
-      </div>
-
-    </div>
-  </section>
-
-  <section>
-    <h2>Testers, Helpers &amp; Trusted Contributors</h2>
-    <p>
-      Not every important contribution is visible in stone. Many of the people who help shape a project do so through
-      testing, feedback, bug reports, practical support, balance discussions, and quiet help behind the scenes.
-    </p>
-
-    <div class="card-grid">
-
-      <div class="card">
-        <h3>Contributor Name</h3>
-        <p><strong>Role:</strong> Tester / Helper</p>
-        <p>
-          Helped test features, track down issues, and improve the player experience through practical support.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>Contributor Name</h3>
-        <p><strong>Role:</strong> Balance / Feedback Support</p>
-        <p>
-          Offered useful ideas, gameplay feedback, and development guidance that helped refine the realm.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>Contributor Name</h3>
-        <p><strong>Role:</strong> Community Contributor</p>
-        <p>
-          A place to honor anyone who meaningfully helped the project even without a formal title.
-        </p>
-      </div>
-
-    </div>
-  </section>
-
-  <section>
-    <h2>Supporters, Patrons &amp; Donors</h2>
-    <p>
-      Support keeps the forge alive. Whether through donations, Patreon backing, or long-term encouragement,
-      supporters help make continued work on the realm more possible.
-    </p>
-
-    <div class="card-grid">
-
-      <div class="card">
-        <h3>Supporter Name</h3>
-        <p><strong>Role:</strong> Donor / Supporter</p>
-        <p>
-          Thank you for helping support the continued growth of Runestone Vale and the wider RunestoneMMO vision.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>Supporter Name</h3>
-        <p><strong>Role:</strong> Patron</p>
-        <p>
-          Your support helps keep development moving, systems growing, and the realm alive.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>Supporter Name</h3>
-        <p><strong>Role:</strong> Realm Supporter</p>
-        <p>
-          Add more donor, patron, or supporter names here as the hall grows over time.
-        </p>
-      </div>
-
-    </div>
-  </section>
-
-  <section class="card">
-    <h2>Those Yet to Be Written</h2>
-    <p>
-      The Hall of Honor is not finished. As Runestone Vale grows, more names will be carved into its memory.
-      More staff will rise, more builders will shape the land, more testers will strengthen the systems,
-      and more supporters will help keep the forge alive.
-    </p>
-    <p>
-      This page is meant to grow with the project — a living record of the people who helped make the realm real.
-    </p>
   </section>
 
   <section class="card">
@@ -291,6 +140,7 @@
       tested unfinished systems, shared ideas, or simply believed this world was worth building:
       thank you.
     </p>
+
     <p>
       No realm is forged alone.
     </p>
@@ -317,6 +167,30 @@
     <a href="https://discord.gg/BNkJDU6qE4" target="_blank" rel="noopener">Discord</a>
   </p>
 </footer>
+
+<script>
+function toggleMenu() {
+  const nav = document.getElementById("mobileNav");
+  const button = document.querySelector(".menu-toggle");
+  nav.classList.toggle("open");
+  button.setAttribute("aria-expanded", nav.classList.contains("open") ? "true" : "false");
+}
+
+document.addEventListener("click", function (event) {
+  const nav = document.getElementById("mobileNav");
+  const button = document.querySelector(".menu-toggle");
+
+  if (!nav || !button) return;
+
+  const clickedInsideNav = nav.contains(event.target);
+  const clickedButton = button.contains(event.target);
+
+  if (!clickedInsideNav && !clickedButton) {
+    nav.classList.remove("open");
+    button.setAttribute("aria-expanded", "false");
+  }
+});
+</script>
 
 </body>
 </html>
