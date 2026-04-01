@@ -2,57 +2,258 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Send a Raven — RunestoneMMO</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — RunestoneMMO</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
 
 <body>
 
-<div class="contact-overlay">
+<header>
+  <div class="topbar">
+    <a class="brand" href="/index.html">Runestone Vale</a>
 
-  <!-- LARGE RAVEN IMAGE (full width, no right-side crop) -->
-  <img src="/images/send-a-raven.png"
-       alt="Raven delivering a message"
-       class="raven-bg">
+    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleMenu()">
+      ☰
+    </button>
 
-  <!-- OVERLAY FORM PANEL -->
-  <div class="contact-panel">
+    <nav class="top-links" id="mobileNav">
+      <a class="top-link" href="/index.html">Home</a>
+      <a class="top-link" href="/features.html">Server-Features</a>
+      <a class="top-link" href="/RunestoneCore.html">RunestoneCore</a>
+      <a class="top-link" href="/RunestoneSkills.html">RunestoneSkills</a>
+      <a class="top-link" href="/roadmap_development.html">Roadmap</a>
+      <a class="top-link" href="/contact.html">Contact</a>
+      <a class="top-link" href="/credits.html">Credits</a>
+      <a class="top-link" href="/terms.html">Terms</a>
+    </nav>
+  </div>
+</header>
 
-    <h1>Send a Raven</h1>
+<div class="hero-banner"></div>
+
+<main>
+
+  <section class="hero">
+    <h1>Contact RunestoneMMO</h1>
+    <p class="subtitle">Need help, want to ask a question, report an issue, or get in touch with the realm? Send a message below or reach the project through Discord.</p>
 
     <p>
-      Should you seek answers, guidance, or wish to deliver word to the Deep Halls,
-      a raven stands ready. Inscribe your message below, and it shall take wing
-      toward the Runestone Keep.
+      Whether you are a player, tester, builder, supporter, or someone simply curious about <strong>Runestone Vale</strong> and the wider
+      <strong>RunestoneMMO</strong> project, this page is the main place to reach out.
     </p>
 
-    <form action="https://formspree.io/f/meelkpdq" method="POST" class="contact-form">
+    <p>
+      You can send a direct message through the contact form below, or use the community Discord for faster discussion,
+      announcements, testing updates, project questions, and general contact with the realm.
+    </p>
 
-      <input type="hidden" name="_redirect" value="https://runestonemmo.com/success.html">
+    <div class="buttons">
+      <a href="https://discord.gg/BNkJDU6qE4" class="button" target="_blank" rel="noopener">Join the Discord</a>
+      <a href="/index.html" class="button secondary">Back to Runestone Vale</a>
+      <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneMMO" class="button secondary" target="_blank" rel="noopener">View on Hangar</a>
+    </div>
+  </section>
 
-      <label>Your Name</label>
-      <input type="text" name="name" required>
+  <section class="cta-section">
+    <h2>Best Ways to Reach the Project</h2>
+    <p>
+      Different contact paths are useful for different reasons. If you are not sure where to start, Discord is usually the fastest and most active option.
+    </p>
 
-      <label>Your Email</label>
-      <input type="email" name="email" required>
+    <div class="cta-grid">
+      <article class="cta-card">
+        <h3>Discord</h3>
+        <p>The best place for announcements, server questions, project updates, early testing discussion, and community contact.</p>
+      </article>
 
-      <label>Your Message</label>
-      <textarea name="message" rows="6" required></textarea>
+      <article class="cta-card">
+        <h3>Contact Form</h3>
+        <p>Useful for direct messages, longer questions, more formal contact, or reaching out without joining Discord first.</p>
+      </article>
 
-      <button type="submit" class="button">Send the Raven</button>
-    </form>
+      <article class="cta-card">
+        <h3>Project Pages</h3>
+        <p>You can also follow the development direction through the website, Hangar pages, and the broader RunestoneMMO project pages.</p>
+      </article>
 
-  </div>
-</div>
+      <article class="cta-card">
+        <h3>Early Realm Involvement</h3>
+        <p>Builders, testers, supporters, long-term players, and early community members are all welcome to reach out and get involved.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Discord Contact Details</h2>
+    <p>
+      The main community and project contact point is the official <strong>RunestoneMMO Discord</strong>.
+      This is the best place to follow updates, ask questions, get help, and stay connected to the development of the realm.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Official Discord</h3>
+        <p><strong>Invite Link:</strong></p>
+        <p><a href="https://discord.gg/BNkJDU6qE4" target="_blank" rel="noopener">https://discord.gg/BNkJDU6qE4</a></p>
+      </div>
+
+      <div class="card">
+        <h3>Use Discord For</h3>
+        <ul>
+          <li>Server questions</li>
+          <li>Project updates and announcements</li>
+          <li>Testing and feedback</li>
+          <li>Bug reports and general support</li>
+          <li>Community discussion</li>
+          <li>Getting involved with Runestone Vale early</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Why Discord Matters</h3>
+        <p>
+          Discord is not just a social link. It is the main gateway into the active community around the realm,
+          the easiest place to follow development, and the best current path for staying connected to the project as it grows.
+        </p>
+      </div>
+    </div>
+
+    <div class="button-row-left">
+      <a href="https://discord.gg/BNkJDU6qE4" class="button" target="_blank" rel="noopener">Open Discord</a>
+      <a href="/roadmap_development.html" class="button secondary">View Roadmap</a>
+      <a href="/features.html" class="button secondary">View Server Features</a>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Send a Raven</h2>
+    <p>
+      Should you seek answers, guidance, or wish to deliver word to the Deep Halls,
+      a raven stands ready. Inscribe your message below, and it shall take wing toward the Runestone Keep.
+    </p>
+
+    <div class="card-grid">
+      <div class="card" style="padding: 18px;">
+        <img src="/images/send-a-raven.png" alt="Raven delivering a message" style="width: 100%; display: block; border-radius: 10px;">
+      </div>
+
+      <div class="card">
+        <form action="https://formspree.io/f/meelkpdq" method="POST" class="contact-form">
+          <input type="hidden" name="_redirect" value="https://runestonemmo.com/success.html">
+
+          <label for="name">Your Name</label>
+          <input id="name" type="text" name="name" required>
+
+          <label for="email">Your Email</label>
+          <input id="email" type="email" name="email" required>
+
+          <label for="message">Your Message</label>
+          <textarea id="message" name="message" rows="8" required></textarea>
+
+          <button type="submit" class="button">Send the Raven</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>What You Can Contact Us About</h2>
+    <div class="card-grid">
+      <div class="card">
+        <h3>Server Questions</h3>
+        <p>Ask about joining, server direction, features, current state, or how the realm works.</p>
+      </div>
+
+      <div class="card">
+        <h3>Bug Reports</h3>
+        <p>Report issues, broken behavior, confusing systems, or anything that feels off while playing or testing.</p>
+      </div>
+
+      <div class="card">
+        <h3>Testing & Feedback</h3>
+        <p>Share feedback on gameplay, progression, onboarding, UI, utility features, balance, or overall world feel.</p>
+      </div>
+
+      <div class="card">
+        <h3>Community Involvement</h3>
+        <p>Reach out if you want to help as a tester, builder, supporter, long-term player, or early community member.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Before You Send a Message</h2>
+    <p>
+      If your question is about current development, announcements, or how to join the realm,
+      Discord will usually be the quickest place to get an answer.
+    </p>
+
+    <p>
+      If your message is longer, more detailed, or something you would rather send privately through the website,
+      the contact form is a good option.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>Stay Connected to the Realm</h2>
+    <p>
+      Runestone Vale is still growing, and the people who reach out early often become part of the story of how the realm takes shape.
+      Whether you are here to play, test, build, support, or simply watch the project grow, you are welcome in the halls.
+    </p>
+
+    <div class="button-row-left">
+      <a href="https://discord.gg/BNkJDU6qE4" class="button" target="_blank" rel="noopener">Join the Discord</a>
+      <a href="/RunestoneCore.html" class="button secondary">Explore RunestoneCore</a>
+      <a href="/RunestoneSkills.html" class="button secondary">Explore RunestoneSkills</a>
+      <a href="/roadmap_development.html" class="button secondary">View Roadmap</a>
+    </div>
+  </section>
+
+</main>
 
 <footer>
-  <p>RunestoneMMO — Forged in the Deep Halls</p>
+  <p>RunestoneMMO — Forged in the Deep Halls.</p>
   <p>
-    <a href="https://discord.gg/4ZAzaWGV" target="_blank">Guild Hall</a> •
-    <a href="/contact.html">Send a Raven</a> •
-    <a href="/terms.html">Terms & Licensing</a>
+    <a href="/index.html">Home</a> •
+    <a href="/features.html">Server-Features</a> •
+    <a href="/RunestoneCore.html">RunestoneCore</a> •
+    <a href="/RunestoneSkills.html">RunestoneSkills</a> •
+    <a href="/roadmap_development.html">Roadmap</a> •
+    <a href="/contact.html">Contact</a> •
+    <a href="/terms.html">Terms</a>
+  </p>
+  <p>
+    <a href="https://discord.gg/BNkJDU6qE4" target="_blank" rel="noopener">Discord</a> •
+    <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneMMO" target="_blank" rel="noopener">RunestoneMMO Hangar</a> •
+    <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneSkills" target="_blank" rel="noopener">RunestoneSkills Hangar</a> •
+    <a href="https://www.patreon.com/cw/RunestoneMMO" target="_blank" rel="noopener">Patreon</a>
   </p>
 </footer>
+
+<script>
+function toggleMenu() {
+  const nav = document.getElementById("mobileNav");
+  const button = document.querySelector(".menu-toggle");
+  nav.classList.toggle("open");
+  button.setAttribute("aria-expanded", nav.classList.contains("open") ? "true" : "false");
+}
+
+document.addEventListener("click", function (event) {
+  const nav = document.getElementById("mobileNav");
+  const button = document.querySelector(".menu-toggle");
+
+  if (!nav || !button) return;
+
+  const clickedInsideNav = nav.contains(event.target);
+  const clickedButton = button.contains(event.target);
+
+  if (!clickedInsideNav && !clickedButton) {
+    nav.classList.remove("open");
+    button.setAttribute("aria-expanded", "false");
+  }
+});
+</script>
 
 </body>
 </html>
