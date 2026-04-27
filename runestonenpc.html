@@ -1,1 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RunestoneNPCs — The NPC, Quest, Dialogue & Shop Runtime of RunestoneMMO</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
 
+<body>
+
+<header>
+  <div class="topbar">
+    <a class="brand" href="/index.html">Runestone Vale</a>
+
+    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleMenu()">
+      ☰
+    </button>
+
+    <nav class="top-links" id="mobileNav">
+      <a class="top-link" href="/index.html">Home</a>
+      <a class="top-link" href="/features.html">Server-Features</a>
+
+      <div class="nav-dropdown">
+        <button class="top-link dropdown-toggle" type="button" aria-expanded="false" onclick="toggleRunestoneDropdown(event)">
+          RunestoneMMO ▾
+        </button>
+
+        <div class="dropdown-menu" id="runestoneDropdown">
+          <a class="dropdown-link" href="/RunestoneCore.html">RunestoneCore</a>
+          <a class="dropdown-link" href="/RunestoneSkills.html">RunestoneSkills</a>
+          <a class="dropdown-link" href="/runestoneadmintool.html">RunestoneAdminTool</a>
+          <a class="dropdown-link" href="/runestonehub.html">RunestoneHub</a>
+          <a class="dropdown-link" href="/runestonecombat.html">RunestoneCombat</a>
+          <a class="dropdown-link" href="/runestonestamina.html">RunestoneStamina</a>
+          <a class="dropdown-link" href="/runestonenpc.html">RunestoneNPCs</a>
+        </div>
+      </div>
+
+      <a class="top-link" href="/roadmap_development.html">Roadmap</a>
+      <a class="top-link" href="/credits.html">Credits</a>
+      <a class="top-link" href="/terms.html">Terms</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero-banner"></div>
+
+<main>
+
+  <section class="hero">
+    <h1>RunestoneNPCs</h1>
+    <p class="subtitle">The NPC, dialogue, quest, and shop runtime of RunestoneMMO — built to make NPCs feel like real parts of the realm.</p>
+
+    <p>
+      <strong>RunestoneNPCs</strong> is the authoritative NPC gameplay module for the <strong>RunestoneMMO</strong> ecosystem.
+      It owns NPC bindings, dialogue packages, quest packages, quest state resolution, quest offers, quest rewards,
+      NPC shop packages, NPC shop bindings, and click-open runtime behavior for Runestone Vale.
+    </p>
+
+    <p>
+      RunestoneNPCs works alongside <strong>Citizens</strong>, but does not replace it. Citizens owns the physical NPC entity.
+      RunestoneNPCs owns the MMO gameplay attached to that NPC: what dialogue appears, what quests are offered,
+      what shops open, how quest state progresses, and how NPC interaction behaves.
+    </p>
+
+    <p>
+      In simple terms: <strong>Citizens creates the NPC body, RunestoneCore exposes the bridge commands, AdminTool gives staff a cleaner GUI, and RunestoneNPCs owns the NPC gameplay.</strong>
+    </p>
+
+    <div class="buttons">
+      <a class="button" href="https://hangar.papermc.io/TotalCarnage767/RunestoneMMO" target="_blank" rel="noopener">RunestoneMMO on Hangar</a>
+      <a class="button secondary" href="https://discord.gg/BNkJDU6qE4" target="_blank" rel="noopener">Join the Discord</a>
+      <a class="button secondary" href="/index.html">Back to Runestone Vale</a>
+    </div>
+
+    <p style="margin-top: 18px; font-size: 1.1rem;">
+      <strong>Platform:</strong> Minecraft Java Edition • Paper 1.21.11 • Java 21<br>
+      <strong>Requires:</strong> RunestoneCore<br>
+      <strong>Integrates With:</strong> Citizens • RunestoneAdminTool • RunestoneHub
+    </p>
+  </section>
+
+  <section class="cta-section">
+    <h2>What RunestoneNPCs Owns</h2>
+    <p>
+      RunestoneNPCs owns the NPC MMO runtime. It is the source of truth for NPC content behavior,
+      while Core and AdminTool provide command bridges and staff-facing workflow access.
+    </p>
+
+    <div class="cta-grid">
+      <article class="cta-card">
+        <h3>NPC Bindings</h3>
+        <p>Connects Citizens NPC IDs to Runestone binding data, dialogue packages, quest offers, daily pools, and shop packages.</p>
+      </article>
+
+      <article class="cta-card">
+        <h3>Dialogue Runtime</h3>
+        <p>Displays multi-state and multi-page dialogue based on player quest state, NPC configuration, and package data.</p>
+      </article>
+
+      <article class="cta-card">
+        <h3>Quest Runtime</h3>
+        <p>Owns quest packages, lifecycle state, objective tracking, rewards, completion handling, and quest service integration.</p>
+      </article>
+
+      <article class="cta-card">
+        <h3>NPC Shops</h3>
+        <p>Owns curated NPC shop packages, NPC shop bindings, shop editor behavior, and buy/sell interaction runtime.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Newest NPC Highlights</h2>
+    <p>
+      Recent RunestoneNPCs work has focused on moving NPCs toward a true MMO-style content pipeline:
+      stronger quests, modern offers, better dialogue state handling, in-game authoring, NPC shops, Hub Quest Info support, and safer lifecycle behavior.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Runtime Authority Split</h3>
+        <p>
+          NPC bindings, dialogue, quests, quest offers, daily pools, and shops now belong to RunestoneNPCs instead of being treated as Core-owned config content.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Quest Service Provider</h3>
+        <p>
+          RunestoneNPCs registers the active quest service implementation used by Core scoreboards, Hub Quest Info, and read-only quest displays.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Modern Multi-Offer NPCs</h3>
+        <p>
+          NPCs can use modern offer bindings with offer IDs, order, enabled state, repeatable/daily flags, prerequisites, level requirements, and visibility rules.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Quest Completion UX</h3>
+        <p>
+          Objective-complete notifications and quest-completion dialogue screens are supported, including reward summary feedback for the player.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>NPC Shop Runtime</h3>
+        <p>
+          NPC shops support curated buy/sell behavior through authoritative shop packages and exact ItemStack-backed listings added from held items.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>In-Game Authoring Direction</h3>
+        <p>
+          Normal staff workflow is through <code>/rnpc</code> and AdminTool, while YAML files act as persistence backends rather than the preferred manual editing path.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Module Boundary</h2>
+    <p>
+      RunestoneNPCs is powerful because its ownership is clear. It owns the NPC MMO runtime, but it does not own Citizens entities,
+      Core command registration, AdminTool menus, Hub rendering, or unrelated economy/player-shop systems.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>RunestoneNPCs Owns</h3>
+        <ul>
+          <li>NPC binding runtime</li>
+          <li>NPC dialogue package runtime</li>
+          <li>NPC quest package runtime</li>
+          <li>Quest lifecycle and player quest state resolution</li>
+          <li>Quest reward resolution and completion handling</li>
+          <li>Modern multi-offer quest bindings</li>
+          <li>Per-NPC daily pool runtime support</li>
+          <li>NPC shop package runtime</li>
+          <li>NPC shop editor and open behavior</li>
+          <li><code>npcs.yml</code>, <code>quests.yml</code>, and <code>shops.yml</code> persistence authority</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Other Systems Own</h3>
+        <ul>
+          <li><strong>Citizens</strong> owns NPC entities, selection, spawning, despawning, movement, and physical NPC existence.</li>
+          <li><strong>RunestoneCore</strong> owns the temporary <code>/rnpc</code> command/bridge surface, quest service interface, scoreboards, economy APIs, and shared services.</li>
+          <li><strong>RunestoneAdminTool</strong> owns staff GUI workflows and selected-NPC orchestration.</li>
+          <li><strong>RunestoneHub</strong> owns the player Hub UI and read-only Quest Info display.</li>
+          <li><strong>RunestoneSkills</strong> owns skill XP and skill definitions used by quest rewards/requirements.</li>
+          <li><strong>RunestoneCombat</strong> owns combat XP/runtime behavior used by combat quest rewards.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Main Systems Inside RunestoneNPCs</h2>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <h3>NPC Bindings</h3>
+        <ul>
+          <li>Binding data lives under <code>npc.bindings.&lt;npcId&gt;.*</code></li>
+          <li>Supports base binding keys</li>
+          <li>Supports dialogue binding</li>
+          <li>Supports modern multi-offer quest bindings</li>
+          <li>Supports shop binding</li>
+          <li>Supports daily pool data paths</li>
+          <li>Binding data persists in <code>npcs.yml</code></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Dialogue Packages</h3>
+        <ul>
+          <li>Dialogue data lives under <code>npc.dialogues.&lt;dialogueKey&gt;</code></li>
+          <li>Supports package title</li>
+          <li>Supports dialogue panel title</li>
+          <li>Supports NPC display name</li>
+          <li>Supports labels, buttons, layout, objective, rewards, and icon metadata</li>
+          <li>Supports state-specific lines and pages</li>
+          <li>Dialogue packages persist in <code>npcs.yml</code></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Dialogue States</h3>
+        <ul>
+          <li><code>offer</code> — before the player accepts the quest</li>
+          <li><code>active</code> — while the quest is active</li>
+          <li><code>ready_to_turn_in</code> — when objectives are complete and the player can turn in</li>
+          <li><code>completed</code> — after the quest is completed</li>
+          <li>Supports <code>states.&lt;state&gt;.lines</code></li>
+          <li>Supports <code>states.&lt;state&gt;.pages.&lt;n&gt;.lines</code></li>
+          <li>Supports fallback <code>pages.&lt;n&gt;.lines</code> and <code>lines</code></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Quest Packages</h3>
+        <ul>
+          <li>Quest data lives under <code>npc.quests.&lt;questKey&gt;</code></li>
+          <li>Supports title, summary, objective, type, target, and amount</li>
+          <li>Supports location and radius for discovery quests</li>
+          <li>Supports reward preview lines</li>
+          <li>Supports currency, skill XP, combat XP, and item rewards</li>
+          <li>Quest packages persist in <code>quests.yml</code></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Supported Quest Types</h3>
+        <ul>
+          <li><code>INVENTORY_ITEM</code> — checks for items in inventory</li>
+          <li><code>DELIVER_ITEM</code> — checks and consumes required items on turn-in</li>
+          <li><code>KILL_MOB</code> — tracks valid entity kills</li>
+          <li><code>INTERACT_NPC</code> — tracks NPC interaction objectives</li>
+          <li><code>DISCOVER_LOCATION</code> — tracks arrival at configured location/radius</li>
+          <li>Trainer, travel, reputation, and complex branching quest types are not live</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Quest Lifecycle</h3>
+        <ul>
+          <li><code>AVAILABLE</code></li>
+          <li><code>ACTIVE</code></li>
+          <li><code>READY_TO_TURN_IN</code></li>
+          <li><code>COMPLETED</code></li>
+          <li>Also supports failed, abandoned, and repeat-cooldown style states where relevant</li>
+          <li>Legacy state aliases are normalized into canonical lifecycle values</li>
+          <li>Player state uses keys such as <code>quest.&lt;questKey&gt;.state</code> and <code>quest.&lt;questKey&gt;.progress</code></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Quest Rewards</h3>
+        <ul>
+          <li>Currency rewards</li>
+          <li>Skill XP rewards</li>
+          <li>Combat XP rewards</li>
+          <li>Item rewards</li>
+          <li>Reward preview support</li>
+          <li>Completion GUI reward summary support</li>
+          <li>Reward granting is designed to avoid duplicate reward exploits</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Quest Offers</h3>
+        <ul>
+          <li>Modern offer path: <code>npc.bindings.&lt;npcId&gt;.quests.&lt;offerId&gt;.*</code></li>
+          <li>Offer points to a quest package</li>
+          <li>Supports offer ordering</li>
+          <li>Supports enabled/disabled state</li>
+          <li>Supports repeatable and daily flags</li>
+          <li>Supports completed-quest prerequisites</li>
+          <li>Supports level requirements</li>
+          <li>Supports visibility behavior for unmet requirements</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Daily Quest Pools</h3>
+        <ul>
+          <li>Per-NPC daily pool data path exists under <code>npc.bindings.&lt;npcId&gt;.daily_pool.*</code></li>
+          <li>Supports per-player rolled daily offers in runtime direction</li>
+          <li>Designed for future daily/repeatable NPC quest content</li>
+          <li>Daily pool editing UI is not first-version live scope</li>
+          <li>Static offer workflows remain separate from daily pool workflows</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>NPC Shops</h3>
+        <ul>
+          <li>Shop definitions live under <code>npc.shops.&lt;shopKey&gt;</code></li>
+          <li>NPC shop binding path: <code>npc.bindings.&lt;npcId&gt;.shop</code></li>
+          <li>Supports in-game shop editor</li>
+          <li>Supports shop preview</li>
+          <li>Supports exact held ItemStack listings</li>
+          <li>Supports custom Oraxen items where the item exists in the held stack</li>
+          <li>Shop data persists in <code>shops.yml</code></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>NPC Shop Modes</h3>
+        <ul>
+          <li><code>BUY_ONLY</code> — players buy from the NPC</li>
+          <li><code>SELL_ONLY</code> — players sell to the NPC</li>
+          <li><code>BUY_AND_SELL</code> — NPC supports both buy and sell behavior</li>
+          <li>Valid menu sizes: <code>9</code>, <code>18</code>, <code>27</code>, <code>36</code>, <code>45</code>, <code>54</code></li>
+          <li>Shop editor remains the safest way to manage listings</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Runtime Reload</h3>
+        <ul>
+          <li><code>/rnpc reload</code> refreshes NPC runtime authority</li>
+          <li>Refreshes config-backed NPC data</li>
+          <li>Re-registers NPC-owned listeners where needed</li>
+          <li>Does not wipe player quest progress</li>
+          <li>Does not wipe bindings, dialogues, quests, or shops data</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>NPC Interaction Flow</h2>
+    <p>
+      NPC interaction follows a clear ownership model. Citizens provides the clickable NPC entity, RunestoneNPCs resolves what the NPC should do,
+      and Core/AdminTool provide bridge surfaces for staff.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>When a Player Clicks an NPC</h3>
+        <ul>
+          <li>Citizens handles the physical NPC entity</li>
+          <li>RunestoneNPCs checks the NPC binding</li>
+          <li>If a valid shop is bound, the NPC shop can open</li>
+          <li>If dialogue/quest data is bound, the interaction opens the correct dialogue/quest state</li>
+          <li>Quest state determines whether the player sees offer, active, ready, or completed dialogue</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Player Quest Data</h3>
+        <ul>
+          <li>Tracks active quest state</li>
+          <li>Tracks objective progress</li>
+          <li>Tracks completed quests</li>
+          <li>Tracks ready notification flags for anti-spam behavior</li>
+          <li>Tracks daily availability where daily offers are used</li>
+          <li>Exposes read-only snapshots through the quest service boundary</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Hub & Scoreboard Integration</h3>
+        <ul>
+          <li>RunestoneNPCs provides quest data through <code>RunestoneQuestService</code></li>
+          <li>RunestoneHub reads quest info through the service</li>
+          <li>Core scoreboards read quest placeholders through the service</li>
+          <li>Core does not directly mutate RunestoneNPCs quest state through display systems</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Commands & Permissions</h2>
+    <p>
+      RunestoneNPCs itself does not need a large public player command root. The live operational command surface is exposed through the Core-side
+      <code>/rnpc</code> bridge and AdminTool workflows.
+    </p>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <h3>Main Bridge Command</h3>
+        <ul>
+          <li><code>/rnpc</code> — main NPC admin bridge command</li>
+          <li><code>/runpc</code> — alias</li>
+          <li><code>/rnpcs</code> — alias</li>
+          <li><code>/rnb</code> — convenience alias for bind workflows</li>
+          <li><code>/rnd</code> — convenience alias for dialogue workflows</li>
+          <li><code>/rnq</code> — convenience alias for quest workflows</li>
+          <li><code>/rndb</code> — convenience alias for debug workflows</li>
+          <li><code>/rnm</code> — convenience alias for metadata workflows</li>
+          <li><code>/rno</code> — convenience alias for open workflows</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Permission</h3>
+        <ul>
+          <li><code>runestonecore.npc.admin</code></li>
+          <li>Default: OP</li>
+          <li>Required for the <code>/rnpc</code> admin bridge surface</li>
+          <li>Used by staff/admin NPC management workflows</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Base NPC Commands</h3>
+        <ul>
+          <li><code>/rnpc select nearest</code></li>
+          <li><code>/rnpc bind create &lt;npcId&gt;</code></li>
+          <li><code>/rnpc bind &lt;npcId&gt; &lt;bindingKey&gt;</code></li>
+          <li><code>/rnpc unbind &lt;npcId&gt;</code></li>
+          <li><code>/rnpc debug &lt;npcId&gt; [player]</code></li>
+          <li><code>/rnpc meta &lt;npcId&gt;</code></li>
+          <li><code>/rnpc meta &lt;npcId&gt; sync</code></li>
+          <li><code>/rnpc open &lt;npcId&gt; [player]</code></li>
+          <li><code>/rnpc reload</code></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Dialogue Commands</h3>
+        <ul>
+          <li><code>/rnpc dialogue &lt;npcId&gt; &lt;dialogueKey&gt;</code></li>
+          <li><code>/rnpc dialogue unbind &lt;npcId&gt;</code></li>
+          <li><code>/rnpc dialogue create &lt;dialogueKey&gt;</code></li>
+          <li><code>/rnpc dialogue delete &lt;dialogueKey&gt;</code></li>
+          <li><code>/rnpc dialogue property &lt;dialogueKey&gt; &lt;path&gt; &lt;value&gt;</code></li>
+          <li><code>/rnpc dialogue info &lt;dialogueKey&gt;</code></li>
+          <li><code>/rnpc dialogue validate &lt;dialogueKey&gt;</code></li>
+          <li><code>/rnpc bind dialogue &lt;npcId&gt; &lt;dialogueKey&gt;</code></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Quest Package Commands</h3>
+        <ul>
+          <li><code>/rnpc quest create &lt;questKey&gt;</code></li>
+          <li><code>/rnpc quest delete &lt;questKey&gt;</code></li>
+          <li><code>/rnpc quest title &lt;questKey&gt; &lt;title&gt;</code></li>
+          <li><code>/rnpc quest summary &lt;questKey&gt; &lt;summary&gt;</code></li>
+          <li><code>/rnpc quest objective &lt;questKey&gt; &lt;objective&gt;</code></li>
+          <li><code>/rnpc quest type &lt;questKey&gt; &lt;type&gt;</code></li>
+          <li><code>/rnpc quest target &lt;questKey&gt; &lt;target&gt;</code></li>
+          <li><code>/rnpc quest amount &lt;questKey&gt; &lt;amount&gt;</code></li>
+          <li><code>/rnpc quest repeatable &lt;questKey&gt; &lt;true|false&gt;</code></li>
+          <li><code>/rnpc quest daily &lt;questKey&gt; &lt;true|false&gt;</code></li>
+          <li><code>/rnpc quest enable &lt;questKey&gt;</code></li>
+          <li><code>/rnpc quest disable &lt;questKey&gt;</code></li>
+          <li><code>/rnpc quest location &lt;questKey&gt;</code></li>
+          <li><code>/rnpc quest radius &lt;questKey&gt; &lt;radius&gt;</code></li>
+          <li><code>/rnpc quest property &lt;questKey&gt; &lt;path&gt; &lt;value&gt;</code></li>
+          <li><code>/rnpc quest info &lt;questKey&gt;</code></li>
+          <li><code>/rnpc quest validate &lt;questKey&gt;</code></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Quest Reward Commands</h3>
+        <ul>
+          <li><code>/rnpc quest reward list &lt;questKey&gt;</code></li>
+          <li><code>/rnpc quest reward add currency &lt;questKey&gt; &lt;currencyId&gt; &lt;amount&gt;</code></li>
+          <li><code>/rnpc quest reward remove currency &lt;questKey&gt; &lt;currencyId&gt;</code></li>
+          <li><code>/rnpc quest reward add skillxp &lt;questKey&gt; &lt;skillId&gt; &lt;amount&gt;</code></li>
+          <li><code>/rnpc quest reward remove skillxp &lt;questKey&gt; &lt;skillId&gt;</code></li>
+          <li><code>/rnpc quest reward add item &lt;questKey&gt; &lt;itemId&gt; &lt;amount&gt; [material]</code></li>
+          <li><code>/rnpc quest reward remove item &lt;questKey&gt; &lt;index&gt;</code></li>
+          <li><code>/rnpc quest reward set combatxp &lt;questKey&gt; &lt;amount&gt;</code></li>
+          <li><code>/rnpc quest reward clear combatxp &lt;questKey&gt;</code></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Quest Offer Commands</h3>
+        <ul>
+          <li><code>/rnpc offer list &lt;npcId&gt;</code></li>
+          <li><code>/rnpc offer set &lt;npcId&gt; &lt;offerId&gt; &lt;questKey&gt;</code></li>
+          <li><code>/rnpc offer remove &lt;npcId&gt; &lt;offerId&gt;</code></li>
+          <li><code>/rnpc offer repeatable &lt;npcId&gt; &lt;offerId&gt; &lt;true|false&gt;</code></li>
+          <li><code>/rnpc offer daily &lt;npcId&gt; &lt;offerId&gt; &lt;true|false&gt;</code></li>
+          <li><code>/rnpc offer order &lt;npcId&gt; &lt;offerId&gt; [order]</code></li>
+          <li><code>/rnpc offer enable &lt;npcId&gt; &lt;offerId&gt;</code></li>
+          <li><code>/rnpc offer disable &lt;npcId&gt; &lt;offerId&gt;</code></li>
+          <li><code>/rnpc offer visibility &lt;npcId&gt; &lt;offerId&gt; &lt;hidden|locked&gt;</code></li>
+          <li><code>/rnpc offer require add|remove|list &lt;npcId&gt; &lt;offerId&gt; [questKey]</code></li>
+          <li><code>/rnpc offer level set|remove|list &lt;npcId&gt; &lt;offerId&gt; [skillId] [level]</code></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>NPC Shop Commands</h3>
+        <ul>
+          <li><code>/rnpc shop create &lt;shopKey&gt;</code></li>
+          <li><code>/rnpc shop edit &lt;shopKey&gt;</code></li>
+          <li><code>/rnpc shop title &lt;shopKey&gt; &lt;title&gt;</code></li>
+          <li><code>/rnpc shop mode &lt;shopKey&gt; &lt;BUY_ONLY|SELL_ONLY|BUY_AND_SELL&gt;</code></li>
+          <li><code>/rnpc shop buytitle &lt;shopKey&gt; &lt;title&gt;</code></li>
+          <li><code>/rnpc shop selltitle &lt;shopKey&gt; &lt;title&gt;</code></li>
+          <li><code>/rnpc shop buysize &lt;shopKey&gt; &lt;9|18|27|36|45|54&gt;</code></li>
+          <li><code>/rnpc shop sellsize &lt;shopKey&gt; &lt;9|18|27|36|45|54&gt;</code></li>
+          <li><code>/rnpc shop addhand &lt;shopKey&gt; &lt;price&gt; [currencyId]</code></li>
+          <li><code>/rnpc shop remove &lt;shopKey&gt; &lt;index&gt;</code></li>
+          <li><code>/rnpc shop list &lt;shopKey&gt;</code></li>
+          <li><code>/rnpc shop bind &lt;npcId&gt; &lt;shopKey&gt;</code></li>
+          <li><code>/rnpc shop unbind &lt;npcId&gt;</code></li>
+          <li><code>/rnpc shop open &lt;npcId&gt; [player]</code></li>
+          <li><code>/rnpc shop preview &lt;shopKey&gt;</code></li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>Configuration & Runtime Files</h2>
+    <p>
+      RunestoneNPCs uses split configuration files. These files are authoritative persistence backends,
+      but normal staff authoring should happen through <code>/rnpc</code> commands and AdminTool workflows.
+    </p>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <h3><code>npcs.yml</code></h3>
+        <ul>
+          <li>NPC bindings</li>
+          <li>Binding defaults</li>
+          <li>Dialogue package data</li>
+          <li>NPC GUI defaults</li>
+          <li>Dialogue labels, buttons, layouts, and display tuning</li>
+          <li>Per-NPC quest offer bindings</li>
+          <li>Per-NPC shop binding keys</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3><code>quests.yml</code></h3>
+        <ul>
+          <li>Quest package data</li>
+          <li>Quest title, summary, objective, type, target, and amount</li>
+          <li>Discovery quest location/radius data</li>
+          <li>Reward preview data</li>
+          <li>Currency, skill XP, combat XP, and item rewards</li>
+          <li>Daily pool-related quest data where configured</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3><code>shops.yml</code></h3>
+        <ul>
+          <li>NPC shop package data</li>
+          <li>Shop title</li>
+          <li>Shop mode</li>
+          <li>Buy and sell page titles</li>
+          <li>Buy and sell page sizes</li>
+          <li>Buy and sell listings</li>
+          <li>Exact ItemStack-backed shop entries</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Runtime Rule</h3>
+        <ul>
+          <li>YAML is persistence, not the preferred manual workflow</li>
+          <li>Use <code>/rnpc</code> for command authoring</li>
+          <li>Use AdminTool for staff-facing GUI workflows</li>
+          <li>Use <code>/rnpc reload</code> after config/runtime changes when needed</li>
+          <li>Do not edit player quest state by hand unless specifically instructed</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>AdminTool Integration</h2>
+    <p>
+      AdminTool gives staff a safer interface for NPC work, but it does not become a second NPC backend.
+      It routes NPC actions through Citizens and the live <code>/rnpc</code> bridge.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Citizens-Side Actions</h3>
+        <ul>
+          <li>Create NPC</li>
+          <li>Select nearest NPC</li>
+          <li>Teleport to selected NPC</li>
+          <li>Highlight selected NPC</li>
+          <li>Reuse selected NPC context across follow-up actions</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>RunestoneNPC Actions</h3>
+        <ul>
+          <li>Bind and unbind NPCs</li>
+          <li>Debug NPCs</li>
+          <li>View and sync NPC metadata</li>
+          <li>Open NPC GUI</li>
+          <li>Bind or unbind dialogue</li>
+          <li>Bind quest offers</li>
+          <li>Bind and unbind shops</li>
+          <li>Reload NPC runtime</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Authoring Workflows</h3>
+        <ul>
+          <li>Browse existing dialogue packages</li>
+          <li>Create/edit/delete dialogue packages</li>
+          <li>Browse existing quest packages</li>
+          <li>Create/edit/delete quest packages</li>
+          <li>Manage quest rewards</li>
+          <li>Manage quest offers</li>
+          <li>Create/edit/preview NPC shops</li>
+          <li>Add and remove shop listings</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Recommended Staff Workflow</h2>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <h3>Creating a Quest NPC</h3>
+        <ul>
+          <li>Create or select the Citizens NPC</li>
+          <li>Run <code>/rnpc select nearest</code></li>
+          <li>Run <code>/rnpc bind create &lt;npcId&gt;</code></li>
+          <li>Create a dialogue package</li>
+          <li>Create a quest package</li>
+          <li>Set quest type, target, amount, and rewards</li>
+          <li>Bind the quest to the NPC as an offer</li>
+          <li>Bind dialogue to the NPC</li>
+          <li>Validate dialogue and quest packages</li>
+          <li>Run <code>/rnpc reload</code></li>
+          <li>Test as a normal player</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Creating an NPC Shop</h3>
+        <ul>
+          <li>Create or select the Citizens NPC</li>
+          <li>Run <code>/rnpc bind create &lt;npcId&gt;</code></li>
+          <li>Run <code>/rnpc shop create &lt;shopKey&gt;</code></li>
+          <li>Set title, mode, and page sizes</li>
+          <li>Hold item and use <code>/rnpc shop addhand</code></li>
+          <li>Use <code>/rnpc shop edit &lt;shopKey&gt;</code> for safer listing management</li>
+          <li>Preview the shop</li>
+          <li>Bind the shop to the NPC</li>
+          <li>Run <code>/rnpc reload</code></li>
+          <li>Test as a normal player</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Validation Commands</h3>
+        <ul>
+          <li><code>/rnpc debug &lt;npcId&gt;</code></li>
+          <li><code>/rnpc offer list &lt;npcId&gt;</code></li>
+          <li><code>/rnpc dialogue validate &lt;dialogueKey&gt;</code></li>
+          <li><code>/rnpc dialogue info &lt;dialogueKey&gt;</code></li>
+          <li><code>/rnpc quest validate &lt;questKey&gt;</code></li>
+          <li><code>/rnpc quest info &lt;questKey&gt;</code></li>
+          <li><code>/rnpc quest reward list &lt;questKey&gt;</code></li>
+          <li><code>/rnpc shop list &lt;shopKey&gt;</code></li>
+          <li><code>/rnpc shop preview &lt;shopKey&gt;</code></li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Important Staff Notes</h2>
+    <p>
+      RunestoneNPCs is built to support a professional content pipeline. That means staff should use the live tools,
+      validate content, and avoid bypassing the runtime with unsafe manual edits.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Do</h3>
+        <ul>
+          <li>Use AdminTool when possible</li>
+          <li>Use <code>/rnpc</code> commands for NPC gameplay logic</li>
+          <li>Use exact Bukkit material/entity names</li>
+          <li>Validate quest and dialogue packages</li>
+          <li>Use <code>/rnpc debug</code> before assuming a bug</li>
+          <li>Test as a normal non-op player</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Do Not</h3>
+        <ul>
+          <li>Do not assume Citizens owns quest/shop behavior</li>
+          <li>Do not manually edit YAML as the default workflow</li>
+          <li>Do not use obsolete single-field quest binding as the main workflow</li>
+          <li>Do not fake quest rewards through unrelated commands</li>
+          <li>Do not create duplicate unclear quest keys</li>
+          <li>Do not reload Citizens unless the Citizens NPC entity itself requires it</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Compatibility & Structure</h2>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <h3>Platform</h3>
+        <ul>
+          <li><strong>Server:</strong> Paper</li>
+          <li><strong>Minecraft:</strong> 1.21.11</li>
+          <li><strong>Java:</strong> 21</li>
+          <li><strong>Architecture:</strong> Gradle multi-module</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Dependencies</h3>
+        <ul>
+          <li><strong>Required:</strong> RunestoneCore</li>
+          <li><strong>Required for NPC entities:</strong> Citizens</li>
+          <li><strong>Integrates With:</strong> RunestoneAdminTool</li>
+          <li><strong>Read By:</strong> RunestoneHub Quest Info and Core scoreboards through quest service snapshots</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Lifecycle</h3>
+        <ul>
+          <li>Loads NPC config authority</li>
+          <li>Loads dialogue packages</li>
+          <li>Loads quest packages</li>
+          <li>Loads shop packages</li>
+          <li>Registers quest service provider</li>
+          <li>Registers NPC interaction/listener behavior</li>
+          <li>Supports runtime reload without wiping player progress</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>What Is Still Growing Inside RunestoneNPCs</h2>
+    <p>
+      RunestoneNPCs already provides the current NPC, dialogue, quest, offer, and shop runtime foundation.
+      The system is strong enough for real content, but the long-term MMO vision still leaves room for more depth.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>More Quest Content</h3>
+        <p>
+          The engine supports live quest authoring, but Runestone Vale still needs more actual questlines, tutorials, daily quests, and region-based story content.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Daily Pool Editing</h3>
+        <p>
+          Daily pool runtime paths exist, but full AdminTool pool editing UI is deferred beyond the first-version scope.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Advanced Dialogue Tooling</h3>
+        <p>
+          Multi-state and multi-page dialogue is live, while deeper narrative tooling and complex page management can grow later.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>More NPC Shop Content</h3>
+        <p>
+          NPC shops are ready for curated vendors, but the realm still needs more polished shop packages, themed vendors, and economy-connected listings.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Future Quest Types</h3>
+        <p>
+          Trainer, travel, reputation, branching, and advanced quest types are intentionally not live yet and should be added only after the current system is stable.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>World Content Integration</h3>
+        <p>
+          NPC quests can grow into dungeons, boss arenas, discoveries, towns, events, and long-term world storytelling as content expands.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>State of the Module</h2>
+    <p>
+      RunestoneNPCs is actively serving as the NPC gameplay runtime for <strong>Runestone Vale</strong>.
+      It provides the authority behind NPC bindings, dialogue states, quest packages, quest offers, rewards, shops, and quest service data.
+    </p>
+
+    <p>
+      Current development is focused on making NPC content easier to author, safer to validate, and more connected to Hub displays,
+      scoreboard information, AdminTool workflows, and future server content.
+    </p>
+
+    <p>
+      <strong>This is the NPC content engine of RunestoneMMO — the layer that turns static NPCs into quest givers, shopkeepers, guides, storytellers, and living parts of the realm.</strong>
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>Build the World Through NPCs</h2>
+    <p>
+      RunestoneNPCs gives staff the tools to turn Citizens NPCs into meaningful Runestone Vale content:
+      quests, dialogue, shops, rewards, turn-ins, tutorials, and future storylines.
+    </p>
+
+    <div class="button-row-left">
+      <a class="button" href="https://hangar.papermc.io/TotalCarnage767/RunestoneMMO" target="_blank" rel="noopener">RunestoneMMO on Hangar</a>
+      <a class="button secondary" href="/RunestoneCore.html">See RunestoneCore</a>
+      <a class="button secondary" href="/runestoneadmintool.html">See RunestoneAdminTool</a>
+      <a class="button secondary" href="/features.html">View Server Features</a>
+      <a class="button secondary" href="https://discord.gg/BNkJDU6qE4" target="_blank" rel="noopener">Join the Discord</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>RunestoneNPCs — NPC dialogue, quests, shops, and world interaction for Runestone Vale.</p>
+  <p>
+    <a href="/index.html">Home</a> •
+    <a href="/features.html">Server-Features</a> •
+    <a href="/RunestoneCore.html">RunestoneCore</a> •
+    <a href="/RunestoneSkills.html">RunestoneSkills</a> •
+    <a href="/runestoneadmintool.html">RunestoneAdminTool</a> •
+    <a href="/runestonehub.html">RunestoneHub</a> •
+    <a href="/runestonecombat.html">RunestoneCombat</a> •
+    <a href="/runestonestamina.html">RunestoneStamina</a> •
+    <a href="/runestonenpc.html">RunestoneNPCs</a> •
+    <a href="/roadmap_development.html">Roadmap</a> •
+    <a href="https://discord.gg/BNkJDU6qE4" target="_blank" rel="noopener">Discord</a> •
+    <a href="/terms.html">Terms &amp; Licensing</a>
+  </p>
+</footer>
+
+<script>
+function toggleMenu() {
+  const nav = document.getElementById("mobileNav");
+  const button = document.querySelector(".menu-toggle");
+
+  nav.classList.toggle("open");
+  button.setAttribute("aria-expanded", nav.classList.contains("open") ? "true" : "false");
+}
+
+function toggleRunestoneDropdown(event) {
+  event.stopPropagation();
+
+  const dropdown = event.currentTarget.closest(".nav-dropdown");
+  const button = dropdown.querySelector(".dropdown-toggle");
+
+  dropdown.classList.toggle("open");
+  button.setAttribute("aria-expanded", dropdown.classList.contains("open") ? "true" : "false");
+}
+
+document.addEventListener("click", function (event) {
+  const nav = document.getElementById("mobileNav");
+  const menuButton = document.querySelector(".menu-toggle");
+  const dropdown = document.querySelector(".nav-dropdown");
+  const dropdownButton = document.querySelector(".dropdown-toggle");
+
+  if (dropdown && !dropdown.contains(event.target)) {
+    dropdown.classList.remove("open");
+
+    if (dropdownButton) {
+      dropdownButton.setAttribute("aria-expanded", "false");
+    }
+  }
+
+  if (!nav || !menuButton) return;
+
+  const clickedInsideNav = nav.contains(event.target);
+  const clickedButton = menuButton.contains(event.target);
+
+  if (!clickedInsideNav && !clickedButton) {
+    nav.classList.remove("open");
+    menuButton.setAttribute("aria-expanded", "false");
+  }
+});
+</script>
+
+</body>
+</html>
