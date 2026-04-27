@@ -1,1 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RunestoneAdminTool — Staff Control Nexus of RunestoneMMO</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
 
+<body>
+
+<header>
+  <div class="topbar">
+    <a class="brand" href="/index.html">Runestone Vale</a>
+
+    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleMenu()">
+      ☰
+    </button>
+
+    <nav class="top-links" id="mobileNav">
+      <a class="top-link" href="/index.html">Home</a>
+      <a class="top-link" href="/features.html">Server-Features</a>
+
+      <div class="nav-dropdown">
+        <button class="top-link dropdown-toggle" type="button" aria-expanded="false" onclick="toggleRunestoneDropdown(event)">
+          RunestoneMMO ▾
+        </button>
+
+        <div class="dropdown-menu" id="runestoneDropdown">
+          <a class="dropdown-link" href="/RunestoneCore.html">RunestoneCore</a>
+          <a class="dropdown-link" href="/RunestoneSkills.html">RunestoneSkills</a>
+          <a class="dropdown-link" href="/runestoneadmintool.html">RunestoneAdminTool</a>
+          <a class="dropdown-link" href="/runestonehub.html">RunestoneHub</a>
+          <a class="dropdown-link" href="/runestonecombat.html">RunestoneCombat</a>
+          <a class="dropdown-link" href="/runestonestamina.html">RunestoneStamina</a>
+          <a class="dropdown-link" href="/runestonenpc.html">RunestoneNPCs</a>
+        </div>
+      </div>
+
+      <a class="top-link" href="/roadmap_development.html">Roadmap</a>
+      <a class="top-link" href="/credits.html">Credits</a>
+      <a class="top-link" href="/terms.html">Terms</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero-banner"></div>
+
+<main>
+
+  <section class="hero">
+    <h1>RunestoneAdminTool</h1>
+    <p class="subtitle">The staff control nexus for RunestoneMMO — built to give admins cleaner, safer, menu-driven control over the realm.</p>
+
+    <p>
+      <strong>RunestoneAdminTool</strong> is the administrative control module for the <strong>RunestoneMMO</strong> ecosystem.
+      It provides the <strong>Admin Control Nexus</strong>, <strong>Admin Scepter</strong>, staff menus, selector workflows,
+      confirmation screens, NPC authoring support, player management tools, system reload actions, and controlled world-access surfaces.
+    </p>
+
+    <p>
+      AdminTool is designed as an <strong>orchestration layer</strong>. That means it gives staff clean GUI workflows,
+      but it does not duplicate backend authority. Economy actions still go through Core, NPC actions go through the live
+      <code>/rnpc</code> bridge into RunestoneNPCs, world tools use WorldEdit/WorldGuard where appropriate, and module reloads call the proper module command paths.
+    </p>
+
+    <p>
+      In simple terms: <strong>RunestoneAdminTool is the staff-facing command center that helps manage Runestone Vale without forcing every task through raw commands.</strong>
+    </p>
+
+    <div class="buttons">
+      <a class="button" href="https://hangar.papermc.io/TotalCarnage767/RunestoneAdminTool" target="_blank" rel="noopener">View on Hangar</a>
+      <a class="button secondary" href="https://discord.gg/BNkJDU6qE4" target="_blank" rel="noopener">Join the Discord</a>
+      <a class="button secondary" href="/index.html">Back to Runestone Vale</a>
+    </div>
+
+    <p style="margin-top: 18px; font-size: 1.1rem;">
+      <strong>Platform:</strong> Minecraft Java Edition • Paper 1.21.11 • Java 21<br>
+      <strong>Requires:</strong> RunestoneCore<br>
+      <strong>Purpose:</strong> Staff/admin GUI workflows, tools, and safe command orchestration
+    </p>
+  </section>
+
+  <section class="cta-section">
+    <h2>What RunestoneAdminTool Owns</h2>
+    <p>
+      RunestoneAdminTool owns the staff-facing interface layer. It provides structured admin workflows while leaving real backend authority
+      inside the correct modules.
+    </p>
+
+    <div class="cta-grid">
+      <article class="cta-card">
+        <h3>Admin Control Nexus</h3>
+        <p>The main staff menu used to access moderation, server management, player management, economy, system tools, and utilities.</p>
+      </article>
+
+      <article class="cta-card">
+        <h3>Admin Scepter</h3>
+        <p>A staff artifact used as a quick-access admin tool for opening and navigating administrative systems.</p>
+      </article>
+
+      <article class="cta-card">
+        <h3>Selector Workflows</h3>
+        <p>Provides player selectors, value selectors, block selectors, gamemode selectors, confirmation prompts, and chat-input flows.</p>
+      </article>
+
+      <article class="cta-card">
+        <h3>NPC Admin Surface</h3>
+        <p>Gives staff a unified surface for Citizens NPC actions and RunestoneNPCs-backed dialogue, quest, offer, and shop workflows.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Newest AdminTool Highlights</h2>
+    <p>
+      Recent AdminTool work has focused on safer staff workflows, NPC content authoring, online-only player inventory inspection,
+      world access, WorldEdit wand support, and module reload surfaces.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>World_Content Access</h3>
+        <p>
+          Staff can access the managed <strong>World_Content</strong> void world through AdminTool world access.
+          This is intended for dungeons, boss arenas, quest rooms, raids, trials, and server content spaces.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>WorldEdit Wand Button</h3>
+        <p>
+          AdminTool includes a WorldEdit wand button that runs the WorldEdit wand command path instead of spoofing a plain wooden axe.
+          If WorldEdit is not enabled, it returns a clean error.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Online Inventory Inspection Only</h3>
+        <p>
+          Player inventory administration is now online-only. AdminTool no longer supports offline inventory editing,
+          offline snapshot editing, or direct offline playerdata inventory mutation.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>NPC Quest & Shop Workflows</h3>
+        <p>
+          AdminTool provides structured workflows for NPC selection, bindings, dialogue packages, quest packages, quest offers,
+          quest rewards, NPC shops, shop settings, and listing management.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Module Reload Buttons</h3>
+        <p>
+          Server Management includes confirmation-gated reload actions for Core, Skills, Combat, AdminTool, Hub, and RunestoneNPCs.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Selector-First NPC UX</h3>
+        <p>
+          Quest, dialogue, offer, shop, skill, currency, and visibility workflows prefer existing valid selections first,
+          with manual input available as a fallback.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Module Boundary</h2>
+    <p>
+      RunestoneAdminTool is powerful, but it is not the backend authority for every system it controls.
+      Its role is to provide staff UI and safely route actions to the correct owner.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>RunestoneAdminTool Owns</h3>
+        <ul>
+          <li>Admin Control Nexus menu</li>
+          <li>Admin Scepter item and listener</li>
+          <li>Staff menu workflows</li>
+          <li>Selector and confirmation flows</li>
+          <li>Chat-input prompt flows</li>
+          <li>AdminTool session state</li>
+          <li>Selected NPC context</li>
+          <li>Typed <code>AdminToolAction</code> runtime carrier</li>
+          <li>Wrapper execution orchestration</li>
+          <li>Admin-facing navigation and UX polish</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Other Systems Own</h3>
+        <ul>
+          <li><strong>RunestoneCore</strong> owns economy, claims, graves, resources, moderation, menus, world rules, and shared services.</li>
+          <li><strong>RunestoneNPCs</strong> owns NPC bindings, dialogue, quests, quest state, rewards, and NPC shops.</li>
+          <li><strong>Citizens</strong> owns NPC entity creation, selection, movement, and physical NPC identity.</li>
+          <li><strong>WorldEdit</strong> owns region-editing commands and the real selection wand behavior.</li>
+          <li><strong>WorldGuard</strong> owns region protection and region flag behavior.</li>
+          <li><strong>RunestoneHub</strong> owns the player Hub UI runtime.</li>
+          <li><strong>RunestoneCombat</strong> and <strong>RunestoneSkills</strong> own their own runtime/config reload behavior.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Main AdminTool Menus</h2>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <h3>Admin Nexus</h3>
+        <ul>
+          <li>Main entry menu for staff</li>
+          <li>Opened with <code>/runestoneadmin</code>, <code>/ra</code>, or <code>/adminnexus</code></li>
+          <li>Resets transient flow state while preserving selected NPC context</li>
+          <li>Routes staff into major admin categories</li>
+          <li>Uses direct-coded menus rather than a YAML-driven admin framework</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Moderation</h3>
+        <ul>
+          <li>Freeze player</li>
+          <li>Unfreeze player</li>
+          <li>Jail player</li>
+          <li>Unjail player</li>
+          <li>Temporary mute workflow</li>
+          <li>Vanish toggle</li>
+          <li>God mode toggle</li>
+          <li>Player/self selectors where appropriate</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Server Management</h3>
+        <ul>
+          <li>Set day</li>
+          <li>Set night</li>
+          <li>Clear weather</li>
+          <li>Set rain</li>
+          <li>Set thunder</li>
+          <li>Broadcast message</li>
+          <li>Reload RunestoneCore</li>
+          <li>Reload RunestoneSkills</li>
+          <li>Reload RunestoneCombat</li>
+          <li>Reload Admin Nexus</li>
+          <li>Reload Login Hub</li>
+          <li>Reload RunestoneNPCs</li>
+          <li>Save world/player data</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Player Management</h3>
+        <ul>
+          <li>Inspect Online Inventory</li>
+          <li>Teleport to player</li>
+          <li>Teleport player here</li>
+          <li>Teleport to world</li>
+          <li>Toggle flight</li>
+          <li>Heal player</li>
+          <li>Change gamemode</li>
+          <li>Online inventory administration only; no offline inventory editor</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Economy</h3>
+        <ul>
+          <li>Give currency to a player</li>
+          <li>Take currency from a player</li>
+          <li>Set a player balance</li>
+          <li>Uses value selectors with presets and custom amount input</li>
+          <li>Routes to Core economy command/backend behavior</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>System Tools</h3>
+        <ul>
+          <li>Install Oraxen assets</li>
+          <li>Claims Admin</li>
+          <li>Graves Admin</li>
+          <li>NPC Admin</li>
+          <li>Hologram Admin</li>
+          <li>World Rules Admin</li>
+          <li>WorldEdit Admin</li>
+          <li>WorldGuard Admin</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Admin Utilities</h3>
+        <ul>
+          <li>Spawn Admin Scepter</li>
+          <li>Spawn Hub Compass</li>
+          <li>Spawn WorldEdit Wand</li>
+          <li>WorldEdit wand uses WorldEdit command behavior</li>
+          <li>Returns clean error if WorldEdit is not enabled</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Confirmation Menus</h3>
+        <ul>
+          <li>Used for dangerous or disruptive actions</li>
+          <li>Reload confirmation flows</li>
+          <li>Claim deletion confirmation</li>
+          <li>Protects staff from accidental destructive clicks</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Player Management Contract</h2>
+    <p>
+      Player inventory administration inside AdminTool is intentionally limited to live online players.
+      This protects playerdata files and avoids dangerous offline inventory mutation.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Live Inventory Support</h3>
+        <ul>
+          <li>Inspect online player inventory</li>
+          <li>Main inventory</li>
+          <li>Hotbar</li>
+          <li>Armor slots</li>
+          <li>Offhand slot</li>
+          <li>Online player selector only</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Hard Prohibitions</h3>
+        <ul>
+          <li>No offline inventory editor</li>
+          <li>No offline snapshot editor</li>
+          <li>No offline save/cancel inventory workflow</li>
+          <li>No reading offline <code>.dat</code> player inventory files</li>
+          <li>No writing offline <code>.dat</code> player inventory files</li>
+          <li>No fallback from online inspection to offline storage</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>NPC Admin Suite</h2>
+    <p>
+      AdminTool’s NPC section is one of its largest staff systems. It brings together Citizens actions and RunestoneNPCs-backed
+      <code>/rnpc</code> workflows into a cleaner admin interface.
+    </p>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <h3>Selected NPC Workflow</h3>
+        <ul>
+          <li>Create NPC</li>
+          <li>Select nearest NPC</li>
+          <li>Store selected NPC in AdminTool session state</li>
+          <li>Show selected NPC context in relevant menus</li>
+          <li>Teleport to selected NPC</li>
+          <li>Highlight selected NPC</li>
+          <li>Use selected NPC for follow-up binding and debug actions</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Base NPC Actions</h3>
+        <ul>
+          <li>Bind NPC key</li>
+          <li>Unbind NPC</li>
+          <li>Debug NPC</li>
+          <li>View NPC metadata</li>
+          <li>Sync NPC metadata</li>
+          <li>Open NPC GUI</li>
+          <li>Reload NPC runtime through RunestoneNPCs</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Dialogue Package Workflows</h3>
+        <ul>
+          <li>Browse existing dialogue packages</li>
+          <li>Create dialogue package</li>
+          <li>Delete dialogue package</li>
+          <li>Edit dialogue title</li>
+          <li>Edit NPC display name</li>
+          <li>Edit state-specific dialogue content</li>
+          <li>Inspect dialogue package info</li>
+          <li>Validate dialogue package</li>
+          <li>Bind dialogue to selected NPC</li>
+          <li>Unbind dialogue without clearing quest/shop bindings</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Supported Dialogue States</h3>
+        <ul>
+          <li><code>offer</code></li>
+          <li><code>active</code></li>
+          <li><code>ready_to_turn_in</code></li>
+          <li><code>completed</code></li>
+          <li>Multi-page runtime content is backend-supported where configured</li>
+          <li>Advanced dialogue condition trees are not live</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Quest Package Workflows</h3>
+        <ul>
+          <li>Browse existing quest packages</li>
+          <li>Create quest package</li>
+          <li>Delete quest package</li>
+          <li>Edit title, summary, objective, type, target, and amount</li>
+          <li>Capture discovery location</li>
+          <li>Set discovery radius</li>
+          <li>Inspect quest info</li>
+          <li>Validate quest package</li>
+          <li>Bind quest package as a modern NPC offer</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Supported Quest Types</h3>
+        <ul>
+          <li><code>INVENTORY_ITEM</code></li>
+          <li><code>DELIVER_ITEM</code></li>
+          <li><code>KILL_MOB</code></li>
+          <li><code>INTERACT_NPC</code></li>
+          <li><code>DISCOVER_LOCATION</code></li>
+          <li>Trainer, travel, reputation, and complex branching quest systems are not live</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Quest Offer Management</h3>
+        <ul>
+          <li>List NPC offers</li>
+          <li>Set offer quest</li>
+          <li>Remove offer</li>
+          <li>Set repeatable flag</li>
+          <li>Set daily flag</li>
+          <li>Set offer order</li>
+          <li>Enable offer</li>
+          <li>Disable offer</li>
+          <li>Set visibility to hidden or locked</li>
+          <li>Manage completed-quest prerequisites</li>
+          <li>Manage level requirements</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Quest Reward Management</h3>
+        <ul>
+          <li>List quest rewards</li>
+          <li>Add currency reward</li>
+          <li>Remove currency reward</li>
+          <li>Add skill XP reward</li>
+          <li>Remove skill XP reward</li>
+          <li>Add item reward</li>
+          <li>Remove item reward</li>
+          <li>Set combat XP reward</li>
+          <li>Clear combat XP reward</li>
+          <li>Reward behavior remains owned by RunestoneNPCs runtime authority</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>NPC Shop Workflows</h3>
+        <ul>
+          <li>Create shop package</li>
+          <li>Select active shop key</li>
+          <li>Inspect selected shop context</li>
+          <li>Open authoritative shop editor</li>
+          <li>Preview selected shop</li>
+          <li>Bind shop to NPC</li>
+          <li>Unbind shop from NPC</li>
+          <li>Edit shop title</li>
+          <li>Edit shop mode</li>
+          <li>Edit buy/sell page titles</li>
+          <li>Edit buy/sell page sizes</li>
+          <li>Add held item listing</li>
+          <li>Remove listing</li>
+          <li>List shop entries</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>NPC Shop Modes</h3>
+        <ul>
+          <li><code>BUY_ONLY</code> — players buy from the NPC</li>
+          <li><code>SELL_ONLY</code> — players sell to the NPC</li>
+          <li><code>BUY_AND_SELL</code> — NPC supports both buy and sell behavior</li>
+          <li>Valid shop sizes: <code>9</code>, <code>18</code>, <code>27</code>, <code>36</code>, <code>45</code>, <code>54</code></li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>World & Build Tools</h2>
+    <p>
+      AdminTool exposes staff-friendly access to build, world, and protection tools without replacing WorldEdit, WorldGuard,
+      or Core’s world-rule authority.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>World Selector</h3>
+        <ul>
+          <li>Teleport to loaded worlds</li>
+          <li>Access Devflat / creative_flat for staff build staging</li>
+          <li>Access World_Content for content building and testing</li>
+          <li>World_Content access is teleport-only</li>
+          <li>World_Content does not force Creative mode</li>
+          <li>World_Content does not enable flight</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>WorldEdit Admin</h3>
+        <ul>
+          <li><code>//set</code> workflow</li>
+          <li><code>//replace</code> workflow</li>
+          <li><code>//walls</code> workflow</li>
+          <li><code>//outline</code> workflow</li>
+          <li>Uses selector input for block choices</li>
+          <li>WorldEdit itself remains the authority for edit behavior</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>WorldGuard Admin</h3>
+        <ul>
+          <li>Region flag workflow</li>
+          <li>Region info workflow</li>
+          <li>Region teleport workflow</li>
+          <li>Region list/reference support</li>
+          <li>WorldGuard remains the authority for region behavior</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>World Rules Admin</h3>
+        <ul>
+          <li>World rule status</li>
+          <li>World rule info</li>
+          <li>World rule listing</li>
+          <li>World rule reload path</li>
+          <li>Routes to Core world-rule authority</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Commands & Permissions</h2>
+    <p>
+      RunestoneAdminTool has a small command surface. Most functionality is accessed through the Admin Nexus GUI after opening the tool.
+    </p>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <h3>Main Command</h3>
+        <ul>
+          <li><code>/runestoneadmin</code> — opens the Admin Control Nexus</li>
+          <li><code>/ra</code> — alias</li>
+          <li><code>/adminnexus</code> — alias</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Subcommands</h3>
+        <ul>
+          <li><code>/runestoneadmin scepter</code> — gives yourself the Admin Scepter</li>
+          <li><code>/runestoneadmin scepter &lt;player&gt;</code> — gives an online player the Admin Scepter</li>
+          <li><code>/runestoneadmin reload</code> — reloads the AdminTool system</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Main Permission</h3>
+        <ul>
+          <li><code>runestone.admin</code></li>
+          <li>Default: OP</li>
+          <li>Grants access to RunestoneAdminTool and Admin Nexus</li>
+          <li>Includes online inventory inspection authority by default</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Inventory Permission</h3>
+        <ul>
+          <li><code>runestone.admin.player.inventory.view</code></li>
+          <li>Default: OP</li>
+          <li>Allows viewing live online player inventories through AdminTool</li>
+          <li>Does not grant offline inventory editing because offline inventory editing is not supported</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Configuration & Runtime Structure</h2>
+    <p>
+      RunestoneAdminTool is intentionally direct-coded for its menus and workflows. It does not use a large YAML-driven admin menu framework.
+      This keeps the AdminTool aligned with real backend actions instead of fake buttons.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Important Files</h3>
+        <ul>
+          <li><code>plugin.yml</code> — command and permission declaration</li>
+          <li><code>AdminTool.md</code> — architecture and workflow contract documentation</li>
+          <li><code>AdminNexusMenu.java</code> — main Admin Nexus menu</li>
+          <li><code>AdminToolWrapperExecutor.java</code> — wrapper action routing</li>
+          <li><code>AdminToolFlowHandler.java</code> — selector/chat-input flow handling</li>
+          <li><code>AdminToolSessionManager.java</code> — transient session and selected context state</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Architecture Guardrails</h3>
+        <ul>
+          <li>Direct-coded menu/runtime architecture remains required</li>
+          <li>No YAML/data-driven AdminTool framework reintroduction</li>
+          <li><code>AdminToolAction</code> remains a typed runtime carrier</li>
+          <li>AdminTool must not duplicate NPC backend logic</li>
+          <li>AdminTool must not become a second persistence authority</li>
+          <li>Buttons must have real backend wiring</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Why RunestoneAdminTool Matters</h2>
+    <p>
+      A growing MMO server needs more than raw commands. Staff need safer menus, clearer workflows, confirmation screens,
+      selector-first input, and tools that reduce mistakes during live server management.
+    </p>
+
+    <p>
+      RunestoneAdminTool makes server administration more practical by turning many common admin actions into organized workflows.
+      That matters for moderation, economy management, player support, NPC content creation, shop authoring, quest setup, build work,
+      reload management, and world-content preparation.
+    </p>
+
+    <p>
+      The most important part is that AdminTool does this without stealing authority from the modules that own the actual systems.
+      It is a staff control layer, not a second backend.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>What Is Still Growing Inside RunestoneAdminTool</h2>
+    <p>
+      RunestoneAdminTool already provides a major staff control surface, but more polish and future workflow depth can still grow over time.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>NPC Authoring Polish</h3>
+        <p>
+          Dialogue, quest, offer, reward, and shop workflows are live for the first-version scope, but more advanced narrative tooling can still grow later.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Player Quest Debug Views</h3>
+        <p>
+          Admin view of a player’s quest journal is planned so staff can better inspect hidden, unavailable, completed, and active quest truth.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Daily Quest Pool Editing</h3>
+        <p>
+          Per-player random NPC daily quest pools have backend support, but AdminTool pool editing UI is deferred beyond the first version.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>More Staff UX Polish</h3>
+        <p>
+          Future work can continue reducing typing, improving selectors, and making staff workflows clearer without duplicating backend logic.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>State of the Module</h2>
+    <p>
+      RunestoneAdminTool is actively serving as the staff control surface for <strong>Runestone Vale</strong>.
+      It provides a direct GUI path into moderation, player support, economy tools, server management, world tools, NPC authoring,
+      and system utilities.
+    </p>
+
+    <p>
+      The current module is strongest when used exactly as designed: staff use AdminTool for clean workflow access,
+      while Core, NPCs, Citizens, WorldEdit, WorldGuard, Hub, Skills, Combat, and Stamina remain the true owners of their own systems.
+    </p>
+
+    <p>
+      <strong>This is the staff command center of RunestoneMMO — built to help admins manage a growing realm with less guesswork and fewer dangerous manual steps.</strong>
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>Open the Admin Nexus</h2>
+    <p>
+      RunestoneAdminTool gives staff a safer, cleaner way to manage Runestone Vale.
+      Use the Admin Nexus for staff workflows, Admin Scepter access, NPC setup, system tools, world access, and live server support.
+    </p>
+
+    <div class="button-row-left">
+      <a class="button" href="https://hangar.papermc.io/TotalCarnage767/RunestoneAdminTool" target="_blank" rel="noopener">Open on Hangar</a>
+      <a class="button secondary" href="/RunestoneCore.html">See RunestoneCore</a>
+      <a class="button secondary" href="/features.html">View Server Features</a>
+      <a class="button secondary" href="https://discord.gg/BNkJDU6qE4" target="_blank" rel="noopener">Join the Discord</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>RunestoneAdminTool — Staff control tools for Runestone Vale.</p>
+  <p>
+    <a href="/index.html">Home</a> •
+    <a href="/features.html">Server-Features</a> •
+    <a href="/RunestoneCore.html">RunestoneCore</a> •
+    <a href="/RunestoneSkills.html">RunestoneSkills</a> •
+    <a href="/runestoneadmintool.html">RunestoneAdminTool</a> •
+    <a href="/roadmap_development.html">Roadmap</a> •
+    <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneAdminTool" target="_blank" rel="noopener">RunestoneAdminTool Hangar</a> •
+    <a href="https://discord.gg/BNkJDU6qE4" target="_blank" rel="noopener">Discord</a> •
+    <a href="/terms.html">Terms &amp; Licensing</a>
+  </p>
+</footer>
+
+<script>
+function toggleMenu() {
+  const nav = document.getElementById("mobileNav");
+  const button = document.querySelector(".menu-toggle");
+
+  nav.classList.toggle("open");
+  button.setAttribute("aria-expanded", nav.classList.contains("open") ? "true" : "false");
+}
+
+function toggleRunestoneDropdown(event) {
+  event.stopPropagation();
+
+  const dropdown = event.currentTarget.closest(".nav-dropdown");
+  const button = dropdown.querySelector(".dropdown-toggle");
+
+  dropdown.classList.toggle("open");
+  button.setAttribute("aria-expanded", dropdown.classList.contains("open") ? "true" : "false");
+}
+
+document.addEventListener("click", function (event) {
+  const nav = document.getElementById("mobileNav");
+  const menuButton = document.querySelector(".menu-toggle");
+  const dropdown = document.querySelector(".nav-dropdown");
+  const dropdownButton = document.querySelector(".dropdown-toggle");
+
+  if (dropdown && !dropdown.contains(event.target)) {
+    dropdown.classList.remove("open");
+
+    if (dropdownButton) {
+      dropdownButton.setAttribute("aria-expanded", "false");
+    }
+  }
+
+  if (!nav || !menuButton) return;
+
+  const clickedInsideNav = nav.contains(event.target);
+  const clickedButton = menuButton.contains(event.target);
+
+  if (!clickedInsideNav && !clickedButton) {
+    nav.classList.remove("open");
+    menuButton.setAttribute("aria-expanded", "false");
+  }
+});
+</script>
+
+</body>
+</html>
