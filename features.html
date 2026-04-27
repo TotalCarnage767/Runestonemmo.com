@@ -35,32 +35,31 @@
 
   <section class="hero">
     <h1>Runestone Vale Features & Commands</h1>
-    <p class="subtitle">A Paper 1.21.11 fantasy MMORPG survival realm built around progression, commandless utility, stronger onboarding, and systems meant to work together.</p>
+    <p class="subtitle">A Paper 1.21.11 fantasy MMORPG survival realm built around progression, commandless utility, quests, economy, custom content, and long-term world identity.</p>
 
     <p>
-      This page is a detailed look at what <strong>Runestone Vale</strong> currently offers as a live server experience.
-      It covers the major player-facing systems, quality-of-life tools, progression features, and the most important commands players are likely to use.
+      This page is the detailed feature and command guide for <strong>Runestone Vale</strong>.
+      It covers the current live systems, player-facing tools, server progression, staff-supported systems, and the most important commands players or staff may use.
     </p>
 
     <p>
-      Runestone Vale is built on <strong>Paper 1.21.11</strong> and powered by the custom project plugins
-      <strong>RunestoneCore</strong> and <strong>RunestoneSkills</strong>, along with supporting plugins for custom assets,
-      world control, permissions, and cross-platform access.
+      Runestone Vale is powered by the custom <strong>RunestoneMMO</strong> plugin suite and supported by trusted tools for custom assets,
+      NPCs, permissions, world protection, economy compatibility, Bedrock access, and build support.
     </p>
 
     <div class="buttons">
       <a class="button" href="https://discord.gg/BNkJDU6qE4" target="_blank" rel="noopener">Join Through Discord</a>
-      <a class="button secondary" href="/RunestoneCore.html">Explore RunestoneCore</a>
-      <a class="button secondary" href="/RunestoneSkills.html">Explore RunestoneSkills</a>
+      <a class="button secondary" href="/index.html">Return Home</a>
+      <a class="button secondary" href="/roadmap_development.html">View Roadmap</a>
     </div>
   </section>
 
   <section class="card">
     <h2>Server at a Glance</h2>
     <p>
-      Runestone Vale is a <strong>fantasy MMORPG survival server</strong> with a serious medieval, dwarven, and rune-forged identity.
-      It is being built around long-term player progression, stronger world atmosphere, connected server systems,
-      and a more meaningful gameplay loop than typical throwaway survival worlds.
+      Runestone Vale is a <strong>fantasy MMORPG survival server</strong> with medieval, dwarven, and rune-forged identity.
+      It is being built around long-term progression, economy, quests, NPCs, custom content, exploration, world control,
+      and systems that are meant to feel connected instead of scattered.
     </p>
 
     <div class="card-grid">
@@ -70,15 +69,17 @@
           <li>Paper 1.21.11</li>
           <li>Java Edition primary support</li>
           <li>Bedrock access supported through Geyser + Floodgate</li>
+          <li>Version support through the ViaVersion suite</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Core Direction</h3>
+        <h3>Realm Direction</h3>
         <ul>
           <li>Fantasy MMORPG survival atmosphere</li>
-          <li>Long-term progression and persistence</li>
-          <li>Connected systems instead of scattered mechanics</li>
+          <li>Long-term character and skill progression</li>
+          <li>Connected economy, quests, travel, combat, and world systems</li>
+          <li>Serious medieval, dwarven, and rune-forged identity</li>
         </ul>
       </div>
 
@@ -87,16 +88,64 @@
         <ul>
           <li>RunestoneCore</li>
           <li>RunestoneSkills</li>
-          <li>Oraxen custom assets</li>
+          <li>RunestoneCombat</li>
+          <li>RunestoneStamina</li>
+          <li>RunestoneHub</li>
+          <li>RunestoneNPCs</li>
+          <li>RunestoneAdminTool</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Realm Focus</h3>
+        <h3>Current Focus</h3>
         <ul>
-          <li>Onboarding and utility polish</li>
-          <li>Combat and attribute stability</li>
-          <li>Travel, graves, and player progression quality of life</li>
+          <li>Quest and NPC polish</li>
+          <li>Hub and player utility polish</li>
+          <li>Economy and bank reliability</li>
+          <li>Dungeon, boss, and content-world preparation</li>
+          <li>Vanilla progression control for MMO balance</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Plugin Stack Basics</h2>
+    <p>
+      The custom RunestoneMMO modules are the main identity of the realm. Supporting plugins provide permissions, NPCs,
+      custom assets, world protection, build tooling, cross-platform access, and compatibility.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>RunestoneMMO Plugins</h3>
+        <ul>
+          <li><strong>RunestoneCore</strong> — shared server foundation, economy, menus, travel, world rules, scoreboards, claims, graves, items, mail, and core APIs</li>
+          <li><strong>RunestoneSkills</strong> — skills, professions, XP, gathering, crafting direction, Oraxen skill assets, and skill progression</li>
+          <li><strong>RunestoneCombat</strong> — custom combat framework, attributes, scaling, damage direction, and combat progression</li>
+          <li><strong>RunestoneStamina</strong> — stamina state, movement pacing, survival pressure, stamina HUD, buffs, and stamina brews</li>
+          <li><strong>RunestoneHub</strong> — Login Hub, Hub Compass, travel access, market access, bank access, quest info, and updates</li>
+          <li><strong>RunestoneNPCs</strong> — NPC bindings, dialogue runtime, quest runtime, NPC shops, and world interaction systems</li>
+          <li><strong>RunestoneAdminTool</strong> — Admin Scepter, Admin Control Nexus, staff menus, debug tools, and controlled world access</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Supporting Server Plugins</h3>
+        <ul>
+          <li><strong>Oraxen</strong> — custom items, blocks, models, textures, and resource-pack identity</li>
+          <li><strong>Citizens</strong> — NPC framework for characters, quest givers, shops, and interaction points</li>
+          <li><strong>Sentinel</strong> — NPC combat/security support where needed</li>
+          <li><strong>Denizen</strong> — scripting support where used for world interaction</li>
+          <li><strong>WorldGuard</strong> — protected regions and controlled areas</li>
+          <li><strong>WorldEdit</strong> — building, schematic work, and world shaping</li>
+          <li><strong>LuckPerms</strong> — ranks, permissions, and staff access control</li>
+          <li><strong>Vault</strong> — economy compatibility layer</li>
+          <li><strong>PlaceholderAPI</strong> — placeholders for displays, scoreboards, and integrations</li>
+          <li><strong>Geyser-Spigot + Floodgate</strong> — Bedrock access support</li>
+          <li><strong>ViaVersion / ViaBackwards / ViaRewind</strong> — version compatibility support</li>
+          <li><strong>Discord-Linker</strong> — Discord/server connection support</li>
+          <li><strong>packetevents</strong> — packet-level support used by compatible systems</li>
         </ul>
       </div>
     </div>
@@ -105,38 +154,38 @@
   <section class="cta-section">
     <h2>Newest Live Highlights</h2>
     <p>
-      Recent updates have focused heavily on making the server feel cleaner, more usable, and more connected for both new and returning players.
+      Recent work has focused on making the server cleaner, safer, more connected, and better prepared for future MMO content.
     </p>
 
     <div class="cta-grid">
       <article class="cta-card">
-        <h3>Starter Kit Overhaul</h3>
-        <p>A cleaner first-login experience with a dedicated starter setup, survival gear, a written manual, and the Login Hub Compass.</p>
+        <h3>Quest Info in Hub</h3>
+        <p>The Hub now supports a read-only Quest Info page showing current quest data, progress, ready quests, and completed quest count.</p>
       </article>
 
       <article class="cta-card">
-        <h3>Login Hub Compass Expansion</h3>
-        <p>The Login Hub Compass now acts as a commandless utility hub for travel, daily features, graves, updates, and more.</p>
+        <h3>Market & Bank Polish</h3>
+        <p>Market & Trading is cleaner, and Bank tools now live in their own dedicated submenu with deposit and withdraw actions.</p>
       </article>
 
       <article class="cta-card">
-        <h3>Teleport Requests in the Hub</h3>
-        <p>Players can now manage TPA-style travel tools directly through the Login Hub without needing to rely only on typed commands.</p>
+        <h3>World_Content Added</h3>
+        <p>A managed void content world now exists for future dungeons, boss arenas, quest rooms, raids, trials, and custom events.</p>
       </article>
 
       <article class="cta-card">
-        <h3>Graves in the Hub</h3>
-        <p>Active graves can now be viewed more clearly, including death location, marker location when relevant, and remaining time.</p>
+        <h3>AdminTool World Access</h3>
+        <p>Staff can access World_Content through AdminTool. It is teleport-only and does not force Creative mode or flight.</p>
       </article>
 
       <article class="cta-card">
-        <h3>Combat & Attributes Work</h3>
-        <p>Health syncing, mob scaling, and attribute behavior have been tightened so combat feels more stable and more correct.</p>
+        <h3>Vanilla Progression Controls</h3>
+        <p>Totem natural drops, shulker crafting, Elytra acquisition, and custom recipe access can be controlled for MMO balance.</p>
       </article>
 
       <article class="cta-card">
-        <h3>Daily Rewards + Skills Integration</h3>
-        <p>Daily rewards now fit more naturally into the server’s longer-term progression path and RunestoneSkills direction.</p>
+        <h3>Server Updates Page</h3>
+        <p>The Hub Server Updates section now includes a polished RunestoneMMO development update for players.</p>
       </article>
     </div>
   </section>
@@ -147,55 +196,100 @@
     <div class="card-grid">
 
       <div class="card">
-        <h3>Starter Kit & First Login Experience</h3>
+        <h3>Starter Kit & First Login</h3>
         <ul>
           <li>Dedicated starter kit system</li>
           <li>Runestone Vale written manual</li>
           <li>Login Hub Compass</li>
           <li>Optional starter backpack support</li>
-          <li>Starter food and torches</li>
-          <li>Copper starter armor</li>
-          <li>Copper sword, pickaxe, and axe</li>
-          <li>Shield and practical early-survival support</li>
-          <li>Improved first-join and onboarding direction</li>
+          <li>Starter food, torches, and survival tools</li>
+          <li>Copper starter armor and tools</li>
+          <li>Shield and early-survival support</li>
+          <li>Cleaner first-join direction and onboarding</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Login Hub Compass Features</h3>
+        <h3>Login Hub Compass</h3>
         <ul>
-          <li>Spawn</li>
-          <li>Home</li>
-          <li>Set Home</li>
-          <li>Daily Claim</li>
-          <li>Streak display</li>
-          <li>Mailbox access/status</li>
-          <li>Balance display</li>
-          <li>Market / Services access</li>
-          <li>Skills page access</li>
+          <li>Opens the main player utility hub</li>
+          <li>Spawn, Home, and Set Home access</li>
+          <li>Daily Claim and streak display</li>
+          <li>Mailbox access and status</li>
+          <li>Wallet and bank information</li>
+          <li>Market & Trading menu</li>
+          <li>Dedicated Bank submenu</li>
+          <li>Skills access</li>
+          <li>Quest Info access</li>
           <li>Server Updates page</li>
           <li>Teleport Requests submenu</li>
           <li>Graves submenu</li>
-          <li>Optional hub auto-open behavior for players</li>
+          <li>Optional auto-open behavior on login</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Travel & Teleport Features</h3>
+        <h3>Quest Info & Quest Tracking</h3>
+        <ul>
+          <li>Quest Info button in the Hub</li>
+          <li>Shows current or primary quest title</li>
+          <li>Shows quest status, objective, and progress text</li>
+          <li>Shows progress percent when available</li>
+          <li>Shows active quest count</li>
+          <li>Shows ready-to-turn-in quest count</li>
+          <li>Shows completed quest counter</li>
+          <li>Clean fallback when no active quest exists</li>
+          <li>Read-only display; it does not mutate quest state or rewards</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>NPC Quests, Dialogue & Shops</h3>
+        <ul>
+          <li>RunestoneNPCs owns NPC bindings, dialogue, quests, and shops</li>
+          <li>Quest lifecycle supports Available, Active, Ready, and Completed flow</li>
+          <li>Additional states include Failed, Abandoned, and cooldown behavior</li>
+          <li>NPC dialogue is tied into quest states</li>
+          <li>NPC shops support curated shop behavior</li>
+          <li>Quest reward handling is designed against duplication issues</li>
+          <li>Admin/runtime workflows continue moving toward in-game authoring</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Market, Bank & Economy</h3>
+        <ul>
+          <li>Multi-currency economy direction</li>
+          <li>Wallet balance display</li>
+          <li>Bank balance display</li>
+          <li>Dedicated Bank submenu in the Hub</li>
+          <li>Fixed deposit and withdraw buttons</li>
+          <li>Custom deposit and withdraw prompts</li>
+          <li>Player Shops support</li>
+          <li>Auction House support</li>
+          <li>Market dashboard direction</li>
+          <li>Bank persistence hardened against reset/data-loss issues</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Travel & Teleport Quality of Life</h3>
         <ul>
           <li>Spawn access</li>
-          <li>Homes and Set Home support</li>
+          <li>Home and Set Home support</li>
+          <li>Back teleport tracking</li>
           <li>TPA request system</li>
           <li>Teleport To Player flow</li>
           <li>Bring Player Here flow</li>
-          <li>Accept / Deny / Cancel request tools</li>
-          <li>Toggle teleport request acceptance</li>
-          <li>Commandless hub access for major travel tools</li>
+          <li>Accept / deny / cancel request tools</li>
+          <li>Toggle receiving teleport requests</li>
+          <li>Commandless travel access through the Hub</li>
+          <li>Teleport costs can be tied into server resources such as mana</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Graves & Death Recovery Info</h3>
+        <h3>Graves & Death Recovery</h3>
         <ul>
           <li>Active grave viewing through the Login Hub</li>
           <li>Physical vs virtual grave visibility</li>
@@ -203,32 +297,36 @@
           <li>Marker location display when different</li>
           <li>Time remaining display</li>
           <li>Newest grave shown first</li>
-          <li>Quick “Show Latest Grave Location” utility</li>
-          <li>Read-only grave info access without command spam</li>
+          <li>Quick latest grave location reveal</li>
+          <li>Optional command-based recovery support</li>
+          <li>Improved grave reload and persistence reliability</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Combat, Health, and Attribute Systems</h3>
+        <h3>Combat, Health & Attributes</h3>
         <ul>
-          <li>Improved custom mob health syncing</li>
-          <li>More stable attribute application</li>
-          <li>Better reload behavior for health and attribute systems</li>
-          <li>Improved combat consistency for mobs and players</li>
-          <li>Cleaner balance between MMO scaling and usable gear</li>
-          <li>Hostile mob tuning improvements</li>
-          <li>Less unnecessary debug noise during normal play</li>
+          <li>RunestoneCombat owns combat runtime direction</li>
+          <li>Custom combat framework and combat XP support</li>
+          <li>Attribute-based scaling and combat progression</li>
+          <li>Improved health and attribute sync</li>
+          <li>Better reload behavior for combat-related systems</li>
+          <li>Cleaner mob/player combat consistency</li>
+          <li>Hostile mob tuning direction</li>
+          <li>Debug spam reduced for normal play where appropriate</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Daily Rewards & Utility Systems</h3>
+        <h3>Stamina & Survival Pacing</h3>
         <ul>
-          <li>Daily claim system</li>
-          <li>Streak tracking</li>
-          <li>Improved progression connection with RunestoneSkills</li>
-          <li>Player utility routed through GUI and hub systems</li>
-          <li>Cleaner recurring reward support for long-term play</li>
+          <li>RunestoneStamina owns stamina state, drain, regen, display, buffs, and config</li>
+          <li>Stamina affects movement and survival pacing</li>
+          <li>Stamina can support future ability costs</li>
+          <li>Well Rested style buff direction exists through resource bar integration</li>
+          <li>Stamina progression can connect with Exploration</li>
+          <li>Custom stamina brews exist through Oraxen assets</li>
+          <li>Wayfarer’s Sip, Stonewake Draught, and King’s Rune Brew are the current brew family</li>
         </ul>
       </div>
 
@@ -238,54 +336,103 @@
           <li>Mining</li>
           <li>Forestry</li>
           <li>Fishing</li>
-          <li>Smithing</li>
-          <li>Exploration</li>
-          <li>Foraging</li>
+          <li>Hunting</li>
           <li>Farming</li>
           <li>Cooking</li>
-          <li>Hunting</li>
-          <li>Long-term skill XP progression</li>
+          <li>Strength</li>
+          <li>Defense</li>
+          <li>Exploration</li>
+          <li>Foraging</li>
+          <li>Smithing</li>
+          <li>Combat is also registered through the combat progression bridge</li>
+          <li>Long-term skill XP and profession progression</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Custom Assets & World Identity</h3>
+        <h3>Custom Assets & Oraxen</h3>
         <ul>
           <li>Oraxen-backed custom items and blocks</li>
-          <li>Resource-pack-driven visual identity</li>
-          <li>Rune-forged and dwarven atmosphere</li>
-          <li>Custom materials and stronger world flavor</li>
+          <li>Custom models and textures</li>
+          <li>Runestone and Firestone themed assets</li>
+          <li>Custom skill blocks and ore assets</li>
+          <li>Stamina brew assets</li>
+          <li>Resource-pack-driven realm identity</li>
+          <li>Custom/Oraxen recipes can be disabled from normal crafting progression when needed</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Cross-Platform Access</h3>
+        <h3>Managed Worlds & Content Spaces</h3>
+        <ul>
+          <li>Main survival worlds: world, world_nether, and world_the_end</li>
+          <li>Devflat / creative_flat exists for staff schematic and build staging</li>
+          <li>World_Content exists as a managed void content world</li>
+          <li>World_Content is intended for dungeons, boss arenas, raids, trials, quest rooms, and custom events</li>
+          <li>World_Content does not force Creative mode or flight</li>
+          <li>Staff access to World_Content is handled through AdminTool</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>World Rules & Progression Control</h3>
+        <ul>
+          <li>Totem of Undying natural/entity drops can be disabled</li>
+          <li>Shulker box crafting can be restricted</li>
+          <li>Elytra acquisition/spawn paths can be restricted</li>
+          <li>World rules can control vanilla mechanics for MMO balance</li>
+          <li>Existing player inventories are not wiped by these progression controls</li>
+          <li>Admin rewards, quests, shops, or custom systems can still be used for controlled rewards</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Claims, Towns & Territory Direction</h3>
+        <ul>
+          <li>Personal claim direction exists</li>
+          <li>Town and territory systems are part of the long-term server direction</li>
+          <li>Territory data and tuning live outside the main config where appropriate</li>
+          <li>Future work aims at settlements, upgrades, player identity, and territory value</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Mailbox, Daily Rewards & Utility</h3>
+        <ul>
+          <li>Mailbox support</li>
+          <li>Mail claiming and message access</li>
+          <li>Daily claim system</li>
+          <li>Streak tracking</li>
+          <li>Daily rewards can connect into skill XP and currency direction</li>
+          <li>Hub access reduces command clutter for recurring systems</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>AdminTool & Staff Support</h3>
+        <ul>
+          <li>Admin Control Nexus</li>
+          <li>Admin Scepter support</li>
+          <li>Hub Compass give/access support</li>
+          <li>WorldEdit wand button support</li>
+          <li>World_Content access button</li>
+          <li>Player management and inspection tools</li>
+          <li>NPC and system management direction</li>
+          <li>Safer staff workflows through GUI surfaces</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Cross-Platform & Infrastructure</h3>
         <ul>
           <li>Java Edition primary support</li>
           <li>Bedrock access through Geyser-Spigot</li>
-          <li>Floodgate support for easier Bedrock entry</li>
-          <li>Version support through ViaBackwards, ViaRewinds, and ViaVersions</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>World Control & Building Support</h3>
-        <ul>
-          <li>WorldGuard protection and controlled areas</li>
-          <li>WorldEdit-backed world shaping and building support</li>
-          <li>Citizens NPC framework support</li>
-          <li>Broader framework for future world content and curated experiences</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>Economy & Infrastructure</h3>
-        <ul>
+          <li>Floodgate support</li>
+          <li>LuckPerms permission control</li>
           <li>Vault economy compatibility</li>
-          <li>LuckPerms permissions and role support</li>
           <li>PlaceholderAPI integration</li>
           <li>CommandAPI-powered command structure</li>
-          <li>A custom foundation designed to keep systems connected over time</li>
+          <li>WorldGuard and WorldEdit build/world support</li>
         </ul>
       </div>
 
@@ -295,21 +442,11 @@
   <section class="card">
     <h2>Login Hub Compass — Detailed Breakdown</h2>
     <p>
-      The <strong>Login Hub Compass</strong> is one of the most important convenience features currently on the server.
-      It is designed to reduce command clutter, make key systems easier to reach, and give players a more connected starting point for important daily tools.
+      The <strong>Login Hub Compass</strong> is one of the most important convenience features on Runestone Vale.
+      It reduces command clutter and gives players a central place to reach daily tools, travel, market systems, bank tools, quests, updates, and recovery information.
     </p>
 
     <div class="card-grid">
-      <div class="card">
-        <h3>What It Does</h3>
-        <ul>
-          <li>Acts as a central player utility hub</li>
-          <li>Helps reduce the need to memorize commands</li>
-          <li>Supports both first-login and long-term usage</li>
-          <li>Connects travel, utility, graves, and server update systems</li>
-        </ul>
-      </div>
-
       <div class="card">
         <h3>Travel Tools</h3>
         <ul>
@@ -317,95 +454,242 @@
           <li>Home</li>
           <li>Set Home</li>
           <li>Teleport Requests submenu</li>
+          <li>Teleport to player flow</li>
+          <li>Bring player here flow</li>
+          <li>Accept, deny, cancel, and toggle request actions</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Player Utility</h3>
+        <h3>Economy Tools</h3>
         <ul>
-          <li>Daily Claim</li>
-          <li>Streak display</li>
-          <li>Mailbox</li>
-          <li>Balance</li>
+          <li>Balance display</li>
+          <li>Market & Trading page</li>
+          <li>Player Shops access</li>
+          <li>Auction House direction</li>
+          <li>Dedicated Bank submenu</li>
+          <li>Bank deposit and withdraw buttons</li>
+          <li>Custom amount deposit and withdraw prompts</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Progression Tools</h3>
+        <ul>
           <li>Skills access</li>
+          <li>Quest Info page</li>
+          <li>Current quest display</li>
+          <li>Ready quest count</li>
+          <li>Completed quest count</li>
+          <li>Daily Claim and streak display</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Recovery & Information</h3>
+        <h3>Information & Recovery</h3>
         <ul>
+          <li>Mailbox access</li>
+          <li>Server Updates page</li>
           <li>Graves submenu</li>
           <li>Latest grave location reveal</li>
-          <li>Server Updates / news page</li>
-          <li>Cleaner onboarding and manual support</li>
+          <li>First-login and long-term utility support</li>
         </ul>
       </div>
     </div>
   </section>
 
   <section class="card">
-    <h2>Common Commands</h2>
+    <h2>Player Commands</h2>
     <p>
-      Runestone Vale includes a growing number of commandless GUI flows, especially through the Login Hub.
-      Even so, commands are still important. Below are the most relevant and commonly used commands currently associated with the realm’s core systems.
+      Many systems are available through the Hub Compass, but typed commands remain useful for speed and direct access.
+      Some commands may depend on permissions, server configuration, or whether that system is enabled.
     </p>
 
     <div class="card-grid">
 
       <div class="card">
-        <h3>Travel & Hub Commands</h3>
+        <h3>Hub, Skills, Stats & Scoreboards</h3>
         <ul>
-          <li><code>/spawn</code> — return to spawn</li>
-          <li><code>/home</code> — teleport to your home</li>
-          <li><code>/sethome</code> — set your home location</li>
+          <li><code>/hub</code> — open the Login Hub</li>
+          <li><code>/loginhub</code> — alias for the Login Hub</li>
+          <li><code>/skills</code> — view skill levels</li>
+          <li><code>/stats</code> — view player stats</li>
+          <li><code>/quests</code> — view active quest journal</li>
+          <li><code>/q</code> — alias for quests</li>
+          <li><code>/scoreboard</code> — scoreboard menu and controls</li>
+          <li><code>/scoreboard list</code> — list available layouts</li>
+          <li><code>/scoreboard set main</code> — set main scoreboard</li>
+          <li><code>/scoreboard set skills</code> — set skills scoreboard</li>
+          <li><code>/scoreboard set combat</code> — set combat scoreboard</li>
+          <li><code>/scoreboard set quests</code> — set quest scoreboard</li>
+          <li><code>/scoreboard toggle</code> — toggle scoreboard visibility</li>
+          <li><code>/sm</code> — shortcut for main scoreboard</li>
+          <li><code>/ss</code> — shortcut for skills scoreboard</li>
+          <li><code>/sc</code> — shortcut for combat scoreboard</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Teleport Request Commands</h3>
+        <h3>Travel Commands</h3>
         <ul>
+          <li><code>/spawn</code> — teleport to server spawn</li>
+          <li><code>/back</code> — return to previous tracked location</li>
+          <li><code>/home</code> — teleport to your home</li>
+          <li><code>/sethome</code> — set your home</li>
+          <li><code>/delhome</code> — delete your home</li>
           <li><code>/tpa &lt;player&gt;</code> — request to teleport to a player</li>
           <li><code>/tpahere &lt;player&gt;</code> — request a player teleport to you</li>
-          <li><code>/tpah &lt;player&gt;</code> — alias for tpahere</li>
-          <li><code>/tpaccept</code> — accept a request</li>
-          <li><code>/tpacc</code> — alias for tpaccept</li>
+          <li><code>/tpah &lt;player&gt;</code> — shortcut for tpahere</li>
+          <li><code>/tpaccept</code> — accept a teleport request</li>
+          <li><code>/tpaaccept</code> — accept a teleport request</li>
+          <li><code>/tpacc</code> — shortcut for accepting</li>
           <li><code>/tpdeny</code> — deny a request</li>
           <li><code>/tpacancel</code> — cancel your outgoing request</li>
-          <li><code>/tpac</code> — alias for tpacancel</li>
+          <li><code>/tpac</code> — shortcut for canceling outgoing request</li>
+          <li><code>/tptoggle</code> — toggle receiving teleport requests</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Utility / Common Shortcuts</h3>
+        <h3>Economy, Bank & Market</h3>
         <ul>
-          <li><code>/gm c</code> — creative mode shortcut</li>
-          <li><code>/gm s</code> — survival mode shortcut</li>
-          <li><code>/gm sp</code> — spectator mode shortcut</li>
+          <li><code>/balance</code> — view balance</li>
+          <li><code>/bal</code> — shortcut for balance</li>
+          <li><code>/balance history</code> — view balance history where available</li>
+          <li><code>/pay &lt;player&gt; &lt;amount&gt;</code> — pay another player</li>
+          <li><code>/bank</code> — bank command group</li>
+          <li><code>/bank balance</code> — view bank balance</li>
+          <li><code>/bank deposit &lt;amount&gt;</code> — deposit into bank</li>
+          <li><code>/bank withdraw &lt;amount&gt;</code> — withdraw from bank</li>
+          <li><code>/bank transfer &lt;player&gt; &lt;amount&gt;</code> — transfer bank funds where enabled</li>
+          <li><code>/bank top</code> — bank leaderboard</li>
+          <li><code>/bd &lt;amount&gt;</code> — shortcut for bank deposit</li>
+          <li><code>/bw &lt;amount&gt;</code> — shortcut for bank withdraw</li>
+          <li><code>/baltop</code> — balance leaderboard</li>
+          <li><code>/exchange help</code> — exchange help</li>
+          <li><code>/exchange rates</code> — view exchange rates</li>
+          <li><code>/market</code> — market dashboard</li>
+          <li><code>/market top</code> — market leaderboard/page</li>
+          <li><code>/market currencies</code> — currency overview</li>
+          <li><code>/market treasury</code> — treasury overview where available</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Economy Shortcuts</h3>
+        <h3>Player Shops & Auction House</h3>
         <ul>
-          <li><code>/bw</code> — bank withdraw shortcut</li>
-          <li><code>/bd</code> — bank deposit shortcut</li>
+          <li><code>/shop</code> — open player shops</li>
+          <li><code>/rshop</code> — alias for shop</li>
+          <li><code>/shop create &lt;name&gt;</code> — create a player shop</li>
+          <li><code>/shop delete</code> — delete your shop</li>
+          <li><code>/shop open</code> — open your shop</li>
+          <li><code>/shop close</code> — close your shop</li>
+          <li><code>/shop edit</code> — edit your shop</li>
+          <li><code>/shop &lt;player&gt;</code> — open another player’s shop</li>
+          <li><code>/ah</code> — auction house command</li>
+          <li><code>/auction</code> — alias for auction house</li>
+          <li><code>/rah</code> — alias for auction house</li>
+          <li><code>/ah list &lt;price&gt; &lt;currency&gt;</code> — list held item</li>
+          <li><code>/ah sell &lt;price&gt; &lt;currency&gt;</code> — sell held item</li>
+          <li><code>/ah buy &lt;listingId&gt;</code> — buy listing</li>
+          <li><code>/ah cancel &lt;listingId&gt;</code> — cancel your listing</li>
+          <li><code>/ah search</code> — search listings</li>
+          <li><code>/ah filter</code> — filter listings</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>NPC / Interaction Direction</h3>
+        <h3>Mail, Daily Rewards & Graves</h3>
         <ul>
-          <li><code>/rnpc</code> — Runestone NPC bridge direction</li>
-          <li><code>/rnpcs</code> — additional NPC-related alias support</li>
+          <li><code>/mail</code> — open mailbox</li>
+          <li><code>/mail inbox</code> — view inbox</li>
+          <li><code>/mail read &lt;id&gt;</code> — read a mail</li>
+          <li><code>/mail delete &lt;id&gt;</code> — delete a mail</li>
+          <li><code>/mail claim &lt;id&gt;</code> — claim mail attachment</li>
+          <li><code>/mail claimall</code> — claim all available attachments</li>
+          <li><code>/mail send</code> — send mail where enabled</li>
+          <li><code>/mail sendmoney</code> — send currency through mail where enabled</li>
+          <li><code>/mail senditem</code> — send held item through mail where enabled</li>
+          <li><code>/daily</code> — daily reward status</li>
+          <li><code>/daily claim</code> — claim daily reward</li>
+          <li><code>/daily status</code> — view daily status</li>
+          <li><code>/dc</code> — shortcut for daily claim</li>
+          <li><code>/ds</code> — shortcut for daily status</li>
+          <li><code>/grave</code> — view grave status</li>
+          <li><code>/grave recover</code> — recover grave if enabled and requirements are met</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Skills / Progression Direction</h3>
+        <h3>Inventory, Party & Chat</h3>
         <ul>
-          <li>Skills progression is available through the active RunestoneSkills system</li>
-          <li>Skills access is also surfaced through the Login Hub for easier player use</li>
-          <li>More skill-connected content is expected to grow over time</li>
+          <li><code>/sort hotbar</code> — sort hotbar</li>
+          <li><code>/sort inventory</code> — sort inventory</li>
+          <li><code>/sort chest</code> — sort supported open container</li>
+          <li><code>/sort all</code> — sort all supported inventory areas</li>
+          <li><code>/sh</code> — shortcut for sort hotbar</li>
+          <li><code>/si</code> — shortcut for sort inventory</li>
+          <li><code>/sa</code> — shortcut for sort all</li>
+          <li><code>/party create</code> — create party</li>
+          <li><code>/party invite &lt;player&gt;</code> — invite player</li>
+          <li><code>/party accept</code> — accept invite</li>
+          <li><code>/party deny</code> — deny invite</li>
+          <li><code>/party leave</code> — leave party</li>
+          <li><code>/party kick &lt;player&gt;</code> — kick party member</li>
+          <li><code>/party disband</code> — disband party</li>
+          <li><code>/party list</code> — list party members</li>
+          <li><code>/team</code> and <code>/teams</code> — party aliases</li>
+          <li><code>/channel &lt;global|local|party|staff&gt;</code> — switch chat channel</li>
+          <li><code>/chg</code>, <code>/chl</code>, <code>/chp</code>, <code>/chs</code> — channel shortcuts</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Claims & Towns</h3>
+        <ul>
+          <li><code>/claim</code> — claim command group</li>
+          <li><code>/claim create</code> — create a claim</li>
+          <li><code>/claim confirm</code> — confirm claim action</li>
+          <li><code>/claim cancel</code> — cancel claim action</li>
+          <li><code>/claim info</code> — inspect claim</li>
+          <li><code>/claim list</code> — list claims</li>
+          <li><code>/claim trust</code> — trust management</li>
+          <li><code>/claim flag list</code> — list claim flags</li>
+          <li><code>/claim flag set &lt;flag&gt; &lt;true|false&gt;</code> — set claim flag</li>
+          <li><code>/claim delete</code> — delete claim</li>
+          <li><code>/ccr</code>, <code>/ccf</code>, <code>/cc</code>, <code>/ci</code>, <code>/cl</code>, <code>/ct</code>, <code>/cf</code>, <code>/cd</code> — claim shortcuts</li>
+          <li><code>/town create</code> — create town where enabled</li>
+          <li><code>/town invite</code>, <code>/town accept</code>, <code>/town leave</code> — town membership</li>
+          <li><code>/town claim</code>, <code>/town unclaim</code> — town land actions</li>
+          <li><code>/town upgrade info</code>, <code>/town upgrade buy</code> — town upgrades</li>
+          <li><code>/town treasury balance|deposit|withdraw</code> — town treasury actions</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Resources, Items & Selling</h3>
+        <ul>
+          <li><code>/mana refill</code> — refill own mana where permitted</li>
+          <li><code>/hud</code> — toggle resource HUD</li>
+          <li><code>/sell hand</code> — sell held item through curated vendor path</li>
+          <li><code>/sell price</code> — inspect sell price where supported</li>
+          <li><code>/rsell</code> — sell command alias</li>
+          <li><code>/item get &lt;itemId&gt; [amount]</code> — get custom item where permitted</li>
+          <li><code>/item inspect</code> — inspect held Runestone item</li>
+          <li><code>/item list [filter]</code> — list registered items</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Useful Shortcuts</h3>
+        <ul>
+          <li><code>/pt</code> — playtime shortcut</li>
+          <li><code>/playtime</code> — view total playtime</li>
+          <li><code>/wc</code> — weather clear shortcut</li>
+          <li><code>/wr</code> — weather rain shortcut</li>
+          <li><code>/wt</code> — weather thunder shortcut</li>
+          <li><code>/td</code> — set time day shortcut</li>
+          <li><code>/tn</code> — set time night shortcut</li>
         </ul>
       </div>
 
@@ -413,45 +697,187 @@
   </section>
 
   <section class="card">
-    <h2>Why the Command Page Still Matters</h2>
+    <h2>Staff & Admin Commands</h2>
     <p>
-      One of the goals of Runestone Vale is to make the server easier to use without forcing players to memorize a wall of commands.
-      That is why more core utility is being routed into menus and GUI systems like the Login Hub Compass.
+      The commands below are mainly for staff, operators, builders, or administrators. Many require permissions and should not be expected for default players.
+      Staff should prefer AdminTool buttons where a GUI workflow exists.
     </p>
 
-    <p>
-      At the same time, commands are still useful for speed, convenience, admin workflows, and players who prefer typed access.
-      The long-term goal is not to remove commands entirely — it is to make the server usable both ways.
-    </p>
+    <div class="card-grid">
+
+      <div class="card">
+        <h3>Core Admin</h3>
+        <ul>
+          <li><code>/runestone reload</code> — reload RunestoneCore</li>
+          <li><code>/core reload</code> — alias for RunestoneCore reload</li>
+          <li><code>/runestonecore reload</code> — alias for RunestoneCore reload</li>
+          <li><code>/rcr</code> — shortcut for RunestoneCore reload</li>
+          <li><code>/perms</code> — list RunestoneCore permission nodes</li>
+          <li><code>/cooldown &lt;player&gt;</code> — inspect cooldowns</li>
+          <li><code>/worldrule</code> — inspect/manage world rules</li>
+          <li><code>/worldrulereload</code> — reload world rules</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>AdminTool</h3>
+        <ul>
+          <li><code>/runestoneadmin</code> — open Admin Control Nexus</li>
+          <li><code>/ra</code> — AdminTool alias</li>
+          <li><code>/adminnexus</code> — AdminTool alias</li>
+          <li><code>/runestoneadmin scepter</code> — Admin Scepter action where available</li>
+          <li><code>/runestoneadmin reload</code> — reload AdminTool where available</li>
+          <li>AdminTool includes Admin Scepter, Hub Compass, WorldEdit Wand, Devflat access, and World_Content access through GUI workflows.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Progression & Skills Admin</h3>
+        <ul>
+          <li><code>/radminxp inspect &lt;player&gt;</code> — inspect progression</li>
+          <li><code>/radminxp combat &lt;add|take|set|reset&gt; &lt;player&gt; &lt;amount|level&gt;</code></li>
+          <li><code>/radminxp skill &lt;add|take|set|reset&gt; &lt;player&gt; &lt;skill&gt; &lt;amount|level&gt;</code></li>
+          <li><code>/radminxp all &lt;add|take|set|reset&gt; &lt;player&gt; &lt;amount|level&gt;</code></li>
+          <li><code>/adminxp</code> — alias for radminxp</li>
+          <li><code>/runestoneskills reload</code> — reload RunestoneSkills</li>
+          <li><code>/runestoneskills installoraxenassets</code> — install skill Oraxen assets</li>
+          <li><code>/rsr</code> — RunestoneSkills reload shortcut</li>
+          <li><code>/rso</code> — RunestoneSkills Oraxen install shortcut</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Combat & Stamina Admin</h3>
+        <ul>
+          <li><code>/combat reload</code> — reload RunestoneCombat</li>
+          <li><code>/combat debug</code> — combat debug/admin path</li>
+          <li><code>/rstamina reload</code> — reload RunestoneStamina</li>
+          <li><code>/rstamina installoraxenassets</code> — install stamina brew Oraxen assets</li>
+          <li><code>/mana set &lt;player&gt; &lt;amount&gt;</code> — set player mana where permitted</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>NPC Admin</h3>
+        <ul>
+          <li><code>/rnpc</code> — Runestone NPC admin bridge</li>
+          <li><code>/rnpc bind</code> — bind Citizens NPC</li>
+          <li><code>/rnpc unbind</code> — unbind NPC</li>
+          <li><code>/rnpc dialogue</code> — dialogue package tools</li>
+          <li><code>/rnpc quest</code> — quest package/tools</li>
+          <li><code>/rnpc offer</code> — NPC offer tools</li>
+          <li><code>/rnpc shop</code> — NPC shop tools</li>
+          <li><code>/rnpc open</code> — open NPC interaction surface</li>
+          <li><code>/rnpc reload</code> — reload RunestoneNPCs runtime/config</li>
+          <li><code>/runpc</code> and <code>/rnpcs</code> — aliases</li>
+          <li><code>/rnb</code>, <code>/rnd</code>, <code>/rnq</code>, <code>/rndb</code>, <code>/rnm</code>, <code>/rno</code> — NPC shortcuts</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Moderation & Staff Utility</h3>
+        <ul>
+          <li><code>/chatcontrol lock|unlock|clear|slow|slowoff|reload</code></li>
+          <li><code>/maintenance on|off|kick|staff|kickoff</code></li>
+          <li><code>/broadcast &lt;message&gt;</code></li>
+          <li><code>/freeze &lt;player&gt;</code></li>
+          <li><code>/unfreeze &lt;player&gt;</code></li>
+          <li><code>/jail &lt;player&gt;</code></li>
+          <li><code>/invsee &lt;player&gt;</code></li>
+          <li><code>/vanish</code></li>
+          <li><code>/god</code></li>
+          <li><code>/gm &lt;mode&gt; [player]</code></li>
+          <li><code>/gamemode &lt;mode&gt; [player]</code></li>
+          <li><code>/tp</code> — staff teleport command path</li>
+          <li><code>/mod</code> or <code>/moderation</code> — moderation command group</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>World, Build & Content Access</h3>
+        <ul>
+          <li><code>/devflat</code> — teleport to staff creative_flat world</li>
+          <li><code>/df</code> — devflat shortcut</li>
+          <li><code>/setspawn</code> — set server spawn</li>
+          <li>World_Content access is handled through AdminTool, not a public command.</li>
+          <li>WorldEdit wand access is available through AdminTool where WorldEdit is enabled.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Economy & Item Admin</h3>
+        <ul>
+          <li><code>/eco balance &lt;player&gt;</code></li>
+          <li><code>/eco give &lt;player&gt; &lt;amount&gt;</code></li>
+          <li><code>/eco take &lt;player&gt; &lt;amount&gt;</code></li>
+          <li><code>/eco set &lt;player&gt; &lt;amount&gt;</code></li>
+          <li><code>/ledger</code> — transaction history/admin review</li>
+          <li><code>/market refresh</code> — market admin refresh</li>
+          <li><code>/item give &lt;player&gt; &lt;itemId&gt; [amount]</code></li>
+          <li><code>/item reload</code></li>
+          <li><code>/item debug build &lt;itemId&gt;</code></li>
+          <li><code>/drops roll &lt;table&gt; [count]</code></li>
+          <li><code>/drops test mob &lt;entityType&gt;</code></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Hologram Admin</h3>
+        <ul>
+          <li><code>/holo create &lt;id&gt; static</code></li>
+          <li><code>/holo create &lt;id&gt; leaderboard &lt;key&gt;</code></li>
+          <li><code>/holo list</code></li>
+          <li><code>/holo remove &lt;id&gt;</code></li>
+          <li><code>/holo tp &lt;id&gt;</code></li>
+          <li><code>/holo movehere &lt;id&gt;</code></li>
+          <li><code>/holo setline &lt;id&gt; &lt;index&gt; &lt;text&gt;</code></li>
+          <li><code>/holo addline &lt;id&gt; &lt;text&gt;</code></li>
+          <li><code>/holo removeline &lt;id&gt; &lt;index&gt;</code></li>
+          <li><code>/holo reload</code></li>
+          <li><code>/holo show &lt;id&gt;</code></li>
+          <li><code>/holo pcreate &lt;id&gt; &lt;text&gt;</code></li>
+        </ul>
+      </div>
+
+    </div>
   </section>
 
   <section class="card">
     <h2>What Is Still Growing</h2>
     <p>
-      Runestone Vale already has a strong base, but the server is still actively being built into a deeper MMORPG realm.
-      Some of the biggest future opportunities are not missing because the project lacks direction — they are simply still being developed,
-      expanded, or waiting for more live content work.
+      Runestone Vale already has a strong custom foundation, but the server is still actively growing into a deeper MMORPG realm.
+      The systems below are either live foundations that need more content, or major future directions still being expanded.
     </p>
 
     <div class="card-grid">
       <div class="card">
-        <h3>Quest Content</h3>
-        <p>NPC quest content, guided progression paths, and broader live questline experiences still need more direct player-facing implementation.</p>
+        <h3>More Quest Content</h3>
+        <p>More NPC stories, questlines, daily quests, repeatable quests, guided progression, and real quest content are planned.</p>
+      </div>
+
+      <div class="card">
+        <h3>Dungeons & Bosses</h3>
+        <p>World_Content is ready for future dungeon rooms, boss arenas, raids, trials, and custom event spaces.</p>
       </div>
 
       <div class="card">
         <h3>Towns & Settlements</h3>
-        <p>Claims and settlement direction are part of the vision, but deeper town gameplay, upgrades, and settlement identity still have room to grow.</p>
+        <p>Claims and town foundations exist, with deeper settlement gameplay, upgrades, and identity planned over time.</p>
       </div>
 
       <div class="card">
         <h3>Discovery & Landmark Depth</h3>
-        <p>The exploration direction exists, but the realm still needs more landmark-based content, discovery hooks, and reasons to roam farther.</p>
+        <p>Exploration is live as a progression direction, while deeper landmarks, discoveries, and reasons to roam are still growing.</p>
       </div>
 
       <div class="card">
-        <h3>More Connected Content Loops</h3>
-        <p>The skills backbone is live, but even stronger connections between professions, rewards, economy, travel, NPC content, and world events are still ahead.</p>
+        <h3>Economy Loops</h3>
+        <p>More connections between skills, markets, NPC shops, quests, crafting, player shops, and rewards are planned.</p>
+      </div>
+
+      <div class="card">
+        <h3>Custom Content</h3>
+        <p>More custom items, blocks, progression rewards, crafted assets, and realm-specific visuals will continue to expand the Vale.</p>
       </div>
     </div>
   </section>
@@ -459,15 +885,12 @@
   <section class="card">
     <h2>Who This Page Is For</h2>
     <p>
-      This page is meant for both new and returning players:
-      people who want to understand what the server already offers,
-      what utility systems are live now,
-      which commands are worth knowing,
-      and how the realm is being shaped into something larger over time.
+      This page is for both new and returning players who want to understand what Runestone Vale currently offers,
+      what tools are live, which commands matter, and how the realm is being shaped into something larger.
     </p>
 
     <p>
-      If you want a survival server with stronger identity, clearer progression direction, deeper atmosphere, and room to be part of a growing fantasy world,
+      If you want a survival server with stronger identity, progression direction, deeper atmosphere, and room to be part of a growing fantasy world,
       Runestone Vale is still early enough that your time here can matter.
     </p>
   </section>
@@ -481,8 +904,7 @@
 
     <div class="button-row-left">
       <a class="button" href="https://discord.gg/BNkJDU6qE4" target="_blank" rel="noopener">Join the Discord</a>
-      <a class="button secondary" href="/RunestoneCore.html">See RunestoneCore</a>
-      <a class="button secondary" href="/RunestoneSkills.html">See RunestoneSkills</a>
+      <a class="button secondary" href="/index.html">Return Home</a>
       <a class="button secondary" href="/roadmap_development.html">View Roadmap</a>
     </div>
   </section>
