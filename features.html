@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Runestone Vale — Features & Commands</title>
+  <title>Runestone Vale — The Realm of RunestoneMMO</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
 
@@ -20,8 +20,23 @@
     <nav class="top-links" id="mobileNav">
       <a class="top-link" href="/index.html">Home</a>
       <a class="top-link" href="/features.html">Server-Features</a>
-      <a class="top-link" href="/RunestoneCore.html">RunestoneCore</a>
-      <a class="top-link" href="/RunestoneSkills.html">RunestoneSkills</a>
+
+      <div class="nav-dropdown">
+        <button class="top-link dropdown-toggle" type="button" aria-expanded="false" onclick="toggleRunestoneDropdown(event)">
+          RunestoneMMO ▾
+        </button>
+
+        <div class="dropdown-menu" id="runestoneDropdown">
+          <a class="dropdown-link" href="/RunestoneCore.html">RunestoneCore</a>
+          <a class="dropdown-link" href="/RunestoneSkills.html">RunestoneSkills</a>
+          <a class="dropdown-link" href="/runestoneadmintool.html">RunestoneAdminTool</a>
+          <a class="dropdown-link" href="/runestonehub.html">RunestoneHub</a>
+          <a class="dropdown-link" href="/runestonecombat.html">RunestoneCombat</a>
+          <a class="dropdown-link" href="/runestonestamina.html">RunestoneStamina</a>
+          <a class="dropdown-link" href="/runestonenpc.html">RunestoneNPCs</a>
+        </div>
+      </div>
+
       <a class="top-link" href="/roadmap_development.html">Roadmap</a>
       <a class="top-link" href="/credits.html">Credits</a>
       <a class="top-link" href="/terms.html">Terms</a>
