@@ -1,155 +1,247 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terms & Licensing — RunestoneMMO</title>
-    <link rel="stylesheet" href="/styles.css">
-    <style>
-        body {
-            font-family: "Segoe UI", Arial, sans-serif;
-            margin: 0;
-            padding: 40px;
-            background: #111;
-            color: #e5e5e5;
-            line-height: 1.6;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms & Licensing — RunestoneMMO</title>
+  <link rel="stylesheet" href="/styles.css">
 
-        h1, h2 {
-            color: #d4b46a;
-            margin-bottom: 10px;
-        }
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #111;
+      color: #e5e5e5;
+      line-height: 1.6;
+    }
 
-        a {
-            color: #d4b46a;
-            text-decoration: none;
-        }
+    h1, h2 {
+      color: #d4b46a;
+      margin-bottom: 10px;
+    }
 
-        a:hover {
-            text-decoration: underline;
-        }
+    a {
+      color: #d4b46a;
+      text-decoration: none;
+    }
 
-        .container {
-            max-width: 900px;
-            margin: auto;
-            background: rgba(0,0,0,0.4);
-            padding: 40px;
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.08);
-        }
+    a:hover {
+      text-decoration: underline;
+    }
 
-        .section {
-            margin-bottom: 40px;
-        }
+    .terms-main {
+      padding: 40px 20px;
+    }
 
-        footer {
-            margin-top: 60px;
-            text-align: center;
-            font-size: 0.9rem;
-            opacity: 0.7;
-        }
-    </style>
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: rgba(0,0,0,0.4);
+      padding: 40px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    footer {
+      margin-top: 60px;
+      text-align: center;
+      font-size: 0.9rem;
+      opacity: 0.7;
+      padding: 24px 20px;
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="container">
+<header>
+  <div class="topbar">
+    <a class="brand" href="/index.html">Runestone Vale</a>
+
+    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleMenu()">
+      ☰
+    </button>
+
+    <nav class="top-links" id="mobileNav">
+      <a class="top-link" href="/index.html">Home</a>
+      <a class="top-link" href="/features.html">Server-Features</a>
+
+      <div class="nav-dropdown">
+        <button class="top-link dropdown-toggle" type="button" aria-expanded="false" onclick="toggleRunestoneDropdown(event)">
+          RunestoneMMO ▾
+        </button>
+
+        <div class="dropdown-menu" id="runestoneDropdown">
+          <a class="dropdown-link" href="/RunestoneCore.html">RunestoneCore</a>
+          <a class="dropdown-link" href="/RunestoneSkills.html">RunestoneSkills</a>
+          <a class="dropdown-link" href="/runestoneadmintool.html">RunestoneAdminTool</a>
+          <a class="dropdown-link" href="/runestonehub.html">RunestoneHub</a>
+          <a class="dropdown-link" href="/runestonecombat.html">RunestoneCombat</a>
+          <a class="dropdown-link" href="/runestonestamina.html">RunestoneStamina</a>
+          <a class="dropdown-link" href="/runestonenpc.html">RunestoneNPCs</a>
+        </div>
+      </div>
+
+      <a class="top-link" href="/roadmap_development.html">Roadmap</a>
+      <a class="top-link" href="/credits.html">Credits</a>
+      <a class="top-link" href="/terms.html">Terms</a>
+    </nav>
+  </div>
+</header>
+
+<main class="terms-main">
+  <div class="container">
 
     <h1>Terms & Licensing</h1>
     <p>Last updated: February 2026</p>
 
     <div class="section">
-        <h2>1. Ownership</h2>
-        <p>
-            All software, code, systems, designs, branding, text, images, and digital assets associated with
-            <strong>RunestoneMMO</strong> are the exclusive property of RunestoneMMO and its creator.
-            All rights are reserved unless explicitly granted in writing.
-        </p>
+      <h2>1. Ownership</h2>
+      <p>
+        All software, code, systems, designs, branding, text, images, and digital assets associated with
+        <strong>RunestoneMMO</strong> are the exclusive property of RunestoneMMO and its creator.
+        All rights are reserved unless explicitly granted in writing.
+      </p>
     </div>
 
     <div class="section">
-        <h2>2. License Type</h2>
-        <p>
-            RunestoneMMO and all related addons, modules, and digital products are distributed under a
-            <strong>Proprietary License</strong>. This means:
-        </p>
-        <ul>
-            <li>No copying</li>
-            <li>No modification</li>
-            <li>No redistribution</li>
-            <li>No resale</li>
-            <li>No forks</li>
-            <li>No derivative works</li>
-            <li>No reuse of any part of the code, assets, or systems</li>
-        </ul>
-        <p>
-            Unless you have <strong>explicit written permission</strong>, you may not use any part of RunestoneMMO
-            in your own projects.
-        </p>
+      <h2>2. License Type</h2>
+      <p>
+        RunestoneMMO and all related addons, modules, and digital products are distributed under a
+        <strong>Proprietary License</strong>. This means:
+      </p>
+      <ul>
+        <li>No copying</li>
+        <li>No modification</li>
+        <li>No redistribution</li>
+        <li>No resale</li>
+        <li>No forks</li>
+        <li>No derivative works</li>
+        <li>No reuse of any part of the code, assets, or systems</li>
+      </ul>
+      <p>
+        Unless you have <strong>explicit written permission</strong>, you may not use any part of RunestoneMMO
+        in your own projects.
+      </p>
     </div>
 
     <div class="section">
-        <h2>3. Prohibited Actions</h2>
-        <p>You may <strong>not</strong>:</p>
-        <ul>
-            <li>Extract or reuse code, scripts, or logic</li>
-            <li>Reverse‑engineer or decompile the plugin</li>
-            <li>Repackage or redistribute any part of the project</li>
-            <li>Upload the project or its assets to any public platform</li>
-            <li>Claim ownership or authorship of any part of the system</li>
-            <li>Sell or monetize any derivative work</li>
-        </ul>
-        <p>
-            Any violation of these terms may result in DMCA takedowns, license termination, or legal action.
-        </p>
+      <h2>3. Prohibited Actions</h2>
+      <p>You may <strong>not</strong>:</p>
+      <ul>
+        <li>Extract or reuse code, scripts, or logic</li>
+        <li>Reverse-engineer or decompile the plugin</li>
+        <li>Repackage or redistribute any part of the project</li>
+        <li>Upload the project or its assets to any public platform</li>
+        <li>Claim ownership or authorship of any part of the system</li>
+        <li>Sell or monetize any derivative work</li>
+      </ul>
+      <p>
+        Any violation of these terms may result in DMCA takedowns, license termination, or legal action.
+      </p>
     </div>
 
     <div class="section">
-        <h2>4. Allowed Usage</h2>
-        <p>You are permitted to:</p>
-        <ul>
-            <li>Use the compiled plugin(s) on your own server</li>
-            <li>Configure the plugin within the provided settings</li>
-            <li>Create gameplay content using the plugin (videos, streams, screenshots)</li>
-            <li>Provide feedback or suggestions</li>
-        </ul>
+      <h2>4. Allowed Usage</h2>
+      <p>You are permitted to:</p>
+      <ul>
+        <li>Use the compiled plugin(s) on your own server</li>
+        <li>Configure the plugin within the provided settings</li>
+        <li>Create gameplay content using the plugin, including videos, streams, and screenshots</li>
+        <li>Provide feedback or suggestions</li>
+      </ul>
     </div>
 
     <div class="section">
-        <h2>5. Branding & Identity</h2>
-        <p>
-            The RunestoneMMO name, logo, lore, worldbuilding, and thematic identity are protected creative works.
-            They may not be reused, imitated, or repurposed in other projects.
-        </p>
+      <h2>5. Branding & Identity</h2>
+      <p>
+        The RunestoneMMO name, logo, lore, worldbuilding, and thematic identity are protected creative works.
+        They may not be reused, imitated, or repurposed in other projects.
+      </p>
     </div>
 
     <div class="section">
-        <h2>6. Enforcement</h2>
-        <p>
-            RunestoneMMO reserves the right to:
-        </p>
-        <ul>
-            <li>Issue DMCA takedowns</li>
-            <li>Remove unauthorized copies</li>
-            <li>Revoke access to licensed products</li>
-            <li>Pursue legal remedies for infringement</li>
-        </ul>
+      <h2>6. Enforcement</h2>
+      <p>
+        RunestoneMMO reserves the right to:
+      </p>
+      <ul>
+        <li>Issue DMCA takedowns</li>
+        <li>Remove unauthorized copies</li>
+        <li>Revoke access to licensed products</li>
+        <li>Pursue legal remedies for infringement</li>
+      </ul>
     </div>
 
     <div class="section">
-        <h2>7. Contact</h2>
-        <p>
-            For licensing questions or permissions, contact:<br>
-            <strong>support@runestonemmo.com</strong>
-        </p>
+      <h2>7. Contact</h2>
+      <p>
+        For licensing questions or permissions, contact:<br>
+        <strong>support@runestonemmo.com</strong>
+      </p>
     </div>
 
-</div>
+  </div>
+</main>
 
 <footer>
-    © 2026 RunestoneMMO. All rights reserved.<br>
-    <a href="/contact.html">Send a Raven</a> •
-    <a href="/terms.html">Terms & Licensing</a>
+  © 2026 RunestoneMMO. All rights reserved.<br>
+  <a href="/index.html">Home</a> •
+  <a href="/features.html">Server-Features</a> •
+  <a href="/roadmap_development.html">Roadmap</a> •
+  <a href="/contact.html">Send a Raven</a> •
+  <a href="/terms.html">Terms & Licensing</a>
 </footer>
+
+<script>
+function toggleMenu() {
+  const nav = document.getElementById("mobileNav");
+  const button = document.querySelector(".menu-toggle");
+
+  nav.classList.toggle("open");
+  button.setAttribute("aria-expanded", nav.classList.contains("open") ? "true" : "false");
+}
+
+function toggleRunestoneDropdown(event) {
+  event.stopPropagation();
+
+  const dropdown = event.currentTarget.closest(".nav-dropdown");
+  const button = dropdown.querySelector(".dropdown-toggle");
+
+  dropdown.classList.toggle("open");
+  button.setAttribute("aria-expanded", dropdown.classList.contains("open") ? "true" : "false");
+}
+
+document.addEventListener("click", function (event) {
+  const nav = document.getElementById("mobileNav");
+  const menuButton = document.querySelector(".menu-toggle");
+  const dropdown = document.querySelector(".nav-dropdown");
+  const dropdownButton = document.querySelector(".dropdown-toggle");
+
+  if (dropdown && !dropdown.contains(event.target)) {
+    dropdown.classList.remove("open");
+
+    if (dropdownButton) {
+      dropdownButton.setAttribute("aria-expanded", "false");
+    }
+  }
+
+  if (!nav || !menuButton) return;
+
+  const clickedInsideNav = nav.contains(event.target);
+  const clickedButton = menuButton.contains(event.target);
+
+  if (!clickedInsideNav && !clickedButton) {
+    nav.classList.remove("open");
+    menuButton.setAttribute("aria-expanded", "false");
+  }
+});
+</script>
 
 </body>
 </html>
