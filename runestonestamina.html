@@ -1,1 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RunestoneStamina — The Stamina & Movement Pacing Module of RunestoneMMO</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
 
+<body>
+
+<header>
+  <div class="topbar">
+    <a class="brand" href="/index.html">Runestone Vale</a>
+
+    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleMenu()">
+      ☰
+    </button>
+
+    <nav class="top-links" id="mobileNav">
+      <a class="top-link" href="/index.html">Home</a>
+      <a class="top-link" href="/features.html">Server-Features</a>
+
+      <div class="nav-dropdown">
+        <button class="top-link dropdown-toggle" type="button" aria-expanded="false" onclick="toggleRunestoneDropdown(event)">
+          RunestoneMMO ▾
+        </button>
+
+        <div class="dropdown-menu" id="runestoneDropdown">
+          <a class="dropdown-link" href="/RunestoneCore.html">RunestoneCore</a>
+          <a class="dropdown-link" href="/RunestoneSkills.html">RunestoneSkills</a>
+          <a class="dropdown-link" href="/runestoneadmintool.html">RunestoneAdminTool</a>
+          <a class="dropdown-link" href="/runestonehub.html">RunestoneHub</a>
+          <a class="dropdown-link" href="/runestonecombat.html">RunestoneCombat</a>
+          <a class="dropdown-link" href="/runestonestamina.html">RunestoneStamina</a>
+          <a class="dropdown-link" href="/runestonenpc.html">RunestoneNPCs</a>
+        </div>
+      </div>
+
+      <a class="top-link" href="/roadmap_development.html">Roadmap</a>
+      <a class="top-link" href="/credits.html">Credits</a>
+      <a class="top-link" href="/terms.html">Terms</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero-banner"></div>
+
+<main>
+
+  <section class="hero">
+    <h1>RunestoneStamina</h1>
+    <p class="subtitle">The stamina, movement pacing, survival pressure, and recovery module of RunestoneMMO.</p>
+
+    <p>
+      <strong>RunestoneStamina</strong> is the authoritative stamina module for the <strong>RunestoneMMO</strong> ecosystem.
+      It owns stamina state, drain, regeneration, boss bar display, low-stamina penalties, exhausted behavior,
+      persistence, Well Rested buffs, stamina progression scaling, and stamina-owned configuration.
+    </p>
+
+    <p>
+      Built on top of <strong>RunestoneCore</strong>, RunestoneStamina keeps stamina behavior isolated inside its own module
+      while still integrating with shared Core systems where needed, such as resource bar display, event bridges,
+      and read-only progression inputs from the wider RunestoneMMO stack.
+    </p>
+
+    <p>
+      In simple terms: <strong>RunestoneCore provides the shared foundation, while RunestoneStamina controls how player energy, movement, recovery, and exhaustion feel during play.</strong>
+    </p>
+
+    <div class="buttons">
+      <a class="button" href="https://hangar.papermc.io/TotalCarnage767/RunestoneStamina" target="_blank" rel="noopener">View on Hangar</a>
+      <a class="button secondary" href="https://discord.gg/BNkJDU6qE4" target="_blank" rel="noopener">Join the Discord</a>
+      <a class="button secondary" href="/index.html">Back to Runestone Vale</a>
+    </div>
+
+    <p style="margin-top: 18px; font-size: 1.1rem;">
+      <strong>Platform:</strong> Minecraft Java Edition • Paper 1.21.11 • Java 21<br>
+      <strong>Requires:</strong> RunestoneCore<br>
+      <strong>Optional Integration:</strong> RunestoneSkills • Oraxen
+    </p>
+  </section>
+
+  <section class="cta-section">
+    <h2>What RunestoneStamina Owns</h2>
+    <p>
+      RunestoneStamina is the stamina authority. It does not own combat, skills, NPCs, the Hub, or AdminTool.
+      Its job is to control stamina state, stamina drain, regeneration, penalties, persistence, buffs, and stamina-specific configuration.
+    </p>
+
+    <div class="cta-grid">
+      <article class="cta-card">
+        <h3>Stamina Runtime</h3>
+        <p>Owns current stamina, max stamina, thresholds, drain, regen, delay after use, and player state tracking.</p>
+      </article>
+
+      <article class="cta-card">
+        <h3>Movement Pacing</h3>
+        <p>Applies configured stamina costs for walking, sprinting, swimming, jumping, mining, attacking, and bow/crossbow usage.</p>
+      </article>
+
+      <article class="cta-card">
+        <h3>Low & Exhausted States</h3>
+        <p>Controls low-stamina slowdown, true exhaustion behavior, exhausted jump restriction, and mining-speed slowdown.</p>
+      </article>
+
+      <article class="cta-card">
+        <h3>Buffs & Progression</h3>
+        <p>Supports Well Rested recovery buffs, proximity bonuses, biome modifiers, and Exploration-linked stamina progression.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Newest Stamina Highlights</h2>
+    <p>
+      Recent RunestoneStamina work focused on making stamina behavior accurate, configurable, reload-safe, and free from unwanted visual side effects.
+      The current tuning direction is clear: stamina should slow and limit players in controlled ways without forcing unwanted FOV effects.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>No Stamina FOV Penalty</h3>
+        <p>
+          Stamina is not supposed to create a field-of-view warp. Low and exhausted states use movement/mining/jump behavior instead of visual FOV punishment.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Low Stamina at 15%</h3>
+        <p>
+          Low stamina begins at <strong>15%</strong> of max stamina and applies a controlled movement slowdown rather than fully stopping the player.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>True Exhaustion at 0</h3>
+        <p>
+          Exhaustion is treated as true zero stamina. At zero stamina, movement is heavily reduced and jumping can be restricted.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Movement Penalty Tuning</h3>
+        <p>
+          Current tuning uses <strong>50%</strong> movement at low stamina and <strong>25%</strong> movement at exhausted stamina.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Mining Slowdown</h3>
+        <p>
+          Stamina supports real mining-speed slowdown while low or exhausted, instead of only charging stamina cost for mining actions.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Reload-Safe Runtime</h3>
+        <p>
+          <code>/rstamina reload</code> rebuilds stamina services so updated thresholds, penalties, bars, modifiers, and config behavior do not stay stale.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Module Boundary</h2>
+    <p>
+      RunestoneStamina is deliberately focused. Other systems may read or integrate with stamina, but stamina ownership remains inside this module.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>RunestoneStamina Owns</h3>
+        <ul>
+          <li>Stamina state and threshold evaluation</li>
+          <li>Stamina drain and regeneration runtime</li>
+          <li>Stamina boss bar presentation</li>
+          <li>Low-stamina and exhausted penalty behavior</li>
+          <li>Mining-speed slowdown behavior</li>
+          <li>Well Rested qualification and buff runtime</li>
+          <li>Food restore support</li>
+          <li>Proximity bonus support</li>
+          <li>Biome override and hardship resistance behavior</li>
+          <li>Stamina persistence through <code>stamina-data.yml</code></li>
+          <li>Stamina gameplay config through <code>stamina.yml</code></li>
+          <li>Stamina progression config through <code>stamina-progression.yml</code></li>
+          <li>Module reload command through <code>/rstamina reload</code></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Other Modules Own</h3>
+        <ul>
+          <li><strong>RunestoneCore</strong> owns shared APIs, resource bars, event bridges, player data infrastructure, and service boundaries.</li>
+          <li><strong>RunestoneSkills</strong> owns skill XP and Exploration progression data consumed by stamina as read-only input.</li>
+          <li><strong>RunestoneCombat</strong> owns combat damage math, combat XP, mob profiles, and combat runtime behavior.</li>
+          <li><strong>RunestoneHub</strong> owns Hub menus and player navigation surfaces.</li>
+          <li><strong>RunestoneNPCs</strong> owns NPC quests, dialogue, shops, and quest state.</li>
+          <li><strong>RunestoneAdminTool</strong> owns staff/admin GUI workflows and command orchestration.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Main Systems Inside RunestoneStamina</h2>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <h3>Stamina State</h3>
+        <ul>
+          <li>Tracks current stamina per player</li>
+          <li>Supports default, minimum, and maximum stamina values</li>
+          <li>Hydrates online players during startup/reload</li>
+          <li>Saves player stamina state on quit, disable, and reload paths</li>
+          <li>Persists current stamina and key timing values in <code>stamina-data.yml</code></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Boss Bar Display</h3>
+        <ul>
+          <li>Displays stamina as a boss bar</li>
+          <li>Updates with current stamina ratio</li>
+          <li>Shows player stamina state clearly without requiring commands</li>
+          <li>Rebuilds cleanly during reload</li>
+          <li>Owned by RunestoneStamina, not Hub or Core menus</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Regeneration</h3>
+        <ul>
+          <li>Configurable base stamina regen</li>
+          <li>Post-use regeneration delay</li>
+          <li>Well Rested multiplier support</li>
+          <li>Proximity bonus multiplier support</li>
+          <li>Biome regen override support</li>
+          <li>Reload-safe regen service rebuild</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Movement Drain</h3>
+        <ul>
+          <li>Walking stamina drain</li>
+          <li>Sprinting stamina drain</li>
+          <li>Swimming stamina drain</li>
+          <li>Movement-state priority handling</li>
+          <li>Progression multiplier support</li>
+          <li>Biome override support for movement costs</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Action Costs</h3>
+        <ul>
+          <li>Jumping stamina cost</li>
+          <li>Mining stamina cost</li>
+          <li>Attacking stamina cost</li>
+          <li>Drawing bow stamina cost</li>
+          <li>Drawing crossbow stamina cost</li>
+          <li>Configurable costs through <code>stamina.yml</code></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Low Stamina Behavior</h3>
+        <ul>
+          <li>Low stamina threshold defaults to <code>15.0</code></li>
+          <li>Low stamina movement multiplier defaults to <code>0.50</code></li>
+          <li>Low-stamina damage penalty defaults to neutral/off with multiplier <code>1.0</code></li>
+          <li>Designed to slow players without fully stopping them</li>
+          <li>No stamina-linked FOV effect is supported</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Exhausted Behavior</h3>
+        <ul>
+          <li>Exhaustion threshold defaults to true zero stamina: <code>0.0</code></li>
+          <li>Exhausted movement multiplier defaults to <code>0.25</code></li>
+          <li>Exhausted sprint suppression defaults to <code>false</code></li>
+          <li>Exhausted jump restriction defaults to <code>true</code></li>
+          <li>Exhaustion limits movement but does not permanently lock the player in place</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Mining Slowdown</h3>
+        <ul>
+          <li>Low/exhausted stamina can slow mining speed</li>
+          <li>Mining slowdown is handled as real mining-speed behavior</li>
+          <li>Default target is <strong>50%</strong> slower mining while low/exhausted</li>
+          <li>Separate from the stamina cost charged for mining actions</li>
+          <li>Cleaned up on reload, quit, and state changes</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Well Rested Buff</h3>
+        <ul>
+          <li>Campfire/proximity-based Well Rested direction</li>
+          <li>Qualification time before buff activation</li>
+          <li>Temporary stamina regeneration multiplier</li>
+          <li>Active buff expiry can be persisted</li>
+          <li>Partial qualification progress is not persisted</li>
+          <li>Optional Core ResourceBar integration fails soft if unavailable</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Proximity Bonus</h3>
+        <ul>
+          <li>Configurable proximity-based stamina bonus behavior</li>
+          <li>Designed for world/environment recovery effects</li>
+          <li>Works as a stamina-owned service</li>
+          <li>Does not replace base regen authority</li>
+          <li>Rebuilt during reload to prevent stale behavior</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Food Restore</h3>
+        <ul>
+          <li>Food-based stamina restoration support</li>
+          <li>Configurable restore values</li>
+          <li>Supports future food/cooking progression direction</li>
+          <li>Owned by stamina runtime, not combat or skills</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Biome Overrides</h3>
+        <ul>
+          <li>Biome-specific regen override support</li>
+          <li>Biome-specific walking drain override</li>
+          <li>Biome-specific sprinting drain override</li>
+          <li>Biome-specific swimming drain override</li>
+          <li>Biome-specific jumping, mining, bow, crossbow, and attacking cost overrides</li>
+          <li>Invalid override values fall back safely to base config behavior</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Exploration Progression Bridge</h3>
+        <ul>
+          <li>Uses Exploration level as read-only progression input</li>
+          <li>RunestoneSkills/Core APIs provide the level source</li>
+          <li>RunestoneStamina remains the authority for applying stamina effects</li>
+          <li>Supports max stamina bonus direction</li>
+          <li>Supports sprint, swim, and jump efficiency direction</li>
+          <li>Supports biome hardship resistance groups</li>
+          <li>Does not hard-lock base movement actions by skill level</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Persistence</h3>
+        <ul>
+          <li>Uses module-owned <code>stamina-data.yml</code></li>
+          <li>Persists current stamina</li>
+          <li>Persists last consumption timestamp</li>
+          <li>Persists active Well Rested expiry when still valid</li>
+          <li>Does not persist boss bars, runtime caches, movement modifiers, or partial buff progress</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Stamina Tuning Contract</h2>
+    <p>
+      The current tuning direction is intentionally simple and readable for players.
+      Stamina should create survival pressure without causing confusing camera effects or completely freezing the character.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Current Defaults</h3>
+        <ul>
+          <li>Low stamina starts at <code>15%</code></li>
+          <li>Exhaustion starts at <code>0</code> stamina</li>
+          <li>Low movement multiplier: <code>0.50</code></li>
+          <li>Exhausted movement multiplier: <code>0.25</code></li>
+          <li>Low damage penalty default: neutral/off</li>
+          <li>Shield stamina penalty default: disabled</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>What Happens at Low Stamina</h3>
+        <ul>
+          <li>Player movement is slowed</li>
+          <li>Mining speed can be slowed</li>
+          <li>Jumping is still allowed above true exhaustion</li>
+          <li>Player is not fully frozen</li>
+          <li>No FOV warp is applied</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>What Happens at Zero Stamina</h3>
+        <ul>
+          <li>Movement is reduced more heavily</li>
+          <li>Jumping can be restricted</li>
+          <li>Sprint suppression is disabled by default</li>
+          <li>Player can still move slowly</li>
+          <li>Stamina must regenerate before full movement returns</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Oraxen Stamina Brews</h2>
+    <p>
+      RunestoneStamina includes optional Oraxen-backed stamina brew assets. These are custom potion-style items intended to restore stamina by a percentage of max stamina.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Current Brew Family</h3>
+        <ul>
+          <li><strong>Wayfarer’s Sip</strong> — smaller stamina recovery brew</li>
+          <li><strong>Stonewake Draught</strong> — medium stamina recovery brew</li>
+          <li><strong>King’s Rune Brew</strong> — stronger stamina recovery brew</li>
+          <li>Built as custom Oraxen potion items</li>
+          <li>Designed for survival, exploration, dungeon, and quest reward use</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Oraxen Asset Support</h3>
+        <ul>
+          <li>Bundled Oraxen item YAML support</li>
+          <li>Bundled model and texture support</li>
+          <li>Install path follows RunestoneMMO module-owned asset patterns</li>
+          <li>Can be installed through the stamina Oraxen asset command</li>
+          <li>Oraxen remains optional, not required for base stamina runtime</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>How RunestoneStamina Connects to RunestoneCore</h2>
+    <p>
+      RunestoneStamina depends on <strong>RunestoneCore</strong> for shared APIs and optional display integration,
+      but stamina behavior itself stays inside the Stamina module.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Core Integration</h3>
+        <ul>
+          <li>Uses Core APIs where needed</li>
+          <li>Can integrate with Core ResourceBarAPI for Well Rested display</li>
+          <li>Can listen to Core/skill level-up style event bridges</li>
+          <li>Uses Core as a shared project foundation</li>
+          <li>Fails soft if optional ResourceBar integration is unavailable</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Skills Integration</h3>
+        <ul>
+          <li>Reads Exploration progression as an input</li>
+          <li>Uses stamina-progression tiers for scaling</li>
+          <li>Can apply max stamina and efficiency improvements</li>
+          <li>Does not mutate skill XP</li>
+          <li>Does not own RunestoneSkills progression data</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Combat Boundary</h3>
+        <ul>
+          <li>Stamina can drain from attacking or bow/crossbow actions</li>
+          <li>Stamina can affect survival pacing</li>
+          <li>RunestoneCombat still owns combat damage math</li>
+          <li>Stamina does not replace combat XP or mob scaling</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="button-row-left">
+      <a href="/RunestoneCore.html" class="button">Explore RunestoneCore</a>
+      <a href="/RunestoneSkills.html" class="button secondary">Explore RunestoneSkills</a>
+      <a href="/runestonecombat.html" class="button secondary">Explore RunestoneCombat</a>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Commands & Permissions</h2>
+    <p>
+      RunestoneStamina has a small admin command surface. Normal players do not need to run commands for stamina;
+      stamina drains, regenerates, displays, and persists automatically during gameplay.
+    </p>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <h3>Main Command</h3>
+        <ul>
+          <li><code>/rstamina reload</code> — reloads stamina configs and rebuilds stamina runtime services</li>
+          <li><code>/rstamina installoraxenassets</code> — installs bundled stamina Oraxen assets where supported</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Main Permission</h3>
+        <ul>
+          <li><code>runestonestamina.reload</code></li>
+          <li>Default: OP</li>
+          <li>Required for stamina admin command access</li>
+          <li>Used for reload and admin-level stamina operations</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Player Access Note</h3>
+        <ul>
+          <li>Players do not need a command to use stamina</li>
+          <li>Stamina is automatic during movement/actions</li>
+          <li>Boss bar display is runtime-managed</li>
+          <li>Stamina brews are item-based, not command-based</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Admin Notes</h3>
+        <ul>
+          <li>Use reload after changing <code>stamina.yml</code> or <code>stamina-progression.yml</code></li>
+          <li>Restart is safest after large asset/config deployment changes</li>
+          <li>Confirm boss bars, drain, regen, and penalties after reload</li>
+          <li>Confirm no FOV behavior returns after tuning changes</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>Configuration & Runtime Files</h2>
+    <p>
+      RunestoneStamina owns its own configuration and persistence files. These files should stay module-owned and should not be replaced by Core, Hub, Combat, or Skills configs.
+    </p>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <h3><code>stamina.yml</code></h3>
+        <ul>
+          <li>Main stamina gameplay config</li>
+          <li>Base stamina values</li>
+          <li>Boss bar settings</li>
+          <li>Regen and delay settings</li>
+          <li>Movement and action drain costs</li>
+          <li>Low/exhausted thresholds and penalties</li>
+          <li>Well Rested, proximity, biome, and food restore settings</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3><code>stamina-progression.yml</code></h3>
+        <ul>
+          <li>Stamina progression bridge config</li>
+          <li>Uses Exploration as the current progression source</li>
+          <li>Defines unlocked stamina tiers</li>
+          <li>Supports max stamina bonuses</li>
+          <li>Supports drain/cost efficiency direction</li>
+          <li>Supports biome hardship resistance groups</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3><code>stamina-data.yml</code></h3>
+        <ul>
+          <li>Module-owned stamina persistence</li>
+          <li>Stores per-player stamina snapshots</li>
+          <li>Stores last consumption time</li>
+          <li>Stores active Well Rested expiry when relevant</li>
+          <li>Not a tuning/config authority file</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Oraxen Assets</h3>
+        <ul>
+          <li>Stamina brew item definitions</li>
+          <li>Model and texture scaffolding</li>
+          <li>Module-owned install workflow</li>
+          <li>Optional integration only</li>
+          <li>Safe to keep disabled if the server does not use Oraxen assets</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>Manual Test Checklist</h2>
+    <p>
+      After deploying a stamina update, staff should test stamina as a real player, not only as OP.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Basic Runtime Tests</h3>
+        <ul>
+          <li>Join the server and confirm the stamina boss bar appears</li>
+          <li>Walk and confirm stamina behavior remains stable</li>
+          <li>Sprint and confirm stamina drains</li>
+          <li>Stop using stamina and confirm regen starts after delay</li>
+          <li>Log out and back in to confirm persistence behaves correctly</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Low / Exhausted Tests</h3>
+        <ul>
+          <li>Drain stamina below 15%</li>
+          <li>Confirm player slows to roughly 50% movement</li>
+          <li>Drain stamina to zero</li>
+          <li>Confirm player slows to roughly 25% movement</li>
+          <li>Confirm jumping is restricted at zero if enabled</li>
+          <li>Confirm the player is not fully frozen</li>
+          <li>Confirm there is no FOV warp</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Integration Tests</h3>
+        <ul>
+          <li>Test mining slowdown while low/exhausted</li>
+          <li>Test Well Rested qualification and expiry</li>
+          <li>Test stamina brew items if Oraxen assets are installed</li>
+          <li>Run <code>/rstamina reload</code> and retest drain/regen/penalties</li>
+          <li>Confirm no stale movement, mining, or boss bar behavior remains after reload</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Why RunestoneStamina Matters</h2>
+    <p>
+      Stamina gives Runestone Vale more survival weight. Movement, mining, combat actions, travel, recovery, and dungeon pacing
+      all feel more meaningful when players have an energy system to manage.
+    </p>
+
+    <p>
+      It matters because stamina can shape how players explore, fight, recover, prepare, and survive without turning the game into a hard stop.
+      The goal is pressure, not frustration: slower movement at low stamina, stronger limitations at zero stamina, readable recovery,
+      and no unwanted visual FOV punishment.
+    </p>
+
+    <p>
+      RunestoneStamina is what helps movement and survival feel like part of the same MMORPG-style world instead of just vanilla sprinting with no consequence.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>What Is Still Growing Inside RunestoneStamina</h2>
+    <p>
+      RunestoneStamina already provides the core stamina runtime, but the system can grow as the rest of RunestoneMMO expands.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>More Stamina Items</h3>
+        <p>
+          The current brew family gives the module a strong item direction, but more food, potion, and reward items can expand stamina gameplay.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>More Exploration Depth</h3>
+        <p>
+          Exploration-linked stamina progression can become more meaningful as landmarks, discoveries, travel routes, and biome hardship content grow.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Dungeon & Boss Pacing</h3>
+        <p>
+          Future dungeons and boss arenas can use stamina to shape movement, recovery windows, and survival pressure.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>More Environmental Effects</h3>
+        <p>
+          Biome overrides, proximity bonuses, and hardship resistance can grow into deeper world-specific stamina behavior.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>State of the Module</h2>
+    <p>
+      RunestoneStamina is actively serving as the stamina authority for <strong>Runestone Vale</strong>.
+      It owns the runtime truth for stamina state, drain, regen, boss bar display, persistence, penalties, Well Rested behavior,
+      progression scaling, and stamina-owned configuration.
+    </p>
+
+    <p>
+      Current development direction is focused on keeping stamina accurate, configurable, readable, and player-friendly:
+      no unwanted FOV changes, clear low/exhausted thresholds, real movement and mining slowdown, safe reload behavior,
+      and clean module boundaries.
+    </p>
+
+    <p>
+      <strong>This is the stamina foundation of RunestoneMMO — the layer that makes movement, recovery, exhaustion, and survival pacing feel like part of the living realm.</strong>
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>Keep Moving Through the Vale</h2>
+    <p>
+      RunestoneStamina gives Runestone Vale an energy system that can grow with exploration, combat, dungeons, professions, custom items, and survival pressure.
+      It helps turn movement and recovery into meaningful parts of the server’s long-term MMORPG identity.
+    </p>
+
+    <div class="button-row-left">
+      <a class="button" href="https://hangar.papermc.io/TotalCarnage767/RunestoneStamina" target="_blank" rel="noopener">Open on Hangar</a>
+      <a class="button secondary" href="/RunestoneCore.html">See RunestoneCore</a>
+      <a class="button secondary" href="/RunestoneSkills.html">See RunestoneSkills</a>
+      <a class="button secondary" href="/runestonecombat.html">See RunestoneCombat</a>
+      <a class="button secondary" href="/features.html">View Server Features</a>
+      <a class="button secondary" href="https://discord.gg/BNkJDU6qE4" target="_blank" rel="noopener">Join the Discord</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>RunestoneStamina — Stamina, movement pacing, and recovery systems for Runestone Vale.</p>
+  <p>
+    <a href="/index.html">Home</a> •
+    <a href="/features.html">Server-Features</a> •
+    <a href="/RunestoneCore.html">RunestoneCore</a> •
+    <a href="/RunestoneSkills.html">RunestoneSkills</a> •
+    <a href="/runestonehub.html">RunestoneHub</a> •
+    <a href="/runestonecombat.html">RunestoneCombat</a> •
+    <a href="/runestonestamina.html">RunestoneStamina</a> •
+    <a href="/runestonenpc.html">RunestoneNPCs</a> •
+    <a href="/roadmap_development.html">Roadmap</a> •
+    <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneStamina" target="_blank" rel="noopener">RunestoneStamina Hangar</a> •
+    <a href="https://discord.gg/BNkJDU6qE4" target="_blank" rel="noopener">Discord</a> •
+    <a href="/terms.html">Terms &amp; Licensing</a>
+  </p>
+</footer>
+
+<script>
+function toggleMenu() {
+  const nav = document.getElementById("mobileNav");
+  const button = document.querySelector(".menu-toggle");
+
+  nav.classList.toggle("open");
+  button.setAttribute("aria-expanded", nav.classList.contains("open") ? "true" : "false");
+}
+
+function toggleRunestoneDropdown(event) {
+  event.stopPropagation();
+
+  const dropdown = event.currentTarget.closest(".nav-dropdown");
+  const button = dropdown.querySelector(".dropdown-toggle");
+
+  dropdown.classList.toggle("open");
+  button.setAttribute("aria-expanded", dropdown.classList.contains("open") ? "true" : "false");
+}
+
+document.addEventListener("click", function (event) {
+  const nav = document.getElementById("mobileNav");
+  const menuButton = document.querySelector(".menu-toggle");
+  const dropdown = document.querySelector(".nav-dropdown");
+  const dropdownButton = document.querySelector(".dropdown-toggle");
+
+  if (dropdown && !dropdown.contains(event.target)) {
+    dropdown.classList.remove("open");
+
+    if (dropdownButton) {
+      dropdownButton.setAttribute("aria-expanded", "false");
+    }
+  }
+
+  if (!nav || !menuButton) return;
+
+  const clickedInsideNav = nav.contains(event.target);
+  const clickedButton = menuButton.contains(event.target);
+
+  if (!clickedInsideNav && !clickedButton) {
+    nav.classList.remove("open");
+    menuButton.setAttribute("aria-expanded", "false");
+  }
+});
+</script>
+
+</body>
+</html>
