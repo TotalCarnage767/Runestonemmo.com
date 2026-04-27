@@ -1,1 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RunestoneHub — The Player Hub of RunestoneMMO</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
 
+<body>
+
+<header>
+  <div class="topbar">
+    <a class="brand" href="/index.html">Runestone Vale</a>
+
+    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleMenu()">
+      ☰
+    </button>
+
+    <nav class="top-links" id="mobileNav">
+      <a class="top-link" href="/index.html">Home</a>
+      <a class="top-link" href="/features.html">Server-Features</a>
+
+      <div class="nav-dropdown">
+        <button class="top-link dropdown-toggle" type="button" aria-expanded="false" onclick="toggleRunestoneDropdown(event)">
+          RunestoneMMO ▾
+        </button>
+
+        <div class="dropdown-menu" id="runestoneDropdown">
+          <a class="dropdown-link" href="/RunestoneCore.html">RunestoneCore</a>
+          <a class="dropdown-link" href="/RunestoneSkills.html">RunestoneSkills</a>
+          <a class="dropdown-link" href="/runestoneadmintool.html">RunestoneAdminTool</a>
+          <a class="dropdown-link" href="/runestonehub.html">RunestoneHub</a>
+          <a class="dropdown-link" href="/runestonecombat.html">RunestoneCombat</a>
+          <a class="dropdown-link" href="/runestonestamina.html">RunestoneStamina</a>
+          <a class="dropdown-link" href="/runestonenpc.html">RunestoneNPCs</a>
+        </div>
+      </div>
+
+      <a class="top-link" href="/roadmap_development.html">Roadmap</a>
+      <a class="top-link" href="/credits.html">Credits</a>
+      <a class="top-link" href="/terms.html">Terms</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero-banner"></div>
+
+<main>
+
+  <section class="hero">
+    <h1>RunestoneHub</h1>
+    <p class="subtitle">The player navigation and utility hub of RunestoneMMO — built to make important systems easier to reach without command clutter.</p>
+
+    <p>
+      <strong>RunestoneHub</strong> is the Login Hub and Hub Compass module for the <strong>RunestoneMMO</strong> ecosystem.
+      It owns the player-facing Hub menu runtime, navigation flow, Hub Compass interaction, travel menu access, market access,
+      bank access, quest information page, server updates page, and key player utility menus.
+    </p>
+
+    <p>
+      Built on top of <strong>RunestoneCore</strong>, RunestoneHub consumes Core services instead of owning every backend itself.
+      Core remains the authority for economy, bank data, menu framework, configuration values, quest service boundaries, travel commands,
+      and shared player systems. Hub organizes those systems into a cleaner player experience.
+    </p>
+
+    <p>
+      In simple terms: <strong>RunestoneCore provides the foundation, while RunestoneHub gives players a central place to access the realm’s most important systems.</strong>
+    </p>
+
+    <div class="buttons">
+      <a class="button" href="https://hangar.papermc.io/TotalCarnage767/RunestoneHub" target="_blank" rel="noopener">View on Hangar</a>
+      <a class="button secondary" href="https://discord.gg/BNkJDU6qE4" target="_blank" rel="noopener">Join the Discord</a>
+      <a class="button secondary" href="/index.html">Back to Runestone Vale</a>
+    </div>
+
+    <p style="margin-top: 18px; font-size: 1.1rem;">
+      <strong>Platform:</strong> Minecraft Java Edition • Paper 1.21.11 • Java 21<br>
+      <strong>Requires:</strong> RunestoneCore<br>
+      <strong>Purpose:</strong> Player Hub menu, Hub Compass interaction, utility navigation, and system access
+    </p>
+  </section>
+
+  <section class="cta-section">
+    <h2>What RunestoneHub Owns</h2>
+    <p>
+      RunestoneHub owns the Hub runtime and player navigation layer. It does not replace Core, NPCs, Skills, Combat, Stamina,
+      or AdminTool. Instead, it gives players cleaner access to those systems through menus.
+    </p>
+
+    <div class="cta-grid">
+      <article class="cta-card">
+        <h3>Login Hub Runtime</h3>
+        <p>Owns the player Hub menu flow, page navigation, button layout, and Hub-specific menu presentation.</p>
+      </article>
+
+      <article class="cta-card">
+        <h3>Hub Compass Interaction</h3>
+        <p>Listens for the Hub Compass right-click behavior and opens the player Hub without forcing players to memorize commands.</p>
+      </article>
+
+      <article class="cta-card">
+        <h3>Player Utility Navigation</h3>
+        <p>Organizes travel, market, bank, quest, grave, mailbox, daily, skill, and update access into one connected interface.</p>
+      </article>
+
+      <article class="cta-card">
+        <h3>Read-Only Quest Info</h3>
+        <p>Displays current quest progress, active/ready counts, and completed quest count through the authoritative Core quest service boundary.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Newest Hub Highlights</h2>
+    <p>
+      Recent RunestoneHub work focused on making the player experience cleaner, less cluttered, and better connected to the current quest,
+      economy, bank, and server update systems.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Quest Info Button</h3>
+        <p>
+          The main Hub now includes a dedicated <strong>Quest Info</strong> page showing current quest data, progress, active quest count,
+          ready-to-turn-in count, and completed quest count.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Market & Bank Split</h3>
+        <p>
+          Market & Trading remains the main economy entry point, while bank actions now live in a cleaner dedicated Bank submenu.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Dedicated Bank Menu</h3>
+        <p>
+          Bank deposit and withdraw actions are grouped in their own menu with fixed amount buttons and custom amount prompts.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Server Updates Page</h3>
+        <p>
+          The Hub Server Updates page reads configured news entries and displays polished development updates in-game.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Hub Compass Polish</h3>
+        <p>
+          Hub Compass wording was cleaned up so players understand it opens the Runestone Hub for market, bank, travel, skills, and updates.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Build Validation</h3>
+        <p>
+          The latest Hub polish sequence built successfully alongside Core and NPC modules, with no extra validation edits introduced during final checks.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Module Boundary</h2>
+    <p>
+      RunestoneHub is intentionally focused on player navigation and UI. It should not become a second backend for economy,
+      quests, NPCs, travel, skills, or server data.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>RunestoneHub Owns</h3>
+        <ul>
+          <li>Login Hub menu runtime</li>
+          <li>Hub Compass right-click listener behavior</li>
+          <li>Hub page navigation</li>
+          <li>Market & Trading menu presentation</li>
+          <li>Bank submenu presentation</li>
+          <li>Quest Info read-only page</li>
+          <li>Server Updates/news viewer</li>
+          <li>Teleport Requests menu surface</li>
+          <li>Graves menu surface</li>
+          <li>Player utility menu layout</li>
+          <li>Hub lifecycle listener registration</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Other Modules Own</h3>
+        <ul>
+          <li><strong>RunestoneCore</strong> owns menu APIs, economy, bank state, commands, config values, travel commands, mail, graves, daily rewards, and quest service read boundaries.</li>
+          <li><strong>RunestoneNPCs</strong> owns quest runtime, quest progress, quest lifecycle, dialogue, rewards, and NPC shops.</li>
+          <li><strong>RunestoneSkills</strong> owns skill progression and skill XP sources.</li>
+          <li><strong>RunestoneCombat</strong> owns combat runtime and combat XP behavior.</li>
+          <li><strong>RunestoneStamina</strong> owns stamina drain, regen, HUD, buffs, and stamina items.</li>
+          <li><strong>RunestoneAdminTool</strong> owns staff/admin GUI workflows.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Main Systems Inside RunestoneHub</h2>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <h3>Login Hub Main Menu</h3>
+        <ul>
+          <li>Main player utility menu</li>
+          <li>Opened by <code>/hub</code>, <code>/loginhub</code>, or Hub Compass right-click</li>
+          <li>Routes players to travel, market, bank, skills, quests, graves, updates, and other utility pages</li>
+          <li>Uses Core’s menu framework instead of a separate standalone GUI backend</li>
+          <li>Designed to reduce command clutter for normal players</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Hub Compass</h3>
+        <ul>
+          <li>Player-facing Hub item</li>
+          <li>Right-click opens the Runestone Hub menu</li>
+          <li>Works through HubItemListener</li>
+          <li>Item authority and fallback wording are handled through the wider Core/Hub integration path</li>
+          <li>Polished lore explains access to market, bank, travel, skills, and updates</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Travel Access</h3>
+        <ul>
+          <li>Spawn button</li>
+          <li>Home button</li>
+          <li>Set Home button</li>
+          <li>Teleport Requests submenu</li>
+          <li>Uses existing Core/player travel command behavior</li>
+          <li>Hub does not replace the actual teleport command authority</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Teleport Requests Menu</h3>
+        <ul>
+          <li>Teleport to Player flow</li>
+          <li>Bring Player Here flow</li>
+          <li>Accept request</li>
+          <li>Deny request</li>
+          <li>Cancel outgoing request</li>
+          <li>Toggle receiving teleport requests</li>
+          <li>Menu access for players who do not want to type every teleport command</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Market & Trading</h3>
+        <ul>
+          <li>Main economy/navigation page</li>
+          <li>Player Shops access</li>
+          <li>Auction House access</li>
+          <li>Trading/economy direction</li>
+          <li>Entry point into the dedicated Bank submenu</li>
+          <li>Recently cleaned up so bank actions no longer clutter the main Market page</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Bank Submenu</h3>
+        <ul>
+          <li>Dedicated bank page under Market & Trading</li>
+          <li>Fixed deposit buttons</li>
+          <li>Fixed withdraw buttons</li>
+          <li>Custom amount deposit prompt</li>
+          <li>Custom amount withdraw prompt</li>
+          <li>Deposit/withdraw actions return players back to the Bank page</li>
+          <li>Uses Core bank/economy authority instead of storing bank state in Hub</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Quest Info Page</h3>
+        <ul>
+          <li>Dedicated Quest Info button in the main Hub</li>
+          <li>Shows tracked/current quest title where available</li>
+          <li>Shows quest status</li>
+          <li>Shows objective text</li>
+          <li>Shows progress text</li>
+          <li>Shows progress percent where available</li>
+          <li>Shows active quest count</li>
+          <li>Shows ready-to-turn-in count</li>
+          <li>Shows completed quest count</li>
+          <li>Read-only display; does not mutate quest lifecycle, rewards, or progress</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Server Updates Page</h3>
+        <ul>
+          <li>Displays configured server news/update entries</li>
+          <li>Reads from <code>login_hub.news.entries</code></li>
+          <li>Supports polished in-game development updates</li>
+          <li>Designed for readable update summaries without external links inside the in-game entry</li>
+          <li>Lets the server communicate current progress from inside the Hub experience</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Graves Access</h3>
+        <ul>
+          <li>Graves submenu access</li>
+          <li>Latest grave location support</li>
+          <li>Death recovery information surface</li>
+          <li>Uses Core grave systems instead of storing grave data inside Hub</li>
+          <li>Gives players easier access to recovery information without command spam</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Mailbox & Daily Utility</h3>
+        <ul>
+          <li>Mailbox access/status</li>
+          <li>Daily Claim access</li>
+          <li>Streak display direction</li>
+          <li>Routes into Core-owned mail and daily reward systems</li>
+          <li>Helps recurring player utility feel connected to one Hub flow</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Skills Access</h3>
+        <ul>
+          <li>Skills page/menu access</li>
+          <li>Routes players toward skill/progression information</li>
+          <li>Uses Core/Skills service boundaries for actual progression data</li>
+          <li>Helps professions feel connected to the main player experience</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Fallback & Safety States</h3>
+        <ul>
+          <li>Clean message when player travel tools are unavailable</li>
+          <li>Clean unavailable state when quest provider is missing</li>
+          <li>Clean no-active-quest state when the player has no active quest</li>
+          <li>Prompts are cleared when players quit</li>
+          <li>Hub views avoid becoming backend mutation paths</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Quest Info Contract</h2>
+    <p>
+      The Quest Info page is intentionally read-only. It exists to show players useful quest information without becoming a second quest engine.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Data Source</h3>
+        <ul>
+          <li>Consumes <code>RunestoneCoreAPI.get().getQuestService()</code></li>
+          <li>Uses <code>RunestoneQuestService</code> snapshots and counts</li>
+          <li>Does not read quest config directly</li>
+          <li>Does not read NPC config directly</li>
+          <li>Does not read player quest preference storage directly</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Displayed Quest Data</h3>
+        <ul>
+          <li>Current/tracked quest</li>
+          <li>Quest status</li>
+          <li>Objective text</li>
+          <li>Progress text</li>
+          <li>Progress percent where available</li>
+          <li>Active quest count</li>
+          <li>Ready-to-turn-in quest count</li>
+          <li>Completed quest count</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Safety Rules</h3>
+        <ul>
+          <li>No quest state mutation</li>
+          <li>No reward claiming</li>
+          <li>No progress editing</li>
+          <li>No direct config reads</li>
+          <li>No NPC runtime ownership</li>
+          <li>Missing data resolves to a clean fallback display</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>How RunestoneHub Connects to RunestoneCore</h2>
+    <p>
+      RunestoneHub depends on <strong>RunestoneCore</strong>. Core provides the menu framework, command-backed player actions,
+      economy and bank authority, configuration sources, quest service read boundary, and many of the systems displayed in the Hub.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Core Menu API</h3>
+        <ul>
+          <li>Hub uses Core menu creation APIs</li>
+          <li>Hub menu pages are rendered through the shared menu framework</li>
+          <li>Hub does not create a separate independent GUI framework</li>
+          <li>Menu readiness checks protect players from broken/opening states</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Core System Commands</h3>
+        <ul>
+          <li>Spawn/Home/Set Home use Core command behavior</li>
+          <li>Teleport Requests use Core command behavior</li>
+          <li>Graves use Core grave command/backend behavior</li>
+          <li>Bank uses Core economy/bank behavior</li>
+          <li>Mail and daily systems remain Core-owned</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Core Config Values</h3>
+        <ul>
+          <li>Server Updates entries are read from <code>login_hub.news.entries</code></li>
+          <li>Hub item fallback wording is tied into the Core/Hub integration path</li>
+          <li>Hub consumes configured data without becoming the master config owner for unrelated systems</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="button-row-left">
+      <a href="/RunestoneCore.html" class="button">Explore RunestoneCore</a>
+      <a href="/features.html" class="button secondary">View Server Features</a>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Commands & Permissions</h2>
+    <p>
+      RunestoneHub has a small command surface. Most of its value is in the Hub menu itself and the Hub Compass interaction.
+    </p>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <h3>Main Player Command</h3>
+        <ul>
+          <li><code>/hub</code> — opens the Login Hub / Runestone Hub menu</li>
+          <li><code>/loginhub</code> — alias for opening the Hub</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Player Permission</h3>
+        <ul>
+          <li><code>runestonecore.hub.use</code></li>
+          <li>Default: true</li>
+          <li>Allows players to open the Hub menu</li>
+          <li>Used by the player-facing Hub command surface</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Admin Permission</h3>
+        <ul>
+          <li><code>runestonecore.hub.admin</code></li>
+          <li>Default: OP</li>
+          <li>Reserved for Hub admin operations and reload/admin paths where available</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Related Commands Used by Hub</h3>
+        <ul>
+          <li><code>/spawn</code></li>
+          <li><code>/home</code></li>
+          <li><code>/sethome</code></li>
+          <li><code>/tpa</code>, <code>/tpahere</code>, <code>/tpaccept</code>, <code>/tpdeny</code>, <code>/tpacancel</code>, <code>/tptoggle</code></li>
+          <li><code>/grave</code></li>
+          <li><code>/daily</code></li>
+          <li><code>/mail</code></li>
+          <li><code>/skills</code></li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>Configuration & Runtime Files</h2>
+    <p>
+      RunestoneHub itself is lightweight. Much of the player-facing content it displays comes from Core configuration and Core services.
+    </p>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <h3>Important Runtime Classes</h3>
+        <ul>
+          <li><code>RunestoneHub</code> — module entry point</li>
+          <li><code>HubItemListener</code> — listens for Hub Compass interaction</li>
+          <li><code>LoginHubSupport</code> — builds and opens Hub menus</li>
+          <li><code>HubCommandRegistrar</code> — registers Hub command access</li>
+          <li><code>HubConstants</code> — shared Hub constants</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Config Sources Consumed</h3>
+        <ul>
+          <li><code>login_hub.news.entries</code> — Server Updates entries</li>
+          <li>Core economy/bank config values where needed</li>
+          <li>Core quest service data for Quest Info</li>
+          <li>Core menu framework state</li>
+          <li>Core command-backed system behavior</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Build / Deployment</h3>
+        <ul>
+          <li>Build module with <code>./gradlew :RunestoneHub:build</code></li>
+          <li>Deploy <code>RunestoneHub-&lt;version&gt;.jar</code></li>
+          <li>Requires the matching RunestoneCore jar</li>
+          <li>Quest Info also depends on the active RunestoneNPCs quest service provider for real quest data</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>Player Experience Goals</h2>
+    <p>
+      RunestoneHub exists because a growing MMO server can quickly become overwhelming if every system requires a separate typed command.
+      The Hub gives players one familiar place to start.
+    </p>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <h3>Reduce Command Clutter</h3>
+        <ul>
+          <li>Players can access major systems from a menu</li>
+          <li>Travel and teleport tools are easier to discover</li>
+          <li>Bank and market systems are easier to understand</li>
+          <li>Quest information is easier to check</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Improve Onboarding</h3>
+        <ul>
+          <li>Hub Compass gives new players an obvious utility item</li>
+          <li>Server Updates help explain current progress</li>
+          <li>Skills, market, bank, and travel are not hidden behind command knowledge</li>
+          <li>Hub creates a stronger first impression for the realm</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Connect Systems</h3>
+        <ul>
+          <li>Travel links to player movement tools</li>
+          <li>Market links to shops, trading, and bank access</li>
+          <li>Quest Info links players back to their current progression</li>
+          <li>Updates help connect development progress to the live player experience</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Manual In-Game Test Checklist</h2>
+    <p>
+      After deploying a new Hub build, staff should test the Hub in-game as a normal player and as staff where needed.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Core Hub Tests</h3>
+        <ul>
+          <li><code>/hub</code> opens the Hub</li>
+          <li><code>/loginhub</code> opens the Hub</li>
+          <li>Hub Compass right-click opens the Hub</li>
+          <li>Main menu buttons appear correctly</li>
+          <li>Back/close navigation behaves cleanly</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Menu Flow Tests</h3>
+        <ul>
+          <li>Market & Trading opens</li>
+          <li>Bank opens from Market & Trading</li>
+          <li>Deposit buttons work and return to Bank page</li>
+          <li>Withdraw buttons work and return to Bank page</li>
+          <li>Custom amount prompt clears properly when done or when player quits</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Quest & Updates Tests</h3>
+        <ul>
+          <li>Quest Info opens</li>
+          <li>Quest Info shows clean fallback when no active quest exists</li>
+          <li>Quest Info shows current quest data when a quest is active</li>
+          <li>Completed quest count displays without errors</li>
+          <li>Server Updates shows the configured development update</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Why RunestoneHub Matters</h2>
+    <p>
+      Runestone Vale has many systems: skills, economy, bank, travel, graves, quests, updates, mail, rewards, and more.
+      Without a central player hub, those systems can feel scattered or hidden.
+    </p>
+
+    <p>
+      RunestoneHub makes the realm easier to use by giving players a connected utility center.
+      It turns the server’s systems into something players can actually navigate, instead of forcing everyone to remember a growing command list.
+    </p>
+
+    <p>
+      The Hub is what helps Runestone Vale feel more like a polished MMORPG realm and less like a loose pile of separate plugin commands.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>What Is Still Growing Inside RunestoneHub</h2>
+    <p>
+      RunestoneHub already provides a strong player utility layer, but it can keep growing as the rest of RunestoneMMO expands.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>More Player Guidance</h3>
+        <p>
+          As quests, skills, towns, dungeons, and content worlds grow, the Hub can become a stronger place for guiding players to what matters next.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>More Economy Navigation</h3>
+        <p>
+          Market, bank, player shop, auction, and trading tools can continue becoming cleaner and easier to understand.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Quest Integration Polish</h3>
+        <p>
+          Quest Info is read-only and service-backed now, but future quest systems may allow more helpful player guidance and clearer quest navigation.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Better New Player Flow</h3>
+        <p>
+          The Hub Compass can keep improving as the main commandless access point for onboarding, daily play, and player utility.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>State of the Module</h2>
+    <p>
+      RunestoneHub is actively serving as the player navigation layer for <strong>Runestone Vale</strong>.
+      It owns the Hub menu runtime and helps players access the systems that matter most during normal play.
+    </p>
+
+    <p>
+      The current direction is focused on clean navigation, readable menus, commandless utility, quest visibility,
+      market/bank clarity, and better in-game communication through Server Updates.
+    </p>
+
+    <p>
+      <strong>This is the player utility center of RunestoneMMO — the place where the realm’s systems become easier to find, understand, and use.</strong>
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>Open the Hub</h2>
+    <p>
+      RunestoneHub gives players a central place to reach travel, market, bank, quests, graves, mail, daily rewards, skills, and server updates.
+      It is one of the main player-facing pieces of the Runestone Vale experience.
+    </p>
+
+    <div class="button-row-left">
+      <a class="button" href="https://hangar.papermc.io/TotalCarnage767/RunestoneHub" target="_blank" rel="noopener">Open on Hangar</a>
+      <a class="button secondary" href="/RunestoneCore.html">See RunestoneCore</a>
+      <a class="button secondary" href="/features.html">View Server Features</a>
+      <a class="button secondary" href="https://discord.gg/BNkJDU6qE4" target="_blank" rel="noopener">Join the Discord</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>RunestoneHub — Player navigation and utility for Runestone Vale.</p>
+  <p>
+    <a href="/index.html">Home</a> •
+    <a href="/features.html">Server-Features</a> •
+    <a href="/RunestoneCore.html">RunestoneCore</a> •
+    <a href="/RunestoneSkills.html">RunestoneSkills</a> •
+    <a href="/runestonehub.html">RunestoneHub</a> •
+    <a href="/roadmap_development.html">Roadmap</a> •
+    <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneHub" target="_blank" rel="noopener">RunestoneHub Hangar</a> •
+    <a href="https://discord.gg/BNkJDU6qE4" target="_blank" rel="noopener">Discord</a> •
+    <a href="/terms.html">Terms &amp; Licensing</a>
+  </p>
+</footer>
+
+<script>
+function toggleMenu() {
+  const nav = document.getElementById("mobileNav");
+  const button = document.querySelector(".menu-toggle");
+
+  nav.classList.toggle("open");
+  button.setAttribute("aria-expanded", nav.classList.contains("open") ? "true" : "false");
+}
+
+function toggleRunestoneDropdown(event) {
+  event.stopPropagation();
+
+  const dropdown = event.currentTarget.closest(".nav-dropdown");
+  const button = dropdown.querySelector(".dropdown-toggle");
+
+  dropdown.classList.toggle("open");
+  button.setAttribute("aria-expanded", dropdown.classList.contains("open") ? "true" : "false");
+}
+
+document.addEventListener("click", function (event) {
+  const nav = document.getElementById("mobileNav");
+  const menuButton = document.querySelector(".menu-toggle");
+  const dropdown = document.querySelector(".nav-dropdown");
+  const dropdownButton = document.querySelector(".dropdown-toggle");
+
+  if (dropdown && !dropdown.contains(event.target)) {
+    dropdown.classList.remove("open");
+
+    if (dropdownButton) {
+      dropdownButton.setAttribute("aria-expanded", "false");
+    }
+  }
+
+  if (!nav || !menuButton) return;
+
+  const clickedInsideNav = nav.contains(event.target);
+  const clickedButton = menuButton.contains(event.target);
+
+  if (!clickedInsideNav && !clickedButton) {
+    nav.classList.remove("open");
+    menuButton.setAttribute("aria-expanded", "false");
+  }
+});
+</script>
+
+</body>
+</html>
