@@ -1,1 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RunestoneCombat — The Combat Engine of RunestoneMMO</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
 
+<body>
+
+<header>
+  <div class="topbar">
+    <a class="brand" href="/index.html">Runestone Vale</a>
+
+    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleMenu()">
+      ☰
+    </button>
+
+    <nav class="top-links" id="mobileNav">
+      <a class="top-link" href="/index.html">Home</a>
+      <a class="top-link" href="/features.html">Server-Features</a>
+
+      <div class="nav-dropdown">
+        <button class="top-link dropdown-toggle" type="button" aria-expanded="false" onclick="toggleRunestoneDropdown(event)">
+          RunestoneMMO ▾
+        </button>
+
+        <div class="dropdown-menu" id="runestoneDropdown">
+          <a class="dropdown-link" href="/RunestoneCore.html">RunestoneCore</a>
+          <a class="dropdown-link" href="/RunestoneSkills.html">RunestoneSkills</a>
+          <a class="dropdown-link" href="/runestoneadmintool.html">RunestoneAdminTool</a>
+          <a class="dropdown-link" href="/runestonehub.html">RunestoneHub</a>
+          <a class="dropdown-link" href="/runestonecombat.html">RunestoneCombat</a>
+          <a class="dropdown-link" href="/runestonestamina.html">RunestoneStamina</a>
+          <a class="dropdown-link" href="/runestonenpc.html">RunestoneNPCs</a>
+        </div>
+      </div>
+
+      <a class="top-link" href="/roadmap_development.html">Roadmap</a>
+      <a class="top-link" href="/credits.html">Credits</a>
+      <a class="top-link" href="/terms.html">Terms</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero-banner"></div>
+
+<main>
+
+  <section class="hero">
+    <h1>RunestoneCombat</h1>
+    <p class="subtitle">The authoritative combat engine of RunestoneMMO — built to make damage, combat XP, mob scaling, abilities, and combat progression feel connected.</p>
+
+    <p>
+      <strong>RunestoneCombat</strong> is the custom combat module for the <strong>RunestoneMMO</strong> ecosystem.
+      It owns the combat runtime layer: damage scaling, combat XP, mob attributes, typed damage, dodge, parry, weapon identity,
+      status effects, combat abilities, and combat stat provider integration.
+    </p>
+
+    <p>
+      Built on top of <strong>RunestoneCore</strong>, RunestoneCombat registers combat services and progression hooks into the wider system.
+      It reads player and mob combat profiles, applies configured combat tuning, awards combat XP, and connects combat progression back into Core-side data and display systems.
+    </p>
+
+    <p>
+      In simple terms: <strong>RunestoneCore provides the shared foundation, while RunestoneCombat provides the custom battle layer that makes danger, weapons, mobs, and combat growth matter.</strong>
+    </p>
+
+    <div class="buttons">
+      <a class="button" href="https://hangar.papermc.io/TotalCarnage767/RunestoneCombat" target="_blank" rel="noopener">View on Hangar</a>
+      <a class="button secondary" href="https://discord.gg/BNkJDU6qE4" target="_blank" rel="noopener">Join the Discord</a>
+      <a class="button secondary" href="/index.html">Back to Runestone Vale</a>
+    </div>
+
+    <p style="margin-top: 18px; font-size: 1.1rem;">
+      <strong>Platform:</strong> Minecraft Java Edition • Paper 1.21.11 • Java 21<br>
+      <strong>Requires:</strong> RunestoneCore<br>
+      <strong>Soft Integration:</strong> RunestoneSkills
+    </p>
+  </section>
+
+  <section class="cta-section">
+    <h2>What RunestoneCombat Owns</h2>
+    <p>
+      RunestoneCombat is the combat authority. It does not own the full server, Hub menus, NPC quests, or stamina runtime.
+      Its job is to process combat behavior, scale mobs, award combat XP, expose combat stats, and enforce combat-specific tuning.
+    </p>
+
+    <div class="cta-grid">
+      <article class="cta-card">
+        <h3>Combat Runtime</h3>
+        <p>Processes custom damage, crits, typed damage, armor/toughness scaling, dodge, parry, guard reduction, and final damage output.</p>
+      </article>
+
+      <article class="cta-card">
+        <h3>Combat XP</h3>
+        <p>Awards combat XP from valid player kills using configured entity rewards, world multipliers, biome multipliers, and baby/adult variants.</p>
+      </article>
+
+      <article class="cta-card">
+        <h3>Mob Scaling</h3>
+        <p>Applies configured combat profiles to living mobs, including health, attack damage, defense, toughness, crit chance, and crit damage.</p>
+      </article>
+
+      <article class="cta-card">
+        <h3>Combat Abilities</h3>
+        <p>Provides built-in combat abilities such as Heavy Strike, Dash, and Guard with cooldowns, feedback, and combo support.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Newest Combat Highlights</h2>
+    <p>
+      RunestoneCombat has grown beyond simple damage scaling. It now includes typed combat tuning, weapon identity,
+      progression bridges, combat status effects, built-in abilities, combat XP, mob profiles, and Core service integration.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Combat Profile Service</h3>
+        <p>
+          RunestoneCombat registers a <code>CombatStatsProvider</code> service so Core and other systems can read resolved combat stats through a clean service boundary.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Typed Damage Foundation</h3>
+        <p>
+          Damage can be treated as <code>PHYSICAL</code>, <code>SHARP</code>, <code>BLUNT</code>, <code>PIERCE</code>, or <code>ARCANE</code>,
+          with bounded tuning for armor interaction and future expansion.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Weapon Identity</h3>
+        <p>
+          Swords, axes, maces, and tridents can receive small identity-based behavior such as crit bonus, parry interaction,
+          guard support, weaken chance, or pierce bonus.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Abilities & Combos</h3>
+        <p>
+          Heavy Strike, Dash, and Guard are built into the combat layer, with combo windows for Dash-to-Heavy and Guard Counter style bonuses.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Combat XP Pipeline</h3>
+        <p>
+          Combat XP is awarded from valid player kills and uses config-driven mob rewards, world multipliers, biome multipliers,
+          variant multipliers, clamping, rounding, and Core persistence.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>World Rule Respect</h3>
+        <p>
+          RunestoneCombat respects Core world-rule controls such as disabling custom combat in configured areas,
+          allowing controlled vanilla fallback where needed.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Module Boundary</h2>
+    <p>
+      RunestoneCombat is the combat runtime module. It works with Core and Skills, but it should not be treated as the owner of every player stat,
+      every skill, every GUI, or every NPC/boss design system.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>RunestoneCombat Owns</h3>
+        <ul>
+          <li>Combat damage listener</li>
+          <li>Combat XP listener</li>
+          <li>Combat XP manager</li>
+          <li>Mob attribute application</li>
+          <li>Combat profile resolution</li>
+          <li>Combat stats provider implementation</li>
+          <li>Typed damage and resistance tuning</li>
+          <li>Dodge and parry handling</li>
+          <li>Weapon identity behavior</li>
+          <li>Combat status effects</li>
+          <li>Built-in combat abilities</li>
+          <li>Combat config loading and reload behavior</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Other Modules Own</h3>
+        <ul>
+          <li><strong>RunestoneCore</strong> owns shared APIs, player data, combat XP storage, scoreboards, world rules, and attribute infrastructure.</li>
+          <li><strong>RunestoneSkills</strong> owns skill definitions and skill XP sources such as Strength, Defense, and Exploration.</li>
+          <li><strong>RunestoneStamina</strong> owns stamina drain, regen, movement penalties, stamina HUD, buffs, and stamina brews.</li>
+          <li><strong>RunestoneHub</strong> owns the player Hub UI runtime and menu navigation.</li>
+          <li><strong>RunestoneNPCs</strong> owns NPC quests, NPC dialogue, NPC shops, and quest state.</li>
+          <li><strong>RunestoneAdminTool</strong> owns staff GUI workflows and command orchestration.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Main Systems Inside RunestoneCombat</h2>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <h3>Combat Damage Pipeline</h3>
+        <ul>
+          <li>Processes melee and projectile combat events</li>
+          <li>Resolves attacker and defender combat profiles</li>
+          <li>Uses attack damage, defense, armor toughness, crit chance, and crit damage</li>
+          <li>Applies configured scaling values from <code>combat.yml</code></li>
+          <li>Supports minimum damage floors</li>
+          <li>Uses a flat unarmed/non-weapon melee damage path</li>
+          <li>Armor stands are excluded from custom combat handling</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Combat Profiles</h3>
+        <ul>
+          <li>Runtime combat profile snapshots</li>
+          <li>Player and mob profile resolution</li>
+          <li>Resolved combat stat maps</li>
+          <li>Combat profile source breakdown support</li>
+          <li>Profile cache support and reload invalidation</li>
+          <li>Typed resistance data support</li>
+          <li>Metadata support for future expansion</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Typed Damage</h3>
+        <ul>
+          <li><code>PHYSICAL</code></li>
+          <li><code>SHARP</code></li>
+          <li><code>BLUNT</code></li>
+          <li><code>PIERCE</code></li>
+          <li><code>ARCANE</code></li>
+          <li>Sharp can reward lower-armor targets</li>
+          <li>Blunt can reward higher-armor targets</li>
+          <li>Pierce can reduce defense contribution</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Typed Resistance</h3>
+        <ul>
+          <li>Configurable typed resistance master toggle</li>
+          <li>Maximum effective resistance cap</li>
+          <li>Resistance values attached to combat profile snapshots</li>
+          <li>Designed as a bounded foundation for future item, mob, and boss identity</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Dodge / Evasion</h3>
+        <ul>
+          <li>Defender-side chance to avoid eligible hits</li>
+          <li>Separate player and mob defaults</li>
+          <li>Global base chance</li>
+          <li>Maximum dodge chance cap</li>
+          <li>Optional progression-derived dodge bonus</li>
+          <li>Current agility-style source can map through Exploration</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Parry / Block</h3>
+        <ul>
+          <li>Defender-side mitigation roll</li>
+          <li>Runs after dodge and before final damage is applied</li>
+          <li>Configurable chance and mitigation</li>
+          <li>Maximum mitigation cap</li>
+          <li>Shield bonus chance support</li>
+          <li>Shield bonus mitigation support</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Weapon Identity</h3>
+        <ul>
+          <li><code>SWORD</code> identity can add small crit bonus</li>
+          <li><code>AXE</code> identity can interact with parry mitigation and weaken chance</li>
+          <li><code>MACE</code> identity can improve guard/parry and pressure control</li>
+          <li><code>TRIDENT</code> identity can improve pierce behavior</li>
+          <li><code>NEUTRAL</code> identity keeps unsupported weapons from receiving special effects</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Status Effects</h3>
+        <ul>
+          <li><code>BLEED</code> status effect support</li>
+          <li><code>WEAKEN</code> status effect support</li>
+          <li><code>SLOW</code> exists as a reserved effect channel for future expansion</li>
+          <li>Bleed can pulse damage over time</li>
+          <li>Weaken can reduce outgoing damage</li>
+          <li>Stack limits and refresh behavior are configurable</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Combat Abilities</h3>
+        <ul>
+          <li><code>Heavy Strike</code> — primed melee burst ability</li>
+          <li><code>Dash</code> — movement burst triggered by double-tap sneak behavior</li>
+          <li><code>Guard</code> — defensive reduction window triggered through sneaking interaction behavior</li>
+          <li>Cooldowns use the combat ability manager</li>
+          <li>Can use Core cooldown service when available</li>
+          <li>Falls back to local cooldown tracking when needed</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Combos</h3>
+        <ul>
+          <li>Combo system master toggle</li>
+          <li>Dash-to-Heavy bonus support</li>
+          <li>Guard Counter bonus support</li>
+          <li>Configurable combo window in ticks</li>
+          <li>Lightweight action-bar feedback for combo events</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Combat XP</h3>
+        <ul>
+          <li>XP awarded from valid player kills</li>
+          <li>Projectile kills can count when the shooter is the player</li>
+          <li>Armor stands are ignored</li>
+          <li>World multiplier support</li>
+          <li>Biome multiplier support</li>
+          <li>Baby/adult variant multiplier support</li>
+          <li>XP reward table covers hostile and passive entities</li>
+          <li>Combat level is calculated through Core’s shared XP curve</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Mob Attributes</h3>
+        <ul>
+          <li>Applies configured mob combat attributes</li>
+          <li>Hostile mob profiles</li>
+          <li>Passive/default mob fallback profiles</li>
+          <li>Health, attack damage, defense, toughness, crit chance, and crit damage support</li>
+          <li>Biome difficulty scaling support</li>
+          <li>Designed to make mobs feel like part of a custom MMO combat layer</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Progression Bridge</h3>
+        <ul>
+          <li>Registers combat skill into the Core registry</li>
+          <li>Consumes Strength as an offensive progression source when enabled</li>
+          <li>Consumes Defense as a mitigation progression source when enabled</li>
+          <li>Uses Exploration as the current agility-style dodge source where configured</li>
+          <li>Reapplies attributes when combat level changes</li>
+          <li>Fires combat level-up event flow on level increases</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>World Rule Integration</h3>
+        <ul>
+          <li>Respects Core world-rule service</li>
+          <li><code>DISABLE_CUSTOM_COMBAT</code> allows vanilla combat fallback in configured areas</li>
+          <li>Custom combat abilities do not fire where custom combat is disabled</li>
+          <li>Custom combat XP is not awarded where custom combat is disabled</li>
+          <li>Safe zones, no-PVP, and no-PVE behavior are enforced through Core world-rule infrastructure</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Combat Abilities — Player-Facing Behavior</h2>
+    <p>
+      Combat abilities are configured inside <code>combat.yml</code> and handled by the Combat Ability Manager.
+      They are designed as lightweight, bounded abilities that sit inside the existing combat pipeline instead of replacing it.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Heavy Strike</h3>
+        <ul>
+          <li>Primed burst attack ability</li>
+          <li>Uses configured damage multiplier</li>
+          <li>Has a hard safety cap for multiplier and range</li>
+          <li>Uses configured cooldown ticks</li>
+          <li>Can require <code>runestone.ability.heavystrike</code> if enabled in config</li>
+          <li>Can participate in Dash-to-Heavy combo behavior</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Dash</h3>
+        <ul>
+          <li>Movement burst ability</li>
+          <li>Triggered through double-tap sneak behavior</li>
+          <li>Uses configured horizontal and vertical strength</li>
+          <li>Has hard safety caps for movement strength</li>
+          <li>Uses configured cooldown ticks</li>
+          <li>Can require <code>runestone.ability.dash</code> if enabled in config</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Guard</h3>
+        <ul>
+          <li>Short defensive mitigation window</li>
+          <li>Triggered through sneaking interaction/right-click behavior</li>
+          <li>Uses configured duration ticks</li>
+          <li>Uses configured damage reduction</li>
+          <li>Has a hard safety cap for mitigation</li>
+          <li>Can participate in Guard Counter combo behavior</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>How RunestoneCombat Connects to RunestoneCore</h2>
+    <p>
+      RunestoneCombat depends on <strong>RunestoneCore</strong>. Core provides the shared APIs, combat XP storage,
+      attribute infrastructure, world rules, event bus, cooldown service, and scoreboard/display surfaces.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Core API Usage</h3>
+        <ul>
+          <li>Reads and writes combat XP through Core APIs</li>
+          <li>Registers combat skill/progression into Core</li>
+          <li>Registers a combat difficulty service into Core</li>
+          <li>Uses Core attributes and stat display infrastructure</li>
+          <li>Uses Core world rules for custom-combat gating</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Combat Stats Provider</h3>
+        <ul>
+          <li>Registers <code>CombatStatsProvider</code> through Bukkit services</li>
+          <li>Allows other systems to read resolved combat data</li>
+          <li>Uses <code>DefaultCombatProfileService</code> as the active profile service</li>
+          <li>Invalidates combat profile cache on reload</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Level & Attribute Sync</h3>
+        <ul>
+          <li>Combat XP is persisted through Core</li>
+          <li>Combat level is calculated from total XP</li>
+          <li>Attribute resync runs on enable/reload where needed</li>
+          <li>Combat level-up events can trigger broader integrations</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="button-row-left">
+      <a href="/RunestoneCore.html" class="button">Explore RunestoneCore</a>
+      <a href="/RunestoneSkills.html" class="button secondary">Explore RunestoneSkills</a>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Commands & Permissions</h2>
+    <p>
+      RunestoneCombat has a compact admin command surface. Most combat behavior is controlled through <code>combat.yml</code>,
+      while the command root is used for reloads and temporary debug toggling.
+    </p>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <h3>Main Command</h3>
+        <ul>
+          <li><code>/combat reload</code> — reloads RunestoneCombat configuration and invalidates combat profile cache</li>
+          <li><code>/combat debug</code> — toggles combat debug mode in memory</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Main Permission</h3>
+        <ul>
+          <li><code>runestone.combat.admin</code></li>
+          <li>Default: OP</li>
+          <li>Required for <code>/combat reload</code></li>
+          <li>Required for <code>/combat debug</code></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Declared Combat Permissions</h3>
+        <ul>
+          <li><code>runestone.combat</code> — bundle permission</li>
+          <li><code>runestone.combat.xp</code> — combat XP permission, default true</li>
+          <li><code>runestone.combat.debug</code> — detailed combat debug permission, default OP</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Ability Permissions</h3>
+        <ul>
+          <li><code>runestone.ability.heavystrike</code> — checked only if Heavy Strike permission requirement is enabled</li>
+          <li><code>runestone.ability.dash</code> — checked only if Dash permission requirement is enabled</li>
+          <li>These ability permissions are code-referenced options and may need LuckPerms setup if enabled in config</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>Configuration & Runtime Files</h2>
+    <p>
+      RunestoneCombat is primarily configured through <code>combat.yml</code>.
+      That file controls damage behavior, abilities, XP rewards, mob profiles, scaling, world/biome multipliers, and status-effect tuning.
+    </p>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <h3>Main Config File</h3>
+        <ul>
+          <li><code>combat.yml</code></li>
+          <li>Generated by RunestoneCombat</li>
+          <li>Reloaded by <code>/combat reload</code></li>
+          <li>Contains combat damage, XP, abilities, scaling, and mob profile tuning</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Core Combat Tuning</h3>
+        <ul>
+          <li><code>combat.debug</code></li>
+          <li><code>combat.log-damage</code></li>
+          <li><code>combat.min-damage</code></li>
+          <li><code>combat.unarmed_flat_damage</code></li>
+          <li><code>combat.attack-scaling</code></li>
+          <li><code>combat.defense-scaling</code></li>
+          <li><code>combat.toughness-scaling</code></li>
+          <li><code>combat.critical.*</code></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Advanced Combat Tuning</h3>
+        <ul>
+          <li><code>combat.typed_damage.*</code></li>
+          <li><code>combat.typed_resistance.*</code></li>
+          <li><code>combat.dodge.*</code></li>
+          <li><code>combat.parry.*</code></li>
+          <li><code>combat.weapon_identity.*</code></li>
+          <li><code>combat.status_effects.*</code></li>
+          <li><code>combat.progression.*</code></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Ability Config</h3>
+        <ul>
+          <li><code>combat.abilities.enabled</code></li>
+          <li><code>combat.abilities.global_cooldown_multiplier</code></li>
+          <li><code>combat.abilities.feedback.*</code></li>
+          <li><code>combat.abilities.heavy_strike.*</code></li>
+          <li><code>combat.abilities.dash.*</code></li>
+          <li><code>combat.abilities.guard.*</code></li>
+          <li><code>combat.combos.*</code></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Combat XP Config</h3>
+        <ul>
+          <li><code>combat.xp.default</code></li>
+          <li><code>combat.xp.variants.*</code></li>
+          <li><code>combat.xp.multipliers.world.*</code></li>
+          <li><code>combat.xp.multipliers.biome.*</code></li>
+          <li><code>combat.xp.rewards.*</code></li>
+          <li>Rewards use Bukkit <code>EntityType</code> names</li>
+          <li>Baby mobs use variant multipliers, not separate Bukkit entity types</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Mob & Scaling Config</h3>
+        <ul>
+          <li><code>combat.scaling.*</code></li>
+          <li><code>combat.attributes.default</code></li>
+          <li><code>combat.attributes.player</code></li>
+          <li><code>combat.biome-difficulty.*</code></li>
+          <li><code>combat.mobs.default</code></li>
+          <li><code>combat.mobs.hostile.*</code></li>
+          <li>Supports configured health, attack damage, defense, toughness, crit chance, and crit damage</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>Anti-Exploit & Safety Rules</h2>
+    <p>
+      Combat systems can easily become abusable if they award XP from every possible damage source.
+      RunestoneCombat includes several safeguards to protect progression value and avoid invalid rewards.
+    </p>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <h3>XP Award Safety</h3>
+        <ul>
+          <li>Combat XP requires a valid player killer</li>
+          <li>Projectile kills only count when the shooter resolves to the player</li>
+          <li>Armor stands are ignored</li>
+          <li>Zero-value configured entities do not grant XP</li>
+          <li>XP can be gated by config permission settings</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Custom Combat Safety</h3>
+        <ul>
+          <li>Only melee and projectile combat are processed by the custom damage path</li>
+          <li>Non-attack causes are ignored by custom damage logic</li>
+          <li>Armor stands are excluded</li>
+          <li>Unsupported weapons resolve to neutral identity</li>
+          <li>Ability values have hard caps where needed</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>World Safety</h3>
+        <ul>
+          <li>Custom combat can be disabled per configured world-rule area</li>
+          <li>Ability triggers are skipped when custom combat is disabled</li>
+          <li>XP awards are skipped when custom combat is disabled</li>
+          <li>Core world-rule enforcement can block PVP, PVE, or safe-zone combat</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>Compatibility & Structure</h2>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <h3>Platform</h3>
+        <ul>
+          <li><strong>Server:</strong> Paper</li>
+          <li><strong>Minecraft:</strong> 1.21.11</li>
+          <li><strong>Java:</strong> 21</li>
+          <li><strong>Architecture:</strong> Gradle multi-module</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Dependencies</h3>
+        <ul>
+          <li><strong>Required:</strong> RunestoneCore</li>
+          <li><strong>Softdepend:</strong> RunestoneSkills</li>
+          <li>Uses Core APIs for XP, events, cooldowns, world rules, attributes, and service registration</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Lifecycle</h3>
+        <ul>
+          <li>Loads <code>combat.yml</code></li>
+          <li>Registers combat difficulty service into Core</li>
+          <li>Registers combat skill bridge into Core</li>
+          <li>Initializes combat ability manager</li>
+          <li>Registers <code>CombatStatsProvider</code></li>
+          <li>Registers damage, XP, and mob-attribute listeners</li>
+          <li>Unregisters services and shuts down ability manager on disable</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Why RunestoneCombat Matters</h2>
+    <p>
+      A fantasy MMO realm needs combat to feel like more than vanilla hits with bigger numbers.
+      RunestoneCombat gives Runestone Vale a dedicated combat layer that can grow with the rest of the project.
+    </p>
+
+    <p>
+      It matters because mobs can be tuned, weapons can have identity, progression can affect combat, XP can follow controlled rules,
+      and future dungeons, boss arenas, NPC encounters, and world content can build on top of a real combat foundation.
+    </p>
+
+    <p>
+      RunestoneCombat is what helps danger, growth, weapons, mobs, and player strength become part of the same larger realm identity.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>What Is Still Growing Inside RunestoneCombat</h2>
+    <p>
+      RunestoneCombat already provides a strong custom combat foundation, but the larger MMO vision still leaves room for deeper encounters,
+      more boss content, better item identity, and stronger integration with future world systems.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Boss & Dungeon Content</h3>
+        <p>
+          The combat engine is ready to support future boss arenas, dungeon encounters, raids, trials, and custom event spaces.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>More Item Identity</h3>
+        <p>
+          Typed damage, weapon identity, resistances, and profile metadata give the project room to expand custom weapons, armor, and mob weaknesses.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>More Status Effects</h3>
+        <p>
+          Bleed and Weaken are active channels, while the reserved Slow channel leaves room for deeper future control effects.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>More Ability Depth</h3>
+        <p>
+          Heavy Strike, Dash, and Guard provide the first built-in ability direction, with room for future active combat tools and class-like gameplay.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Deeper Progression Links</h3>
+        <p>
+          Strength, Defense, Exploration, and Combat progression can become more meaningful as Skills, Stamina, items, and encounters continue to grow.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Encounter Design</h3>
+        <p>
+          Combat profiles, world scaling, biome difficulty, and XP rewards can support more deliberate encounter balancing over time.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>State of the Module</h2>
+    <p>
+      RunestoneCombat is actively serving as the combat engine for <strong>Runestone Vale</strong>.
+      It already provides custom combat math, combat XP, ability handling, status effects, mob stat profiles, and Core service integration.
+    </p>
+
+    <p>
+      Current development direction is not only about making mobs stronger. It is about making combat feel like a real part of the MMO identity:
+      weapons with purpose, mobs with profiles, combat XP with controlled progression, abilities with cooldowns, and battle systems that can support future dungeons and bosses.
+    </p>
+
+    <p>
+      <strong>This is the combat foundation of RunestoneMMO — the layer that turns danger, weapons, mobs, and battle progression into part of the same living realm.</strong>
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>Enter the Fight</h2>
+    <p>
+      RunestoneCombat is the battle engine beneath Runestone Vale.
+      Follow its growth as combat progression, abilities, status effects, mob profiles, boss content, and future encounter systems continue to develop.
+    </p>
+
+    <div class="button-row-left">
+      <a class="button" href="https://hangar.papermc.io/TotalCarnage767/RunestoneCombat" target="_blank" rel="noopener">Open on Hangar</a>
+      <a class="button secondary" href="/RunestoneCore.html">See RunestoneCore</a>
+      <a class="button secondary" href="/RunestoneSkills.html">See RunestoneSkills</a>
+      <a class="button secondary" href="/features.html">View Server Features</a>
+      <a class="button secondary" href="https://discord.gg/BNkJDU6qE4" target="_blank" rel="noopener">Join the Discord</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>RunestoneCombat — Combat systems forged for Runestone Vale.</p>
+  <p>
+    <a href="/index.html">Home</a> •
+    <a href="/features.html">Server-Features</a> •
+    <a href="/RunestoneCore.html">RunestoneCore</a> •
+    <a href="/RunestoneSkills.html">RunestoneSkills</a> •
+    <a href="/runestonecombat.html">RunestoneCombat</a> •
+    <a href="/roadmap_development.html">Roadmap</a> •
+    <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneCombat" target="_blank" rel="noopener">RunestoneCombat Hangar</a> •
+    <a href="https://discord.gg/BNkJDU6qE4" target="_blank" rel="noopener">Discord</a> •
+    <a href="/terms.html">Terms &amp; Licensing</a>
+  </p>
+</footer>
+
+<script>
+function toggleMenu() {
+  const nav = document.getElementById("mobileNav");
+  const button = document.querySelector(".menu-toggle");
+
+  nav.classList.toggle("open");
+  button.setAttribute("aria-expanded", nav.classList.contains("open") ? "true" : "false");
+}
+
+function toggleRunestoneDropdown(event) {
+  event.stopPropagation();
+
+  const dropdown = event.currentTarget.closest(".nav-dropdown");
+  const button = dropdown.querySelector(".dropdown-toggle");
+
+  dropdown.classList.toggle("open");
+  button.setAttribute("aria-expanded", dropdown.classList.contains("open") ? "true" : "false");
+}
+
+document.addEventListener("click", function (event) {
+  const nav = document.getElementById("mobileNav");
+  const menuButton = document.querySelector(".menu-toggle");
+  const dropdown = document.querySelector(".nav-dropdown");
+  const dropdownButton = document.querySelector(".dropdown-toggle");
+
+  if (dropdown && !dropdown.contains(event.target)) {
+    dropdown.classList.remove("open");
+
+    if (dropdownButton) {
+      dropdownButton.setAttribute("aria-expanded", "false");
+    }
+  }
+
+  if (!nav || !menuButton) return;
+
+  const clickedInsideNav = nav.contains(event.target);
+  const clickedButton = menuButton.contains(event.target);
+
+  if (!clickedInsideNav && !clickedButton) {
+    nav.classList.remove("open");
+    menuButton.setAttribute("aria-expanded", "false");
+  }
+});
+</script>
+
+</body>
+</html>
