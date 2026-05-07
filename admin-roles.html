@@ -747,29 +747,33 @@ document.addEventListener('click', (e) => {
 
 // ── Auth + init ────────────────────────────────────────────────────────
 (async () => {
-  const auth = await RSAuth.init();
-  RSAuth.renderNavUser(auth);
+  // initSession() refreshes the token if needed and returns the session object
+  const session = await RSAuth.initSession();
+  RSAuth.renderNavUser(session);
 
   const gate    = document.getElementById('rs-login-gate');
   const denied  = document.getElementById('rs-access-denied');
   const content = document.getElementById('rs-admin-content');
 
-  if (!auth || !auth.session) {
-    // Not logged in — show login gate
+  if (!session) {
+    // Not logged in — show login gate (user clicks the button, no auto-redirect)
+    gate.style.visibility  = 'visible';
+    gate.style.opacity     = '1';
+    gate.style.pointerEvents = 'all';
     return;
   }
 
-  if (auth.role !== 'admin') {
-    // Logged in but not admin
+  if (session.role !== 'admin') {
+    // Logged in but not admin — show access denied
     gate.style.display   = 'none';
     denied.style.display = 'block';
     return;
   }
 
-  // Admin confirmed
+  // Admin confirmed — show the panel
   gate.style.display    = 'none';
   content.style.display = 'block';
-  authSession = auth.session;
+  authSession = { access_token: session.access_token };
 
   await loadPlayers();
 })();
