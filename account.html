@@ -192,6 +192,13 @@ function populateProfile(session) {
 
 async function loadMcLink(session) {
   if (!session || !session.discord_id) return;
+  // Check localStorage cache first — instant, persists 30 days across page navigations
+  const cached = RSAuth.getMcLink();
+  if (cached && cached.uuid) {
+    showLinked(cached.username, cached.uuid);
+    return;
+  }
+  // Cache miss — fetch from Supabase and populate cache
   try {
     const res = await fetch(
       SUPA_URL + '/rest/v1/player_profiles?select=uuid,username&discord_id=eq.' + session.discord_id + '&limit=1',
@@ -199,8 +206,12 @@ async function loadMcLink(session) {
     );
     if (!res.ok) { showUnlinked(); return; }
     const rows = await res.json();
-    if (rows && rows.length > 0 && rows[0].uuid) showLinked(rows[0].username, rows[0].uuid);
-    else showUnlinked();
+    if (rows && rows.length > 0 && rows[0].uuid) {
+      RSAuth.setMcLink(rows[0].username, rows[0].uuid); // cache for 30 days
+      showLinked(rows[0].username, rows[0].uuid);
+    } else {
+      showUnlinked();
+    }
   } catch { showUnlinked(); }
 }
 
@@ -247,6 +258,7 @@ async function doLink() {
     });
     msgEl.textContent = '\u2713 Minecraft account linked successfully!';
     input.value = '';
+    RSAuth.setMcLink(linkRow.username, linkRow.uuid); // persist for 30 days
     showLinked(linkRow.username, linkRow.uuid);
   } catch (e) {
     errEl.textContent = e.message || 'Something went wrong. Please try again.';
@@ -265,6 +277,7 @@ async function doUnlink() {
       headers: { 'apikey': SUPA_ANON, 'Authorization': 'Bearer ' + (session.access_token || SUPA_ANON), 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
       body: JSON.stringify({ discord_id: null }),
     });
+    RSAuth.clearMcLink(); // clear the 30-day cache
     showUnlinked();
   } catch (e) { alert('Failed to unlink: ' + (e.message || 'Unknown error')); }
 }

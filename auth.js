@@ -18,6 +18,8 @@ const RSAuth = (() => {
   const SUPA_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1ZGtoYWtlZ3Fvanh1Z2xpc2tzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5NTE2MjEsImV4cCI6MjA5MzUyNzYyMX0.V5_Mp7eHc-3rKFZLUGNM_iH57hpiGMvp4CBcH33R0rE';
   const SESSION_KEY = 'sb-session';
   const ROLE_KEY    = 'rs-role';
+  const MC_LINK_KEY = 'rs-mc-link'; // { username, uuid, linked_at } — 30-day TTL
+  const MC_LINK_TTL = 30 * 24 * 60 * 60 * 1000; // 30 days in ms
   // Refresh token if it expires within 5 minutes
   const REFRESH_BUFFER_SECS = 300;
 
@@ -40,6 +42,32 @@ const RSAuth = (() => {
     casual_player:   '#c9a227',
     player:          '#c9a227',
   };
+
+  // ── Minecraft link cache (30-day localStorage persistence) ───────────────────
+  function getMcLink() {
+    try {
+      const raw = localStorage.getItem(MC_LINK_KEY);
+      if (!raw) return null;
+      const obj = JSON.parse(raw);
+      if (obj.linked_at && (Date.now() - obj.linked_at) > MC_LINK_TTL) {
+        localStorage.removeItem(MC_LINK_KEY);
+        return null;
+      }
+      return obj; // { username, uuid, linked_at }
+    } catch { return null; }
+  }
+  function setMcLink(username, uuid) {
+    try {
+      localStorage.setItem(MC_LINK_KEY, JSON.stringify({
+        username:  username,
+        uuid:      uuid,
+        linked_at: Date.now(),
+      }));
+    } catch {}
+  }
+  function clearMcLink() {
+    localStorage.removeItem(MC_LINK_KEY);
+  }
 
   // ── Supabase REST helper ──────────────────────────────────────────────────
   async function supaFetch(path, opts, token) {
@@ -382,6 +410,7 @@ const RSAuth = (() => {
       } catch {}
     }
     clearSession();
+    clearMcLink();
     window.location.href = '/index.html';
   }
 
@@ -398,6 +427,9 @@ const RSAuth = (() => {
     loginWithDiscord,
     handleCallback,
     fetchAndCacheRole,
+    getMcLink,
+    setMcLink,
+    clearMcLink,
     logout,
     showLoginModal,
     hideLoginModal,
