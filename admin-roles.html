@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RunestoneMMO — Role Manager</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <script src="/auth.js"></script>
+  <style>
+    /* ── Page layout ── */
+    .admin-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 20px 64px;
+    }
+    .page-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .page-header h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.9rem;
+      font-weight: 900;
+      color: var(--gold);
+      margin: 0 0 4px;
+    }
+    .page-header p {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.45);
+      margin: 0;
+      font-family: 'Crimson Text', serif;
+    }
+    .admin-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 14px;
+      background: rgba(231,76,60,0.12);
+      border: 1px solid rgba(231,76,60,0.45);
+      border-radius: 6px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #e74c3c;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+
+    /* ── Stats row ── */
+    .stats-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      flex: 1;
+      min-width: 100px;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+    }
+    .stat-num {
+      font-family: 'Cinzel', serif;
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: rgba(255,255,255,0.38);
+      margin-top: 5px;
+      font-family: 'Cinzel', serif;
+    }
+
+    /* ── Toolbar ── */
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+      align-items: center;
+    }
+    .search-box {
+      flex: 1;
+      min-width: 200px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0 14px;
+    }
+    .search-box input {
+      flex: 1;
+      background: none;
+      border: none;
+      outline: none;
+      color: var(--text);
+      font-family: 'Crimson Text', serif;
+      font-size: 0.95rem;
+      padding: 10px 0;
+    }
+    .search-box input::placeholder { color: rgba(255,255,255,0.3); }
+    .filter-select {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      padding: 10px 14px;
+      cursor: pointer;
+      outline: none;
+    }
+    .filter-select option { background: #1a1610; }
+    .refresh-btn {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--gold);
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      padding: 10px 16px;
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .refresh-btn:hover { border-color: var(--gold); }
+
+    /* ── Table ── */
+    .player-table-wrap {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .player-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .player-table thead tr {
+      background: rgba(0,0,0,0.3);
+      border-bottom: 1px solid var(--border);
+    }
+    .player-table th {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      padding: 12px 16px;
+      text-align: left;
+    }
+    .player-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      vertical-align: middle;
+      font-family: 'Crimson Text', serif;
+      font-size: 0.95rem;
+    }
+    .player-table tbody tr:last-child td { border-bottom: none; }
+    .player-table tbody tr:hover { background: rgba(255,255,255,0.03); }
+
+    .player-name {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .player-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(201,162,39,0.15);
+      border: 1px solid rgba(201,162,39,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+    .player-username {
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .player-uuid {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.3);
+      font-family: monospace;
+      margin-top: 2px;
+    }
+    .discord-id {
+      font-family: monospace;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.45);
+    }
+    .no-discord {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.25);
+      font-style: italic;
+    }
+
+    /* ── Role pill ── */
+    .role-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      border: 1px solid transparent;
+    }
+    .role-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+    /* ── Role select inline ── */
+    .role-select {
+      background: rgba(0,0,0,0.35);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      padding: 6px 10px;
+      cursor: pointer;
+      outline: none;
+      transition: border-color 0.15s;
+      min-width: 140px;
+    }
+    .role-select:focus { border-color: var(--gold); }
+    .role-select option { background: #1a1610; }
+
+    .save-btn {
+      padding: 6px 14px;
+      background: var(--gold);
+      color: #0d0b08;
+      border: none;
+      border-radius: 6px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .save-btn:disabled { opacity: 0.4; cursor: default; }
+    .save-btn:hover:not(:disabled) { opacity: 0.85; }
+
+    .saved-badge {
+      display: none;
+      font-size: 0.75rem;
+      color: #4caf50;
+      font-family: 'Cinzel', serif;
+    }
+
+    /* ── Empty / loading states ── */
+    .table-state {
+      text-align: center;
+      padding: 48px 20px;
+      color: rgba(255,255,255,0.3);
+      font-family: 'Crimson Text', serif;
+      font-size: 1rem;
+    }
+    .table-state .icon { font-size: 2.5rem; display: block; margin-bottom: 10px; }
+
+    /* ── Login gate ── */
+    #rs-login-gate {
+      text-align: center;
+      padding: 80px 20px;
+    }
+    #rs-login-gate h2 {
+      font-family: 'Cinzel', serif;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    #rs-login-gate p { color: rgba(255,255,255,0.45); }
+
+    /* ── Access denied ── */
+    #rs-access-denied {
+      display: none;
+      text-align: center;
+      padding: 80px 20px;
+    }
+    #rs-access-denied .icon { font-size: 3rem; display: block; margin-bottom: 12px; }
+    #rs-access-denied h2 {
+      font-family: 'Cinzel', serif;
+      color: #e74c3c;
+      margin-bottom: 8px;
+    }
+    #rs-access-denied p { color: rgba(255,255,255,0.45); }
+
+    /* ── Footer count ── */
+    .table-footer {
+      padding: 10px 16px;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.3);
+      font-family: 'Cinzel', serif;
+      text-align: right;
+    }
+
+    /* ── Toast ── */
+    #rs-toast {
+      position: fixed;
+      bottom: 28px;
+      right: 24px;
+      background: #1e1b17;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 20px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      color: var(--text);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.2s, transform 0.2s;
+      pointer-events: none;
+    }
+    #rs-toast.show { opacity: 1; transform: translateY(0); }
+    #rs-toast.success { border-color: rgba(76,175,80,0.5); color: #4caf50; }
+    #rs-toast.error   { border-color: rgba(231,76,60,0.5);  color: #e74c3c; }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .player-table th:nth-child(2),
+      .player-table td:nth-child(2) { display: none; }
+      .player-table th:nth-child(3),
+      .player-table td:nth-child(3) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Header / Nav ── -->
+<header>
+  <div class="topbar">
+    <a class="brand" href="/index.html">Runestone Vale</a>
+    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleMenu()">☰</button>
+    <nav class="top-links" id="mobileNav">
+      <a class="top-link" href="/index.html">Home</a>
+      <a class="top-link" href="/features.html">Server-Features</a>
+      <div class="nav-dropdown">
+        <button class="top-link dropdown-toggle" type="button" aria-expanded="false" onclick="toggleRunestoneDropdown(event)">RunestoneMMO ▾</button>
+        <div class="dropdown-menu" id="runestoneDropdown">
+          <a class="dropdown-link" href="/RunestoneCore.html">RunestoneCore</a>
+          <a class="dropdown-link" href="/RunestoneSkills.html">RunestoneSkills</a>
+          <a class="dropdown-link" href="/runestoneadmintool.html">RunestoneAdminTool</a>
+          <a class="dropdown-link" href="/runestonehub.html">RunestoneHub</a>
+          <a class="dropdown-link" href="/runestonecombat.html">RunestoneCombat</a>
+          <a class="dropdown-link" href="/runestonestamina.html">RunestoneStamina</a>
+          <a class="dropdown-link" href="/runestonenpc.html">RunestoneNPCs</a>
+        </div>
+      </div>
+      <a class="top-link" href="/roadmap_development.html">Roadmap</a>
+      <a class="top-link" href="/credits.html">Credits</a>
+      <a class="top-link" href="/contact.html">Contact</a>
+      <a class="top-link" href="/terms.html">Terms</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="admin-wrap">
+
+    <!-- Login gate -->
+    <div id="rs-login-gate">
+      <span style="font-size:2.5rem;display:block;margin-bottom:12px;">🔐</span>
+      <h2>Login Required</h2>
+      <p>You must be logged in with an Admin account to access this page.</p>
+      <button onclick="RSAuth.loginWithDiscord()" style="
+        margin-top:20px;padding:10px 24px;background:#5865F2;color:#fff;
+        border:none;border-radius:8px;font-family:'Cinzel',serif;font-size:0.85rem;
+        font-weight:700;cursor:pointer;letter-spacing:0.5px;
+      ">Login with Discord</button>
+    </div>
+
+    <!-- Access denied -->
+    <div id="rs-access-denied">
+      <span class="icon">🛡️</span>
+      <h2>Admin Only</h2>
+      <p>This page requires the <strong>Admin</strong> role.</p>
+      <a href="/index.html" style="color:var(--gold);font-family:'Cinzel',serif;font-size:0.85rem;">← Return Home</a>
+    </div>
+
+    <!-- Admin content (hidden until auth confirmed) -->
+    <div id="rs-admin-content" style="display:none;">
+
+      <!-- Page header -->
+      <div class="page-header">
+        <div>
+          <h1>Role Manager</h1>
+          <p>Admin Panel · Manage player roles across the app and website</p>
+        </div>
+        <div class="admin-badge">⚔ Admin Panel</div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-num" id="statTotal">—</div>
+          <div class="stat-label">Players</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="statLinked">—</div>
+          <div class="stat-label">Linked</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="statStaff">—</div>
+          <div class="stat-label">Staff+</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="statUnlinked">—</div>
+          <div class="stat-label">Unlinked</div>
+        </div>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="toolbar">
+        <div class="search-box">
+          <span style="color:rgba(255,255,255,0.3);font-size:0.9rem;">🔍</span>
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Search by username or Discord ID…"
+            oninput="filterTable()"
+            autocomplete="off"
+            spellcheck="false"
+          >
+        </div>
+        <select class="filter-select" id="roleFilter" onchange="filterTable()">
+          <option value="">All Roles</option>
+          <option value="admin">Admin</option>
+          <option value="staff">Staff</option>
+          <option value="content_creator">Content Creator</option>
+          <option value="builder">Builder</option>
+          <option value="runestonemmo">RunestoneMMO</option>
+          <option value="casual_player">Casual Player</option>
+          <option value="player">Player</option>
+        </select>
+        <button class="refresh-btn" onclick="loadPlayers()">↻ Refresh</button>
+      </div>
+
+      <!-- Table -->
+      <div class="player-table-wrap">
+        <table class="player-table" id="playerTable">
+          <thead>
+            <tr>
+              <th>Player</th>
+              <th>Discord ID</th>
+              <th>UUID</th>
+              <th>Current Role</th>
+              <th>Change Role</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="playerTableBody">
+            <tr>
+              <td colspan="6">
+                <div class="table-state">
+                  <span class="icon">⏳</span>
+                  Loading players…
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="table-footer" id="tableFooter"></div>
+      </div>
+
+    </div><!-- /rs-admin-content -->
+  </div><!-- /admin-wrap -->
+</main>
+
+<!-- Toast -->
+<div id="rs-toast"></div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════════
+   Role Manager — admin-roles.html
+   Reads from player_profiles (username, discord_id, role) and
+   user_roles (user_id, role). Writes to both on role change.
+   Requires Admin role via RSAuth.
+══════════════════════════════════════════════════════════════════════ */
+
+const SUPABASE_URL  = 'https://ludkhakegqojxuglisks.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1ZGtoYWtlZ3Fvanh1Z2xpc2tzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5NTE2MjEsImV4cCI6MjA5MzUyNzYyMX0.V5_Mp7eHc-3rKFZLUGNM_iH57hpiGMvp4CBcH33R0rE';
+
+let authSession = null;
+let allPlayers  = [];
+
+// ── Role config ────────────────────────────────────────────────────────
+const ROLES = [
+  { value: 'admin',           label: 'Admin',           color: '#e74c3c' },
+  { value: 'staff',           label: 'Staff',           color: '#e2c178' },
+  { value: 'content_creator', label: 'Content Creator', color: '#9b59b6' },
+  { value: 'builder',         label: 'Builder',         color: '#3498db' },
+  { value: 'runestonemmo',    label: 'RunestoneMMO',    color: '#2ecc71' },
+  { value: 'casual_player',   label: 'Casual Player',   color: '#95a5a6' },
+  { value: 'player',          label: 'Player',          color: '#7f8c8d' },
+];
+
+function roleMeta(value) {
+  return ROLES.find(r => r.value === value) || ROLES[5];
+}
+
+function rolePillHTML(role) {
+  const m = roleMeta(role);
+  return `<span class="role-pill" style="color:${m.color};border-color:${m.color}44;background:${m.color}18;">
+    <span class="role-dot" style="background:${m.color};"></span>${m.label}
+  </span>`;
+}
+
+// ── Supabase fetch helper ──────────────────────────────────────────────
+async function supa(path, opts = {}) {
+  const headers = {
+    'apikey':        SUPABASE_ANON,
+    'Authorization': authSession ? `Bearer ${authSession.access_token}` : `Bearer ${SUPABASE_ANON}`,
+    'Content-Type':  'application/json',
+    'Accept':        'application/json',
+    'Prefer':        'return=representation',
+    ...(opts.headers || {}),
+  };
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, { ...opts, headers });
+  const text = await res.text();
+  if (!res.ok) throw new Error(`${res.status}: ${text}`);
+  return text ? JSON.parse(text) : null;
+}
+
+// ── Load players ───────────────────────────────────────────────────────
+async function loadPlayers() {
+  const tbody = document.getElementById('playerTableBody');
+  tbody.innerHTML = `<tr><td colspan="6"><div class="table-state"><span class="icon">⏳</span>Loading…</div></td></tr>`;
+
+  try {
+    const data = await supa('player_profiles?select=uuid,username,discord_id,role&order=username.asc');
+    allPlayers = data || [];
+    renderTable(allPlayers);
+    updateStats(allPlayers);
+  } catch (e) {
+    tbody.innerHTML = `<tr><td colspan="6"><div class="table-state"><span class="icon">⚠️</span>Failed to load: ${e.message}</div></td></tr>`;
+  }
+}
+
+// ── Render table ───────────────────────────────────────────────────────
+function renderTable(players) {
+  const tbody = document.getElementById('playerTableBody');
+  const footer = document.getElementById('tableFooter');
+
+  if (!players.length) {
+    tbody.innerHTML = `<tr><td colspan="6"><div class="table-state"><span class="icon">🧙</span>No players found.</div></td></tr>`;
+    footer.textContent = '';
+    return;
+  }
+
+  tbody.innerHTML = players.map(p => {
+    const initial = (p.username || '?').charAt(0).toUpperCase();
+    const roleOpts = ROLES.map(r =>
+      `<option value="${r.value}"${p.role === r.value ? ' selected' : ''}>${r.label}</option>`
+    ).join('');
+
+    return `<tr data-uuid="${p.uuid}" data-original-role="${p.role || 'casual_player'}">
+      <td>
+        <div class="player-name">
+          <div class="player-avatar">${initial}</div>
+          <div>
+            <div class="player-username">${escHtml(p.username || '—')}</div>
+            <div class="player-uuid">${p.uuid ? p.uuid.substring(0, 16) + '…' : '—'}</div>
+          </div>
+        </div>
+      </td>
+      <td>
+        ${p.discord_id
+          ? `<span class="discord-id">${escHtml(p.discord_id)}</span>`
+          : `<span class="no-discord">Not linked</span>`}
+      </td>
+      <td>
+        <span style="font-family:monospace;font-size:0.75rem;color:rgba(255,255,255,0.3);">
+          ${p.uuid ? p.uuid.substring(0, 8) + '…' : '—'}
+        </span>
+      </td>
+      <td id="pill-${p.uuid}">${rolePillHTML(p.role || 'casual_player')}</td>
+      <td>
+        <select class="role-select" id="select-${p.uuid}" onchange="onRoleChange('${p.uuid}')">
+          ${roleOpts}
+        </select>
+      </td>
+      <td style="white-space:nowrap;display:flex;align-items:center;gap:8px;">
+        <button class="save-btn" id="save-${p.uuid}" onclick="saveRole('${p.uuid}', '${escHtml(p.username)}', '${p.discord_id || ''}')" disabled>Save</button>
+        <span class="saved-badge" id="saved-${p.uuid}">✓ Saved</span>
+      </td>
+    </tr>`;
+  }).join('');
+
+  footer.textContent = `${players.length} player${players.length !== 1 ? 's' : ''} shown`;
+}
+
+// ── Enable save button when role changes ───────────────────────────────
+function onRoleChange(uuid) {
+  const row = document.querySelector(`tr[data-uuid="${uuid}"]`);
+  const original = row?.getAttribute('data-original-role');
+  const selected = document.getElementById(`select-${uuid}`)?.value;
+  const saveBtn  = document.getElementById(`save-${uuid}`);
+  const savedBadge = document.getElementById(`saved-${uuid}`);
+  if (saveBtn) saveBtn.disabled = (selected === original);
+  if (savedBadge) savedBadge.style.display = 'none';
+}
+
+// ── Save role ──────────────────────────────────────────────────────────
+async function saveRole(uuid, username, discordId) {
+  const newRole = document.getElementById(`select-${uuid}`)?.value;
+  const saveBtn = document.getElementById(`save-${uuid}`);
+  const savedBadge = document.getElementById(`saved-${uuid}`);
+  if (!newRole || !saveBtn) return;
+
+  saveBtn.disabled = true;
+  saveBtn.textContent = '…';
+
+  try {
+    // 1. Update player_profiles.role (used by website auth.js)
+    await supa(`player_profiles?uuid=eq.${encodeURIComponent(uuid)}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ role: newRole }),
+    });
+
+    // 2. Update user_roles if discord_id exists (used by app AuthContext)
+    if (discordId) {
+      // Try update first
+      const existing = await supa(`user_roles?user_id=eq.${encodeURIComponent(discordId)}&select=user_id`);
+      if (existing && existing.length > 0) {
+        await supa(`user_roles?user_id=eq.${encodeURIComponent(discordId)}`, {
+          method: 'PATCH',
+          body: JSON.stringify({ role: newRole }),
+        });
+      } else {
+        // Insert new row
+        await supa('user_roles', {
+          method: 'POST',
+          body: JSON.stringify({ user_id: discordId, role: newRole }),
+          headers: { 'Prefer': 'return=minimal' },
+        });
+      }
+    }
+
+    // 3. Update local state
+    allPlayers = allPlayers.map(p => p.uuid === uuid ? { ...p, role: newRole } : p);
+    const row = document.querySelector(`tr[data-uuid="${uuid}"]`);
+    if (row) row.setAttribute('data-original-role', newRole);
+
+    // Update pill
+    const pill = document.getElementById(`pill-${uuid}`);
+    if (pill) pill.innerHTML = rolePillHTML(newRole);
+
+    saveBtn.textContent = 'Save';
+    if (savedBadge) { savedBadge.style.display = 'inline'; setTimeout(() => { savedBadge.style.display = 'none'; }, 3000); }
+
+    showToast(`✓ ${username} is now ${roleMeta(newRole).label}`, 'success');
+    updateStats(allPlayers);
+  } catch (e) {
+    saveBtn.disabled = false;
+    saveBtn.textContent = 'Save';
+    showToast(`✗ Failed: ${e.message}`, 'error');
+  }
+}
+
+// ── Filter ─────────────────────────────────────────────────────────────
+function filterTable() {
+  const q    = document.getElementById('searchInput').value.toLowerCase().trim();
+  const role = document.getElementById('roleFilter').value;
+  const filtered = allPlayers.filter(p => {
+    const matchSearch = !q ||
+      (p.username || '').toLowerCase().includes(q) ||
+      (p.discord_id || '').toLowerCase().includes(q) ||
+      (p.uuid || '').toLowerCase().includes(q);
+    const matchRole = !role || p.role === role;
+    return matchSearch && matchRole;
+  });
+  renderTable(filtered);
+}
+
+// ── Stats ──────────────────────────────────────────────────────────────
+function updateStats(players) {
+  document.getElementById('statTotal').textContent    = players.length;
+  document.getElementById('statLinked').textContent   = players.filter(p => p.discord_id).length;
+  document.getElementById('statStaff').textContent    = players.filter(p => p.role === 'staff' || p.role === 'admin').length;
+  document.getElementById('statUnlinked').textContent = players.filter(p => !p.discord_id).length;
+}
+
+// ── Toast ──────────────────────────────────────────────────────────────
+let toastTimer = null;
+function showToast(msg, type = '') {
+  const el = document.getElementById('rs-toast');
+  el.textContent = msg;
+  el.className = `show ${type}`;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { el.className = ''; }, 3200);
+}
+
+// ── Helpers ────────────────────────────────────────────────────────────
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Nav helpers (shared pattern) ───────────────────────────────────────
+function toggleMenu() {
+  const nav = document.getElementById('mobileNav');
+  const btn = document.querySelector('.menu-toggle');
+  nav.classList.toggle('open');
+  btn.setAttribute('aria-expanded', nav.classList.contains('open') ? 'true' : 'false');
+}
+function toggleRunestoneDropdown(event) {
+  event.stopPropagation();
+  const dropdown = event.currentTarget.closest('.nav-dropdown');
+  const button   = dropdown.querySelector('.dropdown-toggle');
+  dropdown.classList.toggle('open');
+  button.setAttribute('aria-expanded', dropdown.classList.contains('open') ? 'true' : 'false');
+}
+document.addEventListener('click', (e) => {
+  const nav = document.getElementById('mobileNav');
+  const btn = document.querySelector('.menu-toggle');
+  const dd  = document.getElementById('runestoneDropdown');
+  if (dd && !dd.contains(e.target)) { dd.classList.remove('open'); const db = document.querySelector('.dropdown-toggle'); if (db) db.setAttribute('aria-expanded','false'); }
+  if (nav && btn && !nav.contains(e.target) && !btn.contains(e.target)) { nav.classList.remove('open'); btn.setAttribute('aria-expanded','false'); }
+});
+
+// ── Auth + init ────────────────────────────────────────────────────────
+(async () => {
+  const auth = await RSAuth.init();
+  RSAuth.renderNavUser(auth);
+
+  const gate    = document.getElementById('rs-login-gate');
+  const denied  = document.getElementById('rs-access-denied');
+  const content = document.getElementById('rs-admin-content');
+
+  if (!auth || !auth.session) {
+    // Not logged in — show login gate
+    return;
+  }
+
+  if (auth.role !== 'admin') {
+    // Logged in but not admin
+    gate.style.display   = 'none';
+    denied.style.display = 'block';
+    return;
+  }
+
+  // Admin confirmed
+  gate.style.display    = 'none';
+  content.style.display = 'block';
+  authSession = auth.session;
+
+  await loadPlayers();
+})();
+</script>
+</body>
+</html>
