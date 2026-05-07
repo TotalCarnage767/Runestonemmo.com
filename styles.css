@@ -66,14 +66,15 @@ header {
 }
 
 .topbar {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 14px 20px;
+  padding: 12px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 18px;
+  gap: 12px;
   position: relative;
+  flex-wrap: nowrap;
 }
 
 .brand {
@@ -82,23 +83,27 @@ header {
   font-weight: 900;
   letter-spacing: 1.5px;
   font-size: 1.1rem;
+  white-space: nowrap;
+  flex-shrink: 0;
   text-shadow: 0 0 12px rgba(226, 193, 120, 0.35);
 }
 
 .top-links {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 4px;
 }
 
 .top-link {
   color: var(--text);
   text-decoration: none;
-  padding: 8px 12px;
+  padding: 7px 10px;
   border: 1px solid transparent;
   border-radius: 999px;
   transition: 0.2s ease;
-  font-size: 0.95rem;
+  font-size: 0.88rem;
+  white-space: nowrap;
 }
 
 .top-link:hover {

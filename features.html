@@ -42,7 +42,7 @@
       <a class="top-link" href="/credits.html">Credits</a>
       <a class="top-link" href="/contact.html">Contact</a>
       <a class="top-link" href="/terms.html">Terms</a>
-    <div id="navUserSlot" style="margin-left:auto;display:flex;align-items:center;"></div>
+    <div id="navUserSlot" style="display:flex;align-items:center;flex-shrink:0;margin-left:8px;"></div>
     </nav>
   </div>
 </header>
@@ -971,6 +971,23 @@ document.addEventListener("click", function (event) {
     button.setAttribute("aria-expanded", "false");
   }
 });
+
+function toggleRunestoneDropdown(event) {
+  event.stopPropagation();
+  const dropdown = event.currentTarget.closest('.nav-dropdown');
+  const button   = dropdown.querySelector('.dropdown-toggle');
+  const isOpen   = dropdown.classList.contains('open');
+  // Close all other open dropdowns first
+  document.querySelectorAll('.nav-dropdown.open').forEach(function(d) {
+    d.classList.remove('open');
+    const b = d.querySelector('.dropdown-toggle');
+    if (b) b.setAttribute('aria-expanded', 'false');
+  });
+  if (!isOpen) {
+    dropdown.classList.add('open');
+    button.setAttribute('aria-expanded', 'true');
+  }
+}
 </script>
 
 <script>
