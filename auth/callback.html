@@ -3,35 +3,158 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Signing in… — Runestone Vale</title>
+  <title>Signing in&#8230; &#8212; Runestone Vale</title>
   <link rel="icon" href="/favicon.ico">
-  <style>
-    body { margin:0; background:#0d0b08; display:flex; align-items:center; justify-content:center; min-height:100vh; font-family:"Cinzel",serif; }
-    .spinner { width:48px; height:48px; border:4px solid rgba(201,162,39,0.2); border-top-color:#c9a227; border-radius:50%; animation:spin 0.8s linear infinite; margin:0 auto 20px; }
-    @keyframes spin { to { transform:rotate(360deg); } }
-    .label { color:rgba(240,230,200,0.5); font-size:0.9rem; letter-spacing:1px; }
-    .error-msg { color:#e57373; font-size:0.85rem; margin-top:16px; display:none; }
-  </style>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
-  <script src="/auth.js"><\/script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0d0b08;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: 'Cinzel', serif;
+    }
+    .wrap { text-align: center; padding: 40px 20px; }
+    .spinner {
+      width: 48px; height: 48px;
+      border: 4px solid rgba(201,162,39,0.2);
+      border-top-color: #c9a227;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 20px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .label { color: rgba(240,230,200,0.5); font-size: 0.9rem; letter-spacing: 1px; }
+    .error-msg {
+      color: #e57373; font-size: 0.85rem;
+      margin-top: 20px; display: none;
+      line-height: 1.6;
+    }
+    .error-msg a { color: #c9a227; }
+  </style>
 </head>
 <body>
-  <div style="text-align:center;">
+  <div class="wrap">
     <div class="spinner"></div>
-    <div class="label">Signing in with Discord…</div>
-    <div class="error-msg" id="errMsg">Login failed. <a href="/index.html" style="color:#c9a227;">Return to Home</a></div>
+    <div class="label" id="label">Signing in with Discord&#8230;</div>
+    <div class="error-msg" id="errMsg">
+      Login failed. <a href="/index.html">Return to Home</a>
+    </div>
   </div>
+
   <script>
-    (async function() {
-      try {
-        await RSAuth.handleCallback();
-      } catch (e) {
-        document.getElementById("errMsg").style.display = "block";
-        document.querySelector(".label").textContent = "Something went wrong.";
-        console.error("Auth callback error:", e);
-        setTimeout(function(){ window.location.href = "/index.html"; }, 3000);
-      }
-    })();
-  <\/script>
+    // ── Constants ────────────────────────────────────────────────────────────
+    var SUPA_URL  = 'https://ludkhakegqojxuglisks.supabase.co';
+    var SUPA_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1ZGtoYWtlZ3Fvanh1Z2xpc2tzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5NTE2MjEsImV4cCI6MjA5MzUyNzYyMX0.V5_Mp7eHc-3rKFZLUGNM_iH57hpiGMvp4CBcH33R0rE';
+    var SESSION_KEY = 'sb-session';
+    var ROLE_KEY    = 'rs-role';
+
+    function showError(msg) {
+      document.getElementById('label').textContent = msg || 'Something went wrong.';
+      document.getElementById('errMsg').style.display = 'block';
+      document.querySelector('.spinner').style.display = 'none';
+    }
+
+    // ── Parse hash params ────────────────────────────────────────────────────
+    // Supabase returns tokens in the URL hash: #access_token=...&refresh_token=...
+    var hash = window.location.hash.substring(1);
+    var params = new URLSearchParams(hash);
+
+    // Also check query string as fallback (some OAuth providers use ?)
+    if (!params.get('access_token')) {
+      var qParams = new URLSearchParams(window.location.search);
+      if (qParams.get('access_token')) params = qParams;
+    }
+
+    var accessToken  = params.get('access_token');
+    var refreshToken = params.get('refresh_token');
+    var expiresAt    = params.get('expires_at');
+    var expiresIn    = params.get('expires_in');
+    var errorParam   = params.get('error');
+    var errorDesc    = params.get('error_description');
+
+    // ── Handle OAuth error ───────────────────────────────────────────────────
+    if (errorParam) {
+      showError('Login error: ' + (errorDesc || errorParam));
+    } else if (!accessToken) {
+      // No token — maybe user cancelled, redirect home
+      window.location.replace('/index.html');
+    } else {
+      // ── Store session and redirect ─────────────────────────────────────────
+      (async function() {
+        try {
+          var sessionObj = {
+            access_token:  accessToken,
+            refresh_token: refreshToken || null,
+            expires_at:    expiresAt
+              ? parseInt(expiresAt, 10)
+              : Math.floor(Date.now() / 1000) + parseInt(expiresIn || '3600', 10),
+            user: null,
+          };
+
+          // Fetch user profile from Supabase
+          try {
+            var userRes = await fetch(SUPA_URL + '/auth/v1/user', {
+              headers: {
+                'apikey':        SUPA_ANON,
+                'Authorization': 'Bearer ' + accessToken,
+              },
+            });
+            if (userRes.ok) {
+              sessionObj.user = await userRes.json();
+            }
+          } catch (e) {
+            console.warn('Could not fetch user profile:', e);
+          }
+
+          // Store session in localStorage
+          localStorage.setItem(SESSION_KEY, JSON.stringify(sessionObj));
+
+          // Fetch and cache role
+          if (sessionObj.user && sessionObj.user.id) {
+            try {
+              var roleRes = await fetch(
+                SUPA_URL + '/rest/v1/user_roles?select=role&user_id=eq.' + sessionObj.user.id + '&limit=1',
+                {
+                  headers: {
+                    'apikey':        SUPA_ANON,
+                    'Authorization': 'Bearer ' + accessToken,
+                    'Accept':        'application/json',
+                  },
+                }
+              );
+              if (roleRes.ok) {
+                var roleRows = await roleRes.json();
+                var role = (roleRows && roleRows.length > 0 && roleRows[0].role)
+                  ? roleRows[0].role
+                  : 'player';
+                localStorage.setItem(ROLE_KEY, role);
+              } else {
+                localStorage.setItem(ROLE_KEY, 'player');
+              }
+            } catch (e) {
+              localStorage.setItem(ROLE_KEY, 'player');
+            }
+          }
+
+          // Redirect back to the page the user was trying to visit
+          var returnTo = sessionStorage.getItem('rs-return-to') || '/index.html';
+          sessionStorage.removeItem('rs-return-to');
+
+          // Small delay so localStorage write is flushed before redirect
+          setTimeout(function() {
+            window.location.replace(returnTo);
+          }, 200);
+
+        } catch (e) {
+          console.error('Callback error:', e);
+          showError('Login failed. Redirecting home\u2026');
+          setTimeout(function() { window.location.replace('/index.html'); }, 2500);
+        }
+      })();
+    }
+  </script>
 </body>
 </html>
