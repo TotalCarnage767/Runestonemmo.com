@@ -325,6 +325,11 @@ const RSAuth = (() => {
             color:#f0e6c8;text-decoration:none;border-bottom:1px solid #4a3a28;
             font-family:'Cinzel',serif;
           ">⚙ Account</a>
+          ${ELEVATED_ROLES.includes(session.role) ? `<a href="/admin-roles.html" style="
+            display:block;padding:11px 16px;font-size:0.85rem;
+            color:#ff6b6b;text-decoration:none;border-bottom:1px solid #4a3a28;
+            font-family:'Cinzel',serif;
+          ">⚑ Admin Panel</a>` : ''}
           <button onclick="RSAuth.logout()" style="
             width:100%;text-align:left;padding:11px 16px;font-size:0.85rem;
             color:#e57373;background:none;border:none;cursor:pointer;

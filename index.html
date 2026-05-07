@@ -43,13 +43,6 @@
     .status-dot.offline { background: #e53935; }
     .status-label { font-family: 'Cinzel', serif; font-size: 0.92rem; color: var(--gold); font-weight: 700; }
     .status-detail { font-size: 0.88rem; color: rgba(255,255,255,0.6); }
-    .status-ip {
-      margin-left: auto; font-family: 'Cinzel', serif; font-size: 0.88rem; color: var(--gold);
-      background: rgba(226,193,120,0.1); border: 1px solid rgba(226,193,120,0.25);
-      padding: 5px 14px; border-radius: 6px; cursor: pointer; user-select: all;
-      transition: background 0.2s;
-    }
-    .status-ip:hover { background: rgba(226,193,120,0.2); }
 
     /* ── Feature Cards ── */
     .feat-grid {
@@ -137,7 +130,6 @@
       .app-section { grid-template-columns: 1fr; gap: 18px; }
       .app-qr-block { display: none; }
       .server-status-bar { flex-direction: column; align-items: flex-start; }
-      .status-ip { margin-left: 0; }
     }
   </style>
   <script src="/auth.js"></script>
@@ -186,7 +178,6 @@
       <div class="status-dot" id="statusDot"></div>
       <span class="status-label" id="statusLabel">Checking server…</span>
       <span class="status-detail" id="statusDetail"></span>
-      <span class="status-ip" title="Click to copy" onclick="copyIP()">play.runestonemmo.com</span>
     </div>
 
     <p>
@@ -525,15 +516,6 @@ document.addEventListener("click", function(event) {
   }
 });
 
-/* ── Copy IP ── */
-function copyIP() {
-  navigator.clipboard.writeText("play.runestonemmo.com").then(() => {
-    const el = document.querySelector(".status-ip");
-    const orig = el.textContent;
-    el.textContent = "Copied!";
-    setTimeout(() => { el.textContent = orig; }, 1500);
-  });
-}
 
 /* ── Supabase ── */
 const SUPABASE_URL  = "https://ludkhakegqojxuglisks.supabase.co";
@@ -601,8 +583,9 @@ setInterval(loadStatus, 60000);
 </script>
 <script>
 (function() {
-  var session = RSAuth.getSession();
-  RSAuth.renderNavUser(session);
+  RSAuth.initSession().then(function(session) {
+    RSAuth.renderNavUser(session);
+  });
 })();
 </script>
 </body>

@@ -975,8 +975,9 @@ document.addEventListener("click", function (event) {
 
 <script>
 (function() {
-  var session = RSAuth.getSession();
-  RSAuth.renderNavUser(session);
+  RSAuth.initSession().then(function(session) {
+    RSAuth.renderNavUser(session);
+  });
 })();
 </script>
 </body>
