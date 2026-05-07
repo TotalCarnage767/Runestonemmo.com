@@ -10,248 +10,65 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <style>
-    .account-page {
-      max-width: 640px;
-      margin: 0 auto;
-      padding: 40px 20px 80px;
-    }
-    .account-card {
-      background: #1e1b17;
-      border: 1px solid #4a3a28;
-      border-radius: 14px;
-      padding: 32px 28px;
-      margin-bottom: 20px;
-    }
-    .account-card h2 {
-      font-family: 'Cinzel', serif;
-      color: var(--gold);
-      font-size: 1.1rem;
-      margin: 0 0 20px;
-      letter-spacing: 0.8px;
-      border-bottom: 1px solid rgba(201,162,39,0.2);
-      padding-bottom: 12px;
-    }
-    .profile-row {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      margin-bottom: 24px;
-    }
-    .profile-avatar {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: #3d2e1e;
-      border: 2px solid var(--gold);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Cinzel', serif;
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: var(--gold);
-      flex-shrink: 0;
-    }
-    .profile-name {
-      font-family: 'Cinzel', serif;
-      font-size: 1.25rem;
-      color: #f0e6c8;
-      font-weight: 700;
-    }
-    .profile-role-badge {
-      display: inline-block;
-      font-size: 0.7rem;
-      font-family: 'Cinzel', serif;
-      font-weight: 700;
-      padding: 3px 10px;
-      border-radius: 20px;
-      margin-top: 4px;
-      letter-spacing: 0.4px;
-      text-transform: uppercase;
-    }
-    .info-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-    .info-row:last-child { border-bottom: none; }
-    .info-label {
-      font-family: 'Cinzel', serif;
-      font-size: 0.75rem;
-      color: rgba(255,255,255,0.4);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      width: 110px;
-      flex-shrink: 0;
-    }
-    .info-value {
-      font-size: 0.9rem;
-      color: #f0e6c8;
-      font-family: monospace;
-      word-break: break-all;
-    }
-    .relink-section { margin-top: 8px; }
-    .relink-row {
-      display: flex;
-      gap: 10px;
-      margin-top: 10px;
-    }
-    .relink-input {
-      flex: 1;
-      padding: 10px 14px;
-      background: #0d0b08;
-      border: 1px solid #4a3a28;
-      border-radius: 8px;
-      color: #f0e6c8;
-      font-size: 1rem;
-      font-family: monospace;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      text-align: center;
-      outline: none;
-    }
-    .relink-input:focus { border-color: var(--gold); }
-    .btn-gold {
-      padding: 10px 20px;
-      background: linear-gradient(135deg, #c9a227, #a07820);
-      color: #0d0b08;
-      border: none;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      font-weight: 800;
-      cursor: pointer;
-      font-family: 'Cinzel', serif;
-      letter-spacing: 0.4px;
-      white-space: nowrap;
-    }
-    .btn-gold:hover { filter: brightness(1.1); }
-    .btn-danger {
-      padding: 10px 20px;
-      background: rgba(229,115,115,0.12);
-      color: #e57373;
-      border: 1px solid rgba(229,115,115,0.3);
-      border-radius: 8px;
-      font-size: 0.9rem;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: 'Cinzel', serif;
-      letter-spacing: 0.4px;
-    }
-    .btn-danger:hover { background: rgba(229,115,115,0.22); }
-    .msg-success { color: #81c784; font-size: 0.85rem; margin-top: 10px; min-height: 20px; }
-    .msg-error   { color: #e57373; font-size: 0.85rem; margin-top: 10px; min-height: 20px; }
-    .hint-text {
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.35);
-      line-height: 1.6;
-      margin-top: 6px;
-    }
-    .hint-text code {
-      color: var(--gold);
-      font-family: monospace;
-      background: rgba(201,162,39,0.1);
-      padding: 1px 5px;
-      border-radius: 3px;
-    }
+    .account-page { max-width:640px; margin:0 auto; padding:40px 20px 80px; }
+    .account-card { background:#1e1b17; border:1px solid #4a3a28; border-radius:14px; padding:32px 28px; margin-bottom:20px; }
+    .account-card h2 { font-family:"Cinzel",serif; color:var(--gold); font-size:1.1rem; margin:0 0 20px; letter-spacing:0.8px; border-bottom:1px solid rgba(201,162,39,0.2); padding-bottom:12px; }
+    .profile-row { display:flex; align-items:center; gap:18px; margin-bottom:24px; }
+    .profile-avatar { width:60px; height:60px; border-radius:50%; background:#3d2e1e; border:2px solid var(--gold); display:flex; align-items:center; justify-content:center; font-family:"Cinzel",serif; font-size:1.6rem; font-weight:700; color:var(--gold); flex-shrink:0; }
+    .profile-name { font-family:"Cinzel",serif; font-size:1.25rem; color:#f0e6c8; font-weight:700; }
+    .profile-role-badge { display:inline-block; font-size:0.7rem; font-family:"Cinzel",serif; font-weight:700; padding:3px 10px; border-radius:20px; margin-top:4px; letter-spacing:0.4px; text-transform:uppercase; }
+    .info-row { display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06); }
+    .info-row:last-child { border-bottom:none; }
+    .info-label { font-family:"Cinzel",serif; font-size:0.75rem; color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:0.5px; width:110px; flex-shrink:0; }
+    .info-value { font-size:0.9rem; color:#f0e6c8; word-break:break-all; }
+    .mc-linked-row { display:flex; align-items:center; gap:12px; padding:14px 0; border-bottom:1px solid rgba(255,255,255,0.06); }
+    .mc-dot { width:10px; height:10px; border-radius:50%; background:#4caf50; flex-shrink:0; }
+    .mc-dot.unlinked { background:rgba(255,255,255,0.2); }
+    .mc-linked-name { font-family:"Cinzel",serif; font-size:1rem; color:var(--gold); font-weight:700; }
+    .mc-linked-uuid { font-size:0.72rem; color:rgba(255,255,255,0.3); font-family:monospace; margin-top:2px; }
+    .relink-row { display:flex; gap:10px; margin-top:16px; }
+    .relink-input { flex:1; padding:11px 14px; background:#0d0b08; border:1px solid #4a3a28; border-radius:8px; color:var(--gold); font-size:1.1rem; font-family:monospace; letter-spacing:6px; text-transform:uppercase; text-align:center; outline:none; }
+    .relink-input:focus { border-color:var(--gold); }
+    .btn-gold { padding:11px 22px; background:linear-gradient(135deg,#c9a227,#a07820); color:#0d0b08; border:none; border-radius:8px; font-size:0.9rem; font-weight:800; cursor:pointer; font-family:"Cinzel",serif; letter-spacing:0.4px; white-space:nowrap; }
+    .btn-gold:hover { filter:brightness(1.1); }
+    .btn-danger { padding:11px 22px; background:rgba(229,115,115,0.12); color:#e57373; border:1px solid rgba(229,115,115,0.3); border-radius:8px; font-size:0.9rem; font-weight:700; cursor:pointer; font-family:"Cinzel",serif; letter-spacing:0.4px; }
+    .btn-danger:hover { background:rgba(229,115,115,0.22); }
+    .btn-sm-danger { padding:7px 14px; background:rgba(229,115,115,0.08); color:#e57373; border:1px solid rgba(229,115,115,0.25); border-radius:6px; font-size:0.78rem; font-weight:700; cursor:pointer; font-family:"Cinzel",serif; }
+    .msg-success { color:#81c784; font-size:0.85rem; margin-top:10px; min-height:20px; }
+    .msg-error   { color:#e57373; font-size:0.85rem; margin-top:10px; min-height:20px; }
+    .hint-text { font-size:0.8rem; color:rgba(255,255,255,0.35); line-height:1.6; margin:0 0 6px; }
+    .hint-text code { color:var(--gold); font-family:monospace; background:rgba(201,162,39,0.1); padding:1px 5px; border-radius:3px; }
+    .step-row { display:flex; align-items:flex-start; gap:12px; margin-bottom:10px; }
+    .step-num { width:24px; height:24px; border-radius:50%; background:var(--gold); color:#0d0b08; font-size:0.75rem; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px; }
+    .step-text { font-size:0.85rem; color:rgba(240,230,200,0.8); line-height:1.5; }
   </style>
   <script src="/auth.js"></script>
 </head>
 <body>
 
-<!-- RS Login Gate — visibility:hidden by default, shown only by requireLogin() -->
-<div id="rs-login-gate" style="
-  visibility:hidden;opacity:0;pointer-events:none;
-  position:fixed;inset:0;
-  background:rgba(10,9,7,0.97);
-  z-index:9999;
-  display:flex;align-items:center;justify-content:center;
-  transition:opacity 0.15s;
-">
-  <div style="
-    background:#1e1b17;border:1px solid #4a3a28;border-radius:14px;
-    padding:40px 32px;text-align:center;max-width:400px;width:90%;
-    box-shadow:0 24px 64px rgba(0,0,0,0.7);
-  ">
-    <div style="font-size:2rem;margin-bottom:12px;">⚔</div>
+<!-- RS Login Gate — Discord OAuth — visibility:hidden by default -->
+<div id="rs-login-gate" style="visibility:hidden;opacity:0;pointer-events:none;position:fixed;inset:0;background:rgba(10,9,7,0.97);z-index:9999;display:flex;align-items:center;justify-content:center;transition:opacity 0.15s;">
+  <div style="background:#1e1b17;border:1px solid #4a3a28;border-radius:14px;padding:40px 32px;text-align:center;max-width:400px;width:90%;box-shadow:0 24px 64px rgba(0,0,0,0.7);">
+    <div style="font-size:2rem;margin-bottom:12px;">&#9876;</div>
     <h2 style="font-family:'Cinzel',serif;color:#c9a227;margin:0 0 8px;font-size:1.25rem;letter-spacing:1px;">Members Only</h2>
-    <p style="color:rgba(240,230,200,0.55);font-size:0.88rem;margin:0 0 6px;line-height:1.6;">
-      This page is for registered Runestone Vale players.
-    </p>
-    <p style="color:rgba(240,230,200,0.4);font-size:0.8rem;margin:0 0 28px;line-height:1.5;">
-      Type <strong style="color:#c9a227;font-family:monospace;">/rlink</strong> in-game to get your 6-character code.
-    </p>
-    <div style="display:flex;gap:10px;margin-bottom:16px;">
-      <input
-        id="rs-gate-code"
-        type="text"
-        maxlength="6"
-        placeholder="Enter code (e.g. A3KX7P)"
-        autocomplete="off"
-        spellcheck="false"
-        style="
-          flex:1;padding:11px 14px;
-          background:#0d0b08;border:1px solid #4a3a28;border-radius:8px;
-          color:#f0e6c8;font-size:1rem;font-family:monospace;letter-spacing:3px;
-          text-transform:uppercase;text-align:center;outline:none;
-        "
-        oninput="this.value=this.value.toUpperCase()"
-        onkeydown="if(event.key==='Enter')RSAuth_submitGate()"
-      />
-    </div>
-    <button
-      onclick="RSAuth_submitGate()"
-      id="rs-gate-btn"
-      style="
-        width:100%;padding:12px;
-        background:linear-gradient(135deg,#c9a227,#a07820);
-        color:#0d0b08;border:none;border-radius:8px;
-        font-size:0.95rem;font-weight:800;cursor:pointer;
-        font-family:'Cinzel',serif;letter-spacing:0.5px;
-        margin-bottom:14px;
-      "
-    >Verify Code</button>
-    <div id="rs-gate-error" style="color:#e57373;font-size:0.82rem;min-height:18px;margin-bottom:10px;"></div>
-    <a href="/index.html" style="font-size:0.78rem;color:rgba(255,255,255,0.3);text-decoration:none;">← Back to Home</a>
+    <p style="color:rgba(240,230,200,0.55);font-size:0.88rem;margin:0 0 24px;line-height:1.6;">Sign in with Discord to access your account, view your profile, and link your Minecraft character.</p>
+    <button onclick="RSAuth.loginWithDiscord()" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:13px 24px;background:#5865f2;color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;font-family:'Cinzel',serif;letter-spacing:0.5px;">
+      <svg width="20" height="15" viewBox="0 0 71 55" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M60.1 4.9A58.5 58.5 0 0 0 45.5.4a40.7 40.7 0 0 0-1.8 3.7 54 54 0 0 0-16.3 0A39.6 39.6 0 0 0 25.6.4 58.4 58.4 0 0 0 11 4.9C1.6 19.1-.9 33 .3 46.6a58.9 58.9 0 0 0 18 9.1 44.6 44.6 0 0 0 3.8-6.2 38.3 38.3 0 0 1-6-2.9l1.5-1.1a42 42 0 0 0 36 0l1.5 1.1a38.2 38.2 0 0 1-6 2.9 44.4 44.4 0 0 0 3.8 6.2 58.7 58.7 0 0 0 18-9.1c1.5-15.5-2.5-29.3-10.8-41.6ZM23.7 38.2c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.5 0 6.4 3.2 6.3 7.2 0 4-2.8 7.2-6.3 7.2Zm23.6 0c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.5 0 6.4 3.2 6.3 7.2 0 4-2.8 7.2-6.3 7.2Z"/></svg>
+      Login with Discord
+    </button>
+    <p style="color:rgba(240,230,200,0.25);font-size:0.72rem;margin:16px 0 0;line-height:1.5;">You will be redirected to Discord to authorise. No password is stored on this site.</p>
   </div>
 </div>
-
-<script>
-async function RSAuth_submitGate() {
-  const input = document.getElementById('rs-gate-code');
-  const btn   = document.getElementById('rs-gate-btn');
-  const err   = document.getElementById('rs-gate-error');
-  if (!input || !btn) return;
-  const code = input.value.trim().toUpperCase();
-  if (code.length !== 6) { err.textContent = 'Code must be exactly 6 characters.'; return; }
-  btn.textContent = 'Verifying…';
-  btn.disabled = true;
-  err.textContent = '';
-  try {
-    const session = await RSAuth.verifyCode(code);
-    RSAuth.hideLoginModal();
-    RSAuth.renderNavUser(session);
-    document.body.style.overflow = '';
-    if (typeof RSAuth_onLogin === 'function') RSAuth_onLogin(session);
-    else window.location.reload();
-  } catch (e) {
-    err.textContent = e.message || 'Something went wrong. Please try again.';
-    btn.textContent = 'Verify Code';
-    btn.disabled = false;
-  }
-}
-</script>
 
 <header>
   <div class="topbar">
     <a class="brand" href="/index.html">Runestone Vale</a>
-    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleMenu()">☰</button>
+    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleMenu()">&#9776;</button>
     <nav class="top-links" id="mobileNav">
       <a class="top-link" href="/index.html">Home</a>
       <a class="top-link" href="/features.html">Server-Features</a>
       <div class="nav-dropdown">
-        <button class="top-link dropdown-toggle" type="button" aria-expanded="false" onclick="toggleRunestoneDropdown(event)">RunestoneMMO ▾</button>
+        <button class="top-link dropdown-toggle" type="button" aria-expanded="false" onclick="toggleRunestoneDropdown(event)">RunestoneMMO &#9662;</button>
         <div class="dropdown-menu" id="runestoneDropdown">
           <a class="dropdown-link" href="/RunestoneCore.html">RunestoneCore</a>
           <a class="dropdown-link" href="/RunestoneSkills.html">RunestoneSkills</a>
@@ -270,154 +87,217 @@ async function RSAuth_submitGate() {
     </nav>
   </div>
 </header>
-
 <div class="hero-banner"></div>
 
 <main>
   <div class="account-page">
-    <h1 style="font-family:'Cinzel',serif;color:var(--gold);font-size:1.6rem;margin:0 0 28px;letter-spacing:1px;">⚙ My Account</h1>
+    <h1 style="font-family:'Cinzel',serif;color:var(--gold);font-size:1.6rem;margin:0 0 28px;letter-spacing:1px;">&#9881; My Account</h1>
 
-    <!-- Profile Card -->
-    <div class="account-card" id="profileCard">
-      <h2>⚔ Player Profile</h2>
+    <!-- Discord Profile Card -->
+    <div class="account-card">
+      <h2>&#9876; Discord Profile</h2>
       <div class="profile-row">
         <div class="profile-avatar" id="profileAvatar">?</div>
         <div>
-          <div class="profile-name" id="profileName">Loading…</div>
+          <div class="profile-name" id="profileName">Loading&#8230;</div>
           <div class="profile-role-badge" id="profileRoleBadge"></div>
         </div>
       </div>
       <div class="info-row">
-        <span class="info-label">UUID</span>
-        <span class="info-value" id="profileUUID" style="font-size:0.75rem;color:rgba(255,255,255,0.45);">—</span>
+        <span class="info-label">Role</span>
+        <span class="info-value" id="profileRole">&#8212;</span>
       </div>
       <div class="info-row">
-        <span class="info-label">Role</span>
-        <span class="info-value" id="profileRole">—</span>
+        <span class="info-label">Email</span>
+        <span class="info-value" id="profileEmail" style="font-size:0.82rem;color:rgba(255,255,255,0.45);">&#8212;</span>
       </div>
       <div class="info-row">
         <span class="info-label">Session</span>
-        <span class="info-value" id="profileExpiry" style="font-size:0.78rem;color:rgba(255,255,255,0.4);">—</span>
+        <span class="info-value" id="profileExpiry" style="font-size:0.78rem;color:rgba(255,255,255,0.4);">&#8212;</span>
       </div>
     </div>
 
-    <!-- Re-link Card -->
+    <!-- Minecraft Link Card -->
     <div class="account-card">
-      <h2>🔗 Re-link Minecraft Account</h2>
-      <p class="hint-text">
-        If you need to re-link your account (e.g. after a name change), type <code>/rlink</code> in-game to get a fresh 6-character code, then enter it below.
-      </p>
-      <div class="relink-section">
-        <div class="relink-row">
-          <input
-            type="text"
-            id="relinkCode"
-            class="relink-input"
-            maxlength="6"
-            placeholder="New code"
-            autocomplete="off"
-            spellcheck="false"
-            oninput="this.value=this.value.toUpperCase()"
-            onkeydown="if(event.key==='Enter')doRelink()"
-          />
-          <button class="btn-gold" onclick="doRelink()">Re-link</button>
+      <h2>&#9935; Minecraft Account</h2>
+      <div id="mcLinkedSection" style="display:none;">
+        <div class="mc-linked-row">
+          <div class="mc-dot"></div>
+          <div>
+            <div class="mc-linked-name" id="mcUsername">&#8212;</div>
+            <div class="mc-linked-uuid" id="mcUuid">&#8212;</div>
+          </div>
+          <button class="btn-sm-danger" onclick="doUnlink()" style="margin-left:auto;">Unlink</button>
         </div>
-        <div id="relinkMsg" class="msg-success"></div>
-        <div id="relinkErr" class="msg-error"></div>
+        <p class="hint-text" style="margin-top:12px;">Your Minecraft account is linked. Character Sheet, Dashboard, and player stats are available in the companion app.</p>
+      </div>
+      <div id="mcUnlinkedSection">
+        <p class="hint-text">Link your Minecraft account to unlock your Character Sheet, Dashboard, and live player stats in the companion app.</p>
+        <div style="margin:16px 0 12px;">
+          <div class="step-row"><div class="step-num">1</div><div class="step-text">Join the server and type <code>/rlink</code> in chat</div></div>
+          <div class="step-row"><div class="step-num">2</div><div class="step-text">You will receive a 6-character code in chat</div></div>
+          <div class="step-row"><div class="step-num">3</div><div class="step-text">Enter the code below to link your accounts</div></div>
+        </div>
+        <div class="relink-row">
+          <input type="text" id="linkCode" class="relink-input" maxlength="6" placeholder="A3KX7P" autocomplete="off" spellcheck="false" oninput="this.value=this.value.toUpperCase()" onkeydown="if(event.key==='Enter')doLink()" />
+          <button class="btn-gold" onclick="doLink()" id="linkBtn">Link Account</button>
+        </div>
+        <div id="linkMsg" class="msg-success"></div>
+        <div id="linkErr" class="msg-error"></div>
       </div>
     </div>
 
-    <!-- Logout Card -->
+    <!-- Session / Logout Card -->
     <div class="account-card">
-      <h2>🚪 Session</h2>
-      <p class="hint-text">Logging out will clear your session from this browser. You can log back in at any time using <code>/rlink</code> in-game.</p>
+      <h2>&#128682; Session</h2>
+      <p class="hint-text">Logging out will clear your Discord session from this browser. You can log back in at any time.</p>
       <button class="btn-danger" onclick="RSAuth.logout()" style="margin-top:14px;">Logout</button>
     </div>
   </div>
 </main>
 
 <footer>
-  <p>© 2025 RunestoneMMO — Runestone Vale. All rights reserved.</p>
-  <p><a href="/terms.html">Terms</a> · <a href="/privacy.html">Privacy</a> · <a href="/contact.html">Contact</a></p>
+  <p>&copy; 2025 RunestoneMMO &mdash; Runestone Vale. All rights reserved.</p>
+  <p><a href="/terms.html">Terms</a> &middot; <a href="/privacy.html">Privacy</a> &middot; <a href="/contact.html">Contact</a></p>
 </footer>
 
 <script>
-// ── Page init ─────────────────────────────────────────────────────────────────
-const ROLE_LABELS = {
-  admin:           'Admin',
-  staff:           'Staff',
-  content_creator: 'Content Creator',
-  builder:         'Builder',
-  runestonemmo:    'RunestoneMMO',
-  player:          'Player',
-};
-const ROLE_COLORS = {
-  admin:           '#ff6b6b',
-  staff:           '#6ab0f5',
-  content_creator: '#4ade80',
-  builder:         '#a78bfa',
-  runestonemmo:    '#fb923c',
-  player:          '#c9a227',
-};
+const SUPA_URL  = 'https://ludkhakegqojxuglisks.supabase.co';
+const SUPA_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1ZGtoYWtlZ3Fvanh1Z2xpc2tzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5NTE2MjEsImV4cCI6MjA5MzUyNzYyMX0.V5_Mp7eHc-3rKFZLUGNM_iH57hpiGMvp4CBcH33R0rE';
+const ROLE_LABELS = { admin:'Admin', staff:'Staff', content_creator:'Content Creator', builder:'Builder', runestonemmo:'RunestoneMMO', casual_player:'Casual Player', player:'Player' };
+const ROLE_COLORS = { admin:'#ff6b6b', staff:'#6ab0f5', content_creator:'#4ade80', builder:'#a78bfa', runestonemmo:'#fb923c', casual_player:'#c9a227', player:'#c9a227' };
 
 function populateProfile(session) {
   if (!session) return;
+  const color = ROLE_COLORS[session.role] || '#c9a227';
+  const label = ROLE_LABELS[session.role] || 'Player';
   const initial = (session.username || '?').charAt(0).toUpperCase();
-  const color   = ROLE_COLORS[session.role] || '#c9a227';
-  const label   = ROLE_LABELS[session.role] || 'Player';
-
   document.getElementById('profileAvatar').textContent = initial;
-  document.getElementById('profileAvatar').style.color  = color;
+  document.getElementById('profileAvatar').style.color = color;
   document.getElementById('profileAvatar').style.borderColor = color;
-  document.getElementById('profileName').textContent   = session.username || '—';
-  document.getElementById('profileUUID').textContent   = session.uuid || '—';
-  document.getElementById('profileRole').textContent   = label;
-
+  document.getElementById('profileName').textContent = session.username || '\u2014';
+  document.getElementById('profileEmail').textContent = session.email || '\u2014';
+  document.getElementById('profileRole').textContent = label;
   const badge = document.getElementById('profileRoleBadge');
   badge.textContent = label;
   badge.style.background = color + '22';
   badge.style.color = color;
-  badge.style.border = `1px solid ${color}55`;
-
-  if (session.expires_at) {
-    const d = new Date(session.expires_at);
-    document.getElementById('profileExpiry').textContent =
-      'Expires ' + d.toLocaleDateString(undefined, { year:'numeric', month:'short', day:'numeric' });
+  badge.style.border = '1px solid ' + color + '55';
+  const supa = RSAuth.getSupabaseSession();
+  if (supa && supa.expires_at) {
+    const d = new Date(supa.expires_at * 1000);
+    document.getElementById('profileExpiry').textContent = 'Expires ' + d.toLocaleDateString(undefined, { year:'numeric', month:'short', day:'numeric' });
   }
 }
 
-async function doRelink() {
-  const input = document.getElementById('relinkCode');
-  const msgEl = document.getElementById('relinkMsg');
-  const errEl = document.getElementById('relinkErr');
-  msgEl.textContent = '';
-  errEl.textContent = '';
+async function loadMcLink(session) {
+  if (!session || !session.discord_id) return;
+  try {
+    const res = await fetch(
+      SUPA_URL + '/rest/v1/player_profiles?select=uuid,username&discord_id=eq.' + session.discord_id + '&limit=1',
+      { headers: { 'apikey': SUPA_ANON, 'Authorization': 'Bearer ' + (session.access_token || SUPA_ANON) } }
+    );
+    if (!res.ok) { showUnlinked(); return; }
+    const rows = await res.json();
+    if (rows && rows.length > 0 && rows[0].uuid) showLinked(rows[0].username, rows[0].uuid);
+    else showUnlinked();
+  } catch { showUnlinked(); }
+}
+
+function showLinked(username, uuid) {
+  document.getElementById('mcLinkedSection').style.display = 'block';
+  document.getElementById('mcUnlinkedSection').style.display = 'none';
+  document.getElementById('mcUsername').textContent = username || '\u2014';
+  document.getElementById('mcUuid').textContent = uuid || '\u2014';
+}
+function showUnlinked() {
+  document.getElementById('mcLinkedSection').style.display = 'none';
+  document.getElementById('mcUnlinkedSection').style.display = 'block';
+}
+
+async function doLink() {
+  const input = document.getElementById('linkCode');
+  const msgEl = document.getElementById('linkMsg');
+  const errEl = document.getElementById('linkErr');
+  const btn   = document.getElementById('linkBtn');
+  msgEl.textContent = ''; errEl.textContent = '';
   const code = (input.value || '').trim().toUpperCase();
   if (code.length !== 6) { errEl.textContent = 'Code must be exactly 6 characters.'; return; }
+  const session = RSAuth.getSession();
+  if (!session) { errEl.textContent = 'You must be logged in with Discord first.'; return; }
+  btn.textContent = 'Verifying\u2026'; btn.disabled = true;
   try {
-    const session = await RSAuth.verifyCode(code);
-    populateProfile(session);
-    RSAuth.renderNavUser(session);
-    msgEl.textContent = '✓ Account re-linked successfully.';
+    const codeRes = await fetch(
+      SUPA_URL + '/rest/v1/account_link_codes?select=*&code=eq.' + code + '&used=eq.false&expires_at=gt.' + new Date().toISOString() + '&limit=1',
+      { headers: { 'apikey': SUPA_ANON, 'Authorization': 'Bearer ' + SUPA_ANON } }
+    );
+    const rows = await codeRes.json();
+    if (!rows || rows.length === 0) { errEl.textContent = 'Code not found or expired. Type /rlink in-game to get a new code.'; btn.textContent = 'Link Account'; btn.disabled = false; return; }
+    const linkRow = rows[0];
+    const updateRes = await fetch(SUPA_URL + '/rest/v1/player_profiles?uuid=eq.' + linkRow.uuid, {
+      method: 'PATCH',
+      headers: { 'apikey': SUPA_ANON, 'Authorization': 'Bearer ' + (session.access_token || SUPA_ANON), 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+      body: JSON.stringify({ discord_id: session.discord_id }),
+    });
+    if (!updateRes.ok) { const t = await updateRes.text(); throw new Error(t || 'Failed to update profile.'); }
+    await fetch(SUPA_URL + '/rest/v1/account_link_codes?id=eq.' + linkRow.id, {
+      method: 'PATCH',
+      headers: { 'apikey': SUPA_ANON, 'Authorization': 'Bearer ' + SUPA_ANON, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+      body: JSON.stringify({ used: true }),
+    });
+    msgEl.textContent = '\u2713 Minecraft account linked successfully!';
     input.value = '';
+    showLinked(linkRow.username, linkRow.uuid);
   } catch (e) {
-    errEl.textContent = e.message || 'Failed to verify code.';
+    errEl.textContent = e.message || 'Something went wrong. Please try again.';
+  } finally {
+    btn.textContent = 'Link Account'; btn.disabled = false;
   }
 }
 
-// Callback after login gate completes
-function RSAuth_onLogin(session) {
-  populateProfile(session);
-  RSAuth.renderNavUser(session);
+async function doUnlink() {
+  if (!confirm('Unlink your Minecraft account? You can re-link at any time.')) return;
+  const session = RSAuth.getSession();
+  if (!session) return;
+  try {
+    await fetch(SUPA_URL + '/rest/v1/player_profiles?discord_id=eq.' + session.discord_id, {
+      method: 'PATCH',
+      headers: { 'apikey': SUPA_ANON, 'Authorization': 'Bearer ' + (session.access_token || SUPA_ANON), 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+      body: JSON.stringify({ discord_id: null }),
+    });
+    showUnlinked();
+  } catch (e) { alert('Failed to unlink: ' + (e.message || 'Unknown error')); }
 }
 
-// Init
-(function() {
-  var session = RSAuth.requireLogin();
+function toggleMenu() {
+  const button = document.querySelector('.menu-toggle');
+  const nav = document.getElementById('mobileNav');
+  const expanded = button.getAttribute('aria-expanded') === 'true';
+  button.setAttribute('aria-expanded', String(!expanded));
+  nav.classList.toggle('open', !expanded);
+}
+function toggleRunestoneDropdown(event) {
+  const dropdown = event.currentTarget.closest('.nav-dropdown');
+  const menu = dropdown.querySelector('.dropdown-menu');
+  const expanded = event.currentTarget.getAttribute('aria-expanded') === 'true';
+  event.currentTarget.setAttribute('aria-expanded', String(!expanded));
+  menu.classList.toggle('open', !expanded);
+}
+document.addEventListener('click', function(e) {
+  const dropdown = document.querySelector('.nav-dropdown');
+  if (dropdown && !dropdown.contains(e.target)) {
+    const menu = dropdown.querySelector('.dropdown-menu');
+    const toggle = dropdown.querySelector('.dropdown-toggle');
+    if (menu) menu.classList.remove('open');
+    if (toggle) toggle.setAttribute('aria-expanded', 'false');
+  }
+});
+
+(async function() {
+  const session = await RSAuth.requireLogin();
   RSAuth.renderNavUser(session);
-  if (session) populateProfile(session);
+  if (session) { populateProfile(session); loadMcLink(session); }
 })();
 </script>
-
 </body>
 </html>

@@ -9,90 +9,19 @@
 </head>
 
 <body>
-<!-- RS Login Gate — visibility:hidden by default, shown only by requireLogin() -->
-<div id="rs-login-gate" style="
-  visibility:hidden;opacity:0;pointer-events:none;
-  position:fixed;inset:0;
-  background:rgba(10,9,7,0.97);
-  z-index:9999;
-  display:flex;align-items:center;justify-content:center;
-  transition:opacity 0.15s;
-">
-  <div style="
-    background:#1e1b17;border:1px solid #4a3a28;border-radius:14px;
-    padding:40px 32px;text-align:center;max-width:400px;width:90%;
-    box-shadow:0 24px 64px rgba(0,0,0,0.7);
-  ">
-    <div style="font-size:2rem;margin-bottom:12px;">⚔</div>
+<!-- RS Login Gate — Discord OAuth — visibility:hidden by default -->
+<div id="rs-login-gate" style="visibility:hidden;opacity:0;pointer-events:none;position:fixed;inset:0;background:rgba(10,9,7,0.97);z-index:9999;display:flex;align-items:center;justify-content:center;transition:opacity 0.15s;">
+  <div style="background:#1e1b17;border:1px solid #4a3a28;border-radius:14px;padding:40px 32px;text-align:center;max-width:400px;width:90%;box-shadow:0 24px 64px rgba(0,0,0,0.7);">
+    <div style="font-size:2rem;margin-bottom:12px;">&#9876;</div>
     <h2 style="font-family:'Cinzel',serif;color:#c9a227;margin:0 0 8px;font-size:1.25rem;letter-spacing:1px;">Members Only</h2>
-    <p style="color:rgba(240,230,200,0.55);font-size:0.88rem;margin:0 0 6px;line-height:1.6;">
-      This page is for registered Runestone Vale players.
-    </p>
-    <p style="color:rgba(240,230,200,0.4);font-size:0.8rem;margin:0 0 28px;line-height:1.5;">
-      Type <strong style="color:#c9a227;font-family:monospace;">/rlink</strong> in-game to get your 6-character code.
-    </p>
-    <div style="display:flex;gap:10px;margin-bottom:16px;">
-      <input
-        id="rs-gate-code"
-        type="text"
-        maxlength="6"
-        placeholder="Enter code (e.g. A3KX7P)"
-        autocomplete="off"
-        spellcheck="false"
-        style="
-          flex:1;padding:11px 14px;
-          background:#0d0b08;border:1px solid #4a3a28;border-radius:8px;
-          color:#f0e6c8;font-size:1rem;font-family:monospace;letter-spacing:3px;
-          text-transform:uppercase;text-align:center;outline:none;
-        "
-        oninput="this.value=this.value.toUpperCase()"
-        onkeydown="if(event.key==='Enter')RSAuth_submitGate()"
-      />
-    </div>
-    <button
-      onclick="RSAuth_submitGate()"
-      id="rs-gate-btn"
-      style="
-        width:100%;padding:12px;
-        background:linear-gradient(135deg,#c9a227,#a07820);
-        color:#0d0b08;border:none;border-radius:8px;
-        font-size:0.95rem;font-weight:800;cursor:pointer;
-        font-family:'Cinzel',serif;letter-spacing:0.5px;
-        margin-bottom:14px;
-      "
-    >Verify Code</button>
-    <div id="rs-gate-error" style="color:#e57373;font-size:0.82rem;min-height:18px;margin-bottom:10px;"></div>
-    <a href="/index.html" style="font-size:0.78rem;color:rgba(255,255,255,0.3);text-decoration:none;">← Back to Home</a>
+    <p style="color:rgba(240,230,200,0.55);font-size:0.88rem;margin:0 0 24px;line-height:1.6;">Sign in with Discord to access this page.</p>
+    <button onclick="RSAuth.loginWithDiscord()" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:13px 24px;background:#5865f2;color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;font-family:'Cinzel',serif;letter-spacing:0.5px;">
+      <svg width="20" height="15" viewBox="0 0 71 55" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M60.1 4.9A58.5 58.5 0 0 0 45.5.4a40.7 40.7 0 0 0-1.8 3.7 54 54 0 0 0-16.3 0A39.6 39.6 0 0 0 25.6.4 58.4 58.4 0 0 0 11 4.9C1.6 19.1-.9 33 .3 46.6a58.9 58.9 0 0 0 18 9.1 44.6 44.6 0 0 0 3.8-6.2 38.3 38.3 0 0 1-6-2.9l1.5-1.1a42 42 0 0 0 36 0l1.5 1.1a38.2 38.2 0 0 1-6 2.9 44.4 44.4 0 0 0 3.8 6.2 58.7 58.7 0 0 0 18-9.1c1.5-15.5-2.5-29.3-10.8-41.6ZM23.7 38.2c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.5 0 6.4 3.2 6.3 7.2 0 4-2.8 7.2-6.3 7.2Zm23.6 0c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.5 0 6.4 3.2 6.3 7.2 0 4-2.8 7.2-6.3 7.2Z"/></svg>
+      Login with Discord
+    </button>
+    <p style="color:rgba(240,230,200,0.25);font-size:0.72rem;margin:16px 0 0;line-height:1.5;">You will be redirected to Discord to authorise. No password is stored on this site.</p>
   </div>
 </div>
-
-<script>
-async function RSAuth_submitGate() {
-  const input = document.getElementById('rs-gate-code');
-  const btn   = document.getElementById('rs-gate-btn');
-  const err   = document.getElementById('rs-gate-error');
-  if (!input || !btn) return;
-  const code = input.value.trim().toUpperCase();
-  if (code.length !== 6) { err.textContent = 'Code must be exactly 6 characters.'; return; }
-  btn.textContent = 'Verifying…';
-  btn.disabled = true;
-  err.textContent = '';
-  try {
-    const session = await RSAuth.verifyCode(code);
-    // Logged in — hide gate, re-render nav pill, reload page content
-    RSAuth.hideLoginModal();
-    RSAuth.renderNavUser(session);
-    document.body.style.overflow = '';
-    // If the page has a post-login init function, call it
-    if (typeof RSAuth_onLogin === 'function') RSAuth_onLogin(session);
-    else window.location.reload();
-  } catch (e) {
-    err.textContent = e.message || 'Something went wrong. Please try again.';
-    btn.textContent = 'Verify Code';
-    btn.disabled = false;
-  }
-}
-</script>
 
 <header>
   <div class="topbar">
@@ -886,8 +815,8 @@ document.addEventListener("click", function (event) {
 </script>
 
 <script>
-(function() {
-  var session = RSAuth.requireLogin();
+(async function() {
+  var session = await RSAuth.requireLogin();
   RSAuth.renderNavUser(session);
   if (session && typeof RSAuth_onLogin === 'function') RSAuth_onLogin(session);
 })();
