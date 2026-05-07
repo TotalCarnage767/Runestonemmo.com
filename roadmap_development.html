@@ -5,6 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RunestoneMMO — Roadmap & Development</title>
   <link rel="stylesheet" href="/styles.css">
+  <style>
+    .roadmap-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 20px; }
+    .roadmap-item { border-radius: 12px; padding: 20px 22px; }
+    .roadmap-status-pin { display: flex; align-items: center; gap: 9px; margin-bottom: 9px; }
+    .roadmap-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .roadmap-status-label { font-family: 'Cinzel', serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
+    .roadmap-item h3 { margin: 0 0 7px; font-size: 1.02rem; color: var(--gold); }
+    .roadmap-item p  { margin: 0; font-size: 0.9rem; color: rgba(255,255,255,0.7); line-height: 1.6; }
+    .status-legend { display: flex; gap: 18px; flex-wrap: wrap; margin-bottom: 24px; }
+    .status-legend-item { display: flex; align-items: center; gap: 7px; font-size: 0.85rem; color: rgba(255,255,255,0.65); }
+    .status-legend-dot { width: 9px; height: 9px; border-radius: 50%; }
+  </style>
 </head>
 
 <body>
@@ -77,6 +89,21 @@
     <p style="margin-top: 18px; font-size: 1.1rem;">
       <strong>Current Live Target:</strong> Minecraft Java Edition • Paper 1.21.11 • Java 21
     </p>
+  </section>
+
+  <!-- Live Roadmap Feed -->
+  <section class="card">
+    <h2>Live Roadmap</h2>
+    <p>This roadmap is updated live by the development team. Status reflects the current state of each system in the realm.</p>
+    <div class="status-legend">
+      <div class="status-legend-item"><div class="status-legend-dot" style="background:#4caf50;box-shadow:0 0 5px #4caf50;"></div> Live</div>
+      <div class="status-legend-item"><div class="status-legend-dot" style="background:#ffd54f;"></div> In Progress</div>
+      <div class="status-legend-item"><div class="status-legend-dot" style="background:#90caf9;"></div> Planned</div>
+      <div class="status-legend-item"><div class="status-legend-dot" style="background:#ce93d8;"></div> Future</div>
+    </div>
+    <div id="roadmapGrid" class="roadmap-grid">
+      <div style="text-align:center;color:rgba(255,255,255,0.38);padding:24px;font-size:0.88rem;">Loading roadmap…</div>
+    </div>
   </section>
 
   <section class="cta-section">
@@ -418,6 +445,61 @@
 </footer>
 
 <script>
+const SUPABASE_URL  = "https://ludkhakegqojxuglisks.supabase.co";
+const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1ZGtoYWtlZ3Fvanh1Z2xpc2tzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5NTE2MjEsImV4cCI6MjA5MzUyNzYyMX0.V5_Mp7eHc-3rKFZLUGNM_iH57hpiGMvp4CBcH33R0rE";
+
+const FALLBACK_ROADMAP = [
+  { title: "Starter Kit & Onboarding",       description: "Hub compass, starter items, key commands, and sethome flow.",                                    status: "live" },
+  { title: "Login Hub & Travel",              description: "Hub Compass with warp, teleport, bank, market, and quest access.",                              status: "live" },
+  { title: "Skills & Professions (13)",       description: "Mining, Forestry, Fishing, Smithing, Exploration, Farming, Cooking, Foraging, Hunting, Strength, Defense, Range, Logistics.", status: "live" },
+  { title: "Combat & Attributes",             description: "Custom HP, Mana, Stamina, combat levels, and graves on death.",                                 status: "live" },
+  { title: "Economy & Markets",               description: "Banks, auction house, currency, daily rewards, and player trade.",                              status: "live" },
+  { title: "Quests & NPCs",                   description: "NPC dialogue, quest objectives, turn-ins, and shops.",                                          status: "live" },
+  { title: "Land Claims",                     description: "Player land claiming, trust system, and territory protection.",                                 status: "live" },
+  { title: "Companion App",                   description: "Mobile app for character tracking, guides, roadmap, and community.",                            status: "live" },
+  { title: "Quest Content Expansion",         description: "More NPC questlines, repeatable quests, and guided progression paths.",                         status: "in-progress" },
+  { title: "Skill Ability Unlocks",           description: "Passive and active abilities unlocked at skill level milestones.",                              status: "in-progress" },
+  { title: "Dungeons & Boss Arenas",          description: "Handcrafted challenge spaces, boss encounters, and loot tables.",                               status: "planned" },
+  { title: "Towns & Settlements",             description: "Player towns, territory upgrades, and community-driven world identity.",                        status: "planned" },
+  { title: "Raids & Group Content",           description: "Multi-player challenge events, raid bosses, and group rewards.",                                status: "future" },
+  { title: "Player Housing",                  description: "Persistent player homes with upgrades and decoration systems.",                                 status: "future" }
+];
+
+const STATUS_META = {
+  'live':        { label: 'Live',        color: '#4caf50', bg: 'rgba(76,175,80,0.15)',   border: 'rgba(76,175,80,0.3)',   glow: '0 0 7px #4caf50' },
+  'in-progress': { label: 'In Progress', color: '#ffd54f', bg: 'rgba(255,193,7,0.12)',   border: 'rgba(255,193,7,0.28)',  glow: 'none' },
+  'planned':     { label: 'Planned',     color: '#90caf9', bg: 'rgba(100,181,246,0.12)', border: 'rgba(100,181,246,0.28)',glow: 'none' },
+  'future':      { label: 'Future',      color: '#ce93d8', bg: 'rgba(156,39,176,0.12)',  border: 'rgba(156,39,176,0.28)',glow: 'none' }
+};
+
+async function loadRoadmap() {
+  const grid = document.getElementById('roadmapGrid');
+  if (!grid) return;
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/roadmap_items?select=title,description,status&order=sort_order.asc`, {
+      headers: { 'apikey': SUPABASE_ANON, 'Authorization': `Bearer ${SUPABASE_ANON}`, 'Accept': 'application/json' }
+    });
+    const data = res.ok ? await res.json() : [];
+    renderRoadmap((data && data.length) ? data : FALLBACK_ROADMAP, grid);
+  } catch { renderRoadmap(FALLBACK_ROADMAP, grid); }
+}
+
+function renderRoadmap(items, grid) {
+  grid.innerHTML = items.map(item => {
+    const m = STATUS_META[item.status] || STATUS_META['planned'];
+    return `<div class="roadmap-item" style="background:${m.bg};border:1px solid ${m.border};">
+      <div class="roadmap-status-pin">
+        <div class="roadmap-dot" style="background:${m.color};box-shadow:${m.glow};"></div>
+        <span class="roadmap-status-label" style="color:${m.color};">${m.label}</span>
+      </div>
+      <h3>${item.title}</h3>
+      <p>${item.description}</p>
+    </div>`;
+  }).join('');
+}
+
+loadRoadmap();
+
 function toggleMenu() {
   const nav = document.getElementById("mobileNav");
   const button = document.querySelector(".menu-toggle");
