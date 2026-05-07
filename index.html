@@ -140,6 +140,7 @@
       .status-ip { margin-left: 0; }
     }
   </style>
+  <script src="/auth.js"></script>
 </head>
 <body>
 
@@ -596,6 +597,12 @@ function renderNews(items, feed) {
 loadStatus();
 loadNews();
 setInterval(loadStatus, 60000);
+</script>
+<script>
+(async () => {
+  const auth = await RSAuth.init();
+  RSAuth.renderNavUser(auth);
+})();
 </script>
 </body>
 </html>

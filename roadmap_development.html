@@ -5,39 +5,178 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RunestoneMMO — Roadmap & Development</title>
   <link rel="stylesheet" href="/styles.css">
+  <script src="/auth.js"></script>
   <style>
-    .roadmap-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 20px; }
-    .roadmap-item { border-radius: 12px; padding: 20px 22px; }
-    .roadmap-status-pin { display: flex; align-items: center; gap: 9px; margin-bottom: 9px; }
-    .roadmap-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-    .roadmap-status-label { font-family: 'Cinzel', serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
-    .roadmap-item h3 { margin: 0 0 7px; font-size: 1.02rem; color: var(--gold); }
-    .roadmap-item p  { margin: 0; font-size: 0.9rem; color: rgba(255,255,255,0.7); line-height: 1.6; }
-    .status-legend { display: flex; gap: 18px; flex-wrap: wrap; margin-bottom: 24px; }
-    .status-legend-item { display: flex; align-items: center; gap: 7px; font-size: 0.85rem; color: rgba(255,255,255,0.65); }
-    .status-legend-dot { width: 9px; height: 9px; border-radius: 50%; }
+    :root {
+      --status-live:        #4caf50;
+      --status-live-bg:     rgba(76,175,80,0.12);
+      --status-progress:    #ffd54f;
+      --status-progress-bg: rgba(255,213,79,0.12);
+      --status-planned:     #90caf9;
+      --status-planned-bg:  rgba(144,202,249,0.12);
+      --status-future:      #ce93d8;
+      --status-future-bg:   rgba(206,147,216,0.12);
+    }
+
+    /* Stats row */
+    .rm-stats { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:24px; }
+    .rm-stat-card {
+      flex:1; min-width:90px;
+      background:#1e1b17; border:1px solid #4a3a28; border-radius:10px;
+      padding:14px 16px; text-align:center;
+    }
+    .rm-stat-num { font-family:'Cinzel',serif; font-size:1.6rem; font-weight:700; line-height:1; }
+    .rm-stat-label { font-size:0.7rem; text-transform:uppercase; letter-spacing:0.5px; color:rgba(255,255,255,0.4); margin-top:4px; }
+
+    /* Filter chips */
+    .rm-filters { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; }
+    .rm-chip {
+      padding:6px 14px; border-radius:20px; font-size:0.78rem; font-weight:600;
+      cursor:pointer; border:1.5px solid transparent; font-family:'Cinzel',serif;
+      letter-spacing:0.3px; transition:all 0.15s; background:#2a2318; color:rgba(255,255,255,0.5);
+    }
+    .rm-chip:hover { color:#f0e6c8; border-color:#c9a227; }
+    .rm-chip.active { background:#c9a227; color:#0d0b08; border-color:#c9a227; }
+
+    /* Card grid */
+    .rm-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:14px; }
+
+    /* Card */
+    .rm-card {
+      background:#1e1b17; border:1px solid #4a3a28; border-radius:12px;
+      padding:18px 20px; position:relative; transition:border-color 0.15s;
+    }
+    .rm-card:hover { border-color:#c9a227; }
+
+    /* Status pill pin */
+    .rm-pin {
+      display:inline-flex; align-items:center; gap:6px;
+      padding:3px 10px 3px 7px; border-radius:20px;
+      font-family:'Cinzel',serif; font-size:0.65rem; font-weight:700;
+      letter-spacing:0.5px; text-transform:uppercase; margin-bottom:10px;
+    }
+    .rm-pin-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+    .rm-pin.live        { background:var(--status-live-bg);     color:var(--status-live); }
+    .rm-pin.live .rm-pin-dot { background:var(--status-live); box-shadow:0 0 5px var(--status-live); }
+    .rm-pin.in-progress { background:var(--status-progress-bg); color:var(--status-progress); }
+    .rm-pin.in-progress .rm-pin-dot { background:var(--status-progress); }
+    .rm-pin.planned     { background:var(--status-planned-bg);  color:var(--status-planned); }
+    .rm-pin.planned .rm-pin-dot { background:var(--status-planned); }
+    .rm-pin.future      { background:var(--status-future-bg);   color:var(--status-future); }
+    .rm-pin.future .rm-pin-dot { background:var(--status-future); }
+
+    .rm-card h3 { margin:0 0 6px; font-size:0.98rem; color:#f0e6c8; font-family:'Cinzel',serif; padding-right:34px; }
+    .rm-card p  { margin:0; font-size:0.85rem; color:rgba(255,255,255,0.6); line-height:1.6; }
+
+    /* Edit button */
+    .rm-edit-btn {
+      position:absolute; top:14px; right:14px;
+      background:rgba(201,162,39,0.1); border:1px solid rgba(201,162,39,0.25);
+      color:#c9a227; border-radius:6px; width:28px; height:28px;
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer; font-size:0.8rem; transition:all 0.15s;
+    }
+    .rm-edit-btn:hover { background:rgba(201,162,39,0.25); }
+
+    /* Add button */
+    .rm-add-btn {
+      display:inline-flex; align-items:center; gap:8px;
+      padding:9px 20px; background:#c9a227; color:#0d0b08;
+      border:none; border-radius:8px; font-family:'Cinzel',serif;
+      font-size:0.85rem; font-weight:700; cursor:pointer;
+      letter-spacing:0.5px; margin-bottom:16px; transition:background 0.15s;
+    }
+    .rm-add-btn:hover { background:#e0b83a; }
+    .rm-admin-hint { font-size:0.75rem; color:rgba(255,255,255,0.3); margin-bottom:16px; font-style:italic; }
+
+    .rm-empty { grid-column:1/-1; text-align:center; color:rgba(255,255,255,0.3); padding:40px 20px; font-size:0.88rem; }
+
+    /* Modal overlay */
+    .rm-modal-overlay {
+      display:none; position:fixed; inset:0;
+      background:rgba(0,0,0,0.78); z-index:2000;
+      align-items:center; justify-content:center; padding:16px;
+    }
+    .rm-modal-overlay.open { display:flex; }
+    .rm-modal {
+      background:#1e1b17; border:1px solid #4a3a28; border-radius:14px;
+      padding:28px 24px; width:100%; max-width:460px;
+      max-height:90vh; overflow-y:auto;
+    }
+    .rm-modal h3 { font-family:'Cinzel',serif; color:#c9a227; margin:0 0 20px; font-size:1.1rem; }
+    .rm-modal label {
+      display:block; font-size:0.75rem; color:rgba(255,255,255,0.45);
+      text-transform:uppercase; letter-spacing:0.5px; margin-bottom:5px; font-family:'Cinzel',serif;
+    }
+    .rm-modal input, .rm-modal textarea {
+      width:100%; box-sizing:border-box;
+      background:#2a2318; border:1px solid #4a3a28; border-radius:7px;
+      color:#f0e6c8; padding:10px 12px; font-size:0.9rem;
+      font-family:inherit; margin-bottom:14px; resize:vertical;
+    }
+    .rm-modal input:focus, .rm-modal textarea:focus { outline:none; border-color:#c9a227; }
+
+    /* Status picker */
+    .rm-status-picker { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+    .rm-status-btn {
+      flex:1; min-width:90px; padding:8px 10px;
+      border-radius:8px; border:2px solid #4a3a28;
+      font-family:'Cinzel',serif; font-size:0.7rem; font-weight:700;
+      letter-spacing:0.3px; cursor:pointer; text-align:center;
+      transition:all 0.15s; background:#2a2318; color:rgba(255,255,255,0.45);
+    }
+    .rm-status-btn.sel-live     { border-color:var(--status-live);     color:var(--status-live);     background:var(--status-live-bg); }
+    .rm-status-btn.sel-progress { border-color:var(--status-progress); color:var(--status-progress); background:var(--status-progress-bg); }
+    .rm-status-btn.sel-planned  { border-color:var(--status-planned);  color:var(--status-planned);  background:var(--status-planned-bg); }
+    .rm-status-btn.sel-future   { border-color:var(--status-future);   color:var(--status-future);   background:var(--status-future-bg); }
+
+    .rm-modal-actions { display:flex; gap:10px; margin-top:6px; }
+    .rm-btn-save {
+      flex:1; padding:11px; background:#c9a227; color:#0d0b08;
+      border:none; border-radius:8px; font-family:'Cinzel',serif;
+      font-size:0.88rem; font-weight:700; cursor:pointer; transition:background 0.15s;
+    }
+    .rm-btn-save:hover { background:#e0b83a; }
+    .rm-btn-cancel {
+      padding:11px 18px; background:#2a2318; color:rgba(255,255,255,0.5);
+      border:1px solid #4a3a28; border-radius:8px; font-family:'Cinzel',serif; font-size:0.88rem; cursor:pointer;
+    }
+    .rm-btn-delete {
+      padding:11px 14px; background:rgba(229,115,115,0.1); color:#e57373;
+      border:1px solid rgba(229,115,115,0.3); border-radius:8px;
+      font-family:'Cinzel',serif; font-size:0.88rem; cursor:pointer;
+    }
+
+    @media (max-width:480px) {
+      .rm-stats { gap:8px; }
+      .rm-stat-card { padding:10px 12px; }
+      .rm-stat-num { font-size:1.3rem; }
+    }
   </style>
 </head>
-
 <body>
+
+<!-- Login gate -->
+<div id="rs-login-gate" style="display:none;position:fixed;inset:0;background:#0d0b08;z-index:9999;display:flex;align-items:center;justify-content:center;">
+  <div style="background:#1e1b17;border:1px solid #4a3a28;border-radius:12px;padding:40px 32px;text-align:center;max-width:380px;width:90%;">
+    <h2 style="font-family:'Cinzel',serif;color:#c9a227;margin:0 0 10px;font-size:1.3rem;">Members Only</h2>
+    <p style="color:rgba(255,255,255,0.6);font-size:0.9rem;margin:0 0 24px;line-height:1.6;">
+      This page is available to registered members of Runestone Vale.<br>Sign in with Discord to continue.
+    </p>
+    <button onclick="RSAuth.loginWithDiscord()" style="padding:11px 28px;background:#5865F2;color:#fff;border:none;border-radius:8px;font-size:0.95rem;font-weight:700;cursor:pointer;font-family:'Cinzel',serif;letter-spacing:0.5px;width:100%;margin-bottom:12px;">Login with Discord</button>
+    <a href="/index.html" style="font-size:0.8rem;color:rgba(255,255,255,0.35);text-decoration:none;">← Back to Home</a>
+  </div>
+</div>
 
 <header>
   <div class="topbar">
     <a class="brand" href="/index.html">Runestone Vale</a>
-
-    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleMenu()">
-      ☰
-    </button>
-
+    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleMenu()">☰</button>
     <nav class="top-links" id="mobileNav">
       <a class="top-link" href="/index.html">Home</a>
       <a class="top-link" href="/features.html">Server-Features</a>
-
       <div class="nav-dropdown">
-        <button class="top-link dropdown-toggle" type="button" aria-expanded="false" onclick="toggleRunestoneDropdown(event)">
-          RunestoneMMO ▾
-        </button>
-
+        <button class="top-link dropdown-toggle" type="button" aria-expanded="false" onclick="toggleRunestoneDropdown(event)">RunestoneMMO ▾</button>
         <div class="dropdown-menu" id="runestoneDropdown">
           <a class="dropdown-link" href="/RunestoneCore.html">RunestoneCore</a>
           <a class="dropdown-link" href="/RunestoneSkills.html">RunestoneSkills</a>
@@ -48,10 +187,10 @@
           <a class="dropdown-link" href="/runestonenpc.html">RunestoneNPCs</a>
         </div>
       </div>
-
       <a class="top-link" href="/roadmap_development.html">Roadmap</a>
       <a class="top-link" href="/credits.html">Credits</a>
       <a class="top-link" href="/terms.html">Terms</a>
+      <div id="navUserSlot"></div>
     </nav>
   </div>
 </header>
@@ -59,490 +198,304 @@
 <div class="hero-banner"></div>
 
 <main>
-
   <section class="hero">
     <h1>Roadmap &amp; Development</h1>
-    <p class="subtitle">The forge is active. Runestone Vale is already playable, but the larger MMORPG vision is still being carved into the mountain.</p>
-
+    <p class="subtitle">The forge is active. Runestone Vale is already playable — the larger MMORPG vision is still being carved into the mountain.</p>
     <p>
-      This page exists to show the current development direction of <strong>Runestone Vale</strong> and the wider <strong>RunestoneMMO</strong> project.
-      The server already has a real custom foundation, but the long-term goal is much bigger than a standard survival experience.
+      This roadmap reflects the actual direction the project is being built toward: a grounded, mountain-forged world
+      where systems support one another and players help shape the realm early.
     </p>
-
-    <p>
-      The vision is a <strong>persistent fantasy MMORPG realm</strong> built on connected systems:
-      stronger progression, better world identity, deeper travel and utility, player settlement direction,
-      richer NPC and quest content, stronger discovery, and a world that feels increasingly alive over time.
-    </p>
-
-    <p>
-      This is not meant to be a fake roadmap full of random promises. It is meant to reflect the actual direction the project is being built toward:
-      a grounded, mountain-forged world where systems support one another and players help shape the realm early.
-    </p>
-
     <div class="buttons">
       <a href="/index.html" class="button">Return Home</a>
       <a href="/RunestoneCore.html" class="button secondary">View RunestoneCore</a>
-      <a href="/RunestoneSkills.html" class="button secondary">View RunestoneSkills</a>
     </div>
-
-    <p style="margin-top: 18px; font-size: 1.1rem;">
-      <strong>Current Live Target:</strong> Minecraft Java Edition • Paper 1.21.11 • Java 21
+    <p style="margin-top:18px;font-size:1.0rem;">
+      <strong>Live Target:</strong> Minecraft Java Edition &bull; Paper 1.21.11 &bull; Java 21
     </p>
   </section>
 
-  <!-- Live Roadmap Feed -->
-  <section class="card">
-    <h2>Live Roadmap</h2>
-    <p>This roadmap is updated live by the development team. Status reflects the current state of each system in the realm.</p>
-    <div class="status-legend">
-      <div class="status-legend-item"><div class="status-legend-dot" style="background:#4caf50;box-shadow:0 0 5px #4caf50;"></div> Live</div>
-      <div class="status-legend-item"><div class="status-legend-dot" style="background:#ffd54f;"></div> In Progress</div>
-      <div class="status-legend-item"><div class="status-legend-dot" style="background:#90caf9;"></div> Planned</div>
-      <div class="status-legend-item"><div class="status-legend-dot" style="background:#ce93d8;"></div> Future</div>
+  <!-- ── Live Roadmap ─────────────────────────────────────────────── -->
+  <section class="card" style="padding:28px 24px;">
+
+    <!-- Stats row -->
+    <div class="rm-stats">
+      <div class="rm-stat-card"><div class="rm-stat-num" id="statLive"     style="color:var(--status-live);">—</div><div class="rm-stat-label">Live</div></div>
+      <div class="rm-stat-card"><div class="rm-stat-num" id="statProgress" style="color:var(--status-progress);">—</div><div class="rm-stat-label">In Progress</div></div>
+      <div class="rm-stat-card"><div class="rm-stat-num" id="statPlanned"  style="color:var(--status-planned);">—</div><div class="rm-stat-label">Planned</div></div>
+      <div class="rm-stat-card"><div class="rm-stat-num" id="statFuture"   style="color:var(--status-future);">—</div><div class="rm-stat-label">Future</div></div>
     </div>
-    <div id="roadmapGrid" class="roadmap-grid">
-      <div style="text-align:center;color:rgba(255,255,255,0.38);padding:24px;font-size:0.88rem;">Loading roadmap…</div>
+
+    <!-- Admin bar (staff/admin only) -->
+    <div id="rmAdminBar" style="display:none;">
+      <button class="rm-add-btn" onclick="openModal(null)">+ Add Item</button>
+      <p class="rm-admin-hint">Click the pencil icon on any card to edit or delete it.</p>
+    </div>
+
+    <!-- Filter chips -->
+    <div class="rm-filters">
+      <button class="rm-chip active" data-filter="all"         onclick="setFilter('all',this)">All</button>
+      <button class="rm-chip"        data-filter="live"        onclick="setFilter('live',this)">Live</button>
+      <button class="rm-chip"        data-filter="in-progress" onclick="setFilter('in-progress',this)">In Progress</button>
+      <button class="rm-chip"        data-filter="planned"     onclick="setFilter('planned',this)">Planned</button>
+      <button class="rm-chip"        data-filter="future"      onclick="setFilter('future',this)">Future</button>
+    </div>
+
+    <!-- Card grid -->
+    <div class="rm-grid" id="rmGrid">
+      <div class="rm-empty">Loading roadmap…</div>
     </div>
   </section>
 
+  <!-- Philosophy -->
   <section class="cta-section">
     <h2>Roadmap Philosophy</h2>
-    <p>
-      RunestoneMMO is being built around a simple idea: the realm should feel like one connected world,
-      not a pile of disconnected systems fighting each other.
-    </p>
-
+    <p>RunestoneMMO is built around one idea: the realm should feel like one connected world, not a pile of disconnected systems.</p>
     <div class="cta-grid">
-      <article class="cta-card">
-        <h3>Foundation First</h3>
-        <p>The core systems need to be strong enough that future content can grow cleanly instead of collapsing under patchwork structure.</p>
-      </article>
-
-      <article class="cta-card">
-        <h3>World Before Gimmicks</h3>
-        <p>The project is aimed at building a believable realm with atmosphere, identity, and useful systems rather than shallow one-off features.</p>
-      </article>
-
-      <article class="cta-card">
-        <h3>Player Experience Matters</h3>
-        <p>Onboarding, utility, travel, survival flow, and clarity are all part of the roadmap — not just endgame dreams.</p>
-      </article>
-
-      <article class="cta-card">
-        <h3>Built to Expand</h3>
-        <p>The goal is not just a playable server for today, but a stable platform that can support much deeper content tomorrow.</p>
-      </article>
+      <article class="cta-card"><h3>Foundation First</h3><p>Core systems must be strong enough that future content grows cleanly instead of collapsing under patchwork structure.</p></article>
+      <article class="cta-card"><h3>World Before Gimmicks</h3><p>Building a believable realm with atmosphere, identity, and useful systems rather than shallow one-off features.</p></article>
+      <article class="cta-card"><h3>Player Experience Matters</h3><p>Onboarding, utility, travel, survival flow, and clarity are all part of the roadmap — not just endgame dreams.</p></article>
+      <article class="cta-card"><h3>Built to Expand</h3><p>Not just a playable server for today, but a stable platform that can support much deeper content tomorrow.</p></article>
     </div>
   </section>
-
-  <section class="card">
-    <h2>Current Development Direction</h2>
-    <p>
-      Runestone Vale already has a real live base: starter flow, Login Hub utility, graves, travel tools,
-      progression support, combat and attribute systems, custom assets, and the core structure beneath the server.
-      The next stage is about turning that solid base into a deeper world.
-    </p>
-
-    <p>
-      Right now, development is moving in the direction of <strong>stronger world depth</strong>, <strong>more meaningful progression loops</strong>,
-      <strong>better NPC and quest use</strong>, <strong>town and settlement identity</strong>, and <strong>content that gives players stronger reasons to travel, build, gather, and stay</strong>.
-    </p>
-  </section>
-
-  <section>
-    <h2>Active / Near-Term Priorities</h2>
-
-    <div class="card-grid">
-
-      <div class="card">
-        <h3>Quest Content & NPC Direction</h3>
-        <p>
-          One of the biggest near-term goals is expanding real quest content and stronger NPC interaction.
-          The broader direction already exists, but the world needs more actual questing, guided content,
-          dialogue, objectives, and reasons for NPCs to matter beyond standing in place.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>RunestoneNPCs Direction</h3>
-        <p>
-          The project has clear interest in a stronger dedicated NPC layer for the wider ecosystem.
-          This means deeper NPC interaction, future quest hooks, better world integration,
-          and stronger support for making towns, hubs, and future content feel more alive.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>Towns & Settlement Identity</h3>
-        <p>
-          Claims and broader territory direction are part of the long-term plan, but town gameplay still needs more weight.
-          Upgrades, perks, settlement identity, town growth, and stronger reasons for players to group together remain important development targets.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>Discovery & Landmark Content</h3>
-        <p>
-          Exploration should feel like more than walking for XP. The realm needs more meaningful landmarks,
-          discovery moments, hidden places, and world-linked reasons to roam farther from safe ground.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>More World Content</h3>
-        <p>
-          The core systems are increasingly real, but the realm also needs more handcrafted world identity:
-          more memorable locations, stronger themed areas, more places with purpose,
-          and more reasons for players to feel like they are moving through a living setting instead of empty terrain.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>Economy & Player Value Loops</h3>
-        <p>
-          The economy direction exists, but stronger player-facing value loops are still important:
-          better trade relevance, more reasons for specialization, stronger market identity,
-          and deeper links between gathering, crafting, progression, and world systems.
-        </p>
-      </div>
-
-    </div>
-  </section>
-
-  <section>
-    <h2>Current Core-Side Growth Areas</h2>
-
-    <div class="card-grid">
-
-      <div class="card">
-        <h3>Login Hub Expansion</h3>
-        <p>
-          The Login Hub Compass already shows the direction clearly: fewer confusing command walls, more connected player utility.
-          More important systems can still be brought into the hub over time so the realm feels smoother to live in.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>Player Utility & Daily Flow</h3>
-        <p>
-          First-login experience, starter flow, travel, graves, and recurring player systems are already improving.
-          This direction will continue so the server feels cleaner, more approachable, and more immersive in everyday use.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>Combat & Attribute Stability</h3>
-        <p>
-          Combat behavior, health syncing, and custom scaling have already been receiving major attention.
-          Continued refinement here matters because combat feel can shape the entire quality of the realm experience.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>Graves, Recovery & Clarity</h3>
-        <p>
-          Better recovery flow and clearer death information are now part of the server direction.
-          That kind of polish matters because survival worlds feel stronger when loss is understandable instead of frustrating chaos.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>Shared Menu / GUI Direction</h3>
-        <p>
-          More of the server is gradually being moved toward cleaner GUI-driven access rather than throwing every action into raw commands.
-          That direction is likely to continue as utility expands.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>Broader System Cohesion</h3>
-        <p>
-          One of the biggest ongoing goals is not just “add more features,” but make sure travel, utility, progression,
-          recovery, economy, and future content all feel like parts of one realm instead of separate systems glued together.
-        </p>
-      </div>
-
-    </div>
-  </section>
-
-  <section>
-    <h2>Current Skills-Side Growth Areas</h2>
-
-    <div class="card-grid">
-
-      <div class="card">
-        <h3>Deeper Profession Loops</h3>
-        <p>
-          The profession backbone is live, but the long-term goal is deeper loops between gathering, refining, crafting,
-          economy, travel, and world content so professions feel even more central to the life of the realm.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>More Skill-Connected Content</h3>
-        <p>
-          RunestoneSkills grows stronger as more of the world is built around it.
-          That means future value in quests, towns, rewards, trade, and world events tied more directly to profession growth.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>Discovery Integration</h3>
-        <p>
-          Exploration and broader profession systems still have room to connect more naturally to landmarks, hidden areas,
-          world progression, and reasons to travel the map beyond routine grinding.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>Crafting & Item Identity</h3>
-        <p>
-          The project benefits from continuing to deepen how materials, custom items, crafting paths, and profession rewards
-          feel inside the economy and the fantasy identity of the server.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>More Profession Depth</h3>
-        <p>
-          The plugin is built to expand, which means more tuning, more depth, and more meaningful live content can continue to be layered on over time.
-        </p>
-      </div>
-
-      <div class="card">
-        <h3>Stronger Long-Term Progression Identity</h3>
-        <p>
-          Skills should increasingly shape how players build their identity in the realm — not just what they grind,
-          but what role they play in the broader world.
-        </p>
-      </div>
-
-    </div>
-  </section>
-
-  <section class="card">
-    <h2>Longer-Term Vision</h2>
-    <p>
-      The bigger vision for Runestone Vale and RunestoneMMO goes beyond utility polish and system hardening.
-      The long-term goal is a stronger <strong>fantasy MMORPG platform</strong> built around world identity, progression, settlement,
-      NPC interaction, discovery, and a more believable lived-in realm.
-    </p>
-
-    <div class="card-grid">
-      <div class="card">
-        <h3>Deeper Questing</h3>
-        <p>Not just NPC decorations, but real quest content with objectives, progression, and stronger world meaning.</p>
-      </div>
-
-      <div class="card">
-        <h3>Living Settlements</h3>
-        <p>Towns, player communities, and future settlement systems with more identity, purpose, and long-term relevance.</p>
-      </div>
-
-      <div class="card">
-        <h3>Stronger Exploration</h3>
-        <p>A world that rewards roaming, discovering, uncovering, and interacting with the map beyond pure survival grind.</p>
-      </div>
-
-      <div class="card">
-        <h3>Broader MMORPG Identity</h3>
-        <p>A realm that feels less like a random plugin server and more like a real fantasy world with roles, systems, and memory.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="card">
-    <h2>What Is Not the Goal</h2>
-    <p>
-      This project is not trying to become a server stuffed with random features that do not belong together.
-      The goal is not shallow chaos, gimmick spam, or throwing every idea into the world just because it is possible.
-    </p>
-
-    <p>
-      The goal is a stronger realm with real identity:
-      something more grounded, more connected, more memorable, and more worth staying in over time.
-    </p>
-  </section>
-
-  <section class="cta-section">
-    <h2>How the Community Can Help</h2>
-    <p>
-      Early players and community members matter a lot during this stage of the project.
-      Some of the best support is not just hype — it is useful feedback, real testing, world involvement, and helping shape the direction of the realm while it is still growing.
-    </p>
-
-    <div class="cta-grid">
-      <article class="cta-card">
-        <h3>Testing</h3>
-        <p>Help find rough edges, balance issues, and usability problems while the systems are still being refined.</p>
-      </article>
-
-      <article class="cta-card">
-        <h3>Building</h3>
-        <p>Help strengthen the world itself with themed construction, town ideas, landmark design, and stronger visual identity.</p>
-      </article>
-
-      <article class="cta-card">
-        <h3>Feedback</h3>
-        <p>Share what feels good, what feels confusing, and what kinds of content would make the world stronger.</p>
-      </article>
-
-      <article class="cta-card">
-        <h3>Long-Term Presence</h3>
-        <p>Early community members help define the tone, memory, and social identity of a world before it reaches its final form.</p>
-      </article>
-    </div>
-  </section>
-
-  <section class="card">
-    <h2>Development Transparency</h2>
-    <p>
-      This roadmap is meant to show direction, not lock the project into fake corporate milestone dates.
-      Some systems may move faster than others. Some features may change shape as the world matures.
-      The important part is that the development direction is real, the foundation already exists, and the realm is actively growing.
-    </p>
-
-    <p>
-      Runestone Vale is not waiting to become something someday — it is already becoming that world now.
-    </p>
-  </section>
-
-  <section class="card">
-    <h2>Follow the Project</h2>
-    <p>
-      You can follow the active parts of the project through the main site pages and official links below.
-      This is the best way to keep up with progress as the realm continues to grow.
-    </p>
-
-    <div class="button-row-left">
-      <a href="/RunestoneCore.html" class="button">View RunestoneCore</a>
-      <a href="/RunestoneSkills.html" class="button secondary">View RunestoneSkills</a>
-      <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneMMO" class="button secondary" target="_blank" rel="noopener">RunestoneMMO Hangar</a>
-      <a href="https://discord.gg/BNkJDU6qE4" class="button secondary" target="_blank" rel="noopener">Join the Discord</a>
-    </div>
-  </section>
-
 </main>
 
 <footer>
-  <p>RunestoneMMO — Forged in the Deep Halls.</p>
+  <p>&copy; 2026 RunestoneMMO. All rights reserved.</p>
   <p>
-    <a href="/index.html">Home</a> •
-    <a href="/features.html">Server-Features</a> •
-    <a href="/RunestoneCore.html">RunestoneCore</a> •
-    <a href="/RunestoneSkills.html">RunestoneSkills</a> •
-    <a href="/roadmap_development.html">Roadmap</a> •
-    <a href="/credits.html">Credits</a> •
+    <a href="/index.html">Home</a> &bull;
+    <a href="/features.html">Features</a> &bull;
+    <a href="/roadmap_development.html">Roadmap</a> &bull;
+    <a href="https://discord.gg/BNkJDU6qE4" target="_blank" rel="noopener">Discord</a> &bull;
     <a href="/terms.html">Terms</a>
-  </p>
-  <p>
-    <a href="https://discord.gg/BNkJDU6qE4" target="_blank" rel="noopener">Discord</a> •
-    <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneMMO" target="_blank" rel="noopener">RunestoneMMO Hangar</a> •
-    <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneSkills" target="_blank" rel="noopener">RunestoneSkills Hangar</a> •
-    <a href="https://www.patreon.com/cw/RunestoneMMO" target="_blank" rel="noopener">Patreon</a>
   </p>
 </footer>
 
-<script>
-const SUPABASE_URL  = "https://ludkhakegqojxuglisks.supabase.co";
-const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1ZGtoYWtlZ3Fvanh1Z2xpc2tzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5NTE2MjEsImV4cCI6MjA5MzUyNzYyMX0.V5_Mp7eHc-3rKFZLUGNM_iH57hpiGMvp4CBcH33R0rE";
+<!-- ── Admin CRUD Modal ──────────────────────────────────────────────── -->
+<div class="rm-modal-overlay" id="rmModal">
+  <div class="rm-modal">
+    <h3 id="rmModalTitle">Add Roadmap Item</h3>
+    <label>Title</label>
+    <input type="text" id="rmInputTitle" placeholder="e.g. Dungeon System" maxlength="80">
+    <label>Description</label>
+    <textarea id="rmInputDesc" rows="3" placeholder="Brief description…" maxlength="400"></textarea>
+    <label>Status</label>
+    <div class="rm-status-picker">
+      <button class="rm-status-btn" data-s="live"        onclick="pickStatus('live',this)">● Live</button>
+      <button class="rm-status-btn" data-s="in-progress" onclick="pickStatus('in-progress',this)">● In Progress</button>
+      <button class="rm-status-btn" data-s="planned"     onclick="pickStatus('planned',this)">● Planned</button>
+      <button class="rm-status-btn" data-s="future"      onclick="pickStatus('future',this)">● Future</button>
+    </div>
+    <label>Sort Order <span style="color:rgba(255,255,255,0.25);font-size:0.68rem;">(lower = first)</span></label>
+    <input type="number" id="rmInputSort" value="0" min="0" max="999">
+    <div class="rm-modal-actions">
+      <button class="rm-btn-save"   onclick="saveItem()">Save</button>
+      <button class="rm-btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="rm-btn-delete" id="rmDeleteBtn" onclick="deleteItem()" style="display:none;">Delete</button>
+    </div>
+  </div>
+</div>
 
-const FALLBACK_ROADMAP = [
-  { title: "Starter Kit & Onboarding",       description: "Hub compass, starter items, key commands, and sethome flow.",                                    status: "live" },
-  { title: "Login Hub & Travel",              description: "Hub Compass with warp, teleport, bank, market, and quest access.",                              status: "live" },
-  { title: "Skills & Professions (13)",       description: "Mining, Forestry, Fishing, Smithing, Exploration, Farming, Cooking, Foraging, Hunting, Strength, Defense, Range, Logistics.", status: "live" },
-  { title: "Combat & Attributes",             description: "Custom HP, Mana, Stamina, combat levels, and graves on death.",                                 status: "live" },
-  { title: "Economy & Markets",               description: "Banks, auction house, currency, daily rewards, and player trade.",                              status: "live" },
-  { title: "Quests & NPCs",                   description: "NPC dialogue, quest objectives, turn-ins, and shops.",                                          status: "live" },
-  { title: "Land Claims",                     description: "Player land claiming, trust system, and territory protection.",                                 status: "live" },
-  { title: "Companion App",                   description: "Mobile app for character tracking, guides, roadmap, and community.",                            status: "live" },
-  { title: "Quest Content Expansion",         description: "More NPC questlines, repeatable quests, and guided progression paths.",                         status: "in-progress" },
-  { title: "Skill Ability Unlocks",           description: "Passive and active abilities unlocked at skill level milestones.",                              status: "in-progress" },
-  { title: "Dungeons & Boss Arenas",          description: "Handcrafted challenge spaces, boss encounters, and loot tables.",                               status: "planned" },
-  { title: "Towns & Settlements",             description: "Player towns, territory upgrades, and community-driven world identity.",                        status: "planned" },
-  { title: "Raids & Group Content",           description: "Multi-player challenge events, raid bosses, and group rewards.",                                status: "future" },
-  { title: "Player Housing",                  description: "Persistent player homes with upgrades and decoration systems.",                                 status: "future" }
+<script>
+// ── Config ──────────────────────────────────────────────────────────────
+const SUPA_URL  = 'https://ludkhakegqojxuglisks.supabase.co';
+const SUPA_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1ZGtoYWtlZ3Fvanh1Z2xpc2tzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5NTE2MjEsImV4cCI6MjA5MzUyNzYyMX0.V5_Mp7eHc-3rKFZLUGNM_iH57hpiGMvp4CBcH33R0rE';
+
+const PIN_LABELS = { live:'Live', 'in-progress':'In Progress', planned:'Planned', future:'Future' };
+
+// ── Fallback data (mirrors roadmap.ts exactly) ──────────────────────────
+const FALLBACK = [
+  { id:'core-foundation',   title:'Core Plugin Suite',            status:'live',        sort_order:0,  description:'RunestoneCore, RunestoneSkills, RunestoneCombat, RunestoneStamina, RunestoneHub, RunestoneNPCs, and RunestoneAdminTool are all live and powering the realm.' },
+  { id:'hub-compass',       title:'Login Hub Compass',            status:'live',        sort_order:1,  description:'The Hub Compass is live as the central player utility hub — travel, economy, skills, quests, graves, and daily tools in one place.' },
+  { id:'quest-info',        title:'Quest Info in Hub',            status:'live',        sort_order:2,  description:'Read-only Quest Info page in the Hub showing current quest data, progress, ready quests, and completed quest count.' },
+  { id:'market-bank',       title:'Market & Bank Polish',         status:'live',        sort_order:3,  description:'Market & Trading is cleaner, and Bank tools now live in their own dedicated submenu with deposit and withdraw actions.' },
+  { id:'world-content',     title:'World_Content Space',          status:'live',        sort_order:4,  description:'A managed void content world exists and is ready for future dungeons, boss arenas, quest rooms, raids, trials, and custom events.' },
+  { id:'vanilla-controls',  title:'Vanilla Progression Controls', status:'live',        sort_order:5,  description:'Totem drops, Shulker crafting, Elytra acquisition, and custom recipe access can be controlled for MMO balance.' },
+  { id:'skills-13',         title:'RunestoneSkills — 13 Skills',  status:'live',        sort_order:6,  description:'All 13 skills are live: Mining, Forestry, Fishing, Hunting, Farming, Cooking, Strength, Defense, Range, Exploration, Foraging, Smithing, and Logistics.' },
+  { id:'graves',            title:'Physical Graves System',       status:'live',        sort_order:7,  description:'Physical graves placed at exact death locations with Hub-based viewing, location reveal, and time remaining display.' },
+  { id:'quest-content',     title:'More Quest Content',           status:'in-progress', sort_order:8,  description:'More NPC stories, questlines, daily quests, repeatable quests, and guided progression content are being developed.' },
+  { id:'npc-authoring',     title:'In-Game NPC Authoring',        status:'in-progress', sort_order:9,  description:'Admin and runtime workflows for creating quests, dialogue, and NPC shops are moving toward full in-game authoring tools.' },
+  { id:'hub-quest-journal', title:'Quest Journal in Hub',         status:'planned',     sort_order:10, description:'Full player-facing quest journal GUI linked from the main Hub menu.' },
+  { id:'dungeons',          title:'Dungeons & Bosses',            status:'planned',     sort_order:11, description:'World_Content is ready. Handcrafted dungeon rooms, boss arenas, trials, and custom encounters will be built out over time.' },
+  { id:'towns',             title:'Towns & Settlements',          status:'planned',     sort_order:12, description:'Deeper settlement gameplay, town upgrades, territory value, and community-driven world identity are planned.' },
+  { id:'economy-loops',     title:'Deeper Economy Loops',         status:'planned',     sort_order:13, description:'More connections between skills, markets, NPC shops, quests, crafting, player shops, and rewards are planned.' },
+  { id:'exploration-depth', title:'Discovery & Landmark Depth',   status:'planned',     sort_order:14, description:'Deeper landmarks, discoveries, and reasons to roam the Vale are still growing alongside the Exploration skill.' },
+  { id:'custom-content',    title:'Expanded Custom Content',      status:'planned',     sort_order:15, description:'More custom items, blocks, progression rewards, crafted assets, and realm-specific visuals will continue to expand.' },
+  { id:'raids',             title:'Raids & Events',               status:'future',      sort_order:16, description:'Group raid content, seasonal events, and custom event spaces built within World_Content.' },
+  { id:'player-identity',   title:'Player Identity & Origins',    status:'future',      sort_order:17, description:'Origin benefits, roles, traits, and deeper player identity systems connected to the world lore.' },
+  { id:'live-api',          title:'Live Server API & App',        status:'future',      sort_order:18, description:'Future versions of the companion app will connect to live server data — player stats, skill levels, quest progress, and server status.' },
 ];
 
-const STATUS_META = {
-  'live':        { label: 'Live',        color: '#4caf50', bg: 'rgba(76,175,80,0.15)',   border: 'rgba(76,175,80,0.3)',   glow: '0 0 7px #4caf50' },
-  'in-progress': { label: 'In Progress', color: '#ffd54f', bg: 'rgba(255,193,7,0.12)',   border: 'rgba(255,193,7,0.28)',  glow: 'none' },
-  'planned':     { label: 'Planned',     color: '#90caf9', bg: 'rgba(100,181,246,0.12)', border: 'rgba(100,181,246,0.28)',glow: 'none' },
-  'future':      { label: 'Future',      color: '#ce93d8', bg: 'rgba(156,39,176,0.12)',  border: 'rgba(156,39,176,0.28)',glow: 'none' }
-};
+// ── State ───────────────────────────────────────────────────────────────
+let allItems      = [];
+let activeFilter  = 'all';
+let editingId     = null;
+let selectedStatus = 'planned';
+let isElevated    = false;
+let authSession   = null;
 
-async function loadRoadmap() {
-  const grid = document.getElementById('roadmapGrid');
-  if (!grid) return;
+// ── Supabase fetch ──────────────────────────────────────────────────────
+async function supaFetch(path, opts = {}) {
+  const token = (authSession && authSession.access_token) ? authSession.access_token : SUPA_ANON;
+  const res = await fetch(SUPA_URL + path, {
+    ...opts,
+    headers: {
+      'apikey': SUPA_ANON,
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      ...(opts.headers || {}),
+    },
+  });
+  if (!res.ok) throw new Error(await res.text());
+  const t = await res.text();
+  return t ? JSON.parse(t) : null;
+}
+
+// ── Load ────────────────────────────────────────────────────────────────
+async function loadItems() {
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/roadmap_items?select=title,description,status&order=sort_order.asc`, {
-      headers: { 'apikey': SUPABASE_ANON, 'Authorization': `Bearer ${SUPABASE_ANON}`, 'Accept': 'application/json' }
-    });
-    const data = res.ok ? await res.json() : [];
-    renderRoadmap((data && data.length) ? data : FALLBACK_ROADMAP, grid);
-  } catch { renderRoadmap(FALLBACK_ROADMAP, grid); }
+    const data = await supaFetch('/rest/v1/roadmap_items?select=*&order=sort_order.asc,created_at.asc');
+    allItems = (data && data.length) ? data : FALLBACK;
+  } catch {
+    allItems = FALLBACK;
+  }
+  renderStats();
+  renderGrid();
 }
 
-function renderRoadmap(items, grid) {
-  grid.innerHTML = items.map(item => {
-    const m = STATUS_META[item.status] || STATUS_META['planned'];
-    return `<div class="roadmap-item" style="background:${m.bg};border:1px solid ${m.border};">
-      <div class="roadmap-status-pin">
-        <div class="roadmap-dot" style="background:${m.color};box-shadow:${m.glow};"></div>
-        <span class="roadmap-status-label" style="color:${m.color};">${m.label}</span>
-      </div>
-      <h3>${item.title}</h3>
-      <p>${item.description}</p>
-    </div>`;
-  }).join('');
+// ── Stats ───────────────────────────────────────────────────────────────
+function renderStats() {
+  document.getElementById('statLive').textContent     = allItems.filter(i => i.status === 'live').length;
+  document.getElementById('statProgress').textContent = allItems.filter(i => i.status === 'in-progress').length;
+  document.getElementById('statPlanned').textContent  = allItems.filter(i => i.status === 'planned').length;
+  document.getElementById('statFuture').textContent   = allItems.filter(i => i.status === 'future').length;
 }
 
-loadRoadmap();
-
-function toggleMenu() {
-  const nav = document.getElementById("mobileNav");
-  const button = document.querySelector(".menu-toggle");
-
-  nav.classList.toggle("open");
-  button.setAttribute("aria-expanded", nav.classList.contains("open") ? "true" : "false");
+// ── Grid ────────────────────────────────────────────────────────────────
+function renderGrid() {
+  const grid = document.getElementById('rmGrid');
+  const list = activeFilter === 'all' ? allItems : allItems.filter(i => i.status === activeFilter);
+  if (!list.length) { grid.innerHTML = '<div class="rm-empty">No items found.</div>'; return; }
+  grid.innerHTML = list.map(item => `
+    <div class="rm-card">
+      <div class="rm-pin ${item.status}"><span class="rm-pin-dot"></span>${PIN_LABELS[item.status] || item.status}</div>
+      <h3>${esc(item.title)}</h3>
+      <p>${esc(item.description)}</p>
+      ${isElevated ? `<button class="rm-edit-btn" onclick="openModal('${esc(item.id)}')" title="Edit">✎</button>` : ''}
+    </div>
+  `).join('');
 }
 
-function toggleRunestoneDropdown(event) {
-  event.stopPropagation();
-
-  const dropdown = event.currentTarget.closest(".nav-dropdown");
-  const button = dropdown.querySelector(".dropdown-toggle");
-
-  dropdown.classList.toggle("open");
-  button.setAttribute("aria-expanded", dropdown.classList.contains("open") ? "true" : "false");
+// ── Filter ──────────────────────────────────────────────────────────────
+function setFilter(f, el) {
+  activeFilter = f;
+  document.querySelectorAll('.rm-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  renderGrid();
 }
 
-document.addEventListener("click", function (event) {
-  const nav = document.getElementById("mobileNav");
-  const menuButton = document.querySelector(".menu-toggle");
-  const dropdown = document.querySelector(".nav-dropdown");
-  const dropdownButton = document.querySelector(".dropdown-toggle");
+// ── Modal ───────────────────────────────────────────────────────────────
+function openModal(id) {
+  editingId = id;
+  const item = id ? allItems.find(i => String(i.id) === String(id)) : null;
+  document.getElementById('rmModalTitle').textContent = id ? 'Edit Roadmap Item' : 'Add Roadmap Item';
+  document.getElementById('rmInputTitle').value = item ? item.title : '';
+  document.getElementById('rmInputDesc').value  = item ? item.description : '';
+  document.getElementById('rmInputSort').value  = item ? (item.sort_order ?? 0) : allItems.length;
+  document.getElementById('rmDeleteBtn').style.display = id ? 'block' : 'none';
+  selectedStatus = item ? item.status : 'planned';
+  updateStatusBtns();
+  document.getElementById('rmModal').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('rmModal').classList.remove('open');
+  editingId = null;
+}
+function pickStatus(s) { selectedStatus = s; updateStatusBtns(); }
+function updateStatusBtns() {
+  document.querySelectorAll('.rm-status-btn').forEach(b => {
+    const s = b.dataset.s;
+    const cls = s === 'in-progress' ? 'sel-progress' : `sel-${s}`;
+    b.className = 'rm-status-btn' + (s === selectedStatus ? ` ${cls}` : '');
+  });
+}
 
-  if (dropdown && !dropdown.contains(event.target)) {
-    dropdown.classList.remove("open");
-
-    if (dropdownButton) {
-      dropdownButton.setAttribute("aria-expanded", "false");
+// ── Save ────────────────────────────────────────────────────────────────
+async function saveItem() {
+  const title = document.getElementById('rmInputTitle').value.trim();
+  const desc  = document.getElementById('rmInputDesc').value.trim();
+  const sort  = parseInt(document.getElementById('rmInputSort').value) || 0;
+  if (!title || !desc) { alert('Title and description are required.'); return; }
+  const payload = { title, description: desc, status: selectedStatus, sort_order: sort };
+  try {
+    const isFallback = editingId && FALLBACK.find(f => f.id === editingId);
+    if (editingId && !isFallback) {
+      await supaFetch(`/rest/v1/roadmap_items?id=eq.${editingId}`, {
+        method: 'PATCH', headers: { 'Prefer': 'return=minimal' }, body: JSON.stringify(payload),
+      });
+    } else {
+      await supaFetch('/rest/v1/roadmap_items', {
+        method: 'POST', headers: { 'Prefer': 'return=minimal' }, body: JSON.stringify(payload),
+      });
     }
-  }
+    closeModal();
+    await loadItems();
+  } catch(e) { alert('Save failed: ' + e.message); }
+}
 
-  if (!nav || !menuButton) return;
+// ── Delete ──────────────────────────────────────────────────────────────
+async function deleteItem() {
+  if (!editingId || !confirm('Delete this roadmap item? This cannot be undone.')) return;
+  try {
+    await supaFetch(`/rest/v1/roadmap_items?id=eq.${editingId}`, { method: 'DELETE' });
+    closeModal();
+    await loadItems();
+  } catch(e) { alert('Delete failed: ' + e.message); }
+}
 
-  const clickedInsideNav = nav.contains(event.target);
-  const clickedButton = menuButton.contains(event.target);
+// ── Util ────────────────────────────────────────────────────────────────
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
 
-  if (!clickedInsideNav && !clickedButton) {
-    nav.classList.remove("open");
-    menuButton.setAttribute("aria-expanded", "false");
-  }
+// Close modal on backdrop click
+document.getElementById('rmModal').addEventListener('click', e => { if (e.target === document.getElementById('rmModal')) closeModal(); });
+
+// ── Nav helpers ─────────────────────────────────────────────────────────
+function toggleMenu() {
+  const nav = document.getElementById('mobileNav');
+  const btn = document.querySelector('.menu-toggle');
+  if (!nav || !btn) return;
+  const open = nav.classList.toggle('open');
+  btn.setAttribute('aria-expanded', open);
+}
+function toggleRunestoneDropdown(e) {
+  e.stopPropagation();
+  const dd = document.getElementById('runestoneDropdown');
+  if (!dd) return;
+  const open = dd.classList.toggle('open');
+  e.currentTarget.setAttribute('aria-expanded', open);
+}
+document.addEventListener('click', e => {
+  const nav = document.getElementById('mobileNav');
+  const btn = document.querySelector('.menu-toggle');
+  const dd  = document.getElementById('runestoneDropdown');
+  if (dd && !dd.contains(e.target)) { dd.classList.remove('open'); const db = document.querySelector('.dropdown-toggle'); if (db) db.setAttribute('aria-expanded','false'); }
+  if (nav && btn && !nav.contains(e.target) && !btn.contains(e.target)) { nav.classList.remove('open'); btn.setAttribute('aria-expanded','false'); }
 });
-</script>
 
+// ── Auth + init ──────────────────────────────────────────────────────────
+(async () => {
+  const auth = await RSAuth.requireLogin();
+  if (!auth) return;
+  authSession = auth.session;
+  isElevated  = auth.isElevated;
+  RSAuth.renderNavUser(auth);
+  const gate = document.getElementById('rs-login-gate');
+  if (gate) gate.style.display = 'none';
+  if (isElevated) document.getElementById('rmAdminBar').style.display = 'block';
+  await loadItems();
+})();
+</script>
 </body>
 </html>

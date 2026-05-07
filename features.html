@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Runestone Vale — The Realm of RunestoneMMO</title>
   <link rel="stylesheet" href="/styles.css">
+  <script src="/auth.js"></script>
 </head>
 
 <body>
@@ -971,5 +972,11 @@ document.addEventListener("click", function (event) {
 });
 </script>
 
+<script>
+(async () => {
+  const auth = await RSAuth.init();
+  RSAuth.renderNavUser(auth);
+})();
+</script>
 </body>
 </html>

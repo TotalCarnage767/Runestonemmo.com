@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signing in — Runestone Vale</title>
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    body { display:flex; align-items:center; justify-content:center; min-height:100vh; }
+    .auth-box {
+      background:#1e1b17; border:1px solid #4a3a28; border-radius:12px;
+      padding:40px 32px; text-align:center; max-width:360px; width:90%;
+    }
+    .auth-box h2 { font-family:'Cinzel',serif; color:#c9a227; margin:0 0 12px; font-size:1.3rem; }
+    .auth-box p  { color:rgba(255,255,255,0.6); font-size:0.9rem; margin:0 0 20px; }
+    .auth-spinner {
+      width:40px; height:40px; border:3px solid #4a3a28;
+      border-top-color:#c9a227; border-radius:50%;
+      animation:spin 0.8s linear infinite; margin:0 auto 20px;
+    }
+    @keyframes spin { to { transform:rotate(360deg); } }
+    .auth-error { color:#e57373; font-size:0.85rem; margin-top:12px; }
+  </style>
+</head>
+<body>
+<div class="auth-box">
+  <div class="auth-spinner" id="spinner"></div>
+  <h2>Signing In</h2>
+  <p id="authMsg">Completing Discord login…</p>
+  <p class="auth-error" id="authError" style="display:none;"></p>
+</div>
+
+<script src="/auth.js"></script>
+<script>
+(async () => {
+  const msg   = document.getElementById('authMsg');
+  const err   = document.getElementById('authError');
+  const spin  = document.getElementById('spinner');
+
+  try {
+    // Parse tokens from URL hash (Supabase puts them here after OAuth)
+    const tokens = RSAuth.parseHashTokens();
+
+    if (!tokens || !tokens.access_token) {
+      // Try query params as fallback
+      const params = new URLSearchParams(window.location.search);
+      const code = params.get('code');
+      if (code) {
+        msg.textContent = 'Exchanging code…';
+        // Exchange code for session via Supabase
+        const res = await fetch('https://ludkhakegqojxuglisks.supabase.co/auth/v1/token?grant_type=pkce', {
+          method: 'POST',
+          headers: {
+            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1ZGtoYWtlZ3Fvanh1Z2xpc2tzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5NTE2MjEsImV4cCI6MjA5MzUyNzYyMX0.V5_Mp7eHc-3rKFZLUGNM_iH57hpiGMvp4CBcH33R0rE',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ auth_code: code }),
+        });
+        if (res.ok) {
+          const data = await res.json();
+          RSAuth.storeSession({
+            access_token:  data.access_token,
+            refresh_token: data.refresh_token,
+            expires_at:    Math.floor(Date.now() / 1000) + (data.expires_in || 3600),
+          });
+          redirect();
+          return;
+        }
+      }
+      throw new Error('No tokens found in callback URL.');
+    }
+
+    // Store session
+    RSAuth.storeSession(tokens);
+    msg.textContent = 'Login successful! Redirecting…';
+    redirect();
+
+  } catch (e) {
+    spin.style.display = 'none';
+    msg.textContent = 'Login failed.';
+    err.style.display = 'block';
+    err.textContent = e.message || 'Something went wrong. Please try again.';
+    setTimeout(() => { window.location.href = '/index.html'; }, 3000);
+  }
+
+  function redirect() {
+    // Go back to the page they came from, or home
+    const params = new URLSearchParams(window.location.search);
+    const from   = params.get('from') || '/index.html';
+    // Clean the hash so tokens aren't in browser history
+    history.replaceState(null, '', window.location.pathname + window.location.search);
+    window.location.href = from;
+  }
+})();
+</script>
+</body>
+</html>
