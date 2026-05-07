@@ -42,6 +42,7 @@
       <a class="top-link" href="/credits.html">Credits</a>
       <a class="top-link" href="/contact.html">Contact</a>
       <a class="top-link" href="/terms.html">Terms</a>
+    <div id="navUserSlot" style="margin-left:auto;display:flex;align-items:center;"></div>
     </nav>
   </div>
 </header>
@@ -973,9 +974,9 @@ document.addEventListener("click", function (event) {
 </script>
 
 <script>
-(async () => {
-  const auth = await RSAuth.init();
-  RSAuth.renderNavUser(auth);
+(function() {
+  var session = RSAuth.getSession();
+  RSAuth.renderNavUser(session);
 })();
 </script>
 </body>

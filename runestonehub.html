@@ -9,21 +9,90 @@
 </head>
 
 <body>
-<div id="rs-login-gate" style="display:none;position:fixed;inset:0;background:#0d0b08;z-index:9999;display:flex;align-items:center;justify-content:center;">
-  <div style="background:#1e1b17;border:1px solid #4a3a28;border-radius:12px;padding:40px 32px;text-align:center;max-width:380px;width:90%;">
-    <h2 style="font-family:'Cinzel',serif;color:#c9a227;margin:0 0 10px;font-size:1.3rem;">Members Only</h2>
-    <p style="color:rgba(255,255,255,0.6);font-size:0.9rem;margin:0 0 24px;line-height:1.6;">
-      This page is available to registered members of Runestone Vale.<br>
-      Sign in with Discord to continue.
+<!-- RS Login Gate — visibility:hidden by default, shown only by requireLogin() -->
+<div id="rs-login-gate" style="
+  visibility:hidden;opacity:0;pointer-events:none;
+  position:fixed;inset:0;
+  background:rgba(10,9,7,0.97);
+  z-index:9999;
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity 0.15s;
+">
+  <div style="
+    background:#1e1b17;border:1px solid #4a3a28;border-radius:14px;
+    padding:40px 32px;text-align:center;max-width:400px;width:90%;
+    box-shadow:0 24px 64px rgba(0,0,0,0.7);
+  ">
+    <div style="font-size:2rem;margin-bottom:12px;">⚔</div>
+    <h2 style="font-family:'Cinzel',serif;color:#c9a227;margin:0 0 8px;font-size:1.25rem;letter-spacing:1px;">Members Only</h2>
+    <p style="color:rgba(240,230,200,0.55);font-size:0.88rem;margin:0 0 6px;line-height:1.6;">
+      This page is for registered Runestone Vale players.
     </p>
-    <button onclick="RSAuth.loginWithDiscord()" style="
-      padding:11px 28px;background:#5865F2;color:#fff;border:none;border-radius:8px;
-      font-size:0.95rem;font-weight:700;cursor:pointer;font-family:'Cinzel',serif;
-      letter-spacing:0.5px;width:100%;margin-bottom:12px;
-    ">Login with Discord</button>
-    <a href="/index.html" style="font-size:0.8rem;color:rgba(255,255,255,0.35);text-decoration:none;">← Back to Home</a>
+    <p style="color:rgba(240,230,200,0.4);font-size:0.8rem;margin:0 0 28px;line-height:1.5;">
+      Type <strong style="color:#c9a227;font-family:monospace;">/rlink</strong> in-game to get your 6-character code.
+    </p>
+    <div style="display:flex;gap:10px;margin-bottom:16px;">
+      <input
+        id="rs-gate-code"
+        type="text"
+        maxlength="6"
+        placeholder="Enter code (e.g. A3KX7P)"
+        autocomplete="off"
+        spellcheck="false"
+        style="
+          flex:1;padding:11px 14px;
+          background:#0d0b08;border:1px solid #4a3a28;border-radius:8px;
+          color:#f0e6c8;font-size:1rem;font-family:monospace;letter-spacing:3px;
+          text-transform:uppercase;text-align:center;outline:none;
+        "
+        oninput="this.value=this.value.toUpperCase()"
+        onkeydown="if(event.key==='Enter')RSAuth_submitGate()"
+      />
+    </div>
+    <button
+      onclick="RSAuth_submitGate()"
+      id="rs-gate-btn"
+      style="
+        width:100%;padding:12px;
+        background:linear-gradient(135deg,#c9a227,#a07820);
+        color:#0d0b08;border:none;border-radius:8px;
+        font-size:0.95rem;font-weight:800;cursor:pointer;
+        font-family:'Cinzel',serif;letter-spacing:0.5px;
+        margin-bottom:14px;
+      "
+    >Verify Code</button>
+    <div id="rs-gate-error" style="color:#e57373;font-size:0.82rem;min-height:18px;margin-bottom:10px;"></div>
+    <a href="/index.html" style="font-size:0.78rem;color:rgba(255,255,255,0.3);text-decoration:none;">← Back to Home</a>
   </div>
 </div>
+
+<script>
+async function RSAuth_submitGate() {
+  const input = document.getElementById('rs-gate-code');
+  const btn   = document.getElementById('rs-gate-btn');
+  const err   = document.getElementById('rs-gate-error');
+  if (!input || !btn) return;
+  const code = input.value.trim().toUpperCase();
+  if (code.length !== 6) { err.textContent = 'Code must be exactly 6 characters.'; return; }
+  btn.textContent = 'Verifying…';
+  btn.disabled = true;
+  err.textContent = '';
+  try {
+    const session = await RSAuth.verifyCode(code);
+    // Logged in — hide gate, re-render nav pill, reload page content
+    RSAuth.hideLoginModal();
+    RSAuth.renderNavUser(session);
+    document.body.style.overflow = '';
+    // If the page has a post-login init function, call it
+    if (typeof RSAuth_onLogin === 'function') RSAuth_onLogin(session);
+    else window.location.reload();
+  } catch (e) {
+    err.textContent = e.message || 'Something went wrong. Please try again.';
+    btn.textContent = 'Verify Code';
+    btn.disabled = false;
+  }
+}
+</script>
 
 <header>
   <div class="topbar">
@@ -56,6 +125,7 @@
       <a class="top-link" href="/roadmap_development.html">Roadmap</a>
       <a class="top-link" href="/credits.html">Credits</a>
       <a class="top-link" href="/terms.html">Terms</a>
+    <div id="navUserSlot" style="margin-left:auto;display:flex;align-items:center;"></div>
     </nav>
   </div>
 </header>
@@ -788,13 +858,10 @@ document.addEventListener("click", function (event) {
 </script>
 
 <script>
-(async () => {
-  const auth = await RSAuth.requireLogin();
-  if (!auth) return; // redirecting
-  RSAuth.renderNavUser(auth);
-  // Hide the gate overlay once auth confirmed
-  const gate = document.getElementById('rs-login-gate');
-  if (gate) gate.style.display = 'none';
+(function() {
+  var session = RSAuth.requireLogin();
+  RSAuth.renderNavUser(session);
+  if (session && typeof RSAuth_onLogin === 'function') RSAuth_onLogin(session);
 })();
 </script>
 </body>
