@@ -193,16 +193,17 @@ async function submitBug() {
   try {
     // Try to attach Discord username if already logged in — but never require it
     const session = RSAuth.getSession ? RSAuth.getSession() : null;
+    const token = (session && session.access_token) ? session.access_token : SUPABASE_ANON;
     const res = await fetch(`${SUPABASE_URL}/rest/v1/bug_reports`, {
       method: 'POST',
       headers: {
         'apikey': SUPABASE_ANON,
-        'Authorization': `Bearer ${SUPABASE_ANON}`,
+        'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
         'Prefer': 'return=minimal',
       },
       body: JSON.stringify({
-        reporter_discord_id: session?.userId  || null,
+        reporter_discord_id: session?.user_id  || null,
         reporter_username:   session?.username || 'Anonymous',
         category, severity, title,
         description: desc,

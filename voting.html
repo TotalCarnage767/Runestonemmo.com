@@ -305,7 +305,7 @@ document.addEventListener('click', (e) => {
 
   if (session) {
     authToken   = session.access_token;
-    currentUser = { id: session.userId, username: session.username };
+    currentUser = { id: session.user_id, username: session.username };
     // User is logged in — hide the login banner entirely
     document.getElementById('loginBanner').style.display = 'none';
     // Show admin bar for staff/admin
