@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RunestoneMMO — Bug Reports</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <script src="/auth.js"></script>
+  <!-- Supabase JS for Realtime -->
+  <script type="importmap">{ "imports": { "@supabase/supabase-js": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm" } }</script>
+  <style>
+    .page-wrap { max-width: 960px; margin: 0 auto; padding: 36px 20px 80px; }
+    .page-header { margin-bottom: 28px; }
+    .page-header h1 { font-family: 'Cinzel', serif; font-size: 1.9rem; font-weight: 900; color: var(--gold); margin: 0 0 6px; }
+    .page-header p { font-size: 0.85rem; color: rgba(255,255,255,0.45); margin: 0; }
+
+    /* ── Submit form ── */
+    .submit-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 24px; margin-bottom: 36px; }
+    .submit-card h2 { font-family: 'Cinzel', serif; font-size: 1rem; color: var(--gold); margin: 0 0 18px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+    @media(max-width:600px){ .form-row { grid-template-columns: 1fr; } }
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .form-group label { font-size: 0.78rem; font-weight: 700; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.8px; }
+    .form-group input, .form-group select, .form-group textarea {
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px;
+      color: #f0e6c0; font-size: 0.9rem; padding: 10px 12px; font-family: 'Crimson Text', serif; outline: none;
+      transition: border-color 0.18s;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--gold); }
+    .form-group select option { background: #1a1500; }
+    .form-group textarea { resize: vertical; min-height: 80px; }
+    .submit-btn { background: var(--gold); color: #0d0b07; border: none; border-radius: 8px; padding: 12px 28px; font-family: 'Cinzel', serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.5px; cursor: pointer; transition: opacity 0.18s; }
+    .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .submit-msg { font-size: 0.85rem; margin-top: 10px; display: none; }
+    .submit-msg.ok  { color: #7dcc7d; }
+    .submit-msg.err { color: #e87d7d; }
+
+    /* ── Admin view ── */
+    .admin-section { display: none; }
+    .admin-section h2 { font-family: 'Cinzel', serif; font-size: 1rem; color: var(--gold); margin: 0 0 14px; }
+    .filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+    .filter-chip { padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.5); font-size: 0.78rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+    .filter-chip.active { background: rgba(212,175,55,0.15); border-color: var(--gold); color: var(--gold); }
+    .bug-list { display: flex; flex-direction: column; gap: 10px; }
+    .bug-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 16px 18px; border-left: 3px solid; cursor: pointer; transition: background 0.15s; }
+    .bug-card:hover { background: rgba(255,255,255,0.07); }
+    .bug-card-top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
+    .status-pill { padding: 3px 10px; border-radius: 999px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; border: 1px solid; }
+    .bug-category { font-size: 0.75rem; color: rgba(255,255,255,0.4); }
+    .bug-date { font-size: 0.75rem; color: rgba(255,255,255,0.3); margin-left: auto; }
+    .bug-title { font-family: 'Cinzel', serif; font-size: 0.9rem; color: #f0e6c0; margin: 0 0 4px; }
+    .bug-desc { font-size: 0.82rem; color: rgba(255,255,255,0.45); margin: 0; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .empty-state { text-align: center; padding: 40px 0; color: rgba(255,255,255,0.3); font-size: 0.9rem; }
+    .loading-state { text-align: center; padding: 40px 0; color: rgba(255,255,255,0.4); font-size: 0.9rem; }
+
+    /* ── Detail modal ── */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
+    .modal-overlay.open { display: flex; }
+    .modal-box { background: #1a1500; border: 1px solid rgba(212,175,55,0.25); border-radius: 14px; padding: 28px; max-width: 560px; width: 100%; max-height: 90vh; overflow-y: auto; }
+    .modal-box h3 { font-family: 'Cinzel', serif; font-size: 1.05rem; color: var(--gold); margin: 0 0 14px; }
+    .modal-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+    .modal-body { font-size: 0.88rem; color: rgba(255,255,255,0.65); line-height: 1.6; margin-bottom: 18px; white-space: pre-wrap; }
+    .modal-steps { font-size: 0.82rem; color: rgba(255,255,255,0.45); line-height: 1.6; margin-bottom: 18px; white-space: pre-wrap; }
+    .modal-steps strong { color: rgba(255,255,255,0.55); }
+    .modal-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .status-btn { padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.7); font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: all 0.15s; }
+    .status-btn:hover { background: rgba(255,255,255,0.12); }
+    .status-btn.active { background: rgba(212,175,55,0.2); border-color: var(--gold); color: var(--gold); }
+    .delete-btn { margin-left: auto; padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(231,76,60,0.4); background: rgba(231,76,60,0.1); color: #e74c3c; font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: all 0.15s; }
+    .delete-btn:hover { background: rgba(231,76,60,0.2); }
+    .close-btn { display: block; margin-top: 18px; text-align: center; font-size: 0.82rem; color: rgba(255,255,255,0.35); cursor: pointer; }
+    .close-btn:hover { color: rgba(255,255,255,0.6); }
+  </style>
+</head>
+<body style="visibility:hidden">
+
+<!-- ── Nav ── -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">RunestoneMMO</a>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" onclick="this.setAttribute('aria-expanded',this.getAttribute('aria-expanded')==='true'?'false':'true');document.getElementById('mobileNav').classList.toggle('open')">☰</button>
+    <ul class="nav-links" id="mobileNav">
+      <li><a href="/">Home</a></li>
+      <li><a href="/features.html">Features</a></li>
+      <li><a href="/roadmap_development.html">Roadmap</a></li>
+      <li><a href="/news.html">News</a></li>
+      <li><a href="/bug-report.html" class="active">Bug Report</a></li>
+      <li><a href="/voting.html">Voting</a></li>
+      <li id="nav-admin-link" style="display:none"><a href="/admin-panel.html" style="color:var(--gold)">⚙ Admin</a></li>
+    </ul>
+    <div id="nav-user-area"></div>
+  </div>
+</nav>
+
+<main>
+  <div class="page-wrap">
+    <div class="page-header">
+      <h1>🐛 Bug Reports</h1>
+      <p>Found something broken? Let the dev team know. All reports go directly to the admin panel.</p>
+    </div>
+
+    <!-- Submit form (always visible) -->
+    <div class="submit-card">
+      <h2>Submit a Bug Report</h2>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Category</label>
+          <select id="bugCategory">
+            <option value="">— Select category —</option>
+            <option value="Combat">Combat</option>
+            <option value="Skills">Skills</option>
+            <option value="Economy">Economy</option>
+            <option value="Quests">Quests</option>
+            <option value="UI / HUD">UI / HUD</option>
+            <option value="Hub">Hub</option>
+            <option value="NPCs">NPCs</option>
+            <option value="World / Map">World / Map</option>
+            <option value="Performance">Performance</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Severity</label>
+          <select id="bugSeverity">
+            <option value="low">Low — Minor visual or cosmetic</option>
+            <option value="medium" selected>Medium — Noticeable but workaround exists</option>
+            <option value="high">High — Breaks gameplay</option>
+            <option value="critical">Critical — Server crash / data loss</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Title</label>
+        <input type="text" id="bugTitle" placeholder="Short summary of the bug" maxlength="120">
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea id="bugDesc" placeholder="What happened? What did you expect to happen?" rows="4"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Steps to Reproduce <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
+        <textarea id="bugSteps" placeholder="1. Go to…&#10;2. Click…&#10;3. See error" rows="3"></textarea>
+      </div>
+      <button class="submit-btn" id="submitBtn" onclick="submitBug()">Submit Report</button>
+      <p class="submit-msg" id="submitMsg"></p>
+    </div>
+
+    <!-- Admin view (elevated only) -->
+    <div class="admin-section" id="adminSection">
+      <h2>All Reports <span id="reportCount" style="font-family:'Crimson Text',serif;font-weight:400;color:rgba(255,255,255,0.4);font-size:0.85rem;"></span></h2>
+      <div class="filter-bar" id="filterBar">
+        <button class="filter-chip active" data-filter="all" onclick="setFilter('all',this)">All</button>
+        <button class="filter-chip" data-filter="open" onclick="setFilter('open',this)">Open</button>
+        <button class="filter-chip" data-filter="in_progress" onclick="setFilter('in_progress',this)">In Progress</button>
+        <button class="filter-chip" data-filter="resolved" onclick="setFilter('resolved',this)">Resolved</button>
+        <button class="filter-chip" data-filter="closed" onclick="setFilter('closed',this)">Closed</button>
+      </div>
+      <div id="bugList" class="bug-list">
+        <div class="loading-state">Loading reports…</div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Detail modal -->
+<div class="modal-overlay" id="detailModal">
+  <div class="modal-box">
+    <h3 id="modalTitle"></h3>
+    <div class="modal-meta" id="modalMeta"></div>
+    <div class="modal-body" id="modalBody"></div>
+    <div id="modalStepsWrap" style="display:none">
+      <div class="modal-steps"><strong>Steps to reproduce:</strong><br><span id="modalSteps"></span></div>
+    </div>
+    <div class="modal-actions" id="modalActions"></div>
+    <span class="close-btn" onclick="closeModal()">Close</span>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL  = 'https://ludkhakegqojxuglisks.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1ZGtoYWtlZ3Fvanh1Z2xpc2tzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5NTE2MjEsImV4cCI6MjA5MzUyNzYyMX0.V5_Mp7eHc-3rKFZLUGNM_iH57hpiGMvp4CBcH33R0rE';
+let authSession = null;
+let allReports  = [];
+let activeFilter = 'all';
+let isElevated   = false;
+let selectedReport = null;
+
+const STATUS_CFG = {
+  open:        { label: 'Open',        color: '#e74c3c' },
+  in_progress: { label: 'In Progress', color: '#e67e22' },
+  resolved:    { label: 'Resolved',    color: '#2ecc71' },
+  closed:      { label: 'Closed',      color: '#7f8c8d' },
+};
+
+async function supa(path, opts = {}) {
+  const headers = {
+    'apikey':        SUPABASE_ANON,
+    'Authorization': authSession ? `Bearer ${authSession.access_token}` : `Bearer ${SUPABASE_ANON}`,
+    'Content-Type':  'application/json',
+    'Accept':        'application/json',
+    'Prefer':        'return=representation',
+    ...(opts.headers || {}),
+  };
+  const res  = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, { ...opts, headers });
+  const text = await res.text();
+  if (!res.ok) throw new Error(`${res.status}: ${text}`);
+  return text ? JSON.parse(text) : null;
+}
+
+// ── Submit bug report ──────────────────────────────────────────────────
+async function submitBug() {
+  const title    = document.getElementById('bugTitle').value.trim();
+  const desc     = document.getElementById('bugDesc').value.trim();
+  const category = document.getElementById('bugCategory').value;
+  const severity = document.getElementById('bugSeverity').value;
+  const steps    = document.getElementById('bugSteps').value.trim();
+  const msg      = document.getElementById('submitMsg');
+  const btn      = document.getElementById('submitBtn');
+
+  if (!title || !desc || !category) {
+    msg.textContent = '⚠ Please fill in the category, title, and description.';
+    msg.className = 'submit-msg err';
+    msg.style.display = 'block';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Submitting…';
+  msg.style.display = 'none';
+
+  try {
+    const session = RSAuth.getSession();
+    await supa('bug_reports', {
+      method: 'POST',
+      body: JSON.stringify({
+        reporter_discord_id: session?.userId || null,
+        reporter_username:   session?.username || 'Anonymous',
+        category, severity,
+        title, description: desc,
+        steps_to_reproduce: steps || null,
+        status: 'open',
+      }),
+    });
+    msg.textContent = '✓ Report submitted! Thank you — the dev team will review it shortly.';
+    msg.className = 'submit-msg ok';
+    msg.style.display = 'block';
+    document.getElementById('bugTitle').value  = '';
+    document.getElementById('bugDesc').value   = '';
+    document.getElementById('bugSteps').value  = '';
+    document.getElementById('bugCategory').value  = '';
+    document.getElementById('bugSeverity').value  = 'medium';
+  } catch (e) {
+    msg.textContent = '✗ Failed to submit: ' + e.message;
+    msg.className = 'submit-msg err';
+    msg.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Submit Report';
+  }
+}
+
+// ── Load reports (admin only) ──────────────────────────────────────────
+async function loadReports() {
+  const list = document.getElementById('bugList');
+  list.innerHTML = '<div class="loading-state">Loading reports…</div>';
+  try {
+    const data = await supa('bug_reports?select=*&order=created_at.desc');
+    allReports = data || [];
+    renderReports();
+  } catch (e) {
+    list.innerHTML = `<div class="empty-state">Failed to load: ${e.message}</div>`;
+  }
+}
+
+function renderReports() {
+  const filtered = activeFilter === 'all' ? allReports : allReports.filter(r => r.status === activeFilter);
+  const list = document.getElementById('bugList');
+  document.getElementById('reportCount').textContent = `(${allReports.length} total · ${allReports.filter(r=>r.status==='open').length} open)`;
+
+  if (filtered.length === 0) {
+    list.innerHTML = '<div class="empty-state">No bug reports in this category.</div>';
+    return;
+  }
+  list.innerHTML = filtered.map(r => {
+    const cfg = STATUS_CFG[r.status] || STATUS_CFG.open;
+    return `
+    <div class="bug-card" style="border-left-color:${cfg.color}" onclick="openModal('${r.id}')">
+      <div class="bug-card-top">
+        <span class="status-pill" style="color:${cfg.color};border-color:${cfg.color}66;background:${cfg.color}22">${cfg.label}</span>
+        <span class="bug-category">${r.category}</span>
+        <span class="bug-date">${new Date(r.created_at).toLocaleDateString()}</span>
+      </div>
+      <p class="bug-title">${escHtml(r.title)}</p>
+      <p class="bug-desc">${escHtml(r.description)}</p>
+    </div>`;
+  }).join('');
+}
+
+function setFilter(f, el) {
+  activeFilter = f;
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  renderReports();
+}
+
+// ── Modal ──────────────────────────────────────────────────────────────
+function openModal(id) {
+  selectedReport = allReports.find(r => r.id === id);
+  if (!selectedReport) return;
+  const r   = selectedReport;
+  const cfg = STATUS_CFG[r.status] || STATUS_CFG.open;
+
+  document.getElementById('modalTitle').textContent = r.title;
+  document.getElementById('modalMeta').innerHTML = `
+    <span class="status-pill" style="color:${cfg.color};border-color:${cfg.color}66;background:${cfg.color}22">${cfg.label}</span>
+    <span class="bug-category">${r.category} · ${r.severity || 'medium'}</span>
+    <span class="bug-date">by ${escHtml(r.reporter_username || 'Anonymous')} · ${new Date(r.created_at).toLocaleDateString()}</span>
+  `;
+  document.getElementById('modalBody').textContent = r.description;
+
+  const stepsWrap = document.getElementById('modalStepsWrap');
+  if (r.steps_to_reproduce) {
+    document.getElementById('modalSteps').textContent = r.steps_to_reproduce;
+    stepsWrap.style.display = 'block';
+  } else {
+    stepsWrap.style.display = 'none';
+  }
+
+  const actions = document.getElementById('modalActions');
+  const statuses = ['open','in_progress','resolved','closed'];
+  actions.innerHTML = statuses.map(s => {
+    const c = STATUS_CFG[s];
+    return `<button class="status-btn${r.status===s?' active':''}" onclick="changeStatus('${r.id}','${s}')">${c.label}</button>`;
+  }).join('') + `<button class="delete-btn" onclick="deleteReport('${r.id}')">Delete</button>`;
+
+  document.getElementById('detailModal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('detailModal').classList.remove('open');
+  selectedReport = null;
+}
+
+async function changeStatus(id, status) {
+  try {
+    await supa(`bug_reports?id=eq.${id}`, { method: 'PATCH', body: JSON.stringify({ status }) });
+    allReports = allReports.map(r => r.id === id ? { ...r, status } : r);
+    renderReports();
+    // Refresh modal actions
+    const r   = allReports.find(r => r.id === id);
+    const cfg = STATUS_CFG[status];
+    document.getElementById('modalMeta').innerHTML = `
+      <span class="status-pill" style="color:${cfg.color};border-color:${cfg.color}66;background:${cfg.color}22">${cfg.label}</span>
+      <span class="bug-category">${r.category} · ${r.severity || 'medium'}</span>
+      <span class="bug-date">by ${escHtml(r.reporter_username || 'Anonymous')} · ${new Date(r.created_at).toLocaleDateString()}</span>
+    `;
+    const statuses = ['open','in_progress','resolved','closed'];
+    document.getElementById('modalActions').innerHTML = statuses.map(s => {
+      const c = STATUS_CFG[s];
+      return `<button class="status-btn${status===s?' active':''}" onclick="changeStatus('${id}','${s}')">${c.label}</button>`;
+    }).join('') + `<button class="delete-btn" onclick="deleteReport('${id}')">Delete</button>`;
+  } catch (e) { alert('Error: ' + e.message); }
+}
+
+async function deleteReport(id) {
+  if (!confirm('Permanently delete this report?')) return;
+  try {
+    await supa(`bug_reports?id=eq.${id}`, { method: 'DELETE' });
+    allReports = allReports.filter(r => r.id !== id);
+    renderReports();
+    closeModal();
+  } catch (e) { alert('Error: ' + e.message); }
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Auth + init ────────────────────────────────────────────────────────
+(async () => {
+  const session = await RSAuth.initSession();
+  RSAuth.renderNavUser(session);
+
+  if (session) {
+    authSession = { access_token: session.access_token };
+    isElevated  = session.isElevated;
+    if (session.isElevated) {
+      const navAdminLink = document.getElementById('nav-admin-link');
+      if (navAdminLink) navAdminLink.style.display = '';
+    }
+  }
+
+  document.body.style.visibility = 'visible';
+
+  if (isElevated) {
+    document.getElementById('adminSection').style.display = 'block';
+    await loadReports();
+
+    // Realtime: keep admin list in sync with app changes
+    try {
+      const { createClient } = await import('@supabase/supabase-js');
+      const _rt = createClient(SUPABASE_URL, SUPABASE_ANON, { auth: { persistSession: false } });
+      _rt.channel('bug_reports_web')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'bug_reports' }, () => loadReports())
+        .subscribe();
+    } catch { setInterval(loadReports, 30000); }
+  }
+})();
+
+// Close modal on overlay click
+document.getElementById('detailModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// Mobile nav
+document.addEventListener('click', (e) => {
+  const nav = document.getElementById('mobileNav');
+  const btn = document.querySelector('.menu-toggle');
+  if (nav && btn && !nav.contains(e.target) && !btn.contains(e.target)) {
+    nav.classList.remove('open');
+    btn.setAttribute('aria-expanded','false');
+  }
+});
+</script>
+</body>
+</html>

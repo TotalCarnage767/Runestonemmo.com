@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RunestoneMMO — News &amp; Updates</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <script src="/auth.js"></script>
+  <script type="importmap">{ "imports": { "@supabase/supabase-js": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm" } }</script>
+  <style>
+    .page-wrap { max-width: 960px; margin: 0 auto; padding: 36px 20px 80px; }
+    .page-header { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 14px; margin-bottom: 28px; }
+    .page-header h1 { font-family: 'Cinzel', serif; font-size: 1.9rem; font-weight: 900; color: var(--gold); margin: 0 0 6px; }
+    .page-header p { font-size: 0.85rem; color: rgba(255,255,255,0.45); margin: 0; }
+    .post-btn { background: var(--gold); color: #0d0b07; border: none; border-radius: 8px; padding: 10px 22px; font-family: 'Cinzel', serif; font-size: 0.82rem; font-weight: 700; cursor: pointer; display: none; align-self: flex-start; transition: opacity 0.18s; flex-shrink: 0; }
+    .post-btn:hover { opacity: 0.88; }
+
+    /* ── Filter bar ── */
+    .filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+    .filter-chip { padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.5); font-size: 0.78rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+    .filter-chip.active { background: rgba(212,175,55,0.15); border-color: var(--gold); color: var(--gold); }
+
+    /* ── News grid ── */
+    .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 14px; }
+    .news-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 20px; cursor: pointer; transition: background 0.15s, border-color 0.15s; position: relative; }
+    .news-card:hover { background: rgba(255,255,255,0.07); border-color: rgba(212,175,55,0.25); }
+    .news-card.pinned { border-color: rgba(212,175,55,0.3); }
+    .pinned-banner { display: flex; align-items: center; gap: 6px; font-size: 0.72rem; font-weight: 700; color: var(--gold); margin-bottom: 10px; }
+    .card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+    .cat-badge { padding: 3px 9px; border-radius: 6px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px; }
+    .card-date { font-size: 0.75rem; color: rgba(255,255,255,0.3); }
+    .card-title { font-family: 'Cinzel', serif; font-size: 0.95rem; color: #f0e6c0; margin: 0 0 8px; line-height: 1.4; }
+    .card-summary { font-size: 0.83rem; color: rgba(255,255,255,0.5); margin: 0 0 10px; line-height: 1.55; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .read-more { font-size: 0.78rem; color: var(--gold); font-weight: 600; }
+    .edit-btn { position: absolute; top: 14px; right: 14px; background: rgba(212,175,55,0.15); border: 1px solid rgba(212,175,55,0.3); border-radius: 6px; padding: 4px 8px; font-size: 0.72rem; color: var(--gold); cursor: pointer; display: none; }
+    .edit-btn:hover { background: rgba(212,175,55,0.25); }
+
+    .loading-state, .empty-state { text-align: center; padding: 50px 0; color: rgba(255,255,255,0.35); font-size: 0.9rem; grid-column: 1/-1; }
+
+    /* ── Detail modal ── */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
+    .modal-overlay.open { display: flex; }
+    .modal-box { background: #1a1500; border: 1px solid rgba(212,175,55,0.25); border-radius: 14px; padding: 30px; max-width: 620px; width: 100%; max-height: 90vh; overflow-y: auto; }
+    .modal-box h2 { font-family: 'Cinzel', serif; font-size: 1.15rem; color: var(--gold); margin: 0 0 10px; line-height: 1.4; }
+    .modal-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; align-items: center; }
+    .modal-body { font-size: 0.9rem; color: rgba(255,255,255,0.7); line-height: 1.7; white-space: pre-wrap; }
+    .modal-footer { display: flex; gap: 10px; margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.07); }
+    .close-btn { margin-left: auto; padding: 8px 18px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); background: transparent; color: rgba(255,255,255,0.5); font-size: 0.82rem; cursor: pointer; }
+
+    /* ── Edit / create form modal ── */
+    .form-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1100; align-items: center; justify-content: center; padding: 20px; }
+    .form-modal.open { display: flex; }
+    .form-box { background: #1a1500; border: 1px solid rgba(212,175,55,0.25); border-radius: 14px; padding: 28px; max-width: 560px; width: 100%; max-height: 90vh; overflow-y: auto; }
+    .form-box h3 { font-family: 'Cinzel', serif; font-size: 1rem; color: var(--gold); margin: 0 0 18px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .form-group label { font-size: 0.75rem; font-weight: 700; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.8px; }
+    .form-group input, .form-group select, .form-group textarea { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; color: #f0e6c0; font-size: 0.9rem; padding: 10px 12px; font-family: 'Crimson Text', serif; outline: none; transition: border-color 0.18s; }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--gold); }
+    .form-group select option { background: #1a1500; }
+    .form-group textarea { resize: vertical; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media(max-width:600px){ .form-row { grid-template-columns: 1fr; } }
+    .checkbox-row { display: flex; align-items: center; gap: 10px; }
+    .checkbox-row input[type=checkbox] { width: 16px; height: 16px; accent-color: var(--gold); }
+    .checkbox-row label { font-size: 0.85rem; color: rgba(255,255,255,0.6); text-transform: none; letter-spacing: 0; font-weight: 400; }
+    .form-footer { display: flex; gap: 10px; justify-content: flex-end; margin-top: 18px; flex-wrap: wrap; }
+    .cancel-btn { padding: 9px 18px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); background: transparent; color: rgba(255,255,255,0.5); font-size: 0.82rem; cursor: pointer; }
+    .save-btn { padding: 9px 18px; border-radius: 8px; background: var(--gold); border: none; color: #0d0b07; font-family: 'Cinzel', serif; font-size: 0.82rem; font-weight: 700; cursor: pointer; }
+    .save-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .del-form-btn { padding: 9px 18px; border-radius: 8px; border: 1px solid rgba(231,76,60,0.4); background: rgba(231,76,60,0.1); color: #e74c3c; font-size: 0.82rem; font-weight: 700; cursor: pointer; }
+  </style>
+</head>
+<body style="visibility:hidden">
+
+<!-- ── Nav ── -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">RunestoneMMO</a>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" onclick="this.setAttribute('aria-expanded',this.getAttribute('aria-expanded')==='true'?'false':'true');document.getElementById('mobileNav').classList.toggle('open')">☰</button>
+    <ul class="nav-links" id="mobileNav">
+      <li><a href="/">Home</a></li>
+      <li><a href="/features.html">Features</a></li>
+      <li><a href="/roadmap_development.html">Roadmap</a></li>
+      <li><a href="/news.html" class="active">News</a></li>
+      <li><a href="/bug-report.html">Bug Report</a></li>
+      <li><a href="/voting.html">Voting</a></li>
+      <li id="nav-admin-link" style="display:none"><a href="/admin-panel.html" style="color:var(--gold)">⚙ Admin</a></li>
+    </ul>
+    <div id="nav-user-area"></div>
+  </div>
+</nav>
+
+<main>
+  <div class="page-wrap">
+    <div class="page-header">
+      <div>
+        <h1>📰 News &amp; Updates</h1>
+        <p>The latest from the Runestone Vale development team.</p>
+      </div>
+      <button class="post-btn" id="postBtn" onclick="openFormModal(null)">+ Post Update</button>
+    </div>
+
+    <div class="filter-bar">
+      <button class="filter-chip active" onclick="setFilter('all',this)">All</button>
+      <button class="filter-chip" onclick="setFilter('update',this)">Updates</button>
+      <button class="filter-chip" onclick="setFilter('patch',this)">Patches</button>
+      <button class="filter-chip" onclick="setFilter('event',this)">Events</button>
+      <button class="filter-chip" onclick="setFilter('announcement',this)">Announcements</button>
+      <button class="filter-chip" onclick="setFilter('hotfix',this)">Hotfixes</button>
+    </div>
+
+    <div class="news-grid" id="newsGrid">
+      <div class="loading-state">Loading news…</div>
+    </div>
+  </div>
+</main>
+
+<!-- Detail modal -->
+<div class="modal-overlay" id="detailModal">
+  <div class="modal-box">
+    <h2 id="detailTitle"></h2>
+    <div class="modal-meta" id="detailMeta"></div>
+    <div class="modal-body" id="detailBody"></div>
+    <div class="modal-footer">
+      <button id="detailEditBtn" style="display:none;padding:8px 14px;border-radius:8px;border:1px solid rgba(212,175,55,0.4);background:rgba(212,175,55,0.1);color:var(--gold);font-size:0.78rem;font-weight:700;cursor:pointer" onclick="editFromDetail()">✏ Edit</button>
+      <button class="close-btn" onclick="closeDetail()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit / create form modal -->
+<div class="form-modal" id="formModal">
+  <div class="form-box">
+    <h3 id="formTitle">Post Update</h3>
+    <input type="hidden" id="formId">
+    <div class="form-row">
+      <div class="form-group">
+        <label>Category</label>
+        <select id="formCategory">
+          <option value="update">Update</option>
+          <option value="patch">Patch</option>
+          <option value="event">Event</option>
+          <option value="announcement">Announcement</option>
+          <option value="hotfix">Hotfix</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Date Label</label>
+        <input type="text" id="formDateLabel" placeholder="e.g. May 12, 2026">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Title</label>
+      <input type="text" id="formPostTitle" placeholder="Update title" maxlength="160">
+    </div>
+    <div class="form-group">
+      <label>Summary <span style="font-weight:400;text-transform:none;letter-spacing:0">(shown on card)</span></label>
+      <textarea id="formSummary" rows="3" placeholder="Short summary shown on the card…"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Full Details <span style="font-weight:400;text-transform:none;letter-spacing:0">(shown in modal)</span></label>
+      <textarea id="formDetails" rows="6" placeholder="Full changelog, patch notes, or announcement body…"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Sort Order</label>
+      <input type="number" id="formSortOrder" value="0" min="0">
+    </div>
+    <div class="form-group">
+      <div class="checkbox-row">
+        <input type="checkbox" id="formPinned">
+        <label for="formPinned">Pin this post (appears at the top)</label>
+      </div>
+    </div>
+    <div class="form-footer">
+      <button class="del-form-btn" id="delFormBtn" style="display:none" onclick="deletePost()">Delete</button>
+      <button class="cancel-btn" onclick="closeFormModal()">Cancel</button>
+      <button class="save-btn" id="saveFormBtn" onclick="savePost()">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL  = 'https://ludkhakegqojxuglisks.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1ZGtoYWtlZ3Fvanh1Z2xpc2tzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5NTE2MjEsImV4cCI6MjA5MzUyNzYyMX0.V5_Mp7eHc-3rKFZLUGNM_iH57hpiGMvp4CBcH33R0rE';
+let authSession  = null;
+let isElevated   = false;
+let allPosts     = [];
+let activeFilter = 'all';
+let detailPost   = null;
+
+const CAT_CFG = {
+  update:       { label: 'Update',       bg: '#1a3a1a', text: '#7dcc7d' },
+  patch:        { label: 'Patch',        bg: '#1a2a3a', text: '#4ab3e8' },
+  event:        { label: 'Event',        bg: '#2a1a3a', text: '#b87de8' },
+  announcement: { label: 'Announcement', bg: '#3a2a10', text: '#e8a830' },
+  hotfix:       { label: 'Hotfix',       bg: '#2a1010', text: '#e87d7d' },
+};
+
+async function supa(path, opts = {}) {
+  const headers = {
+    'apikey':        SUPABASE_ANON,
+    'Authorization': authSession ? `Bearer ${authSession.access_token}` : `Bearer ${SUPABASE_ANON}`,
+    'Content-Type':  'application/json',
+    'Accept':        'application/json',
+    'Prefer':        'return=representation',
+    ...(opts.headers || {}),
+  };
+  const res  = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, { ...opts, headers });
+  const text = await res.text();
+  if (!res.ok) throw new Error(`${res.status}: ${text}`);
+  return text ? JSON.parse(text) : null;
+}
+
+// ── Load posts ─────────────────────────────────────────────────────────
+async function loadPosts() {
+  try {
+    const data = await supa('news_posts?select=*&order=pinned.desc,sort_order.asc,created_at.desc');
+    allPosts = data || [];
+    renderPosts();
+  } catch (e) {
+    document.getElementById('newsGrid').innerHTML = `<div class="empty-state">Failed to load: ${escHtml(e.message)}</div>`;
+  }
+}
+
+function renderPosts() {
+  const filtered = activeFilter === 'all' ? allPosts : allPosts.filter(p => p.category === activeFilter);
+  const grid = document.getElementById('newsGrid');
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div class="empty-state">No posts in this category yet.</div>';
+    return;
+  }
+  grid.innerHTML = filtered.map(p => {
+    const cfg = CAT_CFG[p.category] || CAT_CFG.update;
+    const pinnedBanner = p.pinned ? `<div class="pinned-banner">📌 Pinned</div>` : '';
+    const editBtn = isElevated ? `<button class="edit-btn" id="edit-${p.id}" onclick="event.stopPropagation();openFormModal('${p.id}')">✏ Edit</button>` : '';
+    return `
+    <div class="news-card${p.pinned ? ' pinned' : ''}" onclick="openDetail('${p.id}')">
+      ${editBtn}
+      ${pinnedBanner}
+      <div class="card-top">
+        <span class="cat-badge" style="background:${cfg.bg};color:${cfg.text}">${cfg.label}</span>
+        <span class="card-date">${escHtml(p.date_label)}</span>
+      </div>
+      <p class="card-title">${escHtml(p.title)}</p>
+      <p class="card-summary">${escHtml(p.summary)}</p>
+      <span class="read-more">Read more ›</span>
+    </div>`;
+  }).join('');
+
+  // Show edit buttons for elevated users
+  if (isElevated) {
+    document.querySelectorAll('.edit-btn').forEach(b => b.style.display = 'block');
+  }
+}
+
+function setFilter(f, el) {
+  activeFilter = f;
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  renderPosts();
+}
+
+// ── Detail modal ───────────────────────────────────────────────────────
+function openDetail(id) {
+  detailPost = allPosts.find(p => p.id === id);
+  if (!detailPost) return;
+  const p   = detailPost;
+  const cfg = CAT_CFG[p.category] || CAT_CFG.update;
+  document.getElementById('detailTitle').textContent = p.title;
+  document.getElementById('detailMeta').innerHTML = `
+    <span class="cat-badge" style="background:${cfg.bg};color:${cfg.text}">${cfg.label}</span>
+    <span style="font-size:0.78rem;color:rgba(255,255,255,0.35)">${escHtml(p.date_label)}</span>
+    ${p.pinned ? '<span style="font-size:0.78rem;color:var(--gold)">📌 Pinned</span>' : ''}
+  `;
+  document.getElementById('detailBody').textContent = p.details || p.summary;
+  document.getElementById('detailEditBtn').style.display = isElevated ? 'block' : 'none';
+  document.getElementById('detailModal').classList.add('open');
+}
+function closeDetail() { document.getElementById('detailModal').classList.remove('open'); detailPost = null; }
+function editFromDetail() { closeDetail(); if (detailPost) openFormModal(detailPost.id); }
+
+// ── Form modal ─────────────────────────────────────────────────────────
+function openFormModal(id) {
+  const post = id ? allPosts.find(p => p.id === id) : null;
+  document.getElementById('formTitle').textContent = post ? 'Edit Post' : 'Post Update';
+  document.getElementById('formId').value          = post ? post.id : '';
+  document.getElementById('formCategory').value    = post ? post.category : 'update';
+  document.getElementById('formDateLabel').value   = post ? post.date_label : new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  document.getElementById('formPostTitle').value   = post ? post.title : '';
+  document.getElementById('formSummary').value     = post ? post.summary : '';
+  document.getElementById('formDetails').value     = post ? (post.details || '') : '';
+  document.getElementById('formSortOrder').value   = post ? post.sort_order : 0;
+  document.getElementById('formPinned').checked    = post ? post.pinned : false;
+  document.getElementById('delFormBtn').style.display = post ? 'block' : 'none';
+  document.getElementById('formModal').classList.add('open');
+}
+function closeFormModal() { document.getElementById('formModal').classList.remove('open'); }
+
+async function savePost() {
+  const id         = document.getElementById('formId').value;
+  const category   = document.getElementById('formCategory').value;
+  const date_label = document.getElementById('formDateLabel').value.trim();
+  const title      = document.getElementById('formPostTitle').value.trim();
+  const summary    = document.getElementById('formSummary').value.trim();
+  const details    = document.getElementById('formDetails').value.trim();
+  const sort_order = parseInt(document.getElementById('formSortOrder').value) || 0;
+  const pinned     = document.getElementById('formPinned').checked;
+
+  if (!title || !summary) { alert('Title and summary are required.'); return; }
+
+  const btn = document.getElementById('saveFormBtn');
+  btn.disabled = true;
+  try {
+    const body = { category, date_label, title, summary, details, sort_order, pinned };
+    if (id) {
+      await supa(`news_posts?id=eq.${id}`, { method: 'PATCH', body: JSON.stringify(body) });
+    } else {
+      await supa('news_posts', { method: 'POST', body: JSON.stringify(body) });
+    }
+    closeFormModal();
+    await loadPosts();
+  } catch (e) { alert('Error: ' + e.message); }
+  finally { btn.disabled = false; }
+}
+
+async function deletePost() {
+  const id = document.getElementById('formId').value;
+  if (!id || !confirm('Delete this post?')) return;
+  try {
+    await supa(`news_posts?id=eq.${id}`, { method: 'DELETE' });
+    closeFormModal();
+    await loadPosts();
+  } catch (e) { alert('Error: ' + e.message); }
+}
+
+function escHtml(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// ── Auth + init ────────────────────────────────────────────────────────
+(async () => {
+  const session = await RSAuth.initSession();
+  RSAuth.renderNavUser(session);
+
+  if (session) {
+    authSession = { access_token: session.access_token };
+    isElevated  = session.isElevated;
+    if (isElevated) {
+      document.getElementById('postBtn').style.display = 'block';
+      const navAdminLink = document.getElementById('nav-admin-link');
+      if (navAdminLink) navAdminLink.style.display = '';
+    }
+  }
+
+  document.body.style.visibility = 'visible';
+  await loadPosts();
+
+  // Realtime: update news instantly when app admin posts or edits
+  try {
+    const { createClient } = await import('@supabase/supabase-js');
+    const _rt = createClient(SUPABASE_URL, SUPABASE_ANON, { auth: { persistSession: false } });
+    _rt.channel('news_posts_web')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'news_posts' }, () => loadPosts())
+      .subscribe();
+  } catch { setInterval(loadPosts, 30000); }
+})();
+
+// Close modals on overlay click
+document.getElementById('detailModal').addEventListener('click', function(e) { if (e.target===this) closeDetail(); });
+document.getElementById('formModal').addEventListener('click', function(e) { if (e.target===this) closeFormModal(); });
+
+document.addEventListener('click', (e) => {
+  const nav = document.getElementById('mobileNav');
+  const btn = document.querySelector('.menu-toggle');
+  if (nav && btn && !nav.contains(e.target) && !btn.contains(e.target)) {
+    nav.classList.remove('open');
+    btn.setAttribute('aria-expanded','false');
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RunestoneMMO — Admin Panel</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <script src="/auth.js"></script>
+  <style>
+    .admin-wrap { max-width: 860px; margin: 0 auto; padding: 36px 20px 80px; }
+    .page-header { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 28px; }
+    .page-header h1 { font-family: 'Cinzel', serif; font-size: 1.9rem; font-weight: 900; color: var(--gold); margin: 0 0 4px; }
+    .page-header p { font-size: 0.85rem; color: rgba(255,255,255,0.45); margin: 0; font-family: 'Crimson Text', serif; }
+    .role-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: 6px; font-family: 'Cinzel', serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; flex-shrink: 0; }
+    .role-badge.admin { background: rgba(231,76,60,0.12); border: 1px solid rgba(231,76,60,0.45); color: #e74c3c; }
+    .role-badge.staff { background: rgba(212,175,55,0.12); border: 1px solid rgba(212,175,55,0.45); color: var(--gold); }
+    .info-banner { display: flex; align-items: flex-start; gap: 14px; background: #1a1500; border: 1px solid rgba(212,175,55,0.25); border-radius: 10px; padding: 16px 18px; margin-bottom: 28px; }
+    .info-banner .icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+    .info-banner strong { display: block; font-family: 'Cinzel', serif; font-size: 0.85rem; color: var(--gold); margin-bottom: 4px; }
+    .info-banner p { margin: 0; font-size: 0.82rem; color: rgba(255,255,255,0.5); line-height: 1.5; }
+    .section-label { font-family: 'Cinzel', serif; font-size: 0.7rem; font-weight: 700; color: rgba(255,255,255,0.3); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 14px; }
+    .panel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 12px; }
+    .panel-card { display: flex; align-items: center; gap: 16px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-left: 3px solid var(--gold); border-radius: 10px; padding: 16px 18px; text-decoration: none; color: inherit; transition: background 0.18s, border-color 0.18s; cursor: pointer; }
+    .panel-card:hover { background: rgba(212,175,55,0.07); border-color: rgba(212,175,55,0.3); }
+    .panel-icon { width: 46px; height: 46px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; }
+    .panel-text { flex: 1; }
+    .panel-title { font-family: 'Cinzel', serif; font-size: 0.95rem; font-weight: 700; color: #f0e6c0; margin: 0 0 3px; }
+    .panel-sub { font-size: 0.78rem; color: rgba(255,255,255,0.4); margin: 0; line-height: 1.4; }
+    .panel-arrow { font-size: 1.3rem; color: rgba(255,255,255,0.25); flex-shrink: 0; }
+  </style>
+</head>
+<body style="visibility:hidden">
+
+<!-- ── Login gate ── -->
+<div id="rs-login-gate" style="display:none;position:fixed;inset:0;background:#0d0b07;z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;">
+  <p style="font-family:'Cinzel',serif;color:var(--gold);font-size:1.1rem;">Login required to access the Admin Panel</p>
+  <button onclick="RSAuth.loginWithDiscord()" style="background:var(--gold);color:#0d0b07;border:none;padding:12px 28px;border-radius:8px;font-family:'Cinzel',serif;font-weight:700;font-size:0.9rem;cursor:pointer;">Login with Discord</button>
+</div>
+<!-- ── Access denied ── -->
+<div id="rs-access-denied" style="display:none;position:fixed;inset:0;background:#0d0b07;z-index:9999;align-items:center;justify-content:center;flex-direction:column;gap:12px;">
+  <p style="font-family:'Cinzel',serif;color:#e74c3c;font-size:1.2rem;">⛔ Access Denied</p>
+  <p style="color:rgba(255,255,255,0.5);font-size:0.85rem;">This area is restricted to staff and admins.</p>
+  <a href="/" style="color:var(--gold);font-size:0.85rem;">← Return home</a>
+</div>
+
+<!-- ── Nav ── -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">RunestoneMMO</a>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" onclick="this.setAttribute('aria-expanded',this.getAttribute('aria-expanded')==='true'?'false':'true');document.getElementById('mobileNav').classList.toggle('open')">☰</button>
+    <ul class="nav-links" id="mobileNav">
+      <li><a href="/">Home</a></li>
+      <li><a href="/features.html">Features</a></li>
+      <li><a href="/roadmap_development.html">Roadmap</a></li>
+      <li><a href="/news.html">News</a></li>
+      <li><a href="/bug-report.html">Bug Report</a></li>
+      <li><a href="/voting.html">Voting</a></li>
+      <li id="nav-admin-link" style="display:none"><a href="/admin-panel.html" style="color:var(--gold)">⚙ Admin</a></li>
+    </ul>
+    <div id="nav-user-area"></div>
+  </div>
+</nav>
+
+<!-- ── Main content ── -->
+<main id="rs-admin-content" style="display:none">
+  <div class="admin-wrap">
+    <div class="page-header">
+      <div>
+        <h1>⚙️ Admin Panel</h1>
+        <p id="panel-sub">Management tools for Runestone Vale</p>
+      </div>
+      <span id="role-badge" class="role-badge admin">ADMIN</span>
+    </div>
+
+    <div class="info-banner">
+      <span class="icon">🔐</span>
+      <div>
+        <strong>Restricted Area</strong>
+        <p>All actions here are logged. Changes take effect immediately on the live server.</p>
+      </div>
+    </div>
+
+    <div class="section-label">Management Tools</div>
+
+    <div class="panel-grid" id="panel-grid">
+      <!-- Cards injected by JS based on role -->
+    </div>
+  </div>
+</main>
+
+<script>
+const PANEL_ITEMS = [
+  { id: 'players',       href: '/admin-roles.html',    icon: '👥', bg: '#1a2a1a', title: 'Player Manager',    sub: 'Search players, view stats, manage accounts', adminOnly: false },
+  { id: 'roles',         href: '/admin-roles.html',    icon: '🛡️', bg: '#1a1a2a', title: 'Role Manager',       sub: 'Assign and change player roles',               adminOnly: true  },
+  { id: 'notifications', href: '/admin-notifications.html', icon: '🔔', bg: '#2a1a10', title: 'Notifications',  sub: 'Send announcements to all or specific players', adminOnly: false },
+  { id: 'bugs',          href: '/admin-bugs.html',     icon: '🐛', bg: '#2a1010', title: 'Bug Reports',        sub: 'Review, update status, and resolve reports',    adminOnly: false },
+  { id: 'votes',         href: '/admin-votes.html',    icon: '🗳️', bg: '#1a1a2a', title: 'Vote Manager',       sub: 'Create and manage community votes',             adminOnly: false },
+  { id: 'roadmap',       href: '/roadmap_development.html', icon: '🗺️', bg: '#1a2a1a', title: 'Roadmap Manager', sub: 'Create, edit, and reorder roadmap items',    adminOnly: true  },
+  { id: 'news',          href: '/news.html',           icon: '📰', bg: '#2a1a10', title: 'News Manager',       sub: 'Post, edit, and pin news updates',              adminOnly: false },
+];
+
+(async () => {
+  const session = await RSAuth.initSession();
+  RSAuth.renderNavUser(session);
+
+  const gate    = document.getElementById('rs-login-gate');
+  const denied  = document.getElementById('rs-access-denied');
+  const content = document.getElementById('rs-admin-content');
+
+  if (!session) {
+    gate.style.visibility = 'visible';
+    gate.style.opacity    = '1';
+    gate.style.pointerEvents = 'all';
+    document.body.style.visibility = 'visible';
+    return;
+  }
+
+  const role = session.role;
+  const isAdmin = role === 'admin';
+  const isElevated = session.isElevated;
+
+  if (!isElevated) {
+    gate.style.display   = 'none';
+    denied.style.display = 'flex';
+    document.body.style.visibility = 'visible';
+    return;
+  }
+
+  // Show nav admin link
+  const navAdminLink = document.getElementById('nav-admin-link');
+  if (navAdminLink) navAdminLink.style.display = '';
+
+  // Update badge
+  const badge = document.getElementById('role-badge');
+  badge.textContent = isAdmin ? 'ADMIN' : 'STAFF';
+  badge.className = 'role-badge ' + (isAdmin ? 'admin' : 'staff');
+  document.getElementById('panel-sub').textContent = isAdmin ? 'Full admin access — all tools available' : 'Staff access — management tools available';
+
+  // Render panel cards
+  const grid = document.getElementById('panel-grid');
+  const visible = PANEL_ITEMS.filter(item => !item.adminOnly || isAdmin);
+  grid.innerHTML = visible.map(item => `
+    <a class="panel-card" href="${item.href}">
+      <div class="panel-icon" style="background:${item.bg}">${item.icon}</div>
+      <div class="panel-text">
+        <p class="panel-title">${item.title}</p>
+        <p class="panel-sub">${item.sub}</p>
+      </div>
+      <span class="panel-arrow">›</span>
+    </a>
+  `).join('');
+
+  content.style.display = 'block';
+  document.body.style.visibility = 'visible';
+})();
+
+// Mobile nav close on outside click
+document.addEventListener('click', (e) => {
+  const nav = document.getElementById('mobileNav');
+  const btn = document.querySelector('.menu-toggle');
+  if (nav && btn && !nav.contains(e.target) && !btn.contains(e.target)) {
+    nav.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+  }
+});
+</script>
+</body>
+</html>

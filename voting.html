@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RunestoneMMO — Community Voting</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <script src="/auth.js"></script>
+  <script type="importmap">{ "imports": { "@supabase/supabase-js": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm" } }</script>
+  <style>
+    .page-wrap { max-width: 860px; margin: 0 auto; padding: 36px 20px 80px; }
+    .page-header { margin-bottom: 28px; }
+    .page-header h1 { font-family: 'Cinzel', serif; font-size: 1.9rem; font-weight: 900; color: var(--gold); margin: 0 0 6px; }
+    .page-header p { font-size: 0.85rem; color: rgba(255,255,255,0.45); margin: 0; }
+
+    /* ── Admin toolbar ── */
+    .admin-toolbar { display: none; margin-bottom: 20px; }
+    .create-btn { background: var(--gold); color: #0d0b07; border: none; border-radius: 8px; padding: 10px 22px; font-family: 'Cinzel', serif; font-size: 0.82rem; font-weight: 700; cursor: pointer; transition: opacity 0.18s; }
+    .create-btn:hover { opacity: 0.88; }
+
+    /* ── Vote cards ── */
+    .vote-list { display: flex; flex-direction: column; gap: 16px; }
+    .vote-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 22px 24px; }
+    .vote-card.inactive { opacity: 0.55; }
+    .vote-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+    .vote-question { font-family: 'Cinzel', serif; font-size: 1rem; color: #f0e6c0; margin: 0; flex: 1; }
+    .vote-meta { font-size: 0.75rem; color: rgba(255,255,255,0.35); margin-top: 4px; }
+    .vote-badge { padding: 3px 10px; border-radius: 999px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; flex-shrink: 0; }
+    .vote-badge.active   { background: rgba(46,204,113,0.15); border: 1px solid rgba(46,204,113,0.4); color: #2ecc71; }
+    .vote-badge.inactive { background: rgba(127,140,141,0.15); border: 1px solid rgba(127,140,141,0.4); color: #7f8c8d; }
+
+    /* ── Options ── */
+    .options-list { display: flex; flex-direction: column; gap: 8px; }
+    .option-row { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+    .option-row.disabled { cursor: default; }
+    .option-btn { flex: 1; display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 10px 14px; transition: all 0.15s; cursor: pointer; text-align: left; color: inherit; font-family: inherit; }
+    .option-btn:hover:not(:disabled) { background: rgba(212,175,55,0.1); border-color: rgba(212,175,55,0.35); }
+    .option-btn.selected { background: rgba(212,175,55,0.15); border-color: var(--gold); }
+    .option-btn:disabled { cursor: default; }
+    .option-label { flex: 1; font-size: 0.88rem; color: rgba(255,255,255,0.8); }
+    .option-count { font-size: 0.78rem; color: rgba(255,255,255,0.4); flex-shrink: 0; }
+    .option-bar-wrap { height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; margin-top: 4px; }
+    .option-bar { height: 4px; border-radius: 2px; background: var(--gold); transition: width 0.3s; }
+
+    /* ── Admin vote actions ── */
+    .vote-admin-row { display: flex; gap: 8px; margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.07); }
+    .toggle-btn { padding: 6px 14px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.6); font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: all 0.15s; }
+    .toggle-btn:hover { background: rgba(255,255,255,0.12); }
+    .del-btn { padding: 6px 14px; border-radius: 8px; border: 1px solid rgba(231,76,60,0.4); background: rgba(231,76,60,0.1); color: #e74c3c; font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: all 0.15s; }
+    .del-btn:hover { background: rgba(231,76,60,0.2); }
+
+    .loading-state, .empty-state { text-align: center; padding: 50px 0; color: rgba(255,255,255,0.35); font-size: 0.9rem; }
+    .login-note { background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.2); border-radius: 10px; padding: 14px 18px; font-size: 0.85rem; color: rgba(255,255,255,0.55); margin-bottom: 20px; display: none; }
+    .login-note a { color: var(--gold); cursor: pointer; }
+
+    /* ── Create modal ── */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
+    .modal-overlay.open { display: flex; }
+    .modal-box { background: #1a1500; border: 1px solid rgba(212,175,55,0.25); border-radius: 14px; padding: 28px; max-width: 500px; width: 100%; }
+    .modal-box h3 { font-family: 'Cinzel', serif; font-size: 1rem; color: var(--gold); margin: 0 0 18px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .form-group label { font-size: 0.75rem; font-weight: 700; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.8px; }
+    .form-group input, .form-group textarea { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; color: #f0e6c0; font-size: 0.9rem; padding: 10px 12px; font-family: 'Crimson Text', serif; outline: none; transition: border-color 0.18s; }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--gold); }
+    .modal-footer { display: flex; gap: 10px; justify-content: flex-end; margin-top: 18px; }
+    .cancel-btn { padding: 9px 18px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); background: transparent; color: rgba(255,255,255,0.5); font-size: 0.82rem; cursor: pointer; }
+    .save-btn { padding: 9px 18px; border-radius: 8px; background: var(--gold); border: none; color: #0d0b07; font-family: 'Cinzel', serif; font-size: 0.82rem; font-weight: 700; cursor: pointer; }
+    .save-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  </style>
+</head>
+<body style="visibility:hidden">
+
+<!-- ── Nav ── -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">RunestoneMMO</a>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" onclick="this.setAttribute('aria-expanded',this.getAttribute('aria-expanded')==='true'?'false':'true');document.getElementById('mobileNav').classList.toggle('open')">☰</button>
+    <ul class="nav-links" id="mobileNav">
+      <li><a href="/">Home</a></li>
+      <li><a href="/features.html">Features</a></li>
+      <li><a href="/roadmap_development.html">Roadmap</a></li>
+      <li><a href="/news.html">News</a></li>
+      <li><a href="/bug-report.html">Bug Report</a></li>
+      <li><a href="/voting.html" class="active">Voting</a></li>
+      <li id="nav-admin-link" style="display:none"><a href="/admin-panel.html" style="color:var(--gold)">⚙ Admin</a></li>
+    </ul>
+    <div id="nav-user-area"></div>
+  </div>
+</nav>
+
+<main>
+  <div class="page-wrap">
+    <div class="page-header">
+      <h1>🗳️ Community Voting</h1>
+      <p>Have your say on the future of Runestone Vale. Active votes are open to all logged-in players.</p>
+    </div>
+
+    <div class="login-note" id="loginNote">
+      You are viewing results as a guest. <a onclick="RSAuth.loginWithDiscord()">Login with Discord</a> to cast your vote.
+    </div>
+
+    <div class="admin-toolbar" id="adminToolbar">
+      <button class="create-btn" onclick="openCreateModal()">+ Create Vote</button>
+    </div>
+
+    <div id="voteList" class="vote-list">
+      <div class="loading-state">Loading votes…</div>
+    </div>
+  </div>
+</main>
+
+<!-- Create vote modal -->
+<div class="modal-overlay" id="createModal">
+  <div class="modal-box">
+    <h3>Create New Vote</h3>
+    <div class="form-group">
+      <label>Question</label>
+      <input type="text" id="newQuestion" placeholder="What should we add next?" maxlength="200">
+    </div>
+    <div class="form-group">
+      <label>Options <span style="font-weight:400;text-transform:none;letter-spacing:0">(one per line, min 2)</span></label>
+      <textarea id="newOptions" rows="5" placeholder="Option A&#10;Option B&#10;Option C"></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="cancel-btn" onclick="closeCreateModal()">Cancel</button>
+      <button class="save-btn" id="createSaveBtn" onclick="createVote()">Create</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL  = 'https://ludkhakegqojxuglisks.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1ZGtoYWtlZ3Fvanh1Z2xpc2tzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5NTE2MjEsImV4cCI6MjA5MzUyNzYyMX0.V5_Mp7eHc-3rKFZLUGNM_iH57hpiGMvp4CBcH33R0rE';
+let authSession  = null;
+let currentUser  = null;   // { id: discord_id, username }
+let isElevated   = false;
+let allVotes     = [];
+let userVotes    = {};     // { vote_id: selected_option }
+
+async function supa(path, opts = {}) {
+  const headers = {
+    'apikey':        SUPABASE_ANON,
+    'Authorization': authSession ? `Bearer ${authSession.access_token}` : `Bearer ${SUPABASE_ANON}`,
+    'Content-Type':  'application/json',
+    'Accept':        'application/json',
+    'Prefer':        'return=representation',
+    ...(opts.headers || {}),
+  };
+  const res  = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, { ...opts, headers });
+  const text = await res.text();
+  if (!res.ok) throw new Error(`${res.status}: ${text}`);
+  return text ? JSON.parse(text) : null;
+}
+
+// ── Load votes + user responses ────────────────────────────────────────
+async function loadVotes() {
+  try {
+    // Load all votes with response counts per option
+    const votes = await supa('admin_votes?select=*,player_vote_responses(vote_id,selected_option)&order=created_at.desc');
+    allVotes = (votes || []).map(v => {
+      // Count responses per option
+      const responses = v.player_vote_responses || [];
+      const counts = {};
+      (v.options || []).forEach(o => counts[o] = 0);
+      responses.forEach(r => { if (r.selected_option) counts[r.selected_option] = (counts[r.selected_option] || 0) + 1; });
+      return { ...v, optionCounts: counts, totalResponses: responses.length };
+    });
+
+    // Load this user's votes if logged in
+    if (currentUser) {
+      const myVotes = await supa(`player_vote_responses?voter_discord_id=eq.${encodeURIComponent(currentUser.id)}&select=vote_id,selected_option`);
+      userVotes = {};
+      (myVotes || []).forEach(v => { userVotes[v.vote_id] = v.selected_option; });
+    }
+
+    renderVotes();
+  } catch (e) {
+    document.getElementById('voteList').innerHTML = `<div class="empty-state">Failed to load: ${escHtml(e.message)}</div>`;
+  }
+}
+
+function renderVotes() {
+  const list = document.getElementById('voteList');
+  // Show active first, then inactive; hide inactive for non-elevated
+  const visible = isElevated ? allVotes : allVotes.filter(v => v.active);
+
+  if (visible.length === 0) {
+    list.innerHTML = '<div class="empty-state">No active votes right now. Check back soon!</div>';
+    return;
+  }
+
+  list.innerHTML = visible.map(v => {
+    const myPick = userVotes[v.id];
+    const total  = v.totalResponses || 0;
+    const options = (v.options || []).map(opt => {
+      const count   = v.optionCounts[opt] || 0;
+      const pct     = total > 0 ? Math.round((count / total) * 100) : 0;
+      const isMine  = myPick === opt;
+      const canVote = !!currentUser && v.active;
+      return `
+        <div class="option-row${!canVote ? ' disabled' : ''}">
+          <button class="option-btn${isMine ? ' selected' : ''}"
+            ${!canVote ? 'disabled' : ''}
+            onclick="${canVote ? `castVote('${v.id}','${escAttr(opt)}')` : ''}">
+            <span class="option-label">${escHtml(opt)}${isMine ? ' ✓' : ''}</span>
+            <span class="option-count">${count} vote${count !== 1 ? 's' : ''} (${pct}%)</span>
+          </button>
+        </div>
+        <div class="option-bar-wrap"><div class="option-bar" style="width:${pct}%"></div></div>
+      `;
+    }).join('');
+
+    const adminRow = isElevated ? `
+      <div class="vote-admin-row">
+        <button class="toggle-btn" onclick="toggleVote('${v.id}',${v.active})">${v.active ? 'Deactivate' : 'Activate'}</button>
+        <button class="del-btn" onclick="deleteVote('${v.id}')">Delete</button>
+        <span style="margin-left:auto;font-size:0.75rem;color:rgba(255,255,255,0.3)">${total} response${total!==1?'s':''}</span>
+      </div>` : '';
+
+    return `
+    <div class="vote-card${!v.active ? ' inactive' : ''}" id="vote-${v.id}">
+      <div class="vote-header">
+        <div>
+          <p class="vote-question">${escHtml(v.question)}</p>
+          <p class="vote-meta">${new Date(v.created_at).toLocaleDateString()}</p>
+        </div>
+        <span class="vote-badge ${v.active ? 'active' : 'inactive'}">${v.active ? 'Active' : 'Closed'}</span>
+      </div>
+      <div class="options-list">${options}</div>
+      ${adminRow}
+    </div>`;
+  }).join('');
+}
+
+// ── Cast / change / remove vote ────────────────────────────────────────
+async function castVote(voteId, option) {
+  if (!currentUser) return;
+  const existing = userVotes[voteId];
+  try {
+    if (existing === option) {
+      // Remove vote (toggle off)
+      await supa(`player_vote_responses?vote_id=eq.${voteId}&voter_discord_id=eq.${encodeURIComponent(currentUser.id)}`, { method: 'DELETE' });
+      delete userVotes[voteId];
+    } else {
+      // Upsert vote
+      await supa('player_vote_responses', {
+        method: 'POST',
+        headers: { 'Prefer': 'resolution=merge-duplicates,return=representation' },
+        body: JSON.stringify({
+          vote_id: voteId,
+          voter_discord_id: currentUser.id,
+          selected_option: option,
+          voted_at: new Date().toISOString(),
+        }),
+      });
+      userVotes[voteId] = option;
+    }
+    await loadVotes();
+  } catch (e) { alert('Error: ' + e.message); }
+}
+
+// ── Admin: toggle / delete ─────────────────────────────────────────────
+async function toggleVote(id, currentActive) {
+  try {
+    await supa(`admin_votes?id=eq.${id}`, { method: 'PATCH', body: JSON.stringify({ active: !currentActive }) });
+    await loadVotes();
+  } catch (e) { alert('Error: ' + e.message); }
+}
+
+async function deleteVote(id) {
+  if (!confirm('Delete this vote and all responses?')) return;
+  try {
+    await supa(`player_vote_responses?vote_id=eq.${id}`, { method: 'DELETE' });
+    await supa(`admin_votes?id=eq.${id}`, { method: 'DELETE' });
+    await loadVotes();
+  } catch (e) { alert('Error: ' + e.message); }
+}
+
+// ── Create modal ───────────────────────────────────────────────────────
+function openCreateModal()  { document.getElementById('createModal').classList.add('open'); }
+function closeCreateModal() { document.getElementById('createModal').classList.remove('open'); }
+
+async function createVote() {
+  const question = document.getElementById('newQuestion').value.trim();
+  const rawOpts  = document.getElementById('newOptions').value.trim();
+  const options  = rawOpts.split('\n').map(s => s.trim()).filter(Boolean);
+  if (!question || options.length < 2) { alert('Please enter a question and at least 2 options.'); return; }
+  const btn = document.getElementById('createSaveBtn');
+  btn.disabled = true;
+  try {
+    await supa('admin_votes', { method: 'POST', body: JSON.stringify({ question, options, active: true }) });
+    document.getElementById('newQuestion').value = '';
+    document.getElementById('newOptions').value  = '';
+    closeCreateModal();
+    await loadVotes();
+  } catch (e) { alert('Error: ' + e.message); }
+  finally { btn.disabled = false; }
+}
+
+function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function escAttr(s) { return String(s).replace(/'/g,"\\'"); }
+
+// ── Auth + init ────────────────────────────────────────────────────────
+(async () => {
+  const session = await RSAuth.initSession();
+  RSAuth.renderNavUser(session);
+
+  if (session) {
+    authSession = { access_token: session.access_token };
+    currentUser = { id: session.userId, username: session.username };
+    isElevated  = session.isElevated;
+    if (isElevated) {
+      document.getElementById('adminToolbar').style.display = 'block';
+      const navAdminLink = document.getElementById('nav-admin-link');
+      if (navAdminLink) navAdminLink.style.display = '';
+    }
+  } else {
+    document.getElementById('loginNote').style.display = 'block';
+  }
+
+  document.body.style.visibility = 'visible';
+  await loadVotes();
+
+  // Realtime: update votes + counts instantly when app or another user votes
+  try {
+    const { createClient } = await import('@supabase/supabase-js');
+    const _rt = createClient(SUPABASE_URL, SUPABASE_ANON, { auth: { persistSession: false } });
+    _rt.channel('votes_web')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'admin_votes' }, () => loadVotes())
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'player_vote_responses' }, () => loadVotes())
+      .subscribe();
+  } catch { setInterval(loadVotes, 15000); }
+})();
+
+// Close modal on overlay click
+document.getElementById('createModal').addEventListener('click', function(e) {
+  if (e.target === this) closeCreateModal();
+});
+
+document.addEventListener('click', (e) => {
+  const nav = document.getElementById('mobileNav');
+  const btn = document.querySelector('.menu-toggle');
+  if (nav && btn && !nav.contains(e.target) && !btn.contains(e.target)) {
+    nav.classList.remove('open');
+    btn.setAttribute('aria-expanded','false');
+  }
+});
+</script>
+</body>
+</html>
