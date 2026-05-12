@@ -36,7 +36,7 @@
 <body style="visibility:hidden">
 
 <!-- ── Login gate ── -->
-<div id="rs-login-gate" style="display:none;position:fixed;inset:0;background:#0d0b07;z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;">
+<div id="rs-login-gate" style="display:none;position:fixed;inset:0;background:#0d0b07;z-index:9999;align-items:center;justify-content:center;flex-direction:column;gap:18px;">
   <p style="font-family:'Cinzel',serif;color:var(--gold);font-size:1.1rem;">Login required to access the Admin Panel</p>
   <button onclick="RSAuth.loginWithDiscord()" style="background:var(--gold);color:#0d0b07;border:none;padding:12px 28px;border-radius:8px;font-family:'Cinzel',serif;font-weight:700;font-size:0.9rem;cursor:pointer;">Login with Discord</button>
 </div>
@@ -120,9 +120,7 @@ const PANEL_ITEMS = [
   const content = document.getElementById('rs-admin-content');
 
   if (!session) {
-    gate.style.visibility = 'visible';
-    gate.style.opacity    = '1';
-    gate.style.pointerEvents = 'all';
+    gate.style.display = 'flex';
     document.body.style.visibility = 'visible';
     return;
   }
