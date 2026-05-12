@@ -5,10 +5,59 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Privacy Policy — RunestoneMMO</title>
   <link rel="stylesheet" href="/styles.css">
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #111;
+      color: #e5e5e5;
+      line-height: 1.6;
+    }
+    h1, h2, h3 {
+      color: #d4b46a;
+      margin-bottom: 10px;
+    }
+    a {
+      color: #d4b46a;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .privacy-main {
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: rgba(0,0,0,0.4);
+      padding: 40px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .section {
+      margin-bottom: 40px;
+    }
+    .highlight-box {
+      background: rgba(212, 180, 106, 0.1);
+      border-left: 4px solid #d4b46a;
+      padding: 15px 20px;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+    }
+    footer {
+      margin-top: 60px;
+      text-align: center;
+      font-size: 0.9rem;
+      opacity: 0.7;
+      padding: 24px 20px;
+    }
+  </style>
   <script src="/auth.js"></script>
 </head>
 <body>
-<!-- RS Login Gate — Discord OAuth — visibility:hidden by default -->
+<!-- RS Login Gate -->
 <div id="rs-login-gate" style="visibility:hidden;opacity:0;pointer-events:none;position:fixed;inset:0;background:rgba(10,9,7,0.97);z-index:9999;display:flex;align-items:center;justify-content:center;transition:opacity 0.15s;">
   <div style="background:#1e1b17;border:1px solid #4a3a28;border-radius:14px;padding:40px 32px;text-align:center;max-width:400px;width:90%;box-shadow:0 24px 64px rgba(0,0,0,0.7);">
     <div style="font-size:2rem;margin-bottom:12px;">&#9876;</div>
@@ -18,10 +67,8 @@
       <svg width="20" height="15" viewBox="0 0 71 55" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M60.1 4.9A58.5 58.5 0 0 0 45.5.4a40.7 40.7 0 0 0-1.8 3.7 54 54 0 0 0-16.3 0A39.6 39.6 0 0 0 25.6.4 58.4 58.4 0 0 0 11 4.9C1.6 19.1-.9 33 .3 46.6a58.9 58.9 0 0 0 18 9.1 44.6 44.6 0 0 0 3.8-6.2 38.3 38.3 0 0 1-6-2.9l1.5-1.1a42 42 0 0 0 36 0l1.5 1.1a38.2 38.2 0 0 1-6 2.9 44.4 44.4 0 0 0 3.8 6.2 58.7 58.7 0 0 0 18-9.1c1.5-15.5-2.5-29.3-10.8-41.6ZM23.7 38.2c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.5 0 6.4 3.2 6.3 7.2 0 4-2.8 7.2-6.3 7.2Zm23.6 0c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.5 0 6.4 3.2 6.3 7.2 0 4-2.8 7.2-6.3 7.2Z"/></svg>
       Login with Discord
     </button>
-    <p style="color:rgba(240,230,200,0.25);font-size:0.72rem;margin:16px 0 0;line-height:1.5;">You will be redirected to Discord to authorise. No password is stored on this site.</p>
   </div>
 </div>
-
 <header>
   <div class="topbar">
     <a class="brand" href="/index.html">RUNESTONE VALE</a>
@@ -57,152 +104,122 @@
     </nav>
   </div>
 </header>
-<main class="terms-main">
+
+<main class="privacy-main">
   <div class="container">
     <h1>Privacy Policy</h1>
     <p>Last updated: May 2026</p>
+    
     <div class="section">
-      <h2>1. Introduction</h2>
       <p>
-        Welcome to RunestoneMMO and the Runestone Vale Companion App. We are committed to protecting your privacy and ensuring your personal information is handled responsibly. This Privacy Policy explains how we collect, use, and safeguard your data when you use our website and mobile application.
+        Welcome to Runestone Vale. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website (runestonemmo.com), use the Runestone Vale mobile application, or play on the Runestone Vale Minecraft server.
+      </p>
+      <p>
+        Please read this privacy policy carefully. If you do not agree with the terms of this privacy policy, please do not access the site, app, or server.
       </p>
     </div>
+
     <div class="section">
-      <h2>2. Information We Collect</h2>
-      <p>
-        When you log into the Runestone Vale Companion App using Discord OAuth, we collect only the minimum information required to authenticate you and link your app profile to your server progression. This includes:
-      </p>
+      <h2>1. Information We Collect</h2>
+      <p>We may collect information about you in a variety of ways. The information we may collect includes:</p>
+      
+      <h3>Personal Data</h3>
       <ul>
-        <li>Your Discord User ID</li>
-        <li>Your Discord Username</li>
-        <li>Your Discord Avatar (profile picture)</li>
+        <li><strong>Discord Information:</strong> When you log into our website or app using Discord OAuth, we collect your Discord User ID, username, and avatar URL. We do not collect your email address or password.</li>
+        <li><strong>Minecraft Information:</strong> When you link your account using the in-game <code>/rlink</code> command, we collect your Minecraft UUID and username.</li>
       </ul>
-      <p>
-        <strong>We do not collect your password, and we do not have the ability to read your messages or post on your behalf.</strong> Authentication is handled securely through Supabase and Discord's official OAuth system.
-      </p>
-    </div>
-    <div class="section">
-      <h2>3. How We Use Your Information</h2>
-      <p>The information we collect is used strictly for the following purposes:</p>
+
+      <h3>App and Server Activity Data</h3>
       <ul>
-        <li>To authenticate your identity within the companion app</li>
-        <li>To display your Discord username and avatar on your profile page</li>
-        <li>To link your Discord identity to your in-game character progression</li>
-        <li>To verify your role (e.g., Player, Staff, Admin) for role-specific app features</li>
+        <li><strong>Gameplay Stats:</strong> We collect and store your in-game progression, including skill levels, combat stats, currency balances, and playtime.</li>
+        <li><strong>User-Generated Content:</strong> We store chat messages sent in-game and via the app, bug reports, and community votes.</li>
+        <li><strong>Diagnostic Data:</strong> We may collect crash logs and performance data from the mobile app to help us identify and fix bugs.</li>
       </ul>
     </div>
+
     <div class="section">
-      <h2>4. Data Storage and Security</h2>
-      <p>
-        Your authentication data is securely stored using Supabase, a leading open-source database provider. We implement industry-standard security measures to protect your data from unauthorized access. Your Discord access tokens are stored securely and are only used for authentication purposes.
-      </p>
+      <h2>2. How We Use Your Information</h2>
+      <p>Having accurate information about you permits us to provide you with a smooth, efficient, and customized experience. Specifically, we may use information collected about you to:</p>
+      <ul>
+        <li>Create and manage your account across the website, app, and game server.</li>
+        <li>Sync your in-game character stats (skills, economy, claims) to your mobile app dashboard.</li>
+        <li>Enable cross-platform communication (in-app chat synced with in-game chat).</li>
+        <li>Monitor and analyze usage and trends to improve your experience.</li>
+        <li>Prevent fraudulent transactions, monitor against theft, and protect against criminal activity.</li>
+        <li>Respond to customer service requests and support needs.</li>
+      </ul>
     </div>
+
     <div class="section">
-      <h2>5. Data Sharing and Disclosure</h2>
-      <p>
-        <strong>We do not sell, rent, or share your personal information with third parties.</strong> Your data is used exclusively within the RunestoneMMO ecosystem. We will only disclose information if required to do so by law or in response to valid requests by public authorities.
-      </p>
+      <h2>3. Disclosure of Your Information</h2>
+      <p>We do not sell, trade, or rent your personal identification information to others. We may share generic aggregated demographic information not linked to any personal identification information regarding visitors and users with our business partners and trusted affiliates.</p>
+      <p>We may disclose your information where we are legally required to do so in order to comply with applicable law, governmental requests, a judicial proceeding, court order, or legal process.</p>
     </div>
+
     <div class="section">
-      <h2>6. Data Retention and Deletion</h2>
-      <p>
-        We retain your data only for as long as you maintain an active account with us. If you wish to have your data deleted, you can log out of the app and revoke the RunestoneMMO authorization from your Discord settings (User Settings > Authorized Apps). You may also contact us to request full deletion of your profile data from our database.
-      </p>
+      <h2>4. Security of Your Information</h2>
+      <p>We use administrative, technical, and physical security measures to help protect your personal information. All data transmitted between the app/website and our databases (Supabase) is encrypted in transit using HTTPS/TLS. While we have taken reasonable steps to secure the personal information you provide to us, please be aware that despite our efforts, no security measures are perfect or impenetrable.</p>
     </div>
+
+    <div class="section" id="delete">
+      <h2>5. Account and Data Deletion</h2>
+      <div class="highlight-box">
+        <h3 style="margin-top:0;">How to Request Data Deletion</h3>
+        <p>You have the right to request the deletion of your account and associated personal data at any time. This complies with Google Play Data Safety requirements and general privacy best practices.</p>
+        
+        <p><strong>What gets deleted:</strong></p>
+        <ul>
+          <li>Your Discord OAuth link and associated Discord ID</li>
+          <li>Your Minecraft UUID link</li>
+          <li>Your app account profile</li>
+        </ul>
+        
+        <p><strong>What is retained:</strong></p>
+        <ul>
+          <li>In-game character data (skills, claims, economy) remains on the Minecraft server unless specifically requested to be wiped by a server administrator.</li>
+          <li>Chat logs and moderation history may be retained for server safety and rule enforcement purposes.</li>
+        </ul>
+
+        <p><strong>To request deletion, please do one of the following:</strong></p>
+        <ol>
+          <li><strong>Via Discord:</strong> Open a support ticket in the official Runestone Vale Discord server and request an "App Account Deletion".</li>
+          <li><strong>Via Email:</strong> Contact our support team at <code>support@runestonemmo.com</code> with your Discord username and Minecraft IGN.</li>
+        </ol>
+        <p>We will process your deletion request within 7-14 business days.</p>
+      </div>
+    </div>
+
     <div class="section">
-      <h2>7. Contact Us</h2>
-      <p>
-        If you have any questions or concerns about this Privacy Policy or our data practices, please contact us at:<br>
-        <strong>support@runestonemmo.com</strong> or via our official Discord server.
-      </p>
+      <h2>6. Contact Us</h2>
+      <p>If you have questions or comments about this Privacy Policy, please contact us via our official Discord server or through the Bug Report & Contact page on this website.</p>
     </div>
   </div>
 </main>
+
 <footer>
-  © 2026 RunestoneMMO. All rights reserved.<br>
-  <a href="/index.html">Home</a> •
-  <a href="/features.html">Server-Features</a> •
-  <a href="/roadmap_development.html">Roadmap</a> •
-  <a href="/bug-report.html">Bug Reports &amp; Contact</a> •
-  <a href="/terms.html">Terms</a> •
-  <a href="/privacy.html">Privacy</a>
+  &copy; 2026 RunestoneMMO. All rights reserved.<br>
+  <a href="/index.html">Home</a> &bull;
+  <a href="/features.html">Server-Features</a> &bull;
+  <a href="/roadmap_development.html">Roadmap</a> &bull;
+  <a href="/bug-report.html">Bug Reports &amp; Contact</a> &bull;
+  <a href="/terms.html">Terms & Licensing</a> &bull;
+  <a href="/privacy.html">Privacy Policy</a>
 </footer>
-<script>
 
-
-document.addEventListener("click", function (event) {
-  const nav = document.getElementById("mobileNav");
-  const menuButton = document.querySelector(".menu-toggle");
-  const dropdown = document.querySelector(".nav-dropdown");
-  const dropdownButton = document.querySelector(".dropdown-toggle");
-  if (dropdown && !dropdown.contains(event.target)) {
-    dropdown.classList.remove("open");
-    if (dropdownButton) {
-      dropdownButton.setAttribute("aria-expanded", "false");
-    }
-  }
-  if (!nav || !menuButton) return;
-  const clickedInsideNav = nav.contains(event.target);
-  const clickedButton = menuButton.contains(event.target);
-  if (!clickedInsideNav && !clickedButton) {
-    nav.classList.remove("open");
-    menuButton.setAttribute("aria-expanded", "false");
-  }
-});
-</script>
-<script>
-(async function() {
-  var session = await RSAuth.requireLogin();
-  RSAuth.renderNavUser(session);
-  if (session && typeof RSAuth_onLogin === 'function') RSAuth_onLogin(session);
-})();
-
-// ── Community dropdown toggle ──────────────────────────────────────────────
-
-
-</script>
-<script>
-
-
-
-
-
-
-</script>
 <script>
 function toggleMenu() {
-  const nav = document.getElementById("mobileNav");
-  const button = document.querySelector(".menu-toggle");
-  nav.classList.toggle("open");
-  button.setAttribute("aria-expanded", nav.classList.contains("open") ? "true" : "false");
+  const nav = document.getElementById('mobileNav');
+  const btn = document.querySelector('.menu-toggle');
+  const expanded = btn.getAttribute('aria-expanded') === 'true';
+  btn.setAttribute('aria-expanded', !expanded);
+  nav.classList.toggle('open');
 }
 function toggleRunestoneDropdown(event) {
   event.stopPropagation();
-  const dropdown = event.currentTarget.closest(".nav-dropdown");
-  const button = dropdown.querySelector(".dropdown-toggle");
-  dropdown.classList.toggle("open");
-  button.setAttribute("aria-expanded", dropdown.classList.contains("open") ? "true" : "false");
+  const wrap = event.currentTarget.closest('.nav-dropdown');
+  wrap.classList.toggle('open');
+  event.currentTarget.setAttribute('aria-expanded', wrap.classList.contains('open') ? 'true' : 'false');
 }
-document.addEventListener("click", function(event) {
-  const nav = document.getElementById("mobileNav");
-  const menuButton = document.querySelector(".menu-toggle");
-  const dropdown = document.querySelector(".nav-dropdown");
-  const dropdownButton = document.querySelector(".dropdown-toggle");
-  if (dropdown && !dropdown.contains(event.target)) {
-    dropdown.classList.remove("open");
-    if (dropdownButton) dropdownButton.setAttribute("aria-expanded", "false");
-  }
-  if (!nav || !menuButton) return;
-  if (!nav.contains(event.target) && !menuButton.contains(event.target)) {
-    nav.classList.remove("open");
-    menuButton.setAttribute("aria-expanded", "false");
-  }
-});
-(function() {
-  RSAuth.initSession().then(function(session) {
-    RSAuth.renderNavUser(session);
-  });
-})();
 function toggleCommunityDropdown(event) {
   event.stopPropagation();
   const wrap = document.getElementById('communityDropdownWrap');
@@ -212,10 +229,16 @@ function toggleCommunityDropdown(event) {
   if (btn) btn.setAttribute('aria-expanded', wrap.classList.contains('open') ? 'true' : 'false');
 }
 document.addEventListener('click', function(e) {
-  const wrap = document.getElementById('communityDropdownWrap');
-  if (wrap && !wrap.contains(e.target)) {
-    wrap.classList.remove('open');
-    const btn = wrap.querySelector('.dropdown-toggle');
+  const rWrap = document.querySelector('.nav-dropdown');
+  if (rWrap && !rWrap.contains(e.target)) {
+    rWrap.classList.remove('open');
+    const btn = rWrap.querySelector('.dropdown-toggle');
+    if (btn) btn.setAttribute('aria-expanded', 'false');
+  }
+  const cWrap = document.getElementById('communityDropdownWrap');
+  if (cWrap && !cWrap.contains(e.target)) {
+    cWrap.classList.remove('open');
+    const btn = cWrap.querySelector('.dropdown-toggle');
     if (btn) btn.setAttribute('aria-expanded', 'false');
   }
 });
