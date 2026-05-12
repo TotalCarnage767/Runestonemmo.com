@@ -60,6 +60,31 @@
 
     .vote-total { font-size: 0.78rem; color: rgba(255,255,255,0.3); margin-top: 12px; text-align: right; }
     .loading-state, .empty-state { text-align: center; padding: 50px 0; color: rgba(255,255,255,0.35); font-size: 0.9rem; }
+    /* admin create button */
+    .admin-bar { display: none; margin-bottom: 20px; }
+    .create-vote-btn { background: var(--gold); color: #0d0b07; border: none; border-radius: 8px; padding: 10px 22px; font-family: 'Cinzel', serif; font-size: 0.82rem; font-weight: 700; cursor: pointer; transition: opacity 0.18s; }
+    .create-vote-btn:hover { opacity: 0.88; }
+    /* create modal */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.78); z-index: 1000; align-items: flex-start; justify-content: center; padding: 30px 16px; overflow-y: auto; }
+    .modal-overlay.open { display: flex; }
+    .modal-box { background: #1a1500; border: 1px solid rgba(212,175,55,0.25); border-radius: 14px; padding: 28px; max-width: 520px; width: 100%; margin: auto; }
+    .modal-box h3 { font-family: 'Cinzel', serif; font-size: 1rem; color: var(--gold); margin: 0 0 18px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .form-group label { font-size: 0.75rem; font-weight: 700; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.8px; }
+    .form-group input { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; color: #f0e6c0; font-size: 0.9rem; padding: 10px 12px; font-family: 'Crimson Text', serif; outline: none; transition: border-color 0.18s; }
+    .form-group input:focus { border-color: var(--gold); }
+    .options-builder { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+    .option-row { display: flex; gap: 8px; align-items: center; }
+    .option-row input { flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; color: #f0e6c0; font-size: 0.88rem; padding: 8px 12px; font-family: 'Crimson Text', serif; outline: none; }
+    .option-row input:focus { border-color: var(--gold); }
+    .remove-opt { background: none; border: none; color: rgba(255,255,255,0.3); font-size: 1rem; cursor: pointer; padding: 0 4px; }
+    .remove-opt:hover { color: #e74c3c; }
+    .add-opt-btn { background: rgba(255,255,255,0.06); border: 1px dashed rgba(255,255,255,0.2); border-radius: 8px; color: rgba(255,255,255,0.45); font-size: 0.82rem; padding: 8px; cursor: pointer; transition: all 0.15s; }
+    .add-opt-btn:hover { background: rgba(255,255,255,0.1); }
+    .modal-footer { display: flex; gap: 10px; justify-content: flex-end; margin-top: 18px; }
+    .cancel-btn { padding: 9px 18px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); background: transparent; color: rgba(255,255,255,0.5); font-size: 0.82rem; cursor: pointer; }
+    .save-btn { padding: 9px 22px; border-radius: 8px; background: var(--gold); border: none; color: #0d0b07; font-family: 'Cinzel', serif; font-size: 0.82rem; font-weight: 700; cursor: pointer; }
+    .save-btn:disabled { opacity: 0.5; cursor: not-allowed; }
   </style>
 </head>
 <body>
@@ -104,6 +129,11 @@
     <div class="page-header">
       <h1>🗳️ Community Voting</h1>
       <p>Have your say on the future of Runestone Vale. Results update in real time across the app and website.</p>
+    </div>
+
+    <!-- Admin create vote button — only visible to staff/admin -->
+    <div class="admin-bar" id="adminBar">
+      <button class="create-vote-btn" onclick="openCreateModal()">+ Create Vote</button>
     </div>
 
     <!-- Soft login banner — only shown to guests, never blocks content -->
@@ -279,6 +309,10 @@ document.addEventListener('click', (e) => {
     currentUser = { id: session.userId, username: session.username };
     // User is logged in — hide the login banner entirely
     document.getElementById('loginBanner').style.display = 'none';
+    // Show admin bar for staff/admin
+    if (session.isElevated) {
+      document.getElementById('adminBar').style.display = 'block';
+    }
   } else {
     // Not logged in — show soft banner but never block content
     document.getElementById('loginBanner').style.display = 'flex';
@@ -296,6 +330,63 @@ document.addEventListener('click', (e) => {
       .subscribe();
   } catch { setInterval(loadVotes, 15000); }
 })();
+</script>
+
+<!-- Create vote modal -->
+<div class="modal-overlay" id="createModal">
+  <div class="modal-box">
+    <h3>🗳️ Create Vote</h3>
+    <div class="form-group">
+      <label>Question</label>
+      <input type="text" id="voteQuestion" placeholder="What should we add next?" maxlength="200">
+    </div>
+    <div class="form-group">
+      <label>Options <span style="font-weight:400;text-transform:none;letter-spacing:0">(min 2)</span></label>
+    </div>
+    <div class="options-builder" id="optionsBuilder"></div>
+    <button class="add-opt-btn" onclick="addOption()">+ Add Option</button>
+    <div class="modal-footer">
+      <button class="cancel-btn" onclick="closeCreateModal()">Cancel</button>
+      <button class="save-btn" id="createSaveBtn" onclick="createVote()">Create</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let optionCount = 0;
+function openCreateModal() {
+  document.getElementById('voteQuestion').value = '';
+  document.getElementById('optionsBuilder').innerHTML = '';
+  optionCount = 0;
+  addOption(); addOption();
+  document.getElementById('createModal').classList.add('open');
+}
+function closeCreateModal() { document.getElementById('createModal').classList.remove('open'); }
+document.getElementById('createModal').addEventListener('click', e => { if (e.target === document.getElementById('createModal')) closeCreateModal(); });
+
+function addOption() {
+  const idx = optionCount++;
+  const row = document.createElement('div');
+  row.className = 'option-row'; row.id = `optRow${idx}`;
+  row.innerHTML = `<input type="text" placeholder="Option ${idx+1}" id="opt${idx}" maxlength="100"><button class="remove-opt" onclick="document.getElementById('optRow${idx}').remove()" title="Remove">✕</button>`;
+  document.getElementById('optionsBuilder').appendChild(row);
+}
+
+async function createVote() {
+  const question = document.getElementById('voteQuestion').value.trim();
+  const optInputs = document.querySelectorAll('#optionsBuilder input');
+  const options = Array.from(optInputs).map(i => i.value.trim()).filter(Boolean);
+  if (!question) { alert('Please enter a question.'); return; }
+  if (options.length < 2) { alert('Please add at least 2 options.'); return; }
+  const btn = document.getElementById('createSaveBtn');
+  btn.disabled = true; btn.textContent = 'Creating…';
+  try {
+    await supaFetch('admin_votes', { method: 'POST', body: JSON.stringify({ question, options, active: true }) });
+    closeCreateModal();
+    await loadVotes();
+  } catch (e) { alert('Error: ' + e.message); }
+  finally { btn.disabled = false; btn.textContent = 'Create'; }
+}
 </script>
 </body>
 </html>

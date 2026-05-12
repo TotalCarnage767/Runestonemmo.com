@@ -102,13 +102,13 @@
 
 <script>
 const PANEL_ITEMS = [
-  { id: 'players',       href: '/admin-roles.html',    icon: '👥', bg: '#1a2a1a', title: 'Player Manager',    sub: 'Search players, view stats, manage accounts', adminOnly: false },
-  { id: 'roles',         href: '/admin-roles.html',    icon: '🛡️', bg: '#1a1a2a', title: 'Role Manager',       sub: 'Assign and change player roles',               adminOnly: true  },
-  { id: 'notifications', href: '/admin-notifications.html', icon: '🔔', bg: '#2a1a10', title: 'Notifications',  sub: 'Send announcements to all or specific players', adminOnly: false },
-  { id: 'bugs',          href: '/admin-bugs.html',     icon: '🐛', bg: '#2a1010', title: 'Bug Reports',        sub: 'Review, update status, and resolve reports',    adminOnly: false },
-  { id: 'votes',         href: '/admin-votes.html',    icon: '🗳️', bg: '#1a1a2a', title: 'Vote Manager',       sub: 'Create and manage community votes',             adminOnly: false },
-  { id: 'roadmap',       href: '/roadmap_development.html', icon: '🗺️', bg: '#1a2a1a', title: 'Roadmap Manager', sub: 'Create, edit, and reorder roadmap items',    adminOnly: true  },
-  { id: 'news',          href: '/admin-news.html',     icon: '📰', bg: '#2a1a10', title: 'News Manager',       sub: 'Post, edit, and pin news updates',              adminOnly: false },
+  { id: 'players',       href: '/admin-roles.html',          icon: '👥', color: '#4ab3e8', title: 'Player Manager',    sub: 'Search players, view stats, manage accounts', adminOnly: false },
+  { id: 'roles',         href: '/admin-roles.html',          icon: '🛡️', color: '#e74c3c', title: 'Role Manager',       sub: 'Assign and change player roles',               adminOnly: true  },
+  { id: 'notifications', href: '/admin-notifications.html',  icon: '🔔', color: '#c9a227', title: 'Notifications',      sub: 'Send announcements to all or specific players', adminOnly: false },
+  { id: 'bugs',          href: '/admin-bugs.html',           icon: '🐛', color: '#e67e22', title: 'Bug Reports',        sub: 'Review, update status, and resolve reports',    adminOnly: false },
+  { id: 'votes',         href: '/admin-votes.html',          icon: '🗳️', color: '#9b59b6', title: 'Vote Manager',       sub: 'Create and manage community votes',             adminOnly: false },
+  { id: 'roadmap',       href: '/roadmap_development.html',  icon: '🗺️', color: '#2ecc71', title: 'Roadmap Manager',    sub: 'Create, edit, and reorder roadmap items',       adminOnly: true  },
+  { id: 'news',          href: '/admin-news.html',           icon: '📰', color: '#c9a227', title: 'News Manager',       sub: 'Post, edit, and pin news updates',              adminOnly: false },
 ];
 
 (async () => {
@@ -152,8 +152,8 @@ const PANEL_ITEMS = [
   const grid = document.getElementById('panel-grid');
   const visible = PANEL_ITEMS.filter(item => !item.adminOnly || isAdmin);
   grid.innerHTML = visible.map(item => `
-    <a class="panel-card" href="${item.href}">
-      <div class="panel-icon" style="background:${item.bg}">${item.icon}</div>
+    <a class="panel-card" href="${item.href}" style="border-left-color:${item.color}">
+      <div class="panel-icon" style="background:${item.color}22">${item.icon}</div>
       <div class="panel-text">
         <p class="panel-title">${item.title}</p>
         <p class="panel-sub">${item.sub}</p>

@@ -88,6 +88,7 @@
       <button class="filter-chip" onclick="setFilter('patch',this)">Patches</button>
       <button class="filter-chip" onclick="setFilter('announcement',this)">Announcements</button>
       <button class="filter-chip" onclick="setFilter('event',this)">Events</button>
+      <button class="filter-chip" onclick="setFilter('hotfix',this)">Hotfixes</button>
     </div>
     <div id="newsGrid" class="news-grid"><div class="loading-state">Loading news…</div></div>
   </div>
@@ -104,7 +105,7 @@
 const SUPABASE_URL='https://ludkhakegqojxuglisks.supabase.co';
 const SUPABASE_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1ZGtoYWtlZ3Fvanh1Z2xpc2tzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5NTE2MjEsImV4cCI6MjA5MzUyNzYyMX0.V5_Mp7eHc-3rKFZLUGNM_iH57hpiGMvp4CBcH33R0rE';
 let allPosts=[],activeFilter='all';
-const CAT={update:{label:'Update',color:'#3498db'},patch:{label:'Patch',color:'#2ecc71'},announcement:{label:'Announcement',color:'#e67e22'},event:{label:'Event',color:'#9b59b6'}};
+const CAT={update:{label:'Update',color:'#7dcc7d'},patch:{label:'Patch',color:'#4ab3e8'},event:{label:'Event',color:'#b87de8'},announcement:{label:'Announcement',color:'#e8a830'},hotfix:{label:'Hotfix',color:'#e87d7d'}};
 async function loadPosts(){
   try{
     const res=await fetch(`${SUPABASE_URL}/rest/v1/news_posts?select=*&order=pinned.desc,sort_order.asc,created_at.desc`,{headers:{'apikey':SUPABASE_ANON,'Authorization':`Bearer ${SUPABASE_ANON}`,'Accept':'application/json'}});
