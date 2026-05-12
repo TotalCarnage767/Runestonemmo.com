@@ -56,6 +56,14 @@
       <li><a href="/">Home</a></li>
       <li><a href="/features.html">Features</a></li>
       <li><a href="/roadmap_development.html">Roadmap</a></li>
+      <li class="nav-dropdown" id="communityDropdownWrap">
+        <button class="top-link dropdown-toggle" type="button" aria-expanded="false" onclick="toggleCommunityDropdown(event)">Community ▾</button>
+        <div class="dropdown-menu" id="communityDropdown">
+          <a class="dropdown-link" href="/news.html">📰 Patch Notes &amp; News</a>
+          <a class="dropdown-link" href="/voting.html">🗳️ Community Voting</a>
+          <a class="dropdown-link" href="/bug-report.html">🐛 Bug Reports</a>
+        </div>
+      </li>
       <li><a href="/news.html">News</a></li>
       <li><a href="/bug-report.html">Bug Report</a></li>
       <li><a href="/voting.html">Voting</a></li>
@@ -165,6 +173,24 @@ document.addEventListener('click', (e) => {
   if (nav && btn && !nav.contains(e.target) && !btn.contains(e.target)) {
     nav.classList.remove('open');
     btn.setAttribute('aria-expanded', 'false');
+  }
+});
+
+// ── Community dropdown toggle ──────────────────────────────────────────────
+function toggleCommunityDropdown(event) {
+  event.stopPropagation();
+  const wrap = document.getElementById('communityDropdownWrap');
+  const btn  = wrap ? wrap.querySelector('.dropdown-toggle') : null;
+  if (!wrap) return;
+  wrap.classList.toggle('open');
+  if (btn) btn.setAttribute('aria-expanded', wrap.classList.contains('open') ? 'true' : 'false');
+}
+document.addEventListener('click', function(e) {
+  const wrap = document.getElementById('communityDropdownWrap');
+  if (wrap && !wrap.contains(e.target)) {
+    wrap.classList.remove('open');
+    const btn = wrap.querySelector('.dropdown-toggle');
+    if (btn) btn.setAttribute('aria-expanded', 'false');
   }
 });
 </script>
