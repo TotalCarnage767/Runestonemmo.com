@@ -153,6 +153,10 @@
       .rm-stat-num { font-size:1.3rem; }
     }
   </style>
+  <!-- Supabase JS client (needed for Realtime WebSocket subscriptions) -->
+  <script type="importmap">
+    { "imports": { "@supabase/supabase-js": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm" } }
+  </script>
 </head>
 <body>
 <!-- RS Login Gate — Discord OAuth — visibility:hidden by default -->
@@ -499,6 +503,25 @@ document.addEventListener('click', e => {
   if (gate) gate.style.display = 'none';
   if (isElevated) document.getElementById('rmAdminBar').style.display = 'block';
   await loadItems();
+
+  // ── Supabase Realtime: keep roadmap in sync with app edits ──
+  // Uses the supabase-js WebSocket client so any INSERT/UPDATE/DELETE
+  // made from the app (or another admin) appears here without a page reload.
+  try {
+    const { createClient } = await import('@supabase/supabase-js');
+    const _rt = createClient(SUPA_URL, SUPA_ANON, {
+      auth: { persistSession: false },
+      realtime: { params: { eventsPerSecond: 10 } },
+    });
+    _rt.channel('roadmap_items_web')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'roadmap_items' }, () => {
+        loadItems();
+      })
+      .subscribe();
+  } catch (e) {
+    // Realtime unavailable — polling fallback every 30 s
+    setInterval(loadItems, 30000);
+  }
 })();
 </script>
 <script>
