@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Votes | RunestoneMMO</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <script src="/auth.js"></script>
+  <script type="importmap">{ "imports": { "@supabase/supabase-js": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm" } }</script>
+  <style>
+    .admin-wrap { max-width: 900px; margin: 0 auto; padding: 36px 20px 80px; }
+    #rs-login-gate, #rs-access-denied { text-align: center; padding: 80px 20px; }
+    #rs-login-gate h2 { font-family: 'Cinzel', serif; color: var(--gold); margin-bottom: 8px; }
+    #rs-access-denied h2 { font-family: 'Cinzel', serif; color: #e74c3c; margin-bottom: 8px; }
+    #rs-login-gate p, #rs-access-denied p { color: rgba(255,255,255,0.45); }
+    #rs-access-denied { display: none; }
+    #rs-admin-content { display: none; }
+    .discord-btn { margin-top: 20px; padding: 10px 24px; background: #5865F2; color: #fff; border: none; border-radius: 8px; font-family: 'Cinzel', serif; font-size: 0.85rem; font-weight: 700; cursor: pointer; }
+    .page-header { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 14px; margin-bottom: 24px; }
+    .page-header-left h1 { font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 900; color: var(--gold); margin: 0 0 4px; }
+    .page-header-left p { font-size: 0.82rem; color: rgba(255,255,255,0.4); margin: 0; }
+    .back-link { font-size: 0.82rem; color: var(--gold); text-decoration: none; display: inline-block; margin-bottom: 10px; }
+    .back-link:hover { text-decoration: underline; }
+    .create-btn { background: var(--gold); color: #0d0b07; border: none; border-radius: 8px; padding: 10px 22px; font-family: 'Cinzel', serif; font-size: 0.82rem; font-weight: 700; cursor: pointer; align-self: flex-start; transition: opacity 0.18s; }
+    .create-btn:hover { opacity: 0.88; }
+    /* vote cards */
+    .vote-list { display: flex; flex-direction: column; gap: 14px; }
+    .vote-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-left: 3px solid; border-radius: 12px; padding: 20px 22px; }
+    .vote-card-top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+    .vote-pill { padding: 3px 10px; border-radius: 999px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; border: 1px solid; }
+    .vote-date { font-size: 0.75rem; color: rgba(255,255,255,0.3); }
+    .vote-count { font-size: 0.75rem; color: #5dade2; font-weight: 700; margin-left: auto; }
+    .vote-question { font-family: 'Cinzel', serif; font-size: 0.95rem; color: #f0e6c0; margin: 0 0 10px; line-height: 1.4; }
+    .vote-options { display: flex; flex-direction: column; gap: 4px; margin-bottom: 14px; }
+    .vote-option-row { display: flex; align-items: center; gap: 8px; }
+    .opt-label { font-size: 0.82rem; color: rgba(255,255,255,0.55); flex: 1; }
+    .opt-bar-wrap { width: 120px; height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; }
+    .opt-bar { height: 4px; border-radius: 2px; background: var(--gold); transition: width 0.4s; }
+    .opt-count { font-size: 0.75rem; color: rgba(255,255,255,0.35); width: 40px; text-align: right; }
+    .vote-actions { display: flex; gap: 10px; }
+    .toggle-btn { flex: 1; padding: 8px; border-radius: 7px; border: 1px solid rgba(212,175,55,0.4); background: rgba(212,175,55,0.08); color: var(--gold); font-size: 0.8rem; font-weight: 700; cursor: pointer; transition: background 0.15s; }
+    .toggle-btn:hover { background: rgba(212,175,55,0.18); }
+    .del-btn { padding: 8px 14px; border-radius: 7px; border: 1px solid rgba(231,76,60,0.4); background: rgba(231,76,60,0.08); color: #e74c3c; font-size: 0.8rem; font-weight: 700; cursor: pointer; transition: background 0.15s; }
+    .del-btn:hover { background: rgba(231,76,60,0.18); }
+    .empty-state, .loading-state { text-align: center; padding: 40px 0; color: rgba(255,255,255,0.3); font-size: 0.9rem; }
+    /* create modal */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.78); z-index: 1000; align-items: flex-start; justify-content: center; padding: 30px 16px; overflow-y: auto; }
+    .modal-overlay.open { display: flex; }
+    .modal-box { background: #1a1500; border: 1px solid rgba(212,175,55,0.25); border-radius: 14px; padding: 28px; max-width: 520px; width: 100%; margin: auto; }
+    .modal-box h3 { font-family: 'Cinzel', serif; font-size: 1rem; color: var(--gold); margin: 0 0 18px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .form-group label { font-size: 0.75rem; font-weight: 700; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.8px; }
+    .form-group input, .form-group textarea { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; color: #f0e6c0; font-size: 0.9rem; padding: 10px 12px; font-family: 'Crimson Text', serif; outline: none; transition: border-color 0.18s; }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--gold); }
+    .options-builder { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+    .option-row { display: flex; gap: 8px; align-items: center; }
+    .option-row input { flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; color: #f0e6c0; font-size: 0.88rem; padding: 8px 12px; font-family: 'Crimson Text', serif; outline: none; }
+    .option-row input:focus { border-color: var(--gold); }
+    .remove-opt { background: none; border: none; color: rgba(255,255,255,0.3); font-size: 1rem; cursor: pointer; padding: 0 4px; }
+    .remove-opt:hover { color: #e74c3c; }
+    .add-opt-btn { background: rgba(255,255,255,0.06); border: 1px dashed rgba(255,255,255,0.2); border-radius: 8px; color: rgba(255,255,255,0.45); font-size: 0.82rem; padding: 8px; cursor: pointer; transition: all 0.15s; }
+    .add-opt-btn:hover { background: rgba(255,255,255,0.1); }
+    .modal-footer { display: flex; gap: 10px; justify-content: flex-end; margin-top: 18px; }
+    .cancel-btn { padding: 9px 18px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); background: transparent; color: rgba(255,255,255,0.5); font-size: 0.82rem; cursor: pointer; }
+    .save-btn { padding: 9px 22px; border-radius: 8px; background: var(--gold); border: none; color: #0d0b07; font-family: 'Cinzel', serif; font-size: 0.82rem; font-weight: 700; cursor: pointer; }
+    .save-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="topbar">
+    <a class="brand" href="/index.html">Runestone Vale</a>
+    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleMenu()">☰</button>
+    <nav class="top-links" id="mobileNav">
+      <a class="top-link" href="/index.html">Home</a>
+      <a class="top-link" href="/features.html">Server-Features</a>
+      <div class="nav-dropdown">
+        <button class="top-link dropdown-toggle" type="button" aria-expanded="false" onclick="toggleDropdown(event,'runestoneDropdown')">RunestoneMMO ▾</button>
+        <div class="dropdown-menu" id="runestoneDropdown">
+          <a class="dropdown-link" href="/RunestoneCore.html">RunestoneCore</a>
+          <a class="dropdown-link" href="/RunestoneSkills.html">RunestoneSkills</a>
+          <a class="dropdown-link" href="/runestoneadmintool.html">RunestoneAdminTool</a>
+          <a class="dropdown-link" href="/runestonehub.html">RunestoneHub</a>
+          <a class="dropdown-link" href="/runestonecombat.html">RunestoneCombat</a>
+          <a class="dropdown-link" href="/runestonestamina.html">RunestoneStamina</a>
+          <a class="dropdown-link" href="/runestonenpc.html">RunestoneNPCs</a>
+        </div>
+      </div>
+      <a class="top-link" href="/roadmap_development.html">Roadmap</a>
+      <div class="nav-dropdown">
+        <button class="top-link dropdown-toggle" type="button" aria-expanded="false" onclick="toggleDropdown(event,'communityDropdown')">Community ▾</button>
+        <div class="dropdown-menu" id="communityDropdown">
+          <a class="dropdown-link" href="/news.html">📰 Patch Notes &amp; News</a>
+          <a class="dropdown-link" href="/voting.html">🗳️ Community Voting</a>
+          <a class="dropdown-link" href="/bug-report.html">🐛 Bug Reports</a>
+        </div>
+      </div>
+      <a class="top-link" href="/credits.html">Credits</a>
+      <a class="top-link" href="/contact.html">Contact</a>
+      <a class="top-link" href="/terms.html">Terms</a>
+      <div id="navUserSlot" style="display:flex;align-items:center;flex-shrink:0;margin-left:8px;"></div>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="admin-wrap">
+    <div id="rs-login-gate">
+      <span style="font-size:2.5rem;display:block;margin-bottom:12px;">🔐</span>
+      <h2>Login Required</h2>
+      <p>You must be logged in with a Staff or Admin account to access this page.</p>
+      <button class="discord-btn" onclick="RSAuth.loginWithDiscord()">Login with Discord</button>
+    </div>
+    <div id="rs-access-denied">
+      <span style="font-size:2.5rem;display:block;margin-bottom:12px;">🛡️</span>
+      <h2>Access Denied</h2>
+      <p>This page is restricted to Staff and Admin accounts.</p>
+      <a href="/index.html" style="display:inline-block;margin-top:16px;color:var(--gold);font-size:0.85rem;">← Back to Home</a>
+    </div>
+    <div id="rs-admin-content">
+      <div class="page-header">
+        <div class="page-header-left">
+          <a class="back-link" href="/admin-panel.html">‹ Admin Panel</a>
+          <h1>🗳️ Manage Votes</h1>
+          <p id="headerSub">Loading…</p>
+        </div>
+        <button class="create-btn" onclick="openCreateModal()">+ Create Vote</button>
+      </div>
+      <div id="voteList" class="vote-list">
+        <div class="loading-state">Loading votes…</div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Create vote modal -->
+<div class="modal-overlay" id="createModal">
+  <div class="modal-box">
+    <h3>🗳️ Create Vote</h3>
+    <div class="form-group">
+      <label>Question</label>
+      <input type="text" id="voteQuestion" placeholder="What should we add next?" maxlength="200">
+    </div>
+    <div class="form-group">
+      <label>Options <span style="font-weight:400;text-transform:none;letter-spacing:0">(min 2)</span></label>
+    </div>
+    <div class="options-builder" id="optionsBuilder"></div>
+    <button class="add-opt-btn" onclick="addOption()">+ Add Option</button>
+    <div class="modal-footer">
+      <button class="cancel-btn" onclick="closeCreateModal()">Cancel</button>
+      <button class="save-btn" id="createSaveBtn" onclick="createVote()">Create</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL  = 'https://ludkhakegqojxuglisks.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1ZGtoYWtlZ3Fvanh1Z2xpc2tzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5NTE2MjEsImV4cCI6MjA5MzUyNzYyMX0.V5_Mp7eHc-3rKFZLUGNM_iH57hpiGMvp4CBcH33R0rE';
+let authToken = null;
+let allVotes  = [];
+
+async function supaFetch(path, opts = {}) {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+    ...opts,
+    headers: { 'apikey': SUPABASE_ANON, 'Authorization': `Bearer ${authToken}`, 'Content-Type': 'application/json', 'Accept': 'application/json', 'Prefer': 'return=representation', ...(opts.headers || {}) },
+  });
+  const text = await res.text();
+  if (!res.ok) throw new Error(`${res.status}: ${text}`);
+  return text ? JSON.parse(text) : null;
+}
+
+async function loadVotes() {
+  try {
+    const data = await supaFetch('admin_votes?select=*,player_vote_responses(vote_id,selected_option)&order=created_at.desc');
+    allVotes = (data || []).map(v => {
+      const responses = v.player_vote_responses || [];
+      const counts = {};
+      (v.options || []).forEach(o => counts[o] = 0);
+      responses.forEach(r => { if (r.selected_option) counts[r.selected_option] = (counts[r.selected_option] || 0) + 1; });
+      return { ...v, optionCounts: counts, totalResponses: responses.length };
+    });
+    document.getElementById('headerSub').textContent = `${allVotes.length} votes · ${allVotes.filter(v=>v.active).length} active`;
+    renderVotes();
+  } catch (e) {
+    document.getElementById('voteList').innerHTML = `<div class="empty-state">Failed to load: ${esc(e.message)}</div>`;
+  }
+}
+
+function renderVotes() {
+  const list = document.getElementById('voteList');
+  if (!allVotes.length) { list.innerHTML = '<div class="empty-state">No votes yet. Create one above!</div>'; return; }
+  list.innerHTML = allVotes.map(v => {
+    const total = v.totalResponses || 0;
+    const color = v.active ? '#2ecc71' : '#7f8c8d';
+    const opts = (v.options || []).map(opt => {
+      const count = v.optionCounts[opt] || 0;
+      const pct = total > 0 ? Math.round((count / total) * 100) : 0;
+      return `<div class="vote-option-row">
+        <span class="opt-label">• ${esc(opt)}</span>
+        <div class="opt-bar-wrap"><div class="opt-bar" style="width:${pct}%"></div></div>
+        <span class="opt-count">${count} (${pct}%)</span>
+      </div>`;
+    }).join('');
+    return `<div class="vote-card" style="border-left-color:${color}">
+      <div class="vote-card-top">
+        <span class="vote-pill" style="color:${color};border-color:${color}66;background:${color}22">${v.active?'ACTIVE':'CLOSED'}</span>
+        <span class="vote-date">${new Date(v.created_at).toLocaleDateString()}</span>
+        <span class="vote-count">${total} response${total!==1?'s':''}</span>
+      </div>
+      <p class="vote-question">${esc(v.question)}</p>
+      <div class="vote-options">${opts}</div>
+      <div class="vote-actions">
+        <button class="toggle-btn" onclick="toggleVote('${v.id}',${v.active})">${v.active?'Close Vote':'Reopen Vote'}</button>
+        <button class="del-btn" onclick="deleteVote('${v.id}')">Delete</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function toggleVote(id, active) {
+  try {
+    await supaFetch(`admin_votes?id=eq.${id}`, { method: 'PATCH', body: JSON.stringify({ active: !active }) });
+    await loadVotes();
+  } catch (e) { alert('Error: ' + e.message); }
+}
+
+async function deleteVote(id) {
+  if (!confirm('Delete this vote and all responses? This cannot be undone.')) return;
+  try {
+    await supaFetch(`player_vote_responses?vote_id=eq.${id}`, { method: 'DELETE' });
+    await supaFetch(`admin_votes?id=eq.${id}`, { method: 'DELETE' });
+    await loadVotes();
+  } catch (e) { alert('Error: ' + e.message); }
+}
+
+/* ── Create modal ── */
+let optionCount = 0;
+function openCreateModal() {
+  document.getElementById('voteQuestion').value = '';
+  document.getElementById('optionsBuilder').innerHTML = '';
+  optionCount = 0;
+  addOption(); addOption();
+  document.getElementById('createModal').classList.add('open');
+}
+function closeCreateModal() { document.getElementById('createModal').classList.remove('open'); }
+document.getElementById('createModal').addEventListener('click', e => { if (e.target === document.getElementById('createModal')) closeCreateModal(); });
+
+function addOption() {
+  const idx = optionCount++;
+  const row = document.createElement('div');
+  row.className = 'option-row';
+  row.id = `optRow${idx}`;
+  row.innerHTML = `<input type="text" placeholder="Option ${idx+1}" id="opt${idx}" maxlength="100">
+    <button class="remove-opt" onclick="removeOption(${idx})" title="Remove">✕</button>`;
+  document.getElementById('optionsBuilder').appendChild(row);
+}
+function removeOption(idx) {
+  const row = document.getElementById(`optRow${idx}`);
+  if (row) row.remove();
+}
+
+async function createVote() {
+  const question = document.getElementById('voteQuestion').value.trim();
+  const optInputs = document.querySelectorAll('#optionsBuilder input');
+  const options = Array.from(optInputs).map(i => i.value.trim()).filter(Boolean);
+  if (!question) { alert('Please enter a question.'); return; }
+  if (options.length < 2) { alert('Please add at least 2 options.'); return; }
+  const btn = document.getElementById('createSaveBtn');
+  btn.disabled = true; btn.textContent = 'Creating…';
+  try {
+    await supaFetch('admin_votes', { method: 'POST', body: JSON.stringify({ question, options, active: true }) });
+    closeCreateModal();
+    await loadVotes();
+  } catch (e) { alert('Error: ' + e.message); }
+  finally { btn.disabled = false; btn.textContent = 'Create'; }
+}
+
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+/* ── Nav helpers ── */
+function toggleMenu() {
+  const nav = document.getElementById('mobileNav'), btn = document.querySelector('.menu-toggle');
+  nav.classList.toggle('open'); btn.setAttribute('aria-expanded', nav.classList.contains('open') ? 'true' : 'false');
+}
+function toggleDropdown(event, id) {
+  event.stopPropagation();
+  const dd = event.currentTarget.closest('.nav-dropdown'), btn = dd.querySelector('.dropdown-toggle'), isOpen = dd.classList.contains('open');
+  document.querySelectorAll('.nav-dropdown').forEach(d => { d.classList.remove('open'); const b = d.querySelector('.dropdown-toggle'); if (b) b.setAttribute('aria-expanded','false'); });
+  if (!isOpen) { dd.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+}
+document.addEventListener('click', e => {
+  document.querySelectorAll('.nav-dropdown').forEach(dd => { if (!dd.contains(e.target)) { dd.classList.remove('open'); const b = dd.querySelector('.dropdown-toggle'); if (b) b.setAttribute('aria-expanded','false'); } });
+  const nav = document.getElementById('mobileNav'), btn = document.querySelector('.menu-toggle');
+  if (nav && btn && !nav.contains(e.target) && !btn.contains(e.target)) { nav.classList.remove('open'); btn.setAttribute('aria-expanded','false'); }
+});
+
+/* ── Auth + init ── */
+(async () => {
+  const session = await RSAuth.initSession();
+  RSAuth.renderNavUser(session);
+  const gate = document.getElementById('rs-login-gate');
+  const denied = document.getElementById('rs-access-denied');
+  const content = document.getElementById('rs-admin-content');
+  if (!session) { return; }
+  if (!session.isElevated) { gate.style.display = 'none'; denied.style.display = 'block'; return; }
+  gate.style.display = 'none'; content.style.display = 'block';
+  authToken = session.access_token;
+  await loadVotes();
+  try {
+    const { createClient } = await import('@supabase/supabase-js');
+    const _rt = createClient(SUPABASE_URL, SUPABASE_ANON, { auth: { persistSession: false } });
+    _rt.channel('admin_votes_mgmt')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'admin_votes' }, () => loadVotes())
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'player_vote_responses' }, () => loadVotes())
+      .subscribe();
+  } catch { setInterval(loadVotes, 20000); }
+})();
+</script>
+</body>
+</html>
