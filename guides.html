@@ -35,8 +35,8 @@
     .chip {
       display: inline-flex; align-items: center; gap: 5px; padding: 6px 14px;
       border-radius: 20px; font-size: 0.82rem; font-weight: 600; cursor: pointer;
-      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
-      color: rgba(255,255,255,0.45); transition: all 0.2s;
+      background: #1a1a1a; border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.5); transition: all 0.2s;
     }
     .chip:hover { border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.6); }
     .chip.active { background: rgba(184,134,11,0.12); border-color: var(--gold); color: var(--gold); }
@@ -44,7 +44,7 @@
     /* ── Search bar ── */
     .search-bar {
       display: flex; align-items: center; gap: 10px; padding: 10px 16px;
-      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+      background: #111; border: 1px solid rgba(255,255,255,0.12);
       border-radius: 10px; margin-bottom: 20px;
     }
     .search-bar input {
@@ -57,7 +57,7 @@
 
     /* ── Guide cards ── */
     .guide-card {
-      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+      background: #141414; border: 1px solid rgba(255,255,255,0.1);
       border-radius: 12px; margin-bottom: 12px; overflow: hidden; transition: border-color 0.2s;
     }
     .guide-card.open { border-color: var(--gold); }
@@ -92,14 +92,14 @@
     /* ── Tips ── */
     .tips-block {
       margin-top: 14px; padding: 10px 14px; border-radius: 8px;
-      background: rgba(46,125,50,0.08); border: 1px solid rgba(46,125,50,0.2);
+      background: #0d1a0d; border: 1px solid rgba(46,125,50,0.3);
     }
     .tips-header { font-size: 0.78rem; font-weight: 700; color: #66bb6a; margin: 0 0 6px; }
     .tip-line { font-size: 0.78rem; color: #81c784; line-height: 1.5; margin: 2px 0; }
 
     /* ── Command categories ── */
     .cmd-category {
-      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+      background: #141414; border: 1px solid rgba(255,255,255,0.1);
       border-radius: 12px; margin-bottom: 12px; overflow: hidden;
     }
     .cmd-category.open { border-color: rgba(74,179,232,0.4); }
@@ -125,7 +125,7 @@
 
     /* ── Staff Handbook ── */
     .handbook-section {
-      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+      background: #141414; border: 1px solid rgba(255,255,255,0.1);
       border-radius: 12px; margin-bottom: 12px; overflow: hidden;
     }
     .handbook-section.open { border-color: rgba(184,134,11,0.4); }
@@ -144,18 +144,18 @@
     .hb-text { font-size: 0.82rem; color: rgba(255,255,255,0.5); line-height: 1.55; margin: 0 0 8px; }
     .hb-warning {
       display: flex; gap: 8px; padding: 10px 12px; border-radius: 8px; margin-bottom: 8px;
-      background: rgba(139,48,48,0.12); border: 1px solid rgba(139,48,48,0.3);
+      background: #1a0d0d; border: 1px solid rgba(139,48,48,0.4);
     }
     .hb-warning-icon { font-size: 0.9rem; }
     .hb-warning-text { flex: 1; font-size: 0.78rem; color: #cc6060; line-height: 1.5; }
     .hb-tip {
       display: flex; gap: 8px; padding: 10px 12px; border-radius: 8px; margin-bottom: 8px;
-      background: rgba(46,125,50,0.08); border: 1px solid rgba(46,125,50,0.2);
+      background: #0d1a0d; border: 1px solid rgba(46,125,50,0.3);
     }
     .hb-tip-icon { font-size: 0.9rem; }
     .hb-tip-text { flex: 1; font-size: 0.78rem; color: #81c784; line-height: 1.5; }
     .hb-cmd {
-      background: rgba(0,0,0,0.3); border: 1px solid rgba(74,179,232,0.2);
+      background: #0a0a0a; border: 1px solid rgba(74,179,232,0.2);
       border-radius: 8px; padding: 10px 12px; margin-bottom: 8px; cursor: pointer;
       transition: border-color 0.2s;
     }
