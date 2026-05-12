@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RunestoneMMO — Notification Manager</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <script src="/auth.js"></script>
+  <style>
+    .admin-wrap { max-width: 820px; margin: 0 auto; padding: 36px 20px 80px; }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--gold); font-family: 'Cinzel', serif; font-size: 0.78rem; text-decoration: none; margin-bottom: 22px; opacity: 0.8; }
+    .back-link:hover { opacity: 1; }
+    .page-header { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 28px; }
+    .page-header h1 { font-family: 'Cinzel', serif; font-size: 1.9rem; font-weight: 900; color: var(--gold); margin: 0 0 4px; }
+    .page-header p { font-size: 0.85rem; color: rgba(255,255,255,0.4); margin: 0; }
+
+    /* Compose card */
+    .compose-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09); border-radius: 14px; padding: 26px; margin-bottom: 28px; }
+    .compose-card h2 { font-family: 'Cinzel', serif; font-size: 0.95rem; color: var(--gold); margin: 0 0 20px; }
+    .form-group { display: flex; flex-direction: column; gap: 7px; margin-bottom: 16px; }
+    .form-group label { font-size: 0.72rem; font-weight: 700; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.9px; }
+    .form-group input, .form-group textarea {
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px; color: #f0e6c0; font-size: 0.9rem; padding: 10px 13px;
+      font-family: 'Crimson Text', serif; outline: none; transition: border-color 0.18s;
+    }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--gold); }
+    .form-group textarea { resize: vertical; min-height: 80px; }
+
+    /* Type chips */
+    .type-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .type-chip { padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.5); font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: all 0.15s; }
+    .type-chip.active { border-color: currentColor; background: rgba(255,255,255,0.1); }
+    .type-chip[data-type="announcement"] { color: #c9a227; }
+    .type-chip[data-type="update"]       { color: #4ab3e8; }
+    .type-chip[data-type="warning"]      { color: #e67e22; }
+    .type-chip[data-type="info"]         { color: rgba(255,255,255,0.55); }
+
+    .send-btn { background: var(--gold); color: #0d0b07; border: none; border-radius: 8px; padding: 12px 30px; font-family: 'Cinzel', serif; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: opacity 0.18s; }
+    .send-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    .form-msg { font-size: 0.85rem; margin-top: 10px; display: none; }
+    .form-msg.ok  { color: #7dcc7d; }
+    .form-msg.err { color: #e87d7d; }
+
+    /* Notifications list */
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+    .section-header h2 { font-family: 'Cinzel', serif; font-size: 0.95rem; color: var(--gold); margin: 0; }
+    .section-count { font-size: 0.78rem; color: rgba(255,255,255,0.3); }
+    .notif-list { display: flex; flex-direction: column; gap: 10px; }
+    .notif-row { display: flex; align-items: flex-start; gap: 14px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 14px 16px; }
+    .notif-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+    .notif-body { flex: 1; min-width: 0; }
+    .notif-title { font-family: 'Cinzel', serif; font-size: 0.85rem; color: #f0e6c0; margin: 0 0 3px; }
+    .notif-text  { font-size: 0.82rem; color: rgba(255,255,255,0.5); margin: 0 0 6px; line-height: 1.4; }
+    .notif-meta  { font-size: 0.72rem; color: rgba(255,255,255,0.25); }
+    .delete-btn { background: none; border: none; color: rgba(255,255,255,0.2); font-size: 1rem; cursor: pointer; padding: 2px 6px; flex-shrink: 0; transition: color 0.15s; }
+    .delete-btn:hover { color: #e74c3c; }
+    .loading-state, .empty-state { text-align: center; padding: 40px 0; color: rgba(255,255,255,0.3); font-size: 0.88rem; }
+
+    /* Login / access denied gates */
+    .rs-gate { display: none; position: fixed; inset: 0; background: #0d0b07; z-index: 9999; align-items: center; justify-content: center; flex-direction: column; gap: 14px; }
+    .rs-gate p { font-family: 'Cinzel', serif; font-size: 1rem; margin: 0; }
+  </style>
+</head>
+<body style="visibility:hidden">
+
+<!-- Login gate -->
+<div id="rs-login-gate" class="rs-gate" style="display:flex;">
+  <p style="color:var(--gold)">Login required to access this page</p>
+  <button onclick="RSAuth.loginWithDiscord()" style="background:var(--gold);color:#0d0b07;border:none;padding:11px 26px;border-radius:8px;font-family:'Cinzel',serif;font-weight:700;font-size:0.88rem;cursor:pointer;">Login with Discord</button>
+</div>
+<!-- Access denied -->
+<div id="rs-access-denied" class="rs-gate">
+  <p style="color:#e74c3c">⛔ Access Denied</p>
+  <p style="color:rgba(255,255,255,0.45);font-family:'Crimson Text',serif;font-size:0.9rem;">This area is restricted to staff and admins.</p>
+  <a href="/" style="color:var(--gold);font-size:0.85rem;font-family:'Cinzel',serif;">← Return home</a>
+</div>
+
+<!-- Nav -->
+<header>
+  <div class="topbar">
+    <a class="brand" href="/index.html">Runestone Vale</a>
+    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleMenu()">☰</button>
+    <nav class="top-links" id="mobileNav">
+      <a class="top-link" href="/index.html">Home</a>
+      <a class="top-link" href="/features.html">Server-Features</a>
+      <div class="nav-dropdown">
+        <button class="top-link dropdown-toggle" type="button" aria-expanded="false" onclick="toggleDropdown(event,'runestoneDropdown')">RunestoneMMO ▾</button>
+        <div class="dropdown-menu" id="runestoneDropdown">
+          <a class="dropdown-link" href="/RunestoneCore.html">RunestoneCore</a>
+          <a class="dropdown-link" href="/RunestoneSkills.html">RunestoneSkills</a>
+          <a class="dropdown-link" href="/runestoneadmintool.html">RunestoneAdminTool</a>
+          <a class="dropdown-link" href="/runestonehub.html">RunestoneHub</a>
+          <a class="dropdown-link" href="/runestonecombat.html">RunestoneCombat</a>
+          <a class="dropdown-link" href="/runestonestamina.html">RunestoneStamina</a>
+          <a class="dropdown-link" href="/runestonenpc.html">RunestoneNPCs</a>
+        </div>
+      </div>
+      <a class="top-link" href="/roadmap_development.html">Roadmap</a>
+      <div class="nav-dropdown">
+        <button class="top-link dropdown-toggle" type="button" aria-expanded="false" onclick="toggleDropdown(event,'communityDropdown')">Community ▾</button>
+        <div class="dropdown-menu" id="communityDropdown">
+          <a class="dropdown-link" href="/news.html">📰 Patch Notes &amp; News</a>
+          <a class="dropdown-link" href="/voting.html">🗳️ Community Voting</a>
+          <a class="dropdown-link" href="/bug-report.html">🐛 Bug Reports</a>
+        </div>
+      </div>
+      <a class="top-link" href="/credits.html">Credits</a>
+      <a class="top-link" href="/terms.html">Terms</a>
+      <div id="navUserSlot" style="display:flex;align-items:center;flex-shrink:0;margin-left:8px;"></div>
+    </nav>
+  </div>
+</header>
+
+<main id="rs-admin-content" style="display:none">
+  <div class="admin-wrap">
+    <a class="back-link" href="/admin-panel.html">‹ Admin Panel</a>
+
+    <div class="page-header">
+      <div>
+        <h1>🔔 Notification Manager</h1>
+        <p>Send announcements to all players or a specific player. View and delete recent notifications.</p>
+      </div>
+    </div>
+
+    <!-- Compose -->
+    <div class="compose-card">
+      <h2>Compose Notification</h2>
+
+      <div class="form-group">
+        <label>Type</label>
+        <div class="type-row" id="typeRow">
+          <button class="type-chip active" data-type="announcement" onclick="selectType('announcement')">📢 Announcement</button>
+          <button class="type-chip" data-type="update"       onclick="selectType('update')">🔄 Update</button>
+          <button class="type-chip" data-type="warning"      onclick="selectType('warning')">⚠️ Warning</button>
+          <button class="type-chip" data-type="info"         onclick="selectType('info')">ℹ️ Info</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Title</label>
+        <input type="text" id="notifTitle" placeholder="Notification title" maxlength="120">
+      </div>
+
+      <div class="form-group">
+        <label>Body</label>
+        <textarea id="notifBody" rows="3" placeholder="Notification message…" maxlength="500"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Target Player UUID <span style="text-transform:none;letter-spacing:0;font-weight:400">(leave blank to send to all players)</span></label>
+        <input type="text" id="notifTarget" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx  (optional)">
+      </div>
+
+      <button class="send-btn" id="sendBtn" onclick="sendNotification()">Send Notification</button>
+      <p class="form-msg" id="sendMsg"></p>
+    </div>
+
+    <!-- Recent notifications -->
+    <div class="section-header">
+      <h2>Recent Notifications</h2>
+      <span class="section-count" id="notifCount"></span>
+    </div>
+    <div id="notifList" class="notif-list">
+      <div class="loading-state">Loading…</div>
+    </div>
+  </div>
+</main>
+
+<script>
+const SUPABASE_URL  = 'https://ludkhakegqojxuglisks.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1ZGtoYWtlZ3Fvanh1Z2xpc2tzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5NTE2MjEsImV4cCI6MjA5MzUyNzYyMX0.V5_Mp7eHc-3rKFZLUGNM_iH57hpiGMvp4CBcH33R0rE';
+let authToken = null;
+let selectedType = 'announcement';
+
+const TYPE_COLORS = {
+  announcement: '#c9a227',
+  update:       '#4ab3e8',
+  warning:      '#e67e22',
+  info:         'rgba(255,255,255,0.55)',
+};
+
+async function supaFetch(path, opts = {}) {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+    ...opts,
+    headers: {
+      'apikey': SUPABASE_ANON,
+      'Authorization': `Bearer ${authToken || SUPABASE_ANON}`,
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Prefer': 'return=representation',
+      ...(opts.headers || {}),
+    },
+  });
+  const text = await res.text();
+  if (!res.ok) throw new Error(`${res.status}: ${text}`);
+  return text ? JSON.parse(text) : null;
+}
+
+function selectType(type) {
+  selectedType = type;
+  document.querySelectorAll('.type-chip').forEach(c => {
+    c.classList.toggle('active', c.dataset.type === type);
+  });
+}
+
+async function loadNotifications() {
+  try {
+    const data = await supaFetch('notifications?select=*&order=created_at.desc&limit=100');
+    renderNotifications(data || []);
+  } catch (e) {
+    document.getElementById('notifList').innerHTML = `<div class="empty-state">Failed to load: ${esc(e.message)}</div>`;
+  }
+}
+
+function renderNotifications(list) {
+  const el = document.getElementById('notifList');
+  document.getElementById('notifCount').textContent = `${list.length} recent`;
+  if (!list.length) {
+    el.innerHTML = '<div class="empty-state">No notifications sent yet.</div>';
+    return;
+  }
+  el.innerHTML = list.map(n => {
+    const color = TYPE_COLORS[n.type] || 'rgba(255,255,255,0.3)';
+    const when  = new Date(n.created_at).toLocaleString();
+    const tgt   = n.player_uuid ? `→ ${n.player_uuid.slice(0,16)}…` : '→ All players';
+    return `
+    <div class="notif-row">
+      <div class="notif-dot" style="background:${color}"></div>
+      <div class="notif-body">
+        <p class="notif-title">${esc(n.title)}</p>
+        <p class="notif-text">${esc(n.body)}</p>
+        <p class="notif-meta">${esc(n.type)} · ${tgt} · ${when}</p>
+      </div>
+      <button class="delete-btn" onclick="deleteNotification('${n.id}')" title="Delete">✕</button>
+    </div>`;
+  }).join('');
+}
+
+async function sendNotification() {
+  const title  = document.getElementById('notifTitle').value.trim();
+  const body   = document.getElementById('notifBody').value.trim();
+  const target = document.getElementById('notifTarget').value.trim();
+  const msg    = document.getElementById('sendMsg');
+  const btn    = document.getElementById('sendBtn');
+
+  if (!title || !body) {
+    msg.textContent = '⚠ Please fill in Title and Body.';
+    msg.className = 'form-msg err'; msg.style.display = 'block'; return;
+  }
+  btn.disabled = true; btn.textContent = 'Sending…'; msg.style.display = 'none';
+  try {
+    await supaFetch('notifications', {
+      method: 'POST',
+      headers: { 'Prefer': 'return=minimal' },
+      body: JSON.stringify({
+        type: selectedType,
+        title,
+        body,
+        target: target || 'all',
+        player_uuid: target || null,
+        read: false,
+        read_by: [],
+        target_audience: target ? 'player' : 'all',
+        push_sent: false,
+      }),
+    });
+    msg.textContent = '✓ Notification sent successfully.';
+    msg.className = 'form-msg ok'; msg.style.display = 'block';
+    document.getElementById('notifTitle').value = '';
+    document.getElementById('notifBody').value  = '';
+    document.getElementById('notifTarget').value = '';
+    selectType('announcement');
+    await loadNotifications();
+  } catch (e) {
+    msg.textContent = '✗ Failed: ' + e.message;
+    msg.className = 'form-msg err'; msg.style.display = 'block';
+  } finally { btn.disabled = false; btn.textContent = 'Send Notification'; }
+}
+
+async function deleteNotification(id) {
+  if (!confirm('Delete this notification?')) return;
+  try {
+    await supaFetch(`notifications?id=eq.${id}`, { method: 'DELETE', headers: { 'Prefer': 'return=minimal' } });
+    await loadNotifications();
+  } catch (e) { alert('Error: ' + e.message); }
+}
+
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+/* ── Nav helpers ── */
+function toggleMenu() {
+  const nav = document.getElementById('mobileNav');
+  const btn = document.querySelector('.menu-toggle');
+  nav.classList.toggle('open');
+  btn.setAttribute('aria-expanded', nav.classList.contains('open') ? 'true' : 'false');
+}
+function toggleDropdown(event, id) {
+  event.stopPropagation();
+  const dd  = event.currentTarget.closest('.nav-dropdown');
+  const btn = dd.querySelector('.dropdown-toggle');
+  const isOpen = dd.classList.contains('open');
+  document.querySelectorAll('.nav-dropdown').forEach(d => {
+    d.classList.remove('open');
+    const b = d.querySelector('.dropdown-toggle');
+    if (b) b.setAttribute('aria-expanded','false');
+  });
+  if (!isOpen) { dd.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+}
+document.addEventListener('click', (e) => {
+  document.querySelectorAll('.nav-dropdown').forEach(dd => {
+    if (!dd.contains(e.target)) {
+      dd.classList.remove('open');
+      const b = dd.querySelector('.dropdown-toggle');
+      if (b) b.setAttribute('aria-expanded','false');
+    }
+  });
+  const nav = document.getElementById('mobileNav');
+  const btn = document.querySelector('.menu-toggle');
+  if (nav && btn && !nav.contains(e.target) && !btn.contains(e.target)) {
+    nav.classList.remove('open'); btn.setAttribute('aria-expanded','false');
+  }
+});
+
+/* ── Auth init ── */
+(async () => {
+  const session = await RSAuth.initSession();
+  RSAuth.renderNavUser(session);
+
+  const loginGate = document.getElementById('rs-login-gate');
+  const denied    = document.getElementById('rs-access-denied');
+  const content   = document.getElementById('rs-admin-content');
+
+  if (!session) {
+    loginGate.style.display = 'flex';
+    document.body.style.visibility = 'visible';
+    return;
+  }
+  if (!session.isElevated) {
+    loginGate.style.display = 'none';
+    denied.style.display    = 'flex';
+    document.body.style.visibility = 'visible';
+    return;
+  }
+
+  loginGate.style.display = 'none';
+  authToken = session.access_token;
+  content.style.display = 'block';
+  document.body.style.visibility = 'visible';
+
+  await loadNotifications();
+})();
+</script>
+</body>
+</html>
