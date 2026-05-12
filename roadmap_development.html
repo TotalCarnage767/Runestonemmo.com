@@ -504,7 +504,7 @@ document.addEventListener('click', e => {
 (async () => {
   const auth = await RSAuth.requireLogin();
   if (!auth) return;
-  authSession = auth.session;
+  authSession = auth;
   isElevated  = auth.isElevated;
   RSAuth.renderNavUser(auth);
   const gate = document.getElementById('rs-login-gate');

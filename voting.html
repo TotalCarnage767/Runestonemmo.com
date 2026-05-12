@@ -246,14 +246,26 @@ async function castVote(voteId, option) {
   if (!currentUser) { showLoginPrompt(); return; }
   const existing = userVotes[voteId];
   try {
+    // Always delete any existing vote for this poll first (prevents double-count)
+    await supaFetch(
+      `player_vote_responses?vote_id=eq.${voteId}&voter_discord_id=eq.${encodeURIComponent(currentUser.id)}`,
+      { method: 'DELETE', headers: { 'Prefer': 'return=minimal' } }
+    );
+
     if (existing === option) {
-      await supaFetch(`player_vote_responses?vote_id=eq.${voteId}&voter_discord_id=eq.${encodeURIComponent(currentUser.id)}`, { method: 'DELETE' });
+      // Clicking the same option again = remove vote (toggle off)
       delete userVotes[voteId];
     } else {
+      // Insert the new vote
       await supaFetch('player_vote_responses', {
         method: 'POST',
-        headers: { 'Prefer': 'resolution=merge-duplicates,return=representation' },
-        body: JSON.stringify({ vote_id: voteId, voter_discord_id: currentUser.id, selected_option: option, voted_at: new Date().toISOString() }),
+        headers: { 'Prefer': 'return=minimal' },
+        body: JSON.stringify({
+          vote_id: voteId,
+          voter_discord_id: currentUser.id,
+          selected_option: option,
+          voted_at: new Date().toISOString(),
+        }),
       });
       userVotes[voteId] = option;
     }
@@ -301,7 +313,7 @@ document.addEventListener('click', (e) => {
 /* ── Auth + init — no gates, content loads for everyone ── */
 (async () => {
   const session = await RSAuth.initSession();
-  RSAuth.renderNavUser(session);
+  RSAuth.renderNavUser(session, 'navUserSlot');
 
   if (session) {
     authToken   = session.access_token;
