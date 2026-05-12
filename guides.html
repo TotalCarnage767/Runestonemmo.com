@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RunestoneMMO — Guides & Commands</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <script src="/auth.js"></script>
+  <script type="importmap">{ "imports": { "@supabase/supabase-js": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm" } }</script>
+  <style>
+    .page-wrap { max-width: 960px; margin: 0 auto; padding: 40px 20px 80px; }
+    .page-header { margin-bottom: 24px; }
+    .page-header h1 { font-family: 'Cinzel', serif; font-size: 1.9rem; font-weight: 900; color: var(--gold); margin: 0 0 8px; }
+    .page-header p  { font-size: 0.88rem; color: rgba(255,255,255,0.45); margin: 0; line-height: 1.6; }
+
+    /* ── Tab bar ── */
+    .tab-bar { display: flex; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 20px; gap: 0; }
+    .tab-btn {
+      flex: 1; text-align: center; padding: 12px 8px; font-size: 0.88rem; font-weight: 600;
+      color: rgba(255,255,255,0.4); cursor: pointer; border-bottom: 2px solid transparent;
+      background: none; border-top: none; border-left: none; border-right: none;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .tab-btn:hover { color: rgba(255,255,255,0.65); }
+    .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* ── Category chips ── */
+    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .chip {
+      display: inline-flex; align-items: center; gap: 5px; padding: 6px 14px;
+      border-radius: 20px; font-size: 0.82rem; font-weight: 600; cursor: pointer;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.45); transition: all 0.2s;
+    }
+    .chip:hover { border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.6); }
+    .chip.active { background: rgba(184,134,11,0.12); border-color: var(--gold); color: var(--gold); }
+
+    /* ── Search bar ── */
+    .search-bar {
+      display: flex; align-items: center; gap: 10px; padding: 10px 16px;
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px; margin-bottom: 20px;
+    }
+    .search-bar input {
+      flex: 1; background: none; border: none; outline: none; color: #fff;
+      font-size: 0.88rem; font-family: inherit;
+    }
+    .search-bar input::placeholder { color: rgba(255,255,255,0.3); }
+    .search-clear { cursor: pointer; color: rgba(255,255,255,0.3); font-size: 0.9rem; }
+    .search-clear:hover { color: rgba(255,255,255,0.6); }
+
+    /* ── Guide cards ── */
+    .guide-card {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px; margin-bottom: 12px; overflow: hidden; transition: border-color 0.2s;
+    }
+    .guide-card.open { border-color: var(--gold); }
+    .guide-card-header {
+      display: flex; align-items: center; gap: 12px; padding: 16px;
+      cursor: pointer; user-select: none;
+    }
+    .guide-icon {
+      width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center;
+      justify-content: center; font-size: 1.2rem; flex-shrink: 0;
+      background: rgba(184,134,11,0.1); border: 1px solid rgba(184,134,11,0.25);
+    }
+    .guide-title-block { flex: 1; }
+    .guide-title { font-size: 0.95rem; font-weight: 700; color: #fff; margin: 0 0 2px; }
+    .guide-desc { font-size: 0.78rem; color: rgba(255,255,255,0.4); margin: 0; line-height: 1.4; }
+    .guide-chevron { font-size: 0.7rem; color: rgba(255,255,255,0.3); }
+    .guide-body { display: none; padding: 0 16px 16px; border-top: 1px solid rgba(255,255,255,0.06); }
+    .guide-card.open .guide-body { display: block; }
+    .guide-card.open .guide-chevron { transform: rotate(180deg); }
+
+    /* ── Steps ── */
+    .step-row { display: flex; gap: 12px; margin-top: 12px; }
+    .step-num {
+      width: 24px; height: 24px; border-radius: 12px; flex-shrink: 0;
+      background: rgba(184,134,11,0.15); display: flex; align-items: center;
+      justify-content: center; font-size: 0.72rem; font-weight: 800; color: var(--gold);
+    }
+    .step-content { flex: 1; }
+    .step-title { font-size: 0.82rem; font-weight: 700; color: var(--gold); margin: 0 0 2px; }
+    .step-desc { font-size: 0.8rem; color: rgba(255,255,255,0.5); line-height: 1.5; margin: 0; }
+
+    /* ── Tips ── */
+    .tips-block {
+      margin-top: 14px; padding: 10px 14px; border-radius: 8px;
+      background: rgba(46,125,50,0.08); border: 1px solid rgba(46,125,50,0.2);
+    }
+    .tips-header { font-size: 0.78rem; font-weight: 700; color: #66bb6a; margin: 0 0 6px; }
+    .tip-line { font-size: 0.78rem; color: #81c784; line-height: 1.5; margin: 2px 0; }
+
+    /* ── Command categories ── */
+    .cmd-category {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px; margin-bottom: 12px; overflow: hidden;
+    }
+    .cmd-category.open { border-color: rgba(74,179,232,0.4); }
+    .cmd-cat-header {
+      display: flex; align-items: center; gap: 12px; padding: 14px 16px;
+      cursor: pointer; user-select: none;
+    }
+    .cmd-cat-title { flex: 1; font-size: 0.92rem; font-weight: 700; color: #fff; }
+    .cmd-cat-count { font-size: 0.75rem; color: rgba(255,255,255,0.35); }
+    .cmd-cat-chevron { font-size: 0.7rem; color: rgba(255,255,255,0.3); }
+    .cmd-cat-body { display: none; padding: 0 16px 14px; border-top: 1px solid rgba(255,255,255,0.06); }
+    .cmd-category.open .cmd-cat-body { display: block; }
+    .cmd-category.open .cmd-cat-chevron { transform: rotate(180deg); }
+    .cmd-row { padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .cmd-row:last-child { border-bottom: none; }
+    .cmd-text { font-family: 'Courier New', monospace; font-size: 0.84rem; font-weight: 700; color: #4ab3e8; margin: 0 0 2px; }
+    .cmd-desc-text { font-size: 0.78rem; color: rgba(255,255,255,0.4); margin: 0; }
+    .staff-badge {
+      display: inline-block; font-size: 0.65rem; font-weight: 700; color: #e57373;
+      background: rgba(229,115,115,0.1); border: 1px solid rgba(229,115,115,0.25);
+      border-radius: 4px; padding: 2px 6px; margin-left: 8px; vertical-align: middle;
+    }
+
+    /* ── Staff Handbook ── */
+    .handbook-section {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px; margin-bottom: 12px; overflow: hidden;
+    }
+    .handbook-section.open { border-color: rgba(184,134,11,0.4); }
+    .hb-header {
+      display: flex; align-items: center; gap: 12px; padding: 16px;
+      cursor: pointer; user-select: none;
+    }
+    .hb-icon { font-size: 1.3rem; }
+    .hb-title { flex: 1; font-size: 0.95rem; font-weight: 700; color: #fff; }
+    .hb-chevron { font-size: 0.7rem; color: rgba(255,255,255,0.3); }
+    .hb-body { display: none; padding: 0 16px 16px; }
+    .handbook-section.open .hb-body { display: block; }
+    .handbook-section.open .hb-chevron { transform: rotate(180deg); }
+    .hb-subsection { margin-top: 14px; }
+    .hb-sub-title { font-size: 0.85rem; font-weight: 700; color: var(--gold); margin: 0 0 10px; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 6px; }
+    .hb-text { font-size: 0.82rem; color: rgba(255,255,255,0.5); line-height: 1.55; margin: 0 0 8px; }
+    .hb-warning {
+      display: flex; gap: 8px; padding: 10px 12px; border-radius: 8px; margin-bottom: 8px;
+      background: rgba(139,48,48,0.12); border: 1px solid rgba(139,48,48,0.3);
+    }
+    .hb-warning-icon { font-size: 0.9rem; }
+    .hb-warning-text { flex: 1; font-size: 0.78rem; color: #cc6060; line-height: 1.5; }
+    .hb-tip {
+      display: flex; gap: 8px; padding: 10px 12px; border-radius: 8px; margin-bottom: 8px;
+      background: rgba(46,125,50,0.08); border: 1px solid rgba(46,125,50,0.2);
+    }
+    .hb-tip-icon { font-size: 0.9rem; }
+    .hb-tip-text { flex: 1; font-size: 0.78rem; color: #81c784; line-height: 1.5; }
+    .hb-cmd {
+      background: rgba(0,0,0,0.3); border: 1px solid rgba(74,179,232,0.2);
+      border-radius: 8px; padding: 10px 12px; margin-bottom: 8px; cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .hb-cmd:hover { border-color: rgba(74,179,232,0.5); }
+    .hb-cmd-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px; }
+    .hb-cmd-text { font-family: 'Courier New', monospace; font-size: 0.84rem; font-weight: 700; color: #4ab3e8; }
+    .hb-cmd-copy { font-size: 0.68rem; color: rgba(255,255,255,0.25); }
+    .hb-cmd-alias { font-size: 0.72rem; color: rgba(255,255,255,0.3); margin: 0; }
+    .hb-cmd-perm { font-size: 0.72rem; color: #ce93d8; margin: 0; }
+    .hb-cmd-desc { font-size: 0.78rem; color: rgba(255,255,255,0.45); margin: 2px 0 0; }
+
+    /* ── Empty state ── */
+    .empty-state { text-align: center; padding: 60px 20px; }
+    .empty-icon { font-size: 2.5rem; margin-bottom: 12px; }
+    .empty-text { font-size: 0.88rem; color: rgba(255,255,255,0.35); }
+
+    /* ── Staff-only banner ── */
+    .staff-only-banner {
+      display: none; align-items: center; gap: 12px; padding: 14px 18px;
+      background: rgba(229,115,115,0.06); border: 1px solid rgba(229,115,115,0.15);
+      border-radius: 10px; margin-bottom: 20px;
+    }
+    .staff-only-banner p { margin: 0; font-size: 0.82rem; color: rgba(229,115,115,0.7); }
+
+    @media (max-width: 600px) {
+      .page-wrap { padding: 24px 14px 60px; }
+      .tab-btn { font-size: 0.8rem; padding: 10px 4px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── HEADER ─────────────────────────────────────────────────────────────── -->
+<header class="site-header">
+  <div class="topbar">
+    <a class="logo" href="/">RunestoneMMO</a>
+    <button class="hamburger" aria-label="Toggle menu" onclick="toggleMenu()">☰</button>
+    <nav class="top-links" id="mainNav">
+      <a class="top-link" href="/features.html">Features</a>
+      <a class="top-link" href="/roadmap_development.html">Roadmap</a>
+      <div class="dropdown-wrap">
+        <button class="top-link dropdown-toggle" type="button" aria-expanded="false" onclick="toggleDropdown(event,'communityDropdown')">Community ▾</button>
+        <div class="dropdown-menu" id="communityDropdown">
+          <a class="dropdown-link" href="/news.html">📰 Patch Notes &amp; News</a>
+          <a class="dropdown-link" href="/voting.html">🗳️ Community Voting</a>
+          <a class="dropdown-link" href="/bug-report.html">🐛 Bug Reports</a>
+          <a class="dropdown-link" href="/guides.html" style="color:var(--gold)">📖 Guides &amp; Commands</a>
+        </div>
+      </div>
+      <a class="top-link" href="/credits.html">Credits</a>
+      <div id="navUserSlot"></div>
+    </nav>
+  </div>
+</header>
+
+<!-- ─── PAGE CONTENT ───────────────────────────────────────────────────────── -->
+<div class="page-wrap">
+  <div class="page-header">
+    <h1>Guides &amp; Commands</h1>
+    <p>Everything you need to know about Runestone Vale — player guides, command reference, and staff handbook.</p>
+  </div>
+
+  <!-- Tab bar -->
+  <div class="tab-bar">
+    <button class="tab-btn active" data-tab="player" onclick="switchTab('player')">Player Guides</button>
+    <button class="tab-btn" data-tab="commands" onclick="switchTab('commands')">Commands</button>
+    <button class="tab-btn" data-tab="staff" id="staffTabBtn" style="display:none" onclick="switchTab('staff')">Staff Handbook</button>
+  </div>
+
+  <!-- ═══ PLAYER GUIDES TAB ═══ -->
+  <div class="tab-content active" id="tab-player">
+    <div class="chip-row" id="guideCategoryChips"></div>
+    <div id="guidesList"></div>
+  </div>
+
+  <!-- ═══ COMMANDS TAB ═══ -->
+  <div class="tab-content" id="tab-commands">
+    <div class="search-bar">
+      <span>🔍</span>
+      <input type="text" id="cmdSearch" placeholder="Search commands..." oninput="renderCommands()">
+      <span class="search-clear" onclick="document.getElementById('cmdSearch').value='';renderCommands()">✕</span>
+    </div>
+    <div id="commandsList"></div>
+  </div>
+
+  <!-- ═══ STAFF HANDBOOK TAB ═══ -->
+  <div class="tab-content" id="tab-staff">
+    <div class="staff-only-banner" id="staffBanner">
+      <span>🔒</span>
+      <p>This section is only visible to staff and admin members.</p>
+    </div>
+    <div class="chip-row" id="handbookChips"></div>
+    <div id="handbookList"></div>
+  </div>
+</div>
+
+<!-- ─── SCRIPTS ────────────────────────────────────────────────────────────── -->
+<script type="module">
+import { createClient } from '@supabase/supabase-js';
+
+// ── Auth ──
+let session = null;
+let isElevated = false;
+
+async function init() {
+  session = await RSAuth.initSession();
+  if (session) {
+    RSAuth.renderNavUser(session);
+    isElevated = session.isElevated || false;
+  }
+  if (isElevated) {
+    document.getElementById('staffTabBtn').style.display = '';
+    document.getElementById('staffBanner').style.display = 'flex';
+  }
+  renderGuideChips();
+  renderGuides();
+  renderCommands();
+  renderHandbookChips();
+  renderHandbook();
+}
+
+// ── Tab switching ──
+window.switchTab = function(tab) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.querySelector(`.tab-btn[data-tab="${tab}"]`).classList.add('active');
+  document.getElementById(`tab-${tab}`).classList.add('active');
+};
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// PLAYER GUIDES DATA (mirrored from RunestoneValeApp/src/data/playerGuides.ts)
+// ═══════════════════════════════════════════════════════════════════════════════
+const GUIDE_CATEGORIES = [
+  { id: 'all',      label: 'All Guides',     icon: '📚' },
+  { id: 'start',    label: 'Getting Started', icon: '🚀' },
+  { id: 'skills',   label: 'Skills',          icon: '📈' },
+  { id: 'combat',   label: 'Combat',          icon: '⚔️' },
+  { id: 'economy',  label: 'Economy',         icon: '💰' },
+  { id: 'world',    label: 'World & Claims',  icon: '🗺️' },
+  { id: 'social',   label: 'Social & Chat',   icon: '💬' },
+  { id: 'bedrock',  label: 'Bedrock Access',  icon: '📱' },
+];
+
+const PLAYER_GUIDES = [
+  {
+    id: 'first-login', title: 'First Login & Starter Kit', icon: '🚀', category: 'start',
+    description: 'What to expect when you first join Runestone Vale.',
+    steps: [
+      { title: 'Join via Discord', description: 'Server access is granted through the Discord community. Join the Discord and follow the instructions in the access channel to get started.' },
+      { title: 'Starter Kit', description: 'On your very first login you automatically receive a curated starter kit containing starter armor, tools, a shield, food, torches, and survival essentials.' },
+      { title: 'Hub Compass', description: 'You receive the Hub Compass on first join. Right-click it at any time to open the main player hub menu.' },
+      { title: 'Set Your Home', description: 'Use /sethome to save your current location. Use /home to return to it at any time.' },
+      { title: 'Claim Your Daily Reward', description: 'Type /daily or open the Hub Compass and select Daily Claim. Rewards improve over a 7-day streak.' },
+      { title: 'View Your Skills', description: 'Type /skills to open your skill panel. You have 12 skills across Combat, Gathering, Crafting, and Exploration categories.' },
+      { title: 'Check Your Stats', description: 'Type /stats to view your player stats: HP, Mana, Stamina, Combat Level, Attack Damage, and Armor.' },
+      { title: 'Find Quests', description: 'Look for NPCs in towns and the hub area with a quest icon above their head. Right-click the NPC and choose a quest.' },
+      { title: 'Link the Companion App', description: 'Type /rlink in-game to generate a 6-character link code. Open the RunestoneVale app, sign in with Discord, then go to Account and enter the code.' },
+    ],
+    tips: ['The Hub Compass is your best friend — use it instead of memorising commands.', 'Your starter kit is one-time only — do not throw it away.', 'Set a home immediately after finding a good base location.'],
+  },
+  {
+    id: 'hub-compass', title: 'Hub Compass Guide', icon: '🧭', category: 'start',
+    description: 'Everything accessible through the Hub Compass utility menu.',
+    steps: [
+      { title: 'Opening the Hub', description: 'Right-click the Hub Compass in your hotbar or type /hub.' },
+      { title: 'Travel', description: 'Access Spawn, Home, Set Home, and the Teleport Requests submenu.' },
+      { title: 'Economy & Bank', description: 'View your Wallet and Bank balance, access the Market & Trading menu.' },
+      { title: 'Skills & Quests', description: 'Open your skill panel and quest journal directly from the Hub.' },
+      { title: 'Daily Rewards', description: 'Claim your daily reward and view your current streak.' },
+      { title: 'Mailbox', description: 'Access your in-game mailbox from the Hub.' },
+      { title: 'Graves', description: 'Access the Graves submenu to locate and retrieve your grave.' },
+      { title: 'Server Updates', description: 'The Hub includes a Server Updates page showing recent patch notes.' },
+    ],
+    tips: ['All Hub features are also accessible via commands if you prefer typing.'],
+  },
+  {
+    id: 'skills-overview', title: 'Skills & Progression Overview', icon: '📈', category: 'skills',
+    description: 'How the 12-skill progression system works in Runestone Vale.',
+    steps: [
+      { title: 'Twelve Skills', description: 'Combat (Strength, Defense, Range), Gathering (Mining, Forestry, Farming, Fishing, Hunting, Foraging), Crafting (Smithing, Cooking), and Exploration.' },
+      { title: 'How XP Works', description: 'Each skill gains XP through its natural activity. Mining ores levels Mining, chopping trees levels Forestry, fighting mobs levels Strength and Defense.' },
+      { title: 'Viewing Your Skills', description: 'Type /skills to open the skill panel. Set the scoreboard to skills view with /ss.' },
+      { title: 'Skill Level Locks', description: 'Certain gear, crafting recipes, and systems require a minimum skill level.' },
+      { title: 'Combat Level', description: 'Automatically calculated as the floor average of Strength, Defense, and Range. Max level is 99.' },
+      { title: 'Scoreboard Views', description: 'Use /ss for skills, /sm for main, /sc for combat, /sq for quests.' },
+    ],
+    tips: ['Focus on one or two gathering skills early to build up resources quickly.', 'Exploration levels through travel — just exploring the world earns XP.'],
+  },
+  {
+    id: 'gathering-skills', title: 'Gathering Skills', icon: '⛏️', category: 'skills',
+    description: 'Mining, Forestry, Farming, Fishing, Hunting, and Foraging.',
+    steps: [
+      { title: 'Mining', description: 'Level Mining by breaking ores and stone. Higher levels unlock higher-tier ores and improve yield.' },
+      { title: 'Forestry', description: 'Level Forestry by chopping trees. Higher levels unlock better log yields and rare wood types.' },
+      { title: 'Farming', description: 'Level Farming by harvesting crops. Higher levels improve crop yields.' },
+      { title: 'Fishing', description: 'Level Fishing by casting your line. Higher levels improve catch rates and unlock rare fish.' },
+      { title: 'Hunting', description: 'Level Hunting by tracking and killing wildlife. Provides raw materials for Cooking and Crafting.' },
+      { title: 'Foraging', description: 'Level Foraging by gathering plants, mushrooms, and natural resources from the wilds.' },
+    ],
+    tips: ['Gathering skills level passively — just play naturally.', 'Foraging pairs well with Exploration.'],
+  },
+  {
+    id: 'crafting-skills', title: 'Crafting Skills', icon: '🔨', category: 'skills',
+    description: 'Smithing and Cooking — the two crafting professions.',
+    steps: [
+      { title: 'Smithing', description: 'Level Smithing by crafting weapons, armor, and tools. Smithing level gates higher-tier gear.' },
+      { title: 'Smithing Level Locks', description: 'Check the Skills screen in the app for the full list of crafting level requirements.' },
+      { title: 'Cooking', description: 'Level Cooking by preparing food items. Higher levels unlock advanced food recipes with better buffs.' },
+      { title: 'Custom Recipes', description: 'Some crafting recipes are Runestone-specific. Use /item list to browse custom items.' },
+    ],
+    tips: ['Smithing is the most important crafting skill for gear progression.', 'Cooking food provides better stats than raw vanilla food.'],
+  },
+  {
+    id: 'combat-basics', title: 'Combat System & Abilities', icon: '⚔️', category: 'combat',
+    description: 'HP, Mana, Stamina, and the three combat abilities.',
+    steps: [
+      { title: 'Combat Stats', description: 'Your character has HP, Mana, and Stamina. Type /stats to view. Also visible on the scoreboard (/sc).' },
+      { title: 'Stamina', description: "Stamina drains as you sprint. Custom brews restore it: Wayfarer's Sip, Stonewake Draught, and King's Rune Brew." },
+      { title: 'Dash Ability', description: 'Double-tap Sneak while holding a melee weapon. Short burst of movement. Cooldown: 8s.' },
+      { title: 'Guard Ability', description: 'Hold Sneak + Right-click with a melee weapon. Reduces damage by 50% for 2s. Cooldown: 50s.' },
+      { title: 'Heavy Strike', description: 'Right-click with a melee weapon aimed at a target. Next hit deals 1.5x damage. Cooldown: 24s.' },
+      { title: 'Dash → Heavy Strike Combo', description: 'Landing Heavy Strike after Dash grants an additional 25% damage bonus.' },
+      { title: 'Guard Counter Combo', description: 'Attacking after a successful Guard grants a 25% counter damage bonus.' },
+      { title: 'Levelling Combat', description: 'Strength levels through melee, Defense through taking damage, Range through bows/crossbows.' },
+    ],
+    tips: ['Dash then Heavy Strike is your main burst combo.', 'Guard has a long cooldown — save it for heavy hits.'],
+  },
+  {
+    id: 'economy-guide', title: 'Economy, Bank & Markets', icon: '💰', category: 'economy',
+    description: 'Gold Crowns, Runic Shards, banking, player shops, and the market.',
+    steps: [
+      { title: 'Currencies', description: 'Primary: Gold Crowns. Secondary: Runic Shards. Check with /balance or /bal.' },
+      { title: 'Earning Gold', description: 'Complete quests, sell to NPC vendors (/sell hand), trade with players, or run a player shop.' },
+      { title: 'Banking', description: '/bank deposit <amount> (/bd) and /bank withdraw <amount> (/bw). Bank is separate from wallet.' },
+      { title: 'Paying Players', description: '/pay <player> <amount> to send Gold Crowns. /baltop for the leaderboard.' },
+      { title: 'Player Shops', description: '/shop to browse. /shop create <name> to start your own.' },
+      { title: 'Selling to NPCs', description: 'Hold an item and /sell hand. Use /sell price to check value first.' },
+    ],
+    tips: ['Check /sell price before selling.', 'Keep Gold Crowns in your bank for safety.'],
+  },
+  {
+    id: 'plots-claims', title: 'Player Plots & Land Claims', icon: '🏡', category: 'world',
+    description: 'How to browse, purchase, and manage your protected plot.',
+    steps: [
+      { title: 'How Plots Work', description: 'Staff create and configure plots. Players browse and purchase them using Gold Crowns.' },
+      { title: 'Browsing Plots', description: '/claim list (/cl) to see available plots. /claim info <plotId> (/ci) for details.' },
+      { title: 'Purchasing', description: '/claim buy <plotId> to purchase. Cost deducted from wallet.' },
+      { title: 'Trusting Players', description: '/claim trust <player> (/ct) to give build access. /claim untrust to revoke.' },
+      { title: 'Plot Flags', description: '/claim flag list (/cf list) to see flags. /claim flag set <flag> <true|false>.' },
+      { title: 'Towns', description: 'Town systems are part of the long-term direction. /town create to start where enabled.' },
+    ],
+    tips: ['Buy a plot early — good locations go fast.', 'Trust only players you know.'],
+  },
+  {
+    id: 'worlds-guide', title: 'Server Worlds', icon: '🌍', category: 'world',
+    description: 'The different realms and dimensions of Runestone Vale.',
+    steps: [
+      { title: 'The Overworld', description: 'The main survival world where towns, plots, and most gameplay takes place.' },
+      { title: 'The Nether', description: 'Dangerous dimension with lava, ancient debris, and Nether fortresses.' },
+      { title: 'The End', description: 'Home to the Ender Dragon, End Cities, and rare resources.' },
+      { title: 'Future Content World', description: 'A void content world prepared for future dungeons, boss arenas, and events.' },
+      { title: 'Travel Commands', description: '/spawn, /back, /teleports to navigate between worlds.' },
+    ],
+    tips: ['Always set a home before venturing into the Nether or End.', 'Use /back after dying to return to your grave.'],
+  },
+  {
+    id: 'quests-guide', title: 'Quests & NPC Dialogue', icon: '📜', category: 'world',
+    description: 'How to find, accept, and complete NPC quests.',
+    steps: [
+      { title: 'Finding Quest NPCs', description: 'Look for NPCs with a quest icon above their head in towns and the hub area.' },
+      { title: 'Accepting a Quest', description: "Right-click the NPC to open dialogue. Select the quest you want." },
+      { title: 'Quest Types', description: 'Kill Mobs, Deliver Items, and Discover Locations.' },
+      { title: 'Tracking Progress', description: '/quests or /q to open your journal. /sq for scoreboard view.' },
+      { title: 'Turning In', description: 'Return to the quest-giver when complete. Select the turn-in option.' },
+      { title: 'Quest Rewards', description: 'Gold Crowns, Skill XP, custom items, and vanilla resources.' },
+    ],
+    tips: ['Check /quests regularly.', "NPC dialogue changes based on your quest state."],
+  },
+  {
+    id: 'chat-guide', title: 'Chat & Community', icon: '💬', category: 'social',
+    description: 'Chat channels, Discord bridge, and community features.',
+    steps: [
+      { title: 'Global Chat', description: 'Type normally to talk in global. All players can see it.' },
+      { title: 'Discord Bridge', description: 'In-game global chat is bridged live with the Discord #app-chat channel.' },
+      { title: 'In-App Chat', description: 'The companion app includes a Community Chat that mirrors in-game global chat.' },
+      { title: 'Discord Community', description: 'The Discord server is the primary community hub. Join at discord.gg/D4uBMrzBZN.' },
+    ],
+    tips: ['The Discord bridge means you can stay connected even when not in-game.'],
+  },
+  {
+    id: 'app-link', title: 'Linking the Companion App', icon: '🔗', category: 'social',
+    description: 'How to link your Minecraft account to the RunestoneVale app.',
+    steps: [
+      { title: 'Why Link?', description: 'Unlocks your Character Sheet, Dashboard, and future features like live player data.' },
+      { title: 'Step 1 — Sign In', description: 'Open the app → More → My Account → Login with Discord.' },
+      { title: 'Step 2 — Generate Code', description: 'Join the server and type /rlink. Code expires in 10 minutes.' },
+      { title: 'Step 3 — Enter Code', description: 'In the app → Account → Link Minecraft Account → enter the 6-character code.' },
+      { title: 'After Linking', description: 'Character Sheet and Dashboard become active. Stats sync automatically.' },
+    ],
+    tips: ['The link code expires in 10 minutes.', 'You only need to link once.'],
+  },
+  {
+    id: 'bedrock-access', title: 'Bedrock Access — How to Join', icon: '📱', category: 'bedrock',
+    description: 'How Bedrock Edition players can connect using Geyser and third-party tools.',
+    steps: [
+      { title: 'Overview', description: 'Runestone Vale supports Bedrock via Geyser-Spigot and Floodgate. Java is primary, but Bedrock players can join.' },
+      { title: 'The Challenge', description: 'Bedrock does not allow custom ports. You need one of the methods below.' },
+      { title: 'Method 1 — DNS Override (Recommended)', description: "Change your device's DNS to a Bedrock-compatible proxy. Works on any device." },
+      { title: 'DNS: Android', description: 'Settings → Network → Private DNS → enter the DNS from the Discord access channel.' },
+      { title: 'DNS: iOS/iPadOS', description: 'Settings → Wi-Fi → (i) → Configure DNS → Manual → enter the DNS address.' },
+      { title: 'DNS: Console', description: 'Network Settings → Advanced → DNS → Manual → enter the DNS address.' },
+      { title: 'Method 2 — BedrockTogether App', description: 'Free app on iOS/Android. Acts as a local proxy for custom ports.' },
+      { title: 'Method 2 — Netherlink App', description: 'Dedicated Minecraft Bedrock connector app on iOS/Android.' },
+      { title: 'Getting Server Details', description: 'Join Discord at discord.gg/D4uBMrzBZN for the server IP and port.' },
+    ],
+    tips: ['DNS override is the cleanest method.', 'Console players must use DNS — apps are not available on console.'],
+  },
+];
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// COMMANDS DATA (mirrored from RunestoneValeApp/src/data/commands.ts)
+// ═══════════════════════════════════════════════════════════════════════════════
+const COMMAND_CATEGORIES = [
+  { id: 'essentials', title: 'Player Essentials', icon: '🧭', commands: [
+    { cmd: '/hub', desc: 'Open the Login Hub navigation menu' },
+    { cmd: '/teleports', desc: 'Open destination teleports' },
+    { cmd: '/skills', desc: 'View your skill levels' },
+    { cmd: '/stats', desc: 'View your player stats' },
+    { cmd: '/scoreboard [list|set|toggle|auto]', desc: 'Toggle your scoreboard layout' },
+    { cmd: '/grave [recover]', desc: 'View your grave status and recover if enabled' },
+    { cmd: '/mail', desc: 'Open your mailbox' },
+    { cmd: '/daily claim', desc: 'Claim your daily reward' },
+    { cmd: '/playtime', desc: 'View your total playtime' },
+  ]},
+  { id: 'travel', title: 'Travel & Homes', icon: '📍', commands: [
+    { cmd: '/spawn', desc: 'Teleport to the server spawn' },
+    { cmd: '/sethome', desc: 'Set your home location' },
+    { cmd: '/home', desc: 'Teleport to your home' },
+    { cmd: '/delhome', desc: 'Delete your home' },
+    { cmd: '/tpa <player>', desc: 'Request to teleport to a player' },
+    { cmd: '/tpahere <player>', desc: 'Request a player to teleport to you' },
+    { cmd: '/tpaccept', desc: 'Accept the most recent teleport request' },
+    { cmd: '/tpdeny', desc: 'Deny the most recent teleport request' },
+    { cmd: '/tpacancel', desc: 'Cancel your outgoing teleport request' },
+    { cmd: '/tptoggle', desc: 'Toggle receiving teleport requests' },
+  ]},
+  { id: 'social', title: 'Social & Chat', icon: '👥', commands: [
+    { cmd: '/channel <type>', desc: 'Switch chat channels (global, local, party, staff)' },
+    { cmd: '/chg', desc: 'Shortcut: Switch to global chat' },
+    { cmd: '/chl', desc: 'Shortcut: Switch to local chat' },
+    { cmd: '/chp', desc: 'Shortcut: Switch to party chat' },
+  ]},
+  { id: 'inventory', title: 'Inventory & Items', icon: '🎒', commands: [
+    { cmd: '/sort [hotbar|inventory|chest|all]', desc: 'Auto-sort your items' },
+    { cmd: '/sell <hand|price> [amount]', desc: 'Curated vendor selling' },
+  ]},
+  { id: 'claims', title: 'Land Claims', icon: '🚩', commands: [
+    { cmd: '/claim', desc: 'Personal land claiming' },
+    { cmd: '/claim create', desc: 'Create a new claim' },
+    { cmd: '/claim info', desc: 'View claim details' },
+    { cmd: '/claim list', desc: 'List your claims' },
+    { cmd: '/claim trust <player>', desc: 'Trust a player in your claim' },
+    { cmd: '/claim flag', desc: 'Manage claim flags' },
+    { cmd: '/claim delete', desc: 'Delete your claim' },
+  ]},
+  { id: 'staff', title: 'Staff & Admin Commands', icon: '🛡️', isStaffOnly: true, commands: [
+    { cmd: '/runestoneadmin', desc: 'Access the Admin Control Nexus (Alias: /ra, /adminnexus)' },
+    { cmd: '/radminxp inspect <player>', desc: 'View all skill XP and levels for a player' },
+    { cmd: '/radminxp <combat|skill|all> <add|take|set|reset>', desc: 'Unified admin progression editor' },
+    { cmd: '/runestone reload', desc: 'Reload RunestoneCore configuration' },
+    { cmd: '/runestoneskills reload', desc: 'Reload RunestoneSkills configuration' },
+    { cmd: '/combat <reload|debug>', desc: 'Combat system administration' },
+    { cmd: '/rstamina reload', desc: 'RunestoneStamina administration' },
+    { cmd: '/rnpc <bind|unbind|dialogue|quest|debug|open>', desc: 'RunestoneCore NPC admin tools' },
+    { cmd: '/gm <mode> [player]', desc: 'Quick gamemode switch' },
+    { cmd: '/devflat', desc: 'Teleport to the staff creative world spawn' },
+    { cmd: '/setspawn', desc: 'Set the server spawn point' },
+    { cmd: '/wc', desc: 'Set weather to clear' },
+    { cmd: '/td', desc: 'Set time to day' },
+  ]},
+];
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// STAFF HANDBOOK DATA (mirrored from RunestoneValeApp/src/data/staffHandbook.ts)
+// ═══════════════════════════════════════════════════════════════════════════════
+const HANDBOOK_CATEGORIES = [
+  { id: 'runestone', label: 'RunestoneMMO', icon: '⚔️' },
+];
+
+const HANDBOOK_SECTIONS = [
+  {
+    id: 'admin-nexus', title: 'Admin Control Nexus', icon: '⚙️', category: 'runestone',
+    subsections: [
+      { id: 'nexus-overview', title: 'Overview', content: [
+        { type: 'text', text: 'The Admin Control Nexus is your central hub for all administrative actions. Access it with /ra or /runestoneadmin.' },
+        { type: 'command', command: '/ra', alias: '/runestoneadmin, /adminnexus', permission: 'runestone.admin', description: 'Open the Admin Control Nexus GUI' },
+        { type: 'command', command: '/ra scepter', permission: 'runestone.admin', description: 'Give yourself the Admin Scepter (right-click NPCs to select them)' },
+        { type: 'command', command: '/ra reload', permission: 'runestone.admin', description: 'Reload AdminTool configuration' },
+      ]},
+      { id: 'nexus-player-tools', title: 'Player Management', content: [
+        { type: 'text', text: "From the Nexus you can inspect any online player's live inventory, view their stats, manage their economy, and teleport to them." },
+        { type: 'tip', text: 'Use the Admin Scepter (/ra scepter) to right-click an NPC and instantly open its management panel.' },
+        { type: 'command', command: '/radminxp inspect <player>', alias: '/adminxp inspect', permission: 'runestonecore.admin.xp', description: 'View all skill XP and levels for a player' },
+        { type: 'command', command: '/radminxp skill add <player> <skill> <amount>', permission: 'runestonecore.admin.xp', description: 'Add XP to a specific skill' },
+        { type: 'command', command: '/radminxp skill set <player> <skill> <xp>', permission: 'runestonecore.admin.xp', description: 'Set exact XP for a skill' },
+        { type: 'command', command: '/radminxp skill reset <player> <skill>', permission: 'runestonecore.admin.xp', description: 'Reset a skill to level 1' },
+        { type: 'command', command: '/radminxp all reset <player>', permission: 'runestonecore.admin.xp', description: 'Reset ALL skills for a player' },
+        { type: 'command', command: '/radminxp combat add <player> <amount>', permission: 'runestonecore.admin.xp', description: 'Add combat XP to a player' },
+      ]},
+    ],
+  },
+  {
+    id: 'npc-system', title: 'NPC System', icon: '🧙', category: 'runestone',
+    subsections: [
+      { id: 'npc-overview', title: 'Overview & Architecture', content: [
+        { type: 'text', text: 'RunestoneNPCs is the authoritative module for all NPC logic. Citizens handles the entity. RunestoneCore provides the /rnpc command bridge.' },
+        { type: 'warning', text: 'NPC quest authoring is YAML-only. Do not attempt to use in-game commands to create quests, dialogues, or rewards.' },
+        { type: 'tip', text: 'Use /ra scepter to right-click any NPC and open its management panel instantly.' },
+      ]},
+      { id: 'npc-commands', title: 'NPC Support Commands', content: [
+        { type: 'text', text: 'These commands are for binding and debugging NPCs only. Authoring is done in YAML.' },
+        { type: 'command', command: '/rnpc bind <npcId> <key>', alias: '/rnb', permission: 'runestonecore.npc.admin', description: 'Bind a Citizens NPC to a RunestoneMMO binding key' },
+        { type: 'command', command: '/rnpc unbind <npcId>', permission: 'runestonecore.npc.admin', description: 'Remove the MMO binding from an NPC' },
+        { type: 'command', command: '/rnpc meta <npcId>', alias: '/rnm', permission: 'runestonecore.npc.admin', description: 'View all metadata for an NPC binding' },
+        { type: 'command', command: '/rnpc debug <npcId> [player]', alias: '/rndb', permission: 'runestonecore.npc.admin', description: 'Print full debug info for an NPC binding' },
+        { type: 'command', command: '/rnpc open <npcId> [player]', alias: '/rno', permission: 'runestonecore.npc.admin', description: 'Force-open an NPC interaction for a player' },
+        { type: 'command', command: '/rnpc reload', permission: 'runestonecore.npc.admin', description: 'Reload NPC bindings, dialogues, quests, and shops from YAML' },
+      ]},
+    ],
+  },
+  {
+    id: 'world-claims', title: 'World & Claims', icon: '🌍', category: 'runestone',
+    subsections: [
+      { id: 'claims-admin', title: 'Land Control', content: [
+        { type: 'text', text: 'The Land Control system manages both player claims and admin settlement plots.' },
+        { type: 'command', command: '/claim plot create <plotId>', permission: 'runestonecore.claims.admin', description: 'Create a new admin plot from WorldEdit selection' },
+        { type: 'command', command: '/claim plot price <plotId> <amount>', permission: 'runestonecore.claims.admin', description: 'Set the purchase price of a plot' },
+        { type: 'command', command: '/claim plot state <plotId> <state>', permission: 'runestonecore.claims.admin', description: 'Set plot state (AVAILABLE, LOCKED, etc)' },
+        { type: 'command', command: '/claim admin bypass', permission: 'runestonecore.claims.bypass', description: 'Toggle bypass mode for all claim protections' },
+      ]},
+      { id: 'teleports-admin', title: 'Teleport Destinations', content: [
+        { type: 'text', text: 'Manage the /teleports menu destinations.' },
+        { type: 'command', command: '/rtel list', permission: 'runestonecore.teleports.admin', description: 'List all configured destinations' },
+        { type: 'command', command: '/rtel set <key>', permission: 'runestonecore.teleports.admin', description: 'Create/update a destination at your current location' },
+        { type: 'command', command: '/rtel enable|disable <key>', permission: 'runestonecore.teleports.admin', description: 'Toggle a destination' },
+      ]},
+    ],
+  },
+];
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// RENDERING
+// ═══════════════════════════════════════════════════════════════════════════════
+
+let activeGuideCategory = 'all';
+let activeHandbookCategory = 'runestone';
+
+// ── Guide category chips ──
+function renderGuideChips() {
+  const el = document.getElementById('guideCategoryChips');
+  el.innerHTML = GUIDE_CATEGORIES.map(c =>
+    `<span class="chip ${c.id === activeGuideCategory ? 'active' : ''}" onclick="setGuideCategory('${c.id}')">${c.icon} ${c.label}</span>`
+  ).join('');
+}
+window.setGuideCategory = function(id) {
+  activeGuideCategory = id;
+  renderGuideChips();
+  renderGuides();
+};
+
+// ── Player guides ──
+function renderGuides() {
+  const el = document.getElementById('guidesList');
+  const filtered = activeGuideCategory === 'all'
+    ? PLAYER_GUIDES
+    : PLAYER_GUIDES.filter(g => g.category === activeGuideCategory);
+
+  if (filtered.length === 0) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-icon">📚</div><div class="empty-text">No guides in this category yet.</div></div>';
+    return;
+  }
+
+  el.innerHTML = filtered.map(g => `
+    <div class="guide-card" id="guide-${g.id}">
+      <div class="guide-card-header" onclick="toggleGuide('${g.id}')">
+        <div class="guide-icon">${g.icon}</div>
+        <div class="guide-title-block">
+          <div class="guide-title">${g.title}</div>
+          <div class="guide-desc">${g.description}</div>
+        </div>
+        <span class="guide-chevron">▼</span>
+      </div>
+      <div class="guide-body">
+        ${g.steps.map((s, i) => `
+          <div class="step-row">
+            <div class="step-num">${i + 1}</div>
+            <div class="step-content">
+              <div class="step-title">${s.title}</div>
+              <div class="step-desc">${s.description}</div>
+            </div>
+          </div>
+        `).join('')}
+        ${g.tips && g.tips.length ? `
+          <div class="tips-block">
+            <div class="tips-header">💡 Tips</div>
+            ${g.tips.map(t => `<div class="tip-line">• ${t}</div>`).join('')}
+          </div>
+        ` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+window.toggleGuide = function(id) {
+  document.getElementById('guide-' + id).classList.toggle('open');
+};
+
+// ── Commands ──
+function renderCommands() {
+  const el = document.getElementById('commandsList');
+  const search = (document.getElementById('cmdSearch').value || '').toLowerCase().trim();
+
+  const cats = COMMAND_CATEGORIES
+    .filter(c => isElevated || !c.isStaffOnly)
+    .map(c => ({
+      ...c,
+      commands: search
+        ? c.commands.filter(cmd => cmd.cmd.toLowerCase().includes(search) || cmd.desc.toLowerCase().includes(search))
+        : c.commands,
+    }))
+    .filter(c => c.commands.length > 0);
+
+  if (cats.length === 0) {
+    el.innerHTML = `<div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-text">No commands found${search ? ' for "' + search + '"' : ''}.</div></div>`;
+    return;
+  }
+
+  el.innerHTML = cats.map(c => `
+    <div class="cmd-category" id="cmd-${c.id}">
+      <div class="cmd-cat-header" onclick="toggleCmdCat('${c.id}')">
+        <span>${c.icon}</span>
+        <span class="cmd-cat-title">${c.title}${c.isStaffOnly ? '<span class="staff-badge">STAFF</span>' : ''}</span>
+        <span class="cmd-cat-count">${c.commands.length} cmd${c.commands.length !== 1 ? 's' : ''}</span>
+        <span class="cmd-cat-chevron">▼</span>
+      </div>
+      <div class="cmd-cat-body">
+        ${c.commands.map(cmd => `
+          <div class="cmd-row">
+            <div class="cmd-text">${cmd.cmd}</div>
+            <div class="cmd-desc-text">${cmd.desc}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+window.toggleCmdCat = function(id) {
+  document.getElementById('cmd-' + id).classList.toggle('open');
+};
+
+// ── Handbook chips ──
+function renderHandbookChips() {
+  const el = document.getElementById('handbookChips');
+  el.innerHTML = HANDBOOK_CATEGORIES.map(c =>
+    `<span class="chip ${c.id === activeHandbookCategory ? 'active' : ''}" onclick="setHandbookCategory('${c.id}')">${c.icon} ${c.label}</span>`
+  ).join('');
+}
+window.setHandbookCategory = function(id) {
+  activeHandbookCategory = id;
+  renderHandbookChips();
+  renderHandbook();
+};
+
+// ── Handbook sections ──
+function renderHandbook() {
+  const el = document.getElementById('handbookList');
+  if (!isElevated) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-icon">🔒</div><div class="empty-text">Staff handbook is only visible to elevated roles.</div></div>';
+    return;
+  }
+  const filtered = HANDBOOK_SECTIONS.filter(s => s.category === activeHandbookCategory);
+  el.innerHTML = filtered.map(s => `
+    <div class="handbook-section" id="hb-${s.id}">
+      <div class="hb-header" onclick="toggleHb('${s.id}')">
+        <span class="hb-icon">${s.icon}</span>
+        <span class="hb-title">${s.title}</span>
+        <span class="hb-chevron">▼</span>
+      </div>
+      <div class="hb-body">
+        ${s.subsections.map(sub => `
+          <div class="hb-subsection">
+            <div class="hb-sub-title">${sub.title}</div>
+            ${sub.content.map(entry => renderHandbookEntry(entry)).join('')}
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+window.toggleHb = function(id) {
+  document.getElementById('hb-' + id).classList.toggle('open');
+};
+
+function renderHandbookEntry(entry) {
+  switch (entry.type) {
+    case 'text':
+      return `<div class="hb-text">${entry.text}</div>`;
+    case 'warning':
+      return `<div class="hb-warning"><span class="hb-warning-icon">⚠️</span><span class="hb-warning-text">${entry.text}</span></div>`;
+    case 'tip':
+      return `<div class="hb-tip"><span class="hb-tip-icon">💡</span><span class="hb-tip-text">${entry.text}</span></div>`;
+    case 'command':
+      return `
+        <div class="hb-cmd" onclick="navigator.clipboard.writeText('${entry.command}')">
+          <div class="hb-cmd-top">
+            <span class="hb-cmd-text">${entry.command}</span>
+            <span class="hb-cmd-copy">tap to copy</span>
+          </div>
+          ${entry.alias ? `<div class="hb-cmd-alias">Alias: ${entry.alias}</div>` : ''}
+          ${entry.permission ? `<div class="hb-cmd-perm">Permission: ${entry.permission}</div>` : ''}
+          ${entry.description ? `<div class="hb-cmd-desc">${entry.description}</div>` : ''}
+        </div>`;
+    default:
+      return '';
+  }
+}
+
+// ── Nav helpers ──
+window.toggleMenu = function() {
+  document.getElementById('mainNav').classList.toggle('open');
+};
+window.toggleDropdown = function(e, id) {
+  e.stopPropagation();
+  const dd = document.getElementById(id);
+  const isOpen = dd.classList.contains('show');
+  document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('show'));
+  if (!isOpen) dd.classList.add('show');
+};
+document.addEventListener('click', () => {
+  document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('show'));
+});
+
+// ── Init ──
+init();
+</script>
+</body>
+</html>
