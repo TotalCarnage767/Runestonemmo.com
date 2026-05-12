@@ -378,14 +378,15 @@
       <div class="nav-dropdown" id="communityDropdownWrap">
         <button class="top-link dropdown-toggle" type="button" aria-expanded="false" onclick="toggleCommunityDropdown(event)">Community ▾</button>
         <div class="dropdown-menu" id="communityDropdown">
-          <a class="dropdown-link" href="/news.html">📰 Patch Notes &amp; News</a>
+          <a class="dropdown-link" href="/news.html">📰 Patch Notes & News</a>
           <a class="dropdown-link" href="/voting.html">🗳️ Community Voting</a>
           <a class="dropdown-link" href="/bug-report.html">🐛 Bug Reports</a>
-          <a class="dropdown-link" href="/guides.html">📖 Guides &amp; Commands</a>
+          <a class="dropdown-link" href="/guides.html">📖 Guides & Commands</a>
         </div>
       </div>
       <a class="top-link" href="/credits.html">Credits</a>
-<a class="top-link" href="/terms.html">Terms</a>
+      <a class="top-link" href="/terms.html">Terms</a>
+      <div id="navUserSlot" style="display:flex;align-items:center;flex-shrink:0;margin-left:8px;"></div>
     </nav>
   </div>
 </header>
@@ -733,19 +734,8 @@ function escHtml(str) {
 }
 
 // ── Nav helpers (shared pattern) ───────────────────────────────────────
-function toggleMenu() {
-  const nav = document.getElementById('mobileNav');
-  const btn = document.querySelector('.menu-toggle');
-  nav.classList.toggle('open');
-  btn.setAttribute('aria-expanded', nav.classList.contains('open') ? 'true' : 'false');
-}
-function toggleRunestoneDropdown(event) {
-  event.stopPropagation();
-  const dropdown = event.currentTarget.closest('.nav-dropdown');
-  const button   = dropdown.querySelector('.dropdown-toggle');
-  dropdown.classList.toggle('open');
-  button.setAttribute('aria-expanded', dropdown.classList.contains('open') ? 'true' : 'false');
-}
+
+
 document.addEventListener('click', (e) => {
   const nav = document.getElementById('mobileNav');
   const btn = document.querySelector('.menu-toggle');
@@ -788,14 +778,7 @@ document.addEventListener('click', (e) => {
 })();
 
 // ── Community dropdown toggle ──────────────────────────────────────────────
-function toggleCommunityDropdown(event) {
-  event.stopPropagation();
-  const wrap = document.getElementById('communityDropdownWrap');
-  const btn  = wrap ? wrap.querySelector('.dropdown-toggle') : null;
-  if (!wrap) return;
-  wrap.classList.toggle('open');
-  if (btn) btn.setAttribute('aria-expanded', wrap.classList.contains('open') ? 'true' : 'false');
-}
+
 document.addEventListener('click', function(e) {
   const wrap = document.getElementById('communityDropdownWrap');
   if (wrap && !wrap.contains(e.target)) {
@@ -804,6 +787,49 @@ document.addEventListener('click', function(e) {
     if (btn) btn.setAttribute('aria-expanded', 'false');
   }
 });
+</script>
+<script>
+function toggleMenu() {
+  const nav = document.getElementById("mobileNav");
+  const button = document.querySelector(".menu-toggle");
+  nav.classList.toggle("open");
+  button.setAttribute("aria-expanded", nav.classList.contains("open") ? "true" : "false");
+}
+function toggleRunestoneDropdown(event) {
+  event.stopPropagation();
+  const dropdown = event.currentTarget.closest(".nav-dropdown");
+  const button = dropdown.querySelector(".dropdown-toggle");
+  dropdown.classList.toggle("open");
+  button.setAttribute("aria-expanded", dropdown.classList.contains("open") ? "true" : "false");
+}
+function toggleCommunityDropdown(event) {
+  event.stopPropagation();
+  const wrap = document.getElementById('communityDropdownWrap');
+  const btn  = wrap ? wrap.querySelector('.dropdown-toggle') : null;
+  if (!wrap) return;
+  wrap.classList.toggle('open');
+  if (btn) btn.setAttribute('aria-expanded', wrap.classList.contains('open') ? 'true' : 'false');
+}
+document.addEventListener("click", function(event) {
+  const nav = document.getElementById("mobileNav");
+  const menuButton = document.querySelector(".menu-toggle");
+  if (nav && nav.classList.contains("open") && !nav.contains(event.target) && !menuButton.contains(event.target)) {
+    nav.classList.remove("open");
+    menuButton.setAttribute("aria-expanded", "false");
+  }
+  document.querySelectorAll('.nav-dropdown').forEach(wrap => {
+    if (!wrap.contains(event.target)) {
+      wrap.classList.remove('open');
+      const btn = wrap.querySelector('.dropdown-toggle');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+});
+(function() {
+  RSAuth.initSession().then(function(session) {
+    RSAuth.renderNavUser(session);
+  });
+})();
 </script>
 </body>
 </html>

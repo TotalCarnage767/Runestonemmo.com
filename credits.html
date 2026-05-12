@@ -26,20 +26,12 @@
 <header>
   <div class="topbar">
     <a class="brand" href="/index.html">Runestone Vale</a>
-
-    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleMenu()">
-      ☰
-    </button>
-
+    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleMenu()">☰</button>
     <nav class="top-links" id="mobileNav">
       <a class="top-link" href="/index.html">Home</a>
       <a class="top-link" href="/features.html">Server-Features</a>
-
       <div class="nav-dropdown">
-        <button class="top-link dropdown-toggle" type="button" aria-expanded="false" onclick="toggleRunestoneDropdown(event)">
-          RunestoneMMO ▾
-        </button>
-
+        <button class="top-link dropdown-toggle" type="button" aria-expanded="false" onclick="toggleRunestoneDropdown(event)">RunestoneMMO ▾</button>
         <div class="dropdown-menu" id="runestoneDropdown">
           <a class="dropdown-link" href="/RunestoneCore.html">RunestoneCore</a>
           <a class="dropdown-link" href="/RunestoneSkills.html">RunestoneSkills</a>
@@ -50,20 +42,19 @@
           <a class="dropdown-link" href="/runestonenpc.html">RunestoneNPCs</a>
         </div>
       </div>
-
       <a class="top-link" href="/roadmap_development.html">Roadmap</a>
       <div class="nav-dropdown" id="communityDropdownWrap">
         <button class="top-link dropdown-toggle" type="button" aria-expanded="false" onclick="toggleCommunityDropdown(event)">Community ▾</button>
         <div class="dropdown-menu" id="communityDropdown">
-          <a class="dropdown-link" href="/news.html">📰 Patch Notes &amp; News</a>
+          <a class="dropdown-link" href="/news.html">📰 Patch Notes & News</a>
           <a class="dropdown-link" href="/voting.html">🗳️ Community Voting</a>
           <a class="dropdown-link" href="/bug-report.html">🐛 Bug Reports</a>
-          <a class="dropdown-link" href="/guides.html">📖 Guides &amp; Commands</a>
+          <a class="dropdown-link" href="/guides.html">📖 Guides & Commands</a>
         </div>
       </div>
       <a class="top-link" href="/credits.html">Credits</a>
       <a class="top-link" href="/terms.html">Terms</a>
-    <div id="navUserSlot" style="display:flex;align-items:center;flex-shrink:0;margin-left:8px;"></div>
+      <div id="navUserSlot" style="display:flex;align-items:center;flex-shrink:0;margin-left:8px;"></div>
     </nav>
   </div>
 </header>
@@ -218,12 +209,7 @@
 </footer>
 
 <script>
-function toggleMenu() {
-  const nav = document.getElementById("mobileNav");
-  const button = document.querySelector(".menu-toggle");
-  nav.classList.toggle("open");
-  button.setAttribute("aria-expanded", nav.classList.contains("open") ? "true" : "false");
-}
+
 
 document.addEventListener("click", function (event) {
   const nav = document.getElementById("mobileNav");
@@ -240,17 +226,7 @@ document.addEventListener("click", function (event) {
   }
 });
 
-function toggleRunestoneDropdown(event) {
-  event.stopPropagation();
-  const dropdown = event.currentTarget.closest('.nav-dropdown');
-  const button   = dropdown.querySelector('.dropdown-toggle');
-  const isOpen   = dropdown.classList.contains('open');
-  // Close all other open dropdowns first
-  document.querySelectorAll('.nav-dropdown.open').forEach(function(d) {
-    d.classList.remove('open');
-    const b = d.querySelector('.dropdown-toggle');
-    if (b) b.setAttribute('aria-expanded', 'false');
-  });
+);
   if (!isOpen) {
     dropdown.classList.add('open');
     button.setAttribute('aria-expanded', 'true');
@@ -266,14 +242,7 @@ function toggleRunestoneDropdown(event) {
 })();
 
 // ── Community dropdown toggle ──────────────────────────────────────────────
-function toggleCommunityDropdown(event) {
-  event.stopPropagation();
-  const wrap = document.getElementById('communityDropdownWrap');
-  const btn  = wrap ? wrap.querySelector('.dropdown-toggle') : null;
-  if (!wrap) return;
-  wrap.classList.toggle('open');
-  if (btn) btn.setAttribute('aria-expanded', wrap.classList.contains('open') ? 'true' : 'false');
-}
+
 document.addEventListener('click', function(e) {
   const wrap = document.getElementById('communityDropdownWrap');
   if (wrap && !wrap.contains(e.target)) {
@@ -282,6 +251,49 @@ document.addEventListener('click', function(e) {
     if (btn) btn.setAttribute('aria-expanded', 'false');
   }
 });
+</script>
+<script>
+function toggleMenu() {
+  const nav = document.getElementById("mobileNav");
+  const button = document.querySelector(".menu-toggle");
+  nav.classList.toggle("open");
+  button.setAttribute("aria-expanded", nav.classList.contains("open") ? "true" : "false");
+}
+function toggleRunestoneDropdown(event) {
+  event.stopPropagation();
+  const dropdown = event.currentTarget.closest(".nav-dropdown");
+  const button = dropdown.querySelector(".dropdown-toggle");
+  dropdown.classList.toggle("open");
+  button.setAttribute("aria-expanded", dropdown.classList.contains("open") ? "true" : "false");
+}
+function toggleCommunityDropdown(event) {
+  event.stopPropagation();
+  const wrap = document.getElementById('communityDropdownWrap');
+  const btn  = wrap ? wrap.querySelector('.dropdown-toggle') : null;
+  if (!wrap) return;
+  wrap.classList.toggle('open');
+  if (btn) btn.setAttribute('aria-expanded', wrap.classList.contains('open') ? 'true' : 'false');
+}
+document.addEventListener("click", function(event) {
+  const nav = document.getElementById("mobileNav");
+  const menuButton = document.querySelector(".menu-toggle");
+  if (nav && nav.classList.contains("open") && !nav.contains(event.target) && !menuButton.contains(event.target)) {
+    nav.classList.remove("open");
+    menuButton.setAttribute("aria-expanded", "false");
+  }
+  document.querySelectorAll('.nav-dropdown').forEach(wrap => {
+    if (!wrap.contains(event.target)) {
+      wrap.classList.remove('open');
+      const btn = wrap.querySelector('.dropdown-toggle');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+});
+(function() {
+  RSAuth.initSession().then(function(session) {
+    RSAuth.renderNavUser(session);
+  });
+})();
 </script>
 </body>
 </html>
