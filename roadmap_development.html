@@ -25,7 +25,7 @@
       background:#1e1b17; border:1px solid #4a3a28; border-radius:10px;
       padding:14px 16px; text-align:center;
     }
-    .rm-stat-num { font-family:'Cinzel',serif; font-size:1.6rem; font-weight:700; line-height:1; }
+    .rm-stat-num   { font-family:'Cinzel',serif; font-size:1.6rem; font-weight:700; line-height:1; }
     .rm-stat-label { font-size:0.7rem; text-transform:uppercase; letter-spacing:0.5px; color:rgba(255,255,255,0.4); margin-top:4px; }
 
     /* Filter chips */
@@ -35,11 +35,30 @@
       cursor:pointer; border:1.5px solid transparent; font-family:'Cinzel',serif;
       letter-spacing:0.3px; transition:all 0.15s; background:#2a2318; color:rgba(255,255,255,0.5);
     }
-    .rm-chip:hover { color:#f0e6c8; border-color:#c9a227; }
+    .rm-chip:hover  { color:#f0e6c8; border-color:#c9a227; }
     .rm-chip.active { background:#c9a227; color:#0d0b08; border-color:#c9a227; }
 
     /* Card grid */
     .rm-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:14px; }
+
+    /* Status group header */
+    .rm-group-header {
+      grid-column: 1 / -1;
+      display: flex; align-items: center; gap: 10px;
+      padding: 6px 0 2px;
+      margin-top: 8px;
+      border-bottom: 1px solid rgba(74,58,40,0.5);
+      margin-bottom: 4px;
+    }
+    .rm-group-header:first-child { margin-top: 0; }
+    .rm-group-label {
+      font-family: 'Cinzel', serif; font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.8px; text-transform: uppercase;
+    }
+    .rm-group-count {
+      font-size: 0.7rem; color: rgba(255,255,255,0.3);
+      font-family: 'Cinzel', serif;
+    }
 
     /* Card */
     .rm-card {
@@ -48,7 +67,7 @@
     }
     .rm-card:hover { border-color:#c9a227; }
 
-    /* Status pill pin */
+    /* Status pill */
     .rm-pin {
       display:inline-flex; align-items:center; gap:6px;
       padding:3px 10px 3px 7px; border-radius:20px;
@@ -57,13 +76,13 @@
     }
     .rm-pin-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
     .rm-pin.live        { background:var(--status-live-bg);     color:var(--status-live); }
-    .rm-pin.live .rm-pin-dot { background:var(--status-live); box-shadow:0 0 5px var(--status-live); }
+    .rm-pin.live .rm-pin-dot        { background:var(--status-live);     box-shadow:0 0 5px var(--status-live); }
     .rm-pin.in-progress { background:var(--status-progress-bg); color:var(--status-progress); }
     .rm-pin.in-progress .rm-pin-dot { background:var(--status-progress); }
     .rm-pin.planned     { background:var(--status-planned-bg);  color:var(--status-planned); }
-    .rm-pin.planned .rm-pin-dot { background:var(--status-planned); }
+    .rm-pin.planned .rm-pin-dot     { background:var(--status-planned); }
     .rm-pin.future      { background:var(--status-future-bg);   color:var(--status-future); }
-    .rm-pin.future .rm-pin-dot { background:var(--status-future); }
+    .rm-pin.future .rm-pin-dot      { background:var(--status-future); }
 
     .rm-card h3 { margin:0 0 6px; font-size:0.98rem; color:#f0e6c8; font-family:'Cinzel',serif; padding-right:34px; }
     .rm-card p  { margin:0; font-size:0.85rem; color:rgba(255,255,255,0.6); line-height:1.6; }
@@ -84,12 +103,22 @@
       padding:9px 20px; background:#c9a227; color:#0d0b08;
       border:none; border-radius:8px; font-family:'Cinzel',serif;
       font-size:0.85rem; font-weight:700; cursor:pointer;
-      letter-spacing:0.5px; margin-bottom:16px; transition:background 0.15s;
+      letter-spacing:0.5px; margin-bottom:8px; transition:background 0.15s;
     }
     .rm-add-btn:hover { background:#e0b83a; }
     .rm-admin-hint { font-size:0.75rem; color:rgba(255,255,255,0.3); margin-bottom:16px; font-style:italic; }
 
     .rm-empty { grid-column:1/-1; text-align:center; color:rgba(255,255,255,0.3); padding:40px 20px; font-size:0.88rem; }
+
+    /* Toast */
+    .rm-toast {
+      position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px);
+      background:#1e1b17; border:1px solid #c9a227; color:#f0e6c8;
+      padding:10px 22px; border-radius:8px; font-family:'Cinzel',serif;
+      font-size:0.82rem; z-index:3000; transition:transform 0.25s, opacity 0.25s;
+      opacity:0; pointer-events:none;
+    }
+    .rm-toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
 
     /* Modal overlay */
     .rm-modal-overlay {
@@ -100,7 +129,7 @@
     .rm-modal-overlay.open { display:flex; }
     .rm-modal {
       background:#1e1b17; border:1px solid #4a3a28; border-radius:14px;
-      padding:28px 24px; width:100%; max-width:460px;
+      padding:28px 24px; width:100%; max-width:480px;
       max-height:90vh; overflow-y:auto;
     }
     .rm-modal h3 { font-family:'Cinzel',serif; color:#c9a227; margin:0 0 20px; font-size:1.1rem; }
@@ -108,13 +137,16 @@
       display:block; font-size:0.75rem; color:rgba(255,255,255,0.45);
       text-transform:uppercase; letter-spacing:0.5px; margin-bottom:5px; font-family:'Cinzel',serif;
     }
-    .rm-modal input, .rm-modal textarea {
+    .rm-modal input, .rm-modal textarea, .rm-modal select {
       width:100%; box-sizing:border-box;
       background:#2a2318; border:1px solid #4a3a28; border-radius:7px;
       color:#f0e6c8; padding:10px 12px; font-size:0.9rem;
       font-family:inherit; margin-bottom:14px; resize:vertical;
     }
-    .rm-modal input:focus, .rm-modal textarea:focus { outline:none; border-color:#c9a227; }
+    .rm-modal input:focus, .rm-modal textarea:focus, .rm-modal select:focus {
+      outline:none; border-color:#c9a227;
+    }
+    .rm-modal select option { background:#1e1b17; }
 
     /* Status picker */
     .rm-status-picker { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
@@ -130,13 +162,21 @@
     .rm-status-btn.sel-planned  { border-color:var(--status-planned);  color:var(--status-planned);  background:var(--status-planned-bg); }
     .rm-status-btn.sel-future   { border-color:var(--status-future);   color:var(--status-future);   background:var(--status-future-bg); }
 
-    .rm-modal-actions { display:flex; gap:10px; margin-top:6px; }
+    /* Sort hint */
+    .rm-sort-hint {
+      font-size:0.72rem; color:rgba(255,255,255,0.28); font-style:italic;
+      margin: -10px 0 14px; line-height:1.5;
+    }
+
+    .rm-modal-actions { display:flex; gap:10px; margin-top:6px; flex-wrap:wrap; }
     .rm-btn-save {
       flex:1; padding:11px; background:#c9a227; color:#0d0b08;
       border:none; border-radius:8px; font-family:'Cinzel',serif;
       font-size:0.88rem; font-weight:700; cursor:pointer; transition:background 0.15s;
+      min-width:80px;
     }
-    .rm-btn-save:hover { background:#e0b83a; }
+    .rm-btn-save:hover   { background:#e0b83a; }
+    .rm-btn-save:disabled { opacity:0.5; cursor:not-allowed; }
     .rm-btn-cancel {
       padding:11px 18px; background:#2a2318; color:rgba(255,255,255,0.5);
       border:1px solid #4a3a28; border-radius:8px; font-family:'Cinzel',serif; font-size:0.88rem; cursor:pointer;
@@ -153,13 +193,13 @@
       .rm-stat-num { font-size:1.3rem; }
     }
   </style>
-  <!-- Supabase JS client (needed for Realtime WebSocket subscriptions) -->
   <script type="importmap">
     { "imports": { "@supabase/supabase-js": "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm" } }
   </script>
 </head>
 <body>
-<!-- RS Login Gate — Discord OAuth — visibility:hidden by default -->
+
+<!-- RS Login Gate -->
 <div id="rs-login-gate" style="visibility:hidden;opacity:0;pointer-events:none;position:fixed;inset:0;background:rgba(10,9,7,0.97);z-index:9999;display:flex;align-items:center;justify-content:center;transition:opacity 0.15s;">
   <div style="background:#1e1b17;border:1px solid #4a3a28;border-radius:14px;padding:40px 32px;text-align:center;max-width:400px;width:90%;box-shadow:0 24px 64px rgba(0,0,0,0.7);">
     <div style="font-size:2rem;margin-bottom:12px;">&#9876;</div>
@@ -171,9 +211,6 @@
     </button>
     <p style="color:rgba(240,230,200,0.25);font-size:0.72rem;margin:16px 0 0;line-height:1.5;">You will be redirected to Discord to authorise. No password is stored on this site.</p>
   </div>
-</div>
-
-
 </div>
 
 <header>
@@ -220,30 +257,30 @@
     </p>
   </section>
 
-  <!-- ── Live Roadmap ─────────────────────────────────────────────── -->
+  <!-- ── Live Roadmap ── -->
   <section class="card" style="padding:28px 24px;">
 
     <!-- Stats row -->
     <div class="rm-stats">
-      <div class="rm-stat-card"><div class="rm-stat-num" id="statLive"     style="color:var(--status-live);">—</div><div class="rm-stat-label">Live</div></div>
       <div class="rm-stat-card"><div class="rm-stat-num" id="statProgress" style="color:var(--status-progress);">—</div><div class="rm-stat-label">In Progress</div></div>
       <div class="rm-stat-card"><div class="rm-stat-num" id="statPlanned"  style="color:var(--status-planned);">—</div><div class="rm-stat-label">Planned</div></div>
       <div class="rm-stat-card"><div class="rm-stat-num" id="statFuture"   style="color:var(--status-future);">—</div><div class="rm-stat-label">Future</div></div>
+      <div class="rm-stat-card"><div class="rm-stat-num" id="statLive"     style="color:var(--status-live);">—</div><div class="rm-stat-label">Live</div></div>
     </div>
 
-    <!-- Admin bar (staff/admin only) -->
+    <!-- Admin bar (elevated staff only) -->
     <div id="rmAdminBar" style="display:none;">
       <button class="rm-add-btn" onclick="openModal(null)">+ Add Item</button>
-      <p class="rm-admin-hint">Click the pencil icon on any card to edit or delete it.</p>
+      <p class="rm-admin-hint">Click ✎ on any card to edit. Status order: In Progress → Planned → Future → Live. Sort Order controls position within each group (lower = higher up).</p>
     </div>
 
     <!-- Filter chips -->
     <div class="rm-filters">
       <button class="rm-chip active" data-filter="all"         onclick="setFilter('all',this)">All</button>
-      <button class="rm-chip"        data-filter="live"        onclick="setFilter('live',this)">Live</button>
       <button class="rm-chip"        data-filter="in-progress" onclick="setFilter('in-progress',this)">In Progress</button>
       <button class="rm-chip"        data-filter="planned"     onclick="setFilter('planned',this)">Planned</button>
       <button class="rm-chip"        data-filter="future"      onclick="setFilter('future',this)">Future</button>
+      <button class="rm-chip"        data-filter="live"        onclick="setFilter('live',this)">Live</button>
     </div>
 
     <!-- Card grid -->
@@ -271,45 +308,76 @@
     <a href="/index.html">Home</a> &bull;
     <a href="/features.html">Features</a> &bull;
     <a href="/roadmap_development.html">Roadmap</a> &bull;
-    <a href="https://discord.gg/7QV4eaHcHC" target="_blank" rel="noopener">Discord</a> &bull;
+    <a href="/credits.html">Credits</a> &bull;
     <a href="/terms.html">Terms</a>
+  </p>
+  <p>
+    <a href="https://discord.gg/7QV4eaHcHC" target="_blank" rel="noopener">Discord</a> &bull;
+    <a href="https://www.patreon.com/cw/RunestoneMMO" target="_blank" rel="noopener">Patreon</a>
   </p>
 </footer>
 
-<!-- ── Admin CRUD Modal ──────────────────────────────────────────────── -->
+<!-- ── Admin CRUD Modal ── -->
 <div class="rm-modal-overlay" id="rmModal">
   <div class="rm-modal">
     <h3 id="rmModalTitle">Add Roadmap Item</h3>
+
     <label>Title</label>
     <input type="text" id="rmInputTitle" placeholder="e.g. Dungeon System" maxlength="80">
+
     <label>Description</label>
     <textarea id="rmInputDesc" rows="3" placeholder="Brief description…" maxlength="400"></textarea>
+
     <label>Status</label>
     <div class="rm-status-picker">
-      <button class="rm-status-btn" data-s="live"        onclick="pickStatus('live',this)">● Live</button>
       <button class="rm-status-btn" data-s="in-progress" onclick="pickStatus('in-progress',this)">● In Progress</button>
       <button class="rm-status-btn" data-s="planned"     onclick="pickStatus('planned',this)">● Planned</button>
       <button class="rm-status-btn" data-s="future"      onclick="pickStatus('future',this)">● Future</button>
+      <button class="rm-status-btn" data-s="live"        onclick="pickStatus('live',this)">● Live</button>
     </div>
-    <label>Sort Order <span style="color:rgba(255,255,255,0.25);font-size:0.68rem;">(lower = first)</span></label>
-    <input type="number" id="rmInputSort" value="0" min="0" max="999">
+
+    <label>Sort Order <span style="color:rgba(255,255,255,0.25);font-size:0.68rem;">(within status group — lower = higher up)</span></label>
+    <input type="number" id="rmInputSort" value="0" min="0" max="9999">
+    <p class="rm-sort-hint">Items are grouped by status first (In Progress → Planned → Future → Live), then sorted by this number within each group. To move an item up, give it a lower number than its neighbours.</p>
+
     <div class="rm-modal-actions">
-      <button class="rm-btn-save"   onclick="saveItem()">Save</button>
+      <button class="rm-btn-save"   id="rmSaveBtn" onclick="saveItem()">Save</button>
       <button class="rm-btn-cancel" onclick="closeModal()">Cancel</button>
       <button class="rm-btn-delete" id="rmDeleteBtn" onclick="deleteItem()" style="display:none;">Delete</button>
     </div>
   </div>
 </div>
 
+<!-- Toast notification -->
+<div class="rm-toast" id="rmToast"></div>
+
 <script>
-// ── Config ──────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════
+// CONFIG
+// ═══════════════════════════════════════════════════════════════════════════
 const SUPA_URL  = 'https://ludkhakegqojxuglisks.supabase.co';
 const SUPA_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1ZGtoYWtlZ3Fvanh1Z2xpc2tzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5NTE2MjEsImV4cCI6MjA5MzUyNzYyMX0.V5_Mp7eHc-3rKFZLUGNM_iH57hpiGMvp4CBcH33R0rE';
 
-const PIN_LABELS = { live:'Live', 'in-progress':'In Progress', planned:'Planned', future:'Future' };
+// Status display order: In Progress first, Live last
+const STATUS_ORDER = { 'in-progress': 0, planned: 1, future: 2, live: 3 };
+const PIN_LABELS   = { live: 'Live', 'in-progress': 'In Progress', planned: 'Planned', future: 'Future' };
 
-// ── Fallback data (mirrors roadmap.ts exactly) ──────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════
+// FALLBACK DATA (shown when Supabase is unreachable or table is empty)
+// ═══════════════════════════════════════════════════════════════════════════
 const FALLBACK = [
+  { id:'quest-content',     title:'More Quest Content',           status:'in-progress', sort_order:0,  description:'More NPC stories, questlines, daily quests, repeatable quests, and guided progression content are being developed.' },
+  { id:'npc-authoring',     title:'In-Game NPC Authoring',        status:'in-progress', sort_order:1,  description:'Admin and runtime workflows for creating quests, dialogue, and NPC shops are moving toward full in-game authoring tools.' },
+  { id:'follower-system',   title:'Follower System',              status:'in-progress', sort_order:2,  description:'NPC companions are coming to the Vale. When completed, you will be able to unlock, summon, and gear up followers like Bjorn. These companions will fight by your side, level up their own skills, and can be managed through a dedicated GUI.' },
+  { id:'hub-quest-journal', title:'Quest Journal in Hub',         status:'planned',     sort_order:0,  description:'Full player-facing quest journal GUI linked from the main Hub menu.' },
+  { id:'dungeons',          title:'Dungeons & Bosses',            status:'planned',     sort_order:1,  description:'World_Content is ready. Handcrafted dungeon rooms, boss arenas, trials, and custom encounters will be built out over time.' },
+  { id:'towns',             title:'Towns & Settlements',          status:'planned',     sort_order:2,  description:'Deeper settlement gameplay, town upgrades, territory value, and community-driven world identity are planned.' },
+  { id:'economy-loops',     title:'Deeper Economy Loops',         status:'planned',     sort_order:3,  description:'More connections between skills, markets, NPC shops, quests, crafting, player shops, and rewards are planned.' },
+  { id:'exploration-depth', title:'Discovery & Landmark Depth',   status:'planned',     sort_order:4,  description:'Deeper landmarks, discoveries, and reasons to roam the Vale are still growing alongside the Exploration skill.' },
+  { id:'custom-content',    title:'Expanded Custom Content',      status:'planned',     sort_order:5,  description:'More custom items, blocks, progression rewards, crafted assets, and realm-specific visuals will continue to expand.' },
+  { id:'raids',             title:'Raids & Events',               status:'future',      sort_order:0,  description:'Group raid content, seasonal events, and custom event spaces built within World_Content.' },
+  { id:'player-identity',   title:'Player Identity & Origins',    status:'future',      sort_order:1,  description:'Origin benefits, roles, traits, and deeper player identity systems connected to the world lore.' },
+  { id:'live-api',          title:'Live Server API & App',        status:'future',      sort_order:2,  description:'Future versions of the companion app will connect to live server data — player stats, skill levels, quest progress, and server status.' },
   { id:'core-foundation',   title:'Core Plugin Suite',            status:'live',        sort_order:0,  description:'RunestoneCore, RunestoneSkills, RunestoneCombat, RunestoneStamina, RunestoneHub, RunestoneNPCs, and RunestoneAdminTool are all live and powering the realm.' },
   { id:'hub-compass',       title:'Login Hub Compass',            status:'live',        sort_order:1,  description:'The Hub Compass is live as the central player utility hub — travel, economy, skills, quests, graves, and daily tools in one place.' },
   { id:'quest-info',        title:'Quest Info in Hub',            status:'live',        sort_order:2,  description:'Read-only Quest Info page in the Hub showing current quest data, progress, ready quests, and completed quest count.' },
@@ -317,31 +385,26 @@ const FALLBACK = [
   { id:'world-content',     title:'World_Content Space',          status:'live',        sort_order:4,  description:'A managed void content world exists and is ready for future dungeons, boss arenas, quest rooms, raids, trials, and custom events.' },
   { id:'vanilla-controls',  title:'Vanilla Progression Controls', status:'live',        sort_order:5,  description:'Totem drops, Shulker crafting, Elytra acquisition, and custom recipe access can be controlled for MMO balance.' },
   { id:'skills-13',         title:'RunestoneSkills — 13 Skills',  status:'live',        sort_order:6,  description:'All 13 skills are live: Mining, Forestry, Fishing, Hunting, Farming, Cooking, Strength, Defense, Range, Exploration, Foraging, Smithing, and Logistics.' },
-  { id:'mining-overhaul',   title:'Mining Overhaul',              status:'live',        sort_order:7,  description:'A complete refresh of the Mining skill. Players can now use Prospecting to track ore traces, unlock milestone rewards like stamina-reduction buffs, and gain durability-save perks to preserve their high-tier pickaxes.' },
+  { id:'mining-overhaul',   title:'Mining Overhaul',              status:'live',        sort_order:7,  description:'A complete refresh of the Mining skill with Prospecting, milestone rewards, stamina-reduction buffs, and durability-save perks.' },
   { id:'graves',            title:'Physical Graves System',       status:'live',        sort_order:8,  description:'Physical graves placed at exact death locations with Hub-based viewing, location reveal, and time remaining display.' },
-  { id:'quest-content',     title:'More Quest Content',           status:'in-progress', sort_order:9,  description:'More NPC stories, questlines, daily quests, repeatable quests, and guided progression content are being developed.' },
-  { id:'npc-authoring',     title:'In-Game NPC Authoring',        status:'in-progress', sort_order:10, description:'Admin and runtime workflows for creating quests, dialogue, and NPC shops are moving toward full in-game authoring tools.' },
-  { id:'follower-system',   title:'Follower System',              status:'in-progress', sort_order:11, description:'NPC companions are coming to the Vale. When completed, you will be able to unlock, summon, and gear up followers like Bjorn. These companions will fight by your side, level up their own skills, and can be managed through a dedicated GUI.' },
-  { id:'hub-quest-journal', title:'Quest Journal in Hub',         status:'planned',     sort_order:12, description:'Full player-facing quest journal GUI linked from the main Hub menu.' },
-  { id:'dungeons',          title:'Dungeons & Bosses',            status:'planned',     sort_order:13, description:'World_Content is ready. Handcrafted dungeon rooms, boss arenas, trials, and custom encounters will be built out over time.' },
-  { id:'towns',             title:'Towns & Settlements',          status:'planned',     sort_order:14, description:'Deeper settlement gameplay, town upgrades, territory value, and community-driven world identity are planned.' },
-  { id:'economy-loops',     title:'Deeper Economy Loops',         status:'planned',     sort_order:15, description:'More connections between skills, markets, NPC shops, quests, crafting, player shops, and rewards are planned.' },
-  { id:'exploration-depth', title:'Discovery & Landmark Depth',   status:'planned',     sort_order:16, description:'Deeper landmarks, discoveries, and reasons to roam the Vale are still growing alongside the Exploration skill.' },
-  { id:'custom-content',    title:'Expanded Custom Content',      status:'planned',     sort_order:17, description:'More custom items, blocks, progression rewards, crafted assets, and realm-specific visuals will continue to expand.' },
-  { id:'raids',             title:'Raids & Events',               status:'future',      sort_order:18, description:'Group raid content, seasonal events, and custom event spaces built within World_Content.' },
-  { id:'player-identity',   title:'Player Identity & Origins',    status:'future',      sort_order:19, description:'Origin benefits, roles, traits, and deeper player identity systems connected to the world lore.' },
-  { id:'live-api',          title:'Live Server API & App',        status:'future',      sort_order:20, description:'Future versions of the companion app will connect to live server data — player stats, skill levels, quest progress, and server status.' },
 ];
 
-// ── State ───────────────────────────────────────────────────────────────
-let allItems      = [];
-let activeFilter  = 'all';
-let editingId     = null;
+// ═══════════════════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════════════════
+let allItems       = [];
+let activeFilter   = 'all';
+let editingId      = null;      // numeric DB id (or null for new)
+let editingSlug    = null;      // fallback string id (for fallback items)
 let selectedStatus = 'planned';
-let isElevated    = false;
-let authSession   = null;
+let isSaving       = false;
+let isElevated     = false;
+let authSession    = null;
+let usingFallback  = false;
 
-// ── Supabase fetch ──────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════
+// SUPABASE FETCH
+// ═══════════════════════════════════════════════════════════════════════════
 async function supaFetch(path, opts = {}) {
   const token = (authSession && authSession.access_token) ? authSession.access_token : SUPA_ANON;
   const res = await fetch(SUPA_URL + path, {
@@ -359,42 +422,98 @@ async function supaFetch(path, opts = {}) {
   return t ? JSON.parse(t) : null;
 }
 
-// ── Load ────────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════
+// SORT — status group first, then sort_order within group
+// ═══════════════════════════════════════════════════════════════════════════
+function sortItems(items) {
+  return [...items].sort((a, b) => {
+    const sa = STATUS_ORDER[a.status] ?? 99;
+    const sb = STATUS_ORDER[b.status] ?? 99;
+    if (sa !== sb) return sa - sb;
+    return (a.sort_order ?? 0) - (b.sort_order ?? 0);
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// LOAD
+// ═══════════════════════════════════════════════════════════════════════════
 async function loadItems() {
   try {
+    // Fetch all columns; order by sort_order as secondary DB sort
     const data = await supaFetch('/rest/v1/roadmap_items?select=*&order=sort_order.asc,created_at.asc');
-    allItems = (data && data.length) ? data : FALLBACK;
+    if (data && data.length) {
+      allItems = sortItems(data);
+      usingFallback = false;
+    } else {
+      allItems = sortItems(FALLBACK);
+      usingFallback = true;
+    }
   } catch {
-    allItems = FALLBACK;
+    allItems = sortItems(FALLBACK);
+    usingFallback = true;
   }
   renderStats();
   renderGrid();
 }
 
-// ── Stats ───────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════
+// STATS
+// ═══════════════════════════════════════════════════════════════════════════
 function renderStats() {
-  document.getElementById('statLive').textContent     = allItems.filter(i => i.status === 'live').length;
   document.getElementById('statProgress').textContent = allItems.filter(i => i.status === 'in-progress').length;
   document.getElementById('statPlanned').textContent  = allItems.filter(i => i.status === 'planned').length;
   document.getElementById('statFuture').textContent   = allItems.filter(i => i.status === 'future').length;
+  document.getElementById('statLive').textContent     = allItems.filter(i => i.status === 'live').length;
 }
 
-// ── Grid ────────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════
+// GRID — renders with status group headers when filter = 'all'
+// ═══════════════════════════════════════════════════════════════════════════
 function renderGrid() {
   const grid = document.getElementById('rmGrid');
   const list = activeFilter === 'all' ? allItems : allItems.filter(i => i.status === activeFilter);
   if (!list.length) { grid.innerHTML = '<div class="rm-empty">No items found.</div>'; return; }
-  grid.innerHTML = list.map(item => `
+
+  if (activeFilter !== 'all') {
+    // Single-status view — no group headers needed
+    grid.innerHTML = list.map(item => cardHTML(item)).join('');
+    return;
+  }
+
+  // Group by status in display order
+  const groups = ['in-progress', 'planned', 'future', 'live'];
+  const groupLabels = { 'in-progress': 'In Progress', planned: 'Planned', future: 'Future', live: 'Live' };
+  let html = '';
+  for (const status of groups) {
+    const group = list.filter(i => i.status === status);
+    if (!group.length) continue;
+    html += `
+      <div class="rm-group-header">
+        <span class="rm-pin ${status}" style="margin:0;"><span class="rm-pin-dot"></span>${groupLabels[status]}</span>
+        <span class="rm-group-count">${group.length} item${group.length !== 1 ? 's' : ''}</span>
+      </div>
+    `;
+    html += group.map(item => cardHTML(item)).join('');
+  }
+  grid.innerHTML = html;
+}
+
+function cardHTML(item) {
+  const editBtn = isElevated
+    ? `<button class="rm-edit-btn" onclick="openModal(${JSON.stringify(String(item.id))})" title="Edit">✎</button>`
+    : '';
+  return `
     <div class="rm-card">
       <div class="rm-pin ${item.status}"><span class="rm-pin-dot"></span>${PIN_LABELS[item.status] || item.status}</div>
       <h3>${esc(item.title)}</h3>
       <p>${esc(item.description)}</p>
-      ${isElevated ? `<button class="rm-edit-btn" onclick="openModal('${esc(item.id)}')" title="Edit">✎</button>` : ''}
-    </div>
-  `).join('');
+      ${editBtn}
+    </div>`;
 }
 
-// ── Filter ──────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════
+// FILTER
+// ═══════════════════════════════════════════════════════════════════════════
 function setFilter(f, el) {
   activeFilter = f;
   document.querySelectorAll('.rm-chip').forEach(c => c.classList.remove('active'));
@@ -402,24 +521,52 @@ function setFilter(f, el) {
   renderGrid();
 }
 
-// ── Modal ───────────────────────────────────────────────────────────────
-function openModal(id) {
-  editingId = id;
-  const item = id ? allItems.find(i => String(i.id) === String(id)) : null;
-  document.getElementById('rmModalTitle').textContent = id ? 'Edit Roadmap Item' : 'Add Roadmap Item';
+// ═══════════════════════════════════════════════════════════════════════════
+// MODAL — open
+// ═══════════════════════════════════════════════════════════════════════════
+function openModal(idStr) {
+  // idStr is the item's id as a string (numeric DB id or fallback slug)
+  const item = idStr ? allItems.find(i => String(i.id) === idStr) : null;
+
+  editingId   = null;
+  editingSlug = null;
+
+  if (item) {
+    // Determine if this is a real DB row (numeric id) or a fallback slug
+    const numId = parseInt(item.id, 10);
+    if (!isNaN(numId) && !usingFallback) {
+      editingId = numId;
+    } else {
+      editingSlug = String(item.id);
+    }
+  }
+
+  document.getElementById('rmModalTitle').textContent = item ? 'Edit Roadmap Item' : 'Add Roadmap Item';
   document.getElementById('rmInputTitle').value = item ? item.title : '';
   document.getElementById('rmInputDesc').value  = item ? item.description : '';
-  document.getElementById('rmInputSort').value  = item ? (item.sort_order ?? 0) : allItems.length;
-  document.getElementById('rmDeleteBtn').style.display = id ? 'block' : 'none';
+  document.getElementById('rmInputSort').value  = item != null ? (item.sort_order ?? 0) : 0;
+  document.getElementById('rmDeleteBtn').style.display = (item && editingId) ? 'block' : 'none';
+  document.getElementById('rmSaveBtn').disabled = false;
+
   selectedStatus = item ? item.status : 'planned';
   updateStatusBtns();
   document.getElementById('rmModal').classList.add('open');
+  setTimeout(() => document.getElementById('rmInputTitle').focus(), 80);
 }
+
 function closeModal() {
   document.getElementById('rmModal').classList.remove('open');
-  editingId = null;
+  editingId   = null;
+  editingSlug = null;
+  isSaving    = false;
+  document.getElementById('rmSaveBtn').disabled = false;
 }
-function pickStatus(s) { selectedStatus = s; updateStatusBtns(); }
+
+function pickStatus(s) {
+  selectedStatus = s;
+  updateStatusBtns();
+}
+
 function updateStatusBtns() {
   document.querySelectorAll('.rm-status-btn').forEach(b => {
     const s = b.dataset.s;
@@ -428,72 +575,161 @@ function updateStatusBtns() {
   });
 }
 
-// ── Save ────────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════
+// SAVE — fixes the dupe bug:
+//   • If editingId is set  → PATCH the existing DB row
+//   • If editingSlug set   → editing a fallback item that has no DB row yet
+//                            → POST a new row (correct — first time saving it)
+//   • If neither           → POST a brand new item
+// The key fix: we never PATCH a fallback slug (that would 404 or insert wrong),
+// and we never POST when we already have a real DB id.
+// ═══════════════════════════════════════════════════════════════════════════
 async function saveItem() {
+  if (isSaving) return;
   const title = document.getElementById('rmInputTitle').value.trim();
   const desc  = document.getElementById('rmInputDesc').value.trim();
-  const sort  = parseInt(document.getElementById('rmInputSort').value) || 0;
-  if (!title || !desc) { alert('Title and description are required.'); return; }
-  const payload = { title, description: desc, status: selectedStatus, sort_order: sort };
+  const sort  = parseInt(document.getElementById('rmInputSort').value, 10);
+  if (!title) { showToast('Title is required.'); return; }
+  if (!desc)  { showToast('Description is required.'); return; }
+
+  isSaving = true;
+  document.getElementById('rmSaveBtn').disabled = true;
+
+  const payload = {
+    title,
+    description: desc,
+    status: selectedStatus,
+    sort_order: isNaN(sort) ? 0 : sort,
+  };
+
   try {
-    const isFallback = editingId && FALLBACK.find(f => f.id === editingId);
-    if (editingId && !isFallback) {
+    if (editingId !== null) {
+      // Update existing DB row
       await supaFetch(`/rest/v1/roadmap_items?id=eq.${editingId}`, {
-        method: 'PATCH', headers: { 'Prefer': 'return=minimal' }, body: JSON.stringify(payload),
+        method: 'PATCH',
+        headers: { 'Prefer': 'return=minimal' },
+        body: JSON.stringify(payload),
       });
+      showToast('Item updated.');
     } else {
+      // Insert new row (covers both new items and first-time saves of fallback items)
       await supaFetch('/rest/v1/roadmap_items', {
-        method: 'POST', headers: { 'Prefer': 'return=minimal' }, body: JSON.stringify(payload),
+        method: 'POST',
+        headers: { 'Prefer': 'return=minimal' },
+        body: JSON.stringify(payload),
       });
+      showToast(editingSlug ? 'Item saved to database.' : 'Item added.');
     }
     closeModal();
     await loadItems();
-  } catch(e) { alert('Save failed: ' + e.message); }
+  } catch (e) {
+    showToast('Save failed: ' + e.message);
+    isSaving = false;
+    document.getElementById('rmSaveBtn').disabled = false;
+  }
 }
 
-// ── Delete ──────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════
+// DELETE — only works on real DB rows (numeric editingId)
+// ═══════════════════════════════════════════════════════════════════════════
 async function deleteItem() {
-  if (!editingId || !confirm('Delete this roadmap item? This cannot be undone.')) return;
+  if (editingId === null) {
+    showToast('This item is not yet in the database. Save it first, then delete.');
+    return;
+  }
+  if (!confirm('Delete this roadmap item? This cannot be undone.')) return;
   try {
     await supaFetch(`/rest/v1/roadmap_items?id=eq.${editingId}`, { method: 'DELETE' });
+    showToast('Item deleted.');
     closeModal();
     await loadItems();
-  } catch(e) { alert('Delete failed: ' + e.message); }
+  } catch (e) {
+    showToast('Delete failed: ' + e.message);
+  }
 }
 
-// ── Util ────────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════════════════════════════════════
+let _toastTimer = null;
+function showToast(msg) {
+  const t = document.getElementById('rmToast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// UTIL
+// ═══════════════════════════════════════════════════════════════════════════
 function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
 }
 
 // Close modal on backdrop click
-document.getElementById('rmModal').addEventListener('click', e => { if (e.target === document.getElementById('rmModal')) closeModal(); });
-
-// ── Nav helpers ─────────────────────────────────────────────────────────
-document.addEventListener('click', e => {
-  const nav = document.getElementById('mobileNav');
-  const btn = document.querySelector('.menu-toggle');
-  document.querySelectorAll('.nav-dropdown').forEach(dd => {
-    if (!dd.contains(e.target)) { dd.classList.remove('open'); const db = dd.querySelector('.dropdown-toggle'); if (db) db.setAttribute('aria-expanded','false'); }
-  });
-  if (nav && btn && !nav.contains(e.target) && !btn.contains(e.target)) { nav.classList.remove('open'); btn.setAttribute('aria-expanded','false'); }
+document.getElementById('rmModal').addEventListener('click', e => {
+  if (e.target === document.getElementById('rmModal')) closeModal();
 });
 
-// ── Auth + init ──────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════════════════════════════════
+function toggleMenu() {
+  const nav = document.getElementById('mobileNav');
+  const btn = document.querySelector('.menu-toggle');
+  nav.classList.toggle('open');
+  btn.setAttribute('aria-expanded', nav.classList.contains('open') ? 'true' : 'false');
+}
+
+function toggleCommunityDropdown(event) {
+  event.stopPropagation();
+  const wrap = document.getElementById('communityDropdownWrap');
+  const btn  = wrap ? wrap.querySelector('.dropdown-toggle') : null;
+  if (!wrap) return;
+  wrap.classList.toggle('open');
+  if (btn) btn.setAttribute('aria-expanded', wrap.classList.contains('open') ? 'true' : 'false');
+}
+
+document.addEventListener('click', e => {
+  const nav = document.getElementById('mobileNav');
+  const menuBtn = document.querySelector('.menu-toggle');
+  document.querySelectorAll('.nav-dropdown').forEach(dd => {
+    if (!dd.contains(e.target)) {
+      dd.classList.remove('open');
+      const db = dd.querySelector('.dropdown-toggle');
+      if (db) db.setAttribute('aria-expanded', 'false');
+    }
+  });
+  if (nav && menuBtn && !nav.contains(e.target) && !menuBtn.contains(e.target)) {
+    nav.classList.remove('open');
+    menuBtn.setAttribute('aria-expanded', 'false');
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════════════════
+// AUTH + INIT
+// ═══════════════════════════════════════════════════════════════════════════
 (async () => {
   const auth = await RSAuth.requireLogin();
   if (!auth) return;
+
   authSession = auth;
   isElevated  = auth.isElevated;
   RSAuth.renderNavUser(auth);
+
   const gate = document.getElementById('rs-login-gate');
   if (gate) gate.style.display = 'none';
+
   if (isElevated) document.getElementById('rmAdminBar').style.display = 'block';
+
   await loadItems();
 
-  // ── Supabase Realtime: keep roadmap in sync with app edits ──
-  // Uses the supabase-js WebSocket client so any INSERT/UPDATE/DELETE
-  // made from the app (or another admin) appears here without a page reload.
+  // Supabase Realtime: keep roadmap in sync with app edits
   try {
     const { createClient } = await import('@supabase/supabase-js');
     const _rt = createClient(SUPA_URL, SUPA_ANON, {
@@ -505,75 +741,11 @@ document.addEventListener('click', e => {
         loadItems();
       })
       .subscribe();
-  } catch (e) {
+  } catch {
     // Realtime unavailable — polling fallback every 30 s
     setInterval(loadItems, 30000);
   }
 })();
-</script>
-<script>
-(async function() {
-  var session = await RSAuth.requireLogin();
-  RSAuth.renderNavUser(session);
-  if (session && typeof RSAuth_onLogin === 'function') RSAuth_onLogin(session);
-})();
-
-// ── Community dropdown toggle ──────────────────────────────────────────────
-
-
-</script>
-<script>
-
-
-
-
-
-
-</script>
-<script>
-function toggleMenu() {
-  const nav = document.getElementById("mobileNav");
-  const button = document.querySelector(".menu-toggle");
-  nav.classList.toggle("open");
-  button.setAttribute("aria-expanded", nav.classList.contains("open") ? "true" : "false");
-}
-
-document.addEventListener("click", function(event) {
-  const nav = document.getElementById("mobileNav");
-  const menuButton = document.querySelector(".menu-toggle");
-  const dropdown = document.querySelector(".nav-dropdown");
-  const dropdownButton = document.querySelector(".dropdown-toggle");
-  if (dropdown && !dropdown.contains(event.target)) {
-    dropdown.classList.remove("open");
-    if (dropdownButton) dropdownButton.setAttribute("aria-expanded", "false");
-  }
-  if (!nav || !menuButton) return;
-  if (!nav.contains(event.target) && !menuButton.contains(event.target)) {
-    nav.classList.remove("open");
-    menuButton.setAttribute("aria-expanded", "false");
-  }
-});
-(function() {
-  RSAuth.initSession().then(function(session) {
-    RSAuth.renderNavUser(session);
-  });
-})();
-function toggleCommunityDropdown(event) {
-  event.stopPropagation();
-  const wrap = document.getElementById('communityDropdownWrap');
-  const btn  = wrap ? wrap.querySelector('.dropdown-toggle') : null;
-  if (!wrap) return;
-  wrap.classList.toggle('open');
-  if (btn) btn.setAttribute('aria-expanded', wrap.classList.contains('open') ? 'true' : 'false');
-}
-document.addEventListener('click', function(e) {
-  const wrap = document.getElementById('communityDropdownWrap');
-  if (wrap && !wrap.contains(e.target)) {
-    wrap.classList.remove('open');
-    const btn = wrap.querySelector('.dropdown-toggle');
-    if (btn) btn.setAttribute('aria-expanded', 'false');
-  }
-});
 </script>
 </body>
 </html>
