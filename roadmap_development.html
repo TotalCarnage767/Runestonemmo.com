@@ -501,8 +501,9 @@ function renderGrid() {
 }
 
 function cardHTML(item) {
+  // Use data-id to avoid double-quote collision inside the onclick attribute
   const editBtn = isElevated
-    ? `<button class="rm-edit-btn" onclick="openModal(${JSON.stringify(String(item.id))})" title="Edit">✎</button>`
+    ? `<button class="rm-edit-btn" data-edit-id="${esc(String(item.id))}" title="Edit">✎</button>`
     : '';
   return `
     <div class="rm-card">
@@ -676,6 +677,13 @@ function esc(s) {
 // Close modal on backdrop click
 document.getElementById('rmModal').addEventListener('click', e => {
   if (e.target === document.getElementById('rmModal')) closeModal();
+});
+
+// Delegated click handler for edit buttons — avoids double-quote attribute collision
+document.getElementById('rmGrid').addEventListener('click', e => {
+  const btn = e.target.closest('.rm-edit-btn');
+  if (!btn) return;
+  openModal(btn.dataset.editId);
 });
 
 // ═══════════════════════════════════════════════════════════════════════════

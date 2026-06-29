@@ -201,11 +201,14 @@ function renderVotes() {
       const count = v.optionCounts[opt] || 0;
       const pct   = total > 0 ? Math.round((count / total) * 100) : 0;
       const isMine = myPick === opt;
+      // Use data-attributes to avoid any HTML-escaping issues in inline onclick
       return `
         <div class="option-wrap">
           <button class="option-btn${isMine ? ' selected' : ''}"
-            ${!canVote ? 'disabled title="Login to vote"' : ''}
-            onclick="${canVote ? `castVote('${v.id}','${escAttr(opt)}')` : 'showLoginPrompt()'}">
+            data-vote-id="${esc(String(v.id))}"
+            data-vote-opt="${esc(opt)}"
+            data-can-vote="${canVote ? '1' : '0'}"
+            ${!canVote ? 'disabled title="Login to vote"' : ''}>
             <span class="option-label">${esc(opt)}${isMine ? ' ✓' : ''}</span>
             <span class="option-count">${count} (${pct}%)</span>
           </button>
@@ -232,6 +235,17 @@ function showLoginPrompt() {
   document.getElementById('loginBanner').style.display = 'flex';
   document.getElementById('loginBanner').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
+
+// Delegated click handler — avoids all inline onclick escaping issues
+document.getElementById('voteList').addEventListener('click', function(e) {
+  const btn = e.target.closest('button.option-btn');
+  if (!btn) return;
+  if (btn.dataset.canVote === '1') {
+    castVote(btn.dataset.voteId, btn.dataset.voteOpt);
+  } else {
+    showLoginPrompt();
+  }
+});
 
 async function castVote(voteId, option) {
   if (!currentUser) { showLoginPrompt(); return; }
