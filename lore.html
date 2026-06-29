@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RunestoneMMO — The Lore of Runestone Vale</title>
+  <meta name="description" content="The canon backstory of Runestone Vale — a mountain-forged realm built from labor, oath, and the memory of stone.">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/auth.js"></script>
+  <style>
+    /* ── Lore page styles ── */
+    .lore-hero {
+      text-align: center;
+      padding: 48px 24px 32px;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+    .lore-hero h1 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.6rem, 5vw, 2.6rem);
+      color: #c9a227;
+      margin: 0 0 12px;
+      letter-spacing: 1.5px;
+      text-shadow: 0 2px 18px rgba(201,162,39,0.25);
+    }
+    .lore-hero .subtitle {
+      font-size: 1rem;
+      color: rgba(240,230,200,0.55);
+      font-style: italic;
+      margin: 0 0 28px;
+      line-height: 1.7;
+    }
+    .lore-divider {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 0 auto 36px;
+      max-width: 340px;
+    }
+    .lore-divider-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, #c9a227, transparent);
+    }
+    .lore-divider-rune {
+      font-size: 1.1rem;
+      color: #c9a227;
+      opacity: 0.7;
+    }
+
+    /* ── Chapter layout ── */
+    .lore-body {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
+    .lore-chapter {
+      background: #1e1b17;
+      border: 1px solid #4a3a28;
+      border-radius: 14px;
+      padding: 32px 36px;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .lore-chapter::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: linear-gradient(to bottom, #c9a227, rgba(201,162,39,0.1));
+      border-radius: 14px 0 0 14px;
+    }
+    .lore-chapter-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(201,162,39,0.5);
+      margin-bottom: 10px;
+    }
+    .lore-chapter h2 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1rem, 3vw, 1.3rem);
+      color: #f0e6c8;
+      margin: 0 0 18px;
+      letter-spacing: 0.5px;
+    }
+    .lore-chapter p {
+      font-size: 0.95rem;
+      color: rgba(240,230,200,0.78);
+      line-height: 1.85;
+      margin: 0 0 16px;
+    }
+    .lore-chapter p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* ── Pull quote ── */
+    .lore-quote {
+      border: none;
+      border-left: 3px solid #c9a227;
+      background: rgba(201,162,39,0.06);
+      border-radius: 0 10px 10px 0;
+      padding: 16px 22px;
+      margin: 20px 0;
+      font-style: italic;
+      font-size: 0.93rem;
+      color: rgba(240,230,200,0.65);
+      line-height: 1.75;
+    }
+    .lore-quote cite {
+      display: block;
+      margin-top: 8px;
+      font-size: 0.75rem;
+      font-style: normal;
+      font-family: 'Cinzel', serif;
+      letter-spacing: 0.5px;
+      color: rgba(201,162,39,0.55);
+    }
+
+    /* ── Milestone honours table ── */
+    .lore-honours {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 18px 0;
+      font-size: 0.85rem;
+    }
+    .lore-honours th {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: rgba(201,162,39,0.7);
+      border-bottom: 1px solid #4a3a28;
+      padding: 8px 12px;
+      text-align: left;
+    }
+    .lore-honours td {
+      padding: 8px 12px;
+      border-bottom: 1px solid rgba(74,58,40,0.4);
+      color: rgba(240,230,200,0.72);
+      vertical-align: top;
+    }
+    .lore-honours tr:last-child td { border-bottom: none; }
+    .lore-honours tr:hover td { background: rgba(201,162,39,0.04); }
+    .lore-honours .honour-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.82rem;
+      color: #f0e6c8;
+      white-space: nowrap;
+    }
+
+    /* ── Status badges ── */
+    .lore-badge {
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: 20px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      vertical-align: middle;
+    }
+    .lore-badge.live    { background: rgba(76,175,80,0.15);  color: #4caf50; }
+    .lore-badge.future  { background: rgba(206,147,216,0.15); color: #ce93d8; }
+
+    /* ── Closing CTA ── */
+    .lore-cta {
+      text-align: center;
+      padding: 48px 24px 24px;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .lore-cta h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.4rem;
+      color: #c9a227;
+      margin: 0 0 12px;
+    }
+    .lore-cta p {
+      color: rgba(240,230,200,0.55);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      margin: 0 0 24px;
+    }
+
+    @media (max-width: 600px) {
+      .lore-chapter { padding: 22px 18px; }
+      .lore-honours { font-size: 0.8rem; }
+      .lore-honours td, .lore-honours th { padding: 6px 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="topbar">
+    <a class="brand" href="/index.html">RUNESTONE VALE</a>
+    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleMenu()">☰</button>
+    <nav class="top-links" id="mobileNav">
+      <a class="top-link" href="/index.html">HOME</a>
+      <a class="top-link" href="/features.html">SERVER-FEATURES</a>
+      <a class="top-link" href="/RunestoneMMO.html">RUNESTONEMMO</a>
+      <a class="top-link" href="/roadmap_development.html">ROADMAP</a>
+      <div class="nav-dropdown" id="communityDropdownWrap">
+        <button class="top-link dropdown-toggle" type="button" aria-expanded="false" onclick="toggleCommunityDropdown(event)">COMMUNITY ▾</button>
+        <div class="dropdown-menu" id="communityDropdown">
+          <a class="dropdown-link" href="/news.html">📰 PATCH NOTES & NEWS</a>
+          <a class="dropdown-link" href="/voting.html">🗳️ COMMUNITY VOTING</a>
+          <a class="dropdown-link" href="/bug-report.html">🐛 BUG REPORTS</a>
+          <a class="dropdown-link" href="/guides.html">📖 GUIDES & COMMANDS</a>
+        </div>
+      </div>
+      <a class="top-link" href="/lore.html">LORE</a>
+      <a class="top-link" href="/credits.html">CREDITS</a>
+      <a class="top-link" href="/terms.html">TERMS</a>
+      <div id="navUserSlot" style="display:flex;align-items:center;flex-shrink:0;margin-left:8px;"></div>
+    </nav>
+  </div>
+</header>
+
+<div class="hero-banner"></div>
+
+<main>
+
+  <!-- ── Hero ── -->
+  <div class="lore-hero">
+    <h1>The Lore of Runestone Vale</h1>
+    <p class="subtitle">
+      Before there were roads, before there were claims staked by torchlight and banners lifted against the wind,<br>
+      there was only the mountain and the sound beneath it.
+    </p>
+    <div class="lore-divider">
+      <div class="lore-divider-line"></div>
+      <span class="lore-divider-rune">⚒</span>
+      <div class="lore-divider-line"></div>
+    </div>
+  </div>
+
+  <!-- ── Lore body ── -->
+  <div class="lore-body">
+
+    <!-- Chapter I -->
+    <div class="lore-chapter">
+      <div class="lore-chapter-label">Chapter I</div>
+      <h2>The Mountain That Remembered</h2>
+      <p>
+        The oldest tales say the stone of the Vale was never silent. It remembered every pick that struck it, every oath spoken in its halls, every grave dug in fear, and every fire lit against the dark. Men and women came first as wanderers, seeing only cliffs, spruce, fog, and broken ridges. They stayed because the valley answered them.
+      </p>
+      <p>
+        In the night, compasses turned where no settlement yet stood, and those who followed them found not treasure, but places where the earth felt old and wakeful — as though some buried lodestone still called to the living.
+      </p>
+      <blockquote class="lore-quote">
+        "The stone gives twice — first to the patient, then to the prepared."
+        <cite>— Old saying of the Guild Roads</cite>
+      </blockquote>
+    </div>
+
+    <!-- Chapter II -->
+    <div class="lore-chapter">
+      <div class="lore-chapter-label">Chapter II</div>
+      <h2>Built by Workers, Not Kings</h2>
+      <p>
+        The first holdings of Runestone Vale were not raised by kings, but by workers. Miners listening for hollow echoes in the rock. Foresters who could tell a living stand of timber from dead wood by the sound of the axe. Fishers patient enough to read river, weather, and depth. Farmers who learned which slopes would take wheat, which marsh edges would take reeds, and which clearings could be held through winter.
+      </p>
+      <p>
+        Hunters brought meat from the tree line; smiths turned ore to tools and armour; cooks made survival into something more than hunger delayed. Even the simple act of walking mattered here, for the Vale taught its people by distance, by biome, by the discovery of hidden places, and by the stubborn weight of every mile earned on foot.
+      </p>
+    </div>
+
+    <!-- Chapter III -->
+    <div class="lore-chapter">
+      <div class="lore-chapter-label">Chapter III</div>
+      <h2>The Disciplines of the Road</h2>
+      <p>
+        Yet the Vale was never gentle. There are old accounts, copied into written books and kept beside campfires, of beasts that did not fight like ordinary creatures. Some struck with raw physical force; some cut like sharpened iron; some crushed like hammers on plate; some pierced where armour thinned; and some carried stranger, arcane malice that men could feel before they understood it.
+      </p>
+      <p>
+        Against such threats, the wardens of the early roads developed disciplines that later generations named plain and hard, as mountain folk do: <strong>Heavy Strike</strong>, the committed blow that broke a charge in a single answer; <strong>Dash</strong>, the sudden burst that turned a hunted traveller into the one who chose the ground; and <strong>Guard</strong>, the brief, stubborn refusal to yield when a shield and a heartbeat were all that stood between life and death.
+      </p>
+      <p>
+        Veterans also spoke of wounds that kept bleeding after the blade withdrew, and of cruel blows that left the arm willing but the strength diminished. The road taught hard lessons, and those who survived them carried the knowledge in their bodies long after the scars had faded.
+      </p>
+    </div>
+
+    <!-- Chapter IV -->
+    <div class="lore-chapter">
+      <div class="lore-chapter-label">Chapter IV</div>
+      <h2>The Honours of the Deep</h2>
+      <p>
+        In time, the mountain revealed more than danger. Prospectors learned that ore could be sensed before it was seen. A miner with a pickaxe, patience, and the right stillness could stand in the stone, crouch low, and feel a vague answer from the deep — never a sure location, never enough to break the world open, only a trace, a rumour, a direction.
+      </p>
+      <p>
+        From this practice rose the old honours of the guild roads, earned through mastery and endurance rather than birth or title:
+      </p>
+
+      <table class="lore-honours">
+        <thead>
+          <tr>
+            <th>Honour</th>
+            <th>Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="honour-title">Copper Delver</td><td>First steps taken beneath the surface</td></tr>
+          <tr><td class="honour-title">Iron Seeker</td><td>The ore that built the first tools</td></tr>
+          <tr><td class="honour-title">Gold Vein Hunter</td><td>Patience rewarded in deep seams</td></tr>
+          <tr><td class="honour-title">Obsidian Breaker</td><td>Endurance against the hardest stone</td></tr>
+          <tr><td class="honour-title">Diamond Delver</td><td>Rarity found through discipline</td></tr>
+          <tr><td class="honour-title">Runestone Prospector</td><td>The art of sensing before seeing</td></tr>
+          <tr><td class="honour-title">Netherite Seeker</td><td>Descent into the realm beneath the realm</td></tr>
+          <tr><td class="honour-title">Firestone Excavator</td><td>Work done where others turned back</td></tr>
+          <tr><td class="honour-title">Deepforge Miner</td><td>The mountain accepted as master</td></tr>
+          <tr><td class="honour-title">Master of the Mountain</td><td>The summit of all such labour — the mountain's own</td></tr>
+        </tbody>
+      </table>
+
+      <p>
+        Some swore that with mastery a pick wore more slowly in the hand, and that the mountain took less breath from those it had accepted as its own. Whether truth or tradition, the saying held: the stone gives twice — first to the patient, then to the prepared.
+      </p>
+    </div>
+
+    <!-- Chapter V -->
+    <div class="lore-chapter">
+      <div class="lore-chapter-label">Chapter V</div>
+      <h2>The Law of Weariness</h2>
+      <p>
+        The people of the Vale also learned the law of weariness. Strength spent carelessly made the road longer, the climb crueller, the river colder, and the mine heavier than iron itself. Those who ran, struck, swam, climbed, and dug without measure found their bodies slow and their work poor.
+      </p>
+      <p>
+        But there were mercies in the land. A campfire shared among companions, a sheltered place beside stone, a brief nearness to safety, a meal taken before the embers died — these restored more than flesh. Travellers named this grace <strong>Well Rested</strong>, and old guides taught that no hero lasted long in the Vale who despised rest, preparation, and the wisdom of pacing one's strength.
+      </p>
+      <blockquote class="lore-quote">
+        "The mountain did not honour frenzy. It honoured endurance."
+        <cite>— From the Old Guides of the Vale</cite>
+      </blockquote>
+    </div>
+
+    <!-- Chapter VI -->
+    <div class="lore-chapter">
+      <div class="lore-chapter-label">Chapter VI</div>
+      <h2>The First Warden</h2>
+      <p>
+        Among the many names carried forward from the founding years, one survives in nearly every version of the tale: <strong>TotalCarnage767</strong>. In some tellings he was a builder first; in others a warden; in others still the one who heard the mountain most clearly when the realm was only a plan and a hard patch of earth.
+      </p>
+      <p>
+        The truest version is likely simpler and therefore stronger: he was the one who refused to let the Vale remain formless. He raised the first standard where others saw only a test world. He set order to paths, halls, and laws. He taught that a realm needed more than walls — it needed memory, direction, and systems sturdy enough that those who came later could add to them rather than begin again from ruin.
+      </p>
+      <p>
+        Let later ages change the name if they must; the title should remain. In the lore of the Vale, he is best remembered as the <strong>First Warden</strong> — the keeper who proved that stone could indeed remember.
+      </p>
+    </div>
+
+    <!-- Chapter VII -->
+    <div class="lore-chapter">
+      <div class="lore-chapter-label">Chapter VII</div>
+      <h2>The Second Age</h2>
+      <p>
+        Now the Vale stands at the edge of its second age. NPC keepers wait by road and hall; some offer trade, some warning, some burdens disguised as work. Quests pass from rumour to duty, from duty to proof, from proof to reward. Old roads lead to settlements not yet fully claimed, to halls beneath the mountain not yet opened, to territories that will one day swear to banner and bell.
+      </p>
+      <p>
+        There are chambers prepared for trials, arenas meant for monsters or kings, and silent thresholds for stories still unwritten. Even companions are spoken of now — not myths, but future allies who may yet walk beside the people of the Vale and learn their own place within it.
+      </p>
+      <p>
+        The realm is not finished; that is part of its truth. Runestone Vale is a living frontier, and its unfinished edges are not emptiness but invitation.
+      </p>
+
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;">
+        <span class="lore-badge live">Live Now</span>
+        <span style="font-size:0.82rem;color:rgba(240,230,200,0.5);align-self:center;">NPC Keepers &bull; Quest System &bull; Guild Roads &bull; 13 Skills &bull; Combat Disciplines</span>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;">
+        <span class="lore-badge future">Coming</span>
+        <span style="font-size:0.82rem;color:rgba(240,230,200,0.5);align-self:center;">Dungeons &bull; Followers &bull; Towns &bull; Raids &bull; Player Origins</span>
+      </div>
+    </div>
+
+    <!-- Closing canon statement -->
+    <div class="lore-chapter" style="border-color:rgba(201,162,39,0.3);background:rgba(201,162,39,0.04);">
+      <div class="lore-chapter-label">Canon</div>
+      <h2>What Is Remembered</h2>
+      <p>
+        Let this be the canon remembered by every newcomer: Runestone Vale is not a land won in a single battle, nor a kingdom inherited whole. It is a place carved slowly from mountain, danger, labour, and oath. Its banners matter because they were raised after hardship. Its shields matter because they were lifted when the road nearly failed. Its compasses matter because someone chose to follow them when they pointed into wilderness.
+      </p>
+      <blockquote class="lore-quote">
+        "And its future will matter because every hall, grave, quest, faction, and artefact still to come can be traced back to one old truth spoken at the first fire: the stone remembers what is built with purpose."
+        <cite>— The Canon of Runestone Vale</cite>
+      </blockquote>
+    </div>
+
+  </div><!-- /.lore-body -->
+
+  <!-- ── CTA ── -->
+  <div class="lore-cta">
+    <h2>Enter the Vale</h2>
+    <p>The realm is open. The mountain is waiting. Every path you walk becomes part of the story.</p>
+    <div class="buttons" style="justify-content:center;">
+      <a href="https://discord.gg/7QV4eaHcHC" target="_blank" rel="noopener" class="button">Join Discord</a>
+      <a href="/features.html" class="button secondary">Server Features</a>
+      <a href="/roadmap_development.html" class="button secondary">Roadmap</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p>&copy; 2026 RunestoneMMO. All rights reserved.</p>
+  <p>
+    <a href="/index.html">Home</a> &bull;
+    <a href="/features.html">Features</a> &bull;
+    <a href="/roadmap_development.html">Roadmap</a> &bull;
+    <a href="/lore.html">Lore</a> &bull;
+    <a href="/credits.html">Credits</a> &bull;
+    <a href="/terms.html">Terms</a>
+  </p>
+  <p>
+    <a href="https://discord.gg/7QV4eaHcHC" target="_blank" rel="noopener">Discord</a> &bull;
+    <a href="https://www.patreon.com/cw/RunestoneMMO" target="_blank" rel="noopener">Patreon</a>
+  </p>
+</footer>
+
+<script>
+function toggleMenu() {
+  const nav = document.getElementById('mobileNav');
+  const btn = document.querySelector('.menu-toggle');
+  nav.classList.toggle('open');
+  btn.setAttribute('aria-expanded', nav.classList.contains('open') ? 'true' : 'false');
+}
+
+function toggleCommunityDropdown(event) {
+  event.stopPropagation();
+  const wrap = document.getElementById('communityDropdownWrap');
+  const btn  = wrap ? wrap.querySelector('.dropdown-toggle') : null;
+  if (!wrap) return;
+  wrap.classList.toggle('open');
+  if (btn) btn.setAttribute('aria-expanded', wrap.classList.contains('open') ? 'true' : 'false');
+}
+
+document.addEventListener('click', e => {
+  const nav     = document.getElementById('mobileNav');
+  const menuBtn = document.querySelector('.menu-toggle');
+  document.querySelectorAll('.nav-dropdown').forEach(dd => {
+    if (!dd.contains(e.target)) {
+      dd.classList.remove('open');
+      const db = dd.querySelector('.dropdown-toggle');
+      if (db) db.setAttribute('aria-expanded', 'false');
+    }
+  });
+  if (nav && menuBtn && !nav.contains(e.target) && !menuBtn.contains(e.target)) {
+    nav.classList.remove('open');
+    menuBtn.setAttribute('aria-expanded', 'false');
+  }
+});
+
+(async function() {
+  if (typeof RSAuth !== 'undefined') {
+    const session = await RSAuth.initSession();
+    RSAuth.renderNavUser(session);
+  }
+})();
+</script>
+</body>
+</html>
