@@ -143,18 +143,7 @@
     <nav class="top-links" id="mobileNav">
       <a class="top-link" href="/index.html">HOME</a>
       <a class="top-link" href="/features.html">SERVER-FEATURES</a>
-      <div class="nav-dropdown">
-        <button class="top-link dropdown-toggle" type="button" aria-expanded="false" onclick="toggleRunestoneDropdown(event)">RUNESTONEMMO ▾</button>
-        <div class="dropdown-menu" id="runestoneDropdown">
-          <a class="dropdown-link" href="/RunestoneCore.html">RUNESTONECORE</a>
-          <a class="dropdown-link" href="/RunestoneSkills.html">RUNESTONESKILLS</a>
-          <a class="dropdown-link" href="/runestoneadmintool.html">RUNESTONEADMINTOOL</a>
-          <a class="dropdown-link" href="/runestonehub.html">RUNESTONEHUB</a>
-          <a class="dropdown-link" href="/runestonecombat.html">RUNESTONECOMBAT</a>
-          <a class="dropdown-link" href="/runestonestamina.html">RUNESTONESTAMINA</a>
-          <a class="dropdown-link" href="/runestonenpc.html">RUNESTONENPCS</a>
-        </div>
-      </div>
+      <a class="top-link" href="/RunestoneMMO.html">RUNESTONEMMO</a>
       <a class="top-link" href="/roadmap_development.html">ROADMAP</a>
       <div class="nav-dropdown" id="communityDropdownWrap">
         <button class="top-link dropdown-toggle" type="button" aria-expanded="false" onclick="toggleCommunityDropdown(event)">COMMUNITY ▾</button>
@@ -471,8 +460,7 @@
   <p>
     <a href="/index.html">Home</a> •
     <a href="/features.html">Server-Features</a> •
-    <a href="/RunestoneCore.html">RunestoneCore</a> •
-    <a href="/RunestoneSkills.html">RunestoneSkills</a> •
+    <a href="/RunestoneMMO.html">RunestoneMMO</a> •
     <a href="/roadmap_development.html">Roadmap</a> •
     <a href="/credits.html">Credits</a> •
     <a href="/terms.html">Terms</a>
@@ -493,13 +481,7 @@ function toggleMenu() {
   nav.classList.toggle("open");
   button.setAttribute("aria-expanded", nav.classList.contains("open") ? "true" : "false");
 }
-function toggleRunestoneDropdown(event) {
-  event.stopPropagation();
-  const dropdown = event.currentTarget.closest(".nav-dropdown");
-  const button = dropdown.querySelector(".dropdown-toggle");
-  dropdown.classList.toggle("open");
-  button.setAttribute("aria-expanded", dropdown.classList.contains("open") ? "true" : "false");
-}
+
 document.addEventListener("click", function(event) {
   const nav = document.getElementById("mobileNav");
   const menuButton = document.querySelector(".menu-toggle");

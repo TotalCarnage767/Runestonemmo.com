@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RunestoneMMO — The Plugin Suite Powering Runestone Vale</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <script src="/auth.js"></script>
+  <style>
+    .plugin-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+    .plugin-card {
+      background: rgba(30,27,23,0.85);
+      border: 1px solid #4a3a28;
+      border-radius: 10px;
+      padding: 1.5rem 1.4rem 1.3rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .plugin-card:hover {
+      border-color: #c9a227;
+      box-shadow: 0 4px 24px rgba(201,162,39,0.12);
+    }
+    .plugin-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.6rem;
+    }
+    .plugin-icon {
+      font-size: 1.6rem;
+      line-height: 1;
+    }
+    .plugin-card h3 {
+      font-family: 'Cinzel', serif;
+      color: #c9a227;
+      font-size: 1.05rem;
+      letter-spacing: 0.5px;
+      margin: 0;
+    }
+    .plugin-card .plugin-tagline {
+      color: rgba(240,230,200,0.55);
+      font-size: 0.82rem;
+      margin: 0 0 0.75rem;
+      font-style: italic;
+    }
+    .plugin-card p {
+      color: rgba(240,230,200,0.8);
+      font-size: 0.92rem;
+      line-height: 1.65;
+      margin: 0 0 0.85rem;
+    }
+    .plugin-tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.5rem;
+    }
+    .plugin-tag {
+      background: rgba(74,58,40,0.6);
+      border: 1px solid rgba(201,162,39,0.25);
+      color: rgba(240,230,200,0.65);
+      font-size: 0.73rem;
+      padding: 2px 9px;
+      border-radius: 20px;
+      font-family: 'Cinzel', serif;
+      letter-spacing: 0.3px;
+    }
+    .suite-intro {
+      background: rgba(30,27,23,0.7);
+      border-left: 3px solid #c9a227;
+      padding: 1.1rem 1.4rem;
+      border-radius: 0 8px 8px 0;
+      margin: 1.2rem 0 1.8rem;
+    }
+    .suite-intro p {
+      margin: 0;
+      color: rgba(240,230,200,0.8);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+    .hangar-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="topbar">
+    <a class="brand" href="/index.html">RUNESTONE VALE</a>
+    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" onclick="toggleMenu()">☰</button>
+    <nav class="top-links" id="mobileNav">
+      <a class="top-link" href="/index.html">HOME</a>
+      <a class="top-link" href="/features.html">SERVER-FEATURES</a>
+      <a class="top-link active" href="/RunestoneMMO.html">RUNESTONEMMO</a>
+      <a class="top-link" href="/roadmap_development.html">ROADMAP</a>
+      <div class="nav-dropdown" id="communityDropdownWrap">
+        <button class="top-link dropdown-toggle" type="button" aria-expanded="false" onclick="toggleCommunityDropdown(event)">COMMUNITY ▾</button>
+        <div class="dropdown-menu" id="communityDropdown">
+          <a class="dropdown-link" href="/news.html">📰 PATCH NOTES &amp; NEWS</a>
+          <a class="dropdown-link" href="/voting.html">🗳️ COMMUNITY VOTING</a>
+          <a class="dropdown-link" href="/bug-report.html">🐛 BUG REPORTS</a>
+          <a class="dropdown-link" href="/guides.html">📖 GUIDES &amp; COMMANDS</a>
+        </div>
+      </div>
+      <a class="top-link" href="/credits.html">CREDITS</a>
+      <a class="top-link" href="/terms.html">TERMS</a>
+      <div id="navUserSlot" style="display:flex;align-items:center;flex-shrink:0;margin-left:8px;"></div>
+    </nav>
+  </div>
+</header>
+<div class="hero-banner"></div>
+
+<main>
+
+  <!-- ── Page Header ── -->
+  <section class="card">
+    <h1>RunestoneMMO</h1>
+    <p class="subtitle">A custom-built plugin suite designed to turn a Minecraft server into a living, persistent MMORPG realm.</p>
+
+    <div class="suite-intro">
+      <p>
+        RunestoneMMO is not a single plugin — it is a family of interconnected modules, each owning a distinct slice of the
+        Runestone Vale experience. Every module is built in-house, purpose-designed for the server, and wired together through
+        a shared core layer. The result is a cohesive RPG stack that behaves like one system rather than a collection of
+        independent add-ons.
+      </p>
+    </div>
+
+    <p>
+      The suite currently spans seven active modules: a shared core engine, a professions and progression layer, a combat engine,
+      a stamina and survival system, an NPC and quest runtime, a player navigation hub, and a staff administration tool.
+      Each module has a clearly defined responsibility and communicates with the others through the shared Core layer.
+    </p>
+    <p>
+      The plugins are developed and maintained by <strong>TotalCarnage767</strong> and are available publicly on Hangar for
+      other server owners to use. Runestone Vale is the primary testing ground where every system is actively developed and refined.
+    </p>
+
+    <div class="hangar-row">
+      <a class="button secondary" href="https://hangar.papermc.io/TotalCarnage767/RunestoneMMO" target="_blank" rel="noopener">RunestoneMMO on Hangar</a>
+      <a class="button secondary" href="https://hangar.papermc.io/TotalCarnage767/RunestoneSkills" target="_blank" rel="noopener">RunestoneSkills on Hangar</a>
+      <a class="button secondary" href="https://discord.gg/D4uBMrzBZN" target="_blank" rel="noopener">Join Discord</a>
+    </div>
+  </section>
+
+  <!-- ── Plugin Cards ── -->
+  <section class="card">
+    <h2>The Plugin Suite</h2>
+    <p>
+      Each module below owns a specific part of the RunestoneMMO experience. They are designed to work together,
+      but each one has a clear boundary so systems stay maintainable as the server grows.
+    </p>
+
+    <div class="plugin-grid">
+
+      <!-- RunestoneCore -->
+      <div class="plugin-card">
+        <div class="plugin-card-header">
+          <span class="plugin-icon">⚙️</span>
+          <h3>RunestoneCore</h3>
+        </div>
+        <p class="plugin-tagline">The shared foundation everything else is built on.</p>
+        <p>
+          RunestoneCore is the central engine of the suite. It provides the shared services, registries, event bridges,
+          and data layer that every other module depends on. Rather than each plugin managing its own isolated state,
+          they all communicate through Core — keeping the system connected and consistent.
+        </p>
+        <p>
+          Core handles things like the player data foundation, shared configuration, cross-module service access,
+          the starter kit system, the Login Hub backbone, daily rewards, and the live world runtime that ties
+          the realm together.
+        </p>
+        <div class="plugin-tag-row">
+          <span class="plugin-tag">Shared Engine</span>
+          <span class="plugin-tag">Player Data</span>
+          <span class="plugin-tag">Service Registry</span>
+          <span class="plugin-tag">Live World</span>
+        </div>
+      </div>
+
+      <!-- RunestoneSkills -->
+      <div class="plugin-card">
+        <div class="plugin-card-header">
+          <span class="plugin-icon">⛏️</span>
+          <h3>RunestoneSkills</h3>
+        </div>
+        <p class="plugin-tagline">Professions, progression, and long-term advancement.</p>
+        <p>
+          RunestoneSkills is the professions and leveling module. It gives players a structured path of growth
+          across 13 professions — Mining, Forestry, Fishing, Smithing, Exploration, Farming, Cooking, Foraging,
+          Hunting, Combat, and more — each with its own XP curve, milestones, and level-locked rewards.
+        </p>
+        <p>
+          The module is config-driven, meaning profession behaviour, XP rates, and unlock thresholds can be
+          tuned without code changes. It feeds progression data back into Core so other systems can react to
+          a player's skill level.
+        </p>
+        <div class="plugin-tag-row">
+          <span class="plugin-tag">13 Professions</span>
+          <span class="plugin-tag">XP &amp; Milestones</span>
+          <span class="plugin-tag">Level Locks</span>
+          <span class="plugin-tag">Config-Driven</span>
+        </div>
+      </div>
+
+      <!-- RunestoneCombat -->
+      <div class="plugin-card">
+        <div class="plugin-card-header">
+          <span class="plugin-icon">⚔️</span>
+          <h3>RunestoneCombat</h3>
+        </div>
+        <p class="plugin-tagline">Custom damage, mob scaling, and combat progression.</p>
+        <p>
+          RunestoneCombat replaces vanilla combat with a typed damage model that accounts for weapon identity,
+          armour scaling, critical hits, dodge, parry, and guard reduction. Mobs are scaled through combat
+          profiles so danger feels meaningful at different stages of progression.
+        </p>
+        <p>
+          The module also owns combat XP, feeding into the Combat profession in RunestoneSkills, and lays
+          the groundwork for combat abilities and combos as the system continues to expand.
+        </p>
+        <div class="plugin-tag-row">
+          <span class="plugin-tag">Custom Damage</span>
+          <span class="plugin-tag">Mob Scaling</span>
+          <span class="plugin-tag">Combat XP</span>
+          <span class="plugin-tag">Abilities</span>
+        </div>
+      </div>
+
+      <!-- RunestoneStamina -->
+      <div class="plugin-card">
+        <div class="plugin-card-header">
+          <span class="plugin-icon">🫀</span>
+          <h3>RunestoneStamina</h3>
+        </div>
+        <p class="plugin-tagline">Stamina, movement pacing, and survival pressure.</p>
+        <p>
+          RunestoneStamina adds a stamina layer to player movement and actions. Sprinting, mining, attacking,
+          swimming, and jumping all draw from a stamina pool. When stamina runs low, movement slows; when it
+          hits zero, the player enters an exhausted state with further penalties.
+        </p>
+        <p>
+          Recovery, drain rates, and thresholds are all configurable. The module integrates with RunestoneSkills
+          so that progression can reduce stamina costs and improve recovery over time.
+        </p>
+        <div class="plugin-tag-row">
+          <span class="plugin-tag">Stamina Pool</span>
+          <span class="plugin-tag">Movement Pacing</span>
+          <span class="plugin-tag">Exhaustion</span>
+          <span class="plugin-tag">Progression Buffs</span>
+        </div>
+      </div>
+
+      <!-- RunestoneNPCs -->
+      <div class="plugin-card">
+        <div class="plugin-card-header">
+          <span class="plugin-icon">🧙</span>
+          <h3>RunestoneNPCs</h3>
+        </div>
+        <p class="plugin-tagline">NPC dialogue, quests, and shops — the realm's living cast.</p>
+        <p>
+          RunestoneNPCs is the NPC gameplay layer. It works alongside Citizens (which handles the physical NPC
+          entity) to attach MMO behaviour: dialogue packages, quest offers, quest state tracking, turn-ins,
+          rewards, and NPC shops.
+        </p>
+        <p>
+          Quest state is tracked per-player and persists across sessions. Dialogue adapts based on where a
+          player is in a questline, making NPCs feel like real parts of the world rather than static menus.
+        </p>
+        <div class="plugin-tag-row">
+          <span class="plugin-tag">Dialogue</span>
+          <span class="plugin-tag">Quests</span>
+          <span class="plugin-tag">NPC Shops</span>
+          <span class="plugin-tag">State Tracking</span>
+        </div>
+      </div>
+
+      <!-- RunestoneHub -->
+      <div class="plugin-card">
+        <div class="plugin-card-header">
+          <span class="plugin-icon">🧭</span>
+          <h3>RunestoneHub</h3>
+        </div>
+        <p class="plugin-tagline">The player navigation hub and utility access layer.</p>
+        <p>
+          RunestoneHub owns the Login Hub experience and the Hub Compass — the in-game menu system players
+          use to navigate the realm's most important systems. It provides access to warps, banks, markets,
+          the auction house, quest info, and the plot marketplace without requiring players to memorise commands.
+        </p>
+        <p>
+          The Hub is the first thing players see when they log in, making it the gateway to the rest of the
+          Runestone Vale experience.
+        </p>
+        <div class="plugin-tag-row">
+          <span class="plugin-tag">Login Hub</span>
+          <span class="plugin-tag">Hub Compass</span>
+          <span class="plugin-tag">Warp &amp; Travel</span>
+          <span class="plugin-tag">Plot Marketplace</span>
+        </div>
+      </div>
+
+      <!-- RunestoneAdminTool -->
+      <div class="plugin-card">
+        <div class="plugin-card-header">
+          <span class="plugin-icon">🛡️</span>
+          <h3>RunestoneAdminTool</h3>
+        </div>
+        <p class="plugin-tagline">Staff-facing control panel for managing the realm.</p>
+        <p>
+          RunestoneAdminTool gives server staff a structured, menu-driven interface for managing Runestone Vale
+          without relying on raw commands for every task. It provides access to player management, economy
+          tools, NPC workflows, system utilities, and module reload controls.
+        </p>
+        <p>
+          The tool is designed as an orchestration layer — it does not own backend authority itself, but gives
+          staff clean, safe access to the systems that do.
+        </p>
+        <div class="plugin-tag-row">
+          <span class="plugin-tag">Admin Panel</span>
+          <span class="plugin-tag">Player Management</span>
+          <span class="plugin-tag">NPC Workflows</span>
+          <span class="plugin-tag">System Tools</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── How It Fits Together ── -->
+  <section class="card">
+    <h2>How the Suite Fits Together</h2>
+    <p>
+      All seven modules are wired through RunestoneCore. Rather than each plugin running independently,
+      they register their services into Core and consume shared data from it. This means a player's skill
+      level in RunestoneSkills can influence stamina costs in RunestoneStamina, combat outcomes in
+      RunestoneCombat, and what quests an NPC offers in RunestoneNPCs — all without those modules
+      needing to talk to each other directly.
+    </p>
+    <p>
+      The architecture keeps each module focused on its own responsibility while still producing a
+      connected, coherent experience for the player. As the suite grows, new modules can be added
+      without disrupting what already exists.
+    </p>
+    <div class="button-row-left">
+      <a class="button secondary" href="/features.html">View Server Features</a>
+      <a class="button secondary" href="/roadmap_development.html">View Roadmap</a>
+      <a class="button" href="https://discord.gg/D4uBMrzBZN" target="_blank" rel="noopener">Join Discord</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>Runestone Vale — A mountain-forged realm at the heart of RunestoneMMO.</p>
+  <p>
+    <a href="/index.html">Home</a> •
+    <a href="/features.html">Server-Features</a> •
+    <a href="/RunestoneMMO.html">RunestoneMMO</a> •
+    <a href="/roadmap_development.html">Roadmap</a> •
+    <a href="/credits.html">Credits</a> •
+    <a href="/terms.html">Terms</a>
+  </p>
+  <p>
+    <a href="https://discord.gg/D4uBMrzBZN" target="_blank" rel="noopener">Discord</a> •
+    <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneMMO" target="_blank" rel="noopener">RunestoneMMO Hangar</a> •
+    <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneSkills" target="_blank" rel="noopener">RunestoneSkills Hangar</a> •
+    <a href="https://www.patreon.com/cw/RunestoneMMO" target="_blank" rel="noopener">Patreon</a>
+  </p>
+</footer>
+
+<script>
+/* ── Navigation ── */
+function toggleMenu() {
+  const nav = document.getElementById("mobileNav");
+  const button = document.querySelector(".menu-toggle");
+  nav.classList.toggle("open");
+  button.setAttribute("aria-expanded", nav.classList.contains("open") ? "true" : "false");
+}
+function toggleCommunityDropdown(event) {
+  event.stopPropagation();
+  const dropdown = event.currentTarget.closest(".nav-dropdown");
+  const button = dropdown.querySelector(".dropdown-toggle");
+  dropdown.classList.toggle("open");
+  button.setAttribute("aria-expanded", dropdown.classList.contains("open") ? "true" : "false");
+}
+document.addEventListener("click", function(event) {
+  const nav = document.getElementById("mobileNav");
+  const menuButton = document.querySelector(".menu-toggle");
+  const dropdowns = document.querySelectorAll(".nav-dropdown");
+  dropdowns.forEach(function(dropdown) {
+    if (!dropdown.contains(event.target)) {
+      dropdown.classList.remove("open");
+      const btn = dropdown.querySelector(".dropdown-toggle");
+      if (btn) btn.setAttribute("aria-expanded", "false");
+    }
+  });
+  if (!nav || !menuButton) return;
+  if (!nav.contains(event.target) && !menuButton.contains(event.target)) {
+    nav.classList.remove("open");
+    menuButton.setAttribute("aria-expanded", "false");
+  }
+});
+</script>
+</body>
+</html>
