@@ -165,7 +165,6 @@ const PANEL_ITEMS = [
   document.body.style.visibility = 'visible';
 })();
 
-
 function toggleDropdown(event, id) {
   event.stopPropagation();
   const dd = event.currentTarget.closest('.nav-dropdown'), btn = dd.querySelector('.dropdown-toggle'), isOpen = dd.classList.contains('open');
@@ -178,42 +177,16 @@ document.addEventListener('click', e => {
   if (nav && btn && !nav.contains(e.target) && !btn.contains(e.target)) { nav.classList.remove('open'); btn.setAttribute('aria-expanded','false'); }
 });
 </script>
+
+
 <script>
-
-
-
-
-
-
-</script>
-<script>
+/* ── Navigation ── */
 function toggleMenu() {
   const nav = document.getElementById("mobileNav");
   const button = document.querySelector(".menu-toggle");
   nav.classList.toggle("open");
   button.setAttribute("aria-expanded", nav.classList.contains("open") ? "true" : "false");
 }
-
-document.addEventListener("click", function(event) {
-  const nav = document.getElementById("mobileNav");
-  const menuButton = document.querySelector(".menu-toggle");
-  const dropdown = document.querySelector(".nav-dropdown");
-  const dropdownButton = document.querySelector(".dropdown-toggle");
-  if (dropdown && !dropdown.contains(event.target)) {
-    dropdown.classList.remove("open");
-    if (dropdownButton) dropdownButton.setAttribute("aria-expanded", "false");
-  }
-  if (!nav || !menuButton) return;
-  if (!nav.contains(event.target) && !menuButton.contains(event.target)) {
-    nav.classList.remove("open");
-    menuButton.setAttribute("aria-expanded", "false");
-  }
-});
-(function() {
-  RSAuth.initSession().then(function(session) {
-    RSAuth.renderNavUser(session);
-  });
-})();
 function toggleCommunityDropdown(event) {
   event.stopPropagation();
   const wrap = document.getElementById('communityDropdownWrap');
@@ -222,12 +195,20 @@ function toggleCommunityDropdown(event) {
   wrap.classList.toggle('open');
   if (btn) btn.setAttribute('aria-expanded', wrap.classList.contains('open') ? 'true' : 'false');
 }
-document.addEventListener('click', function(e) {
-  const wrap = document.getElementById('communityDropdownWrap');
-  if (wrap && !wrap.contains(e.target)) {
-    wrap.classList.remove('open');
-    const btn = wrap.querySelector('.dropdown-toggle');
-    if (btn) btn.setAttribute('aria-expanded', 'false');
+document.addEventListener("click", function(event) {
+  const nav = document.getElementById("mobileNav");
+  const menuButton = document.querySelector(".menu-toggle");
+  document.querySelectorAll(".nav-dropdown").forEach(function(dropdown) {
+    if (!dropdown.contains(event.target)) {
+      dropdown.classList.remove("open");
+      const btn = dropdown.querySelector(".dropdown-toggle");
+      if (btn) btn.setAttribute("aria-expanded", "false");
+    }
+  });
+  if (!nav || !menuButton) return;
+  if (!nav.contains(event.target) && !menuButton.contains(event.target)) {
+    nav.classList.remove("open");
+    menuButton.setAttribute("aria-expanded", "false");
   }
 });
 </script>

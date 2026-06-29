@@ -145,11 +145,16 @@
       Each module has a clearly defined responsibility and communicates with the others through the shared Core layer.
     </p>
     <p>
-      The plugins are developed and maintained by <strong>TotalCarnage767</strong> and are available publicly on Hangar for
-      other server owners to use. Runestone Vale is the primary testing ground where every system is actively developed and refined.
+      The plugins are developed and maintained by <strong>TotalCarnage767</strong>. Runestone Vale is the primary testing ground
+      where every system is actively developed and refined.
+    </p>
+    <p>
+      The RunestoneMMO plugin suite is <strong>not publicly available for download</strong> at this time.
+      To inquire about access or collaboration, join the Discord.
     </p>
 
-    <div class="hangar-row"><a class="button secondary" href="https://discord.gg/7QV4eaHcHC" target="_blank" rel="noopener">Join Discord</a>
+    <div class="hangar-row">
+      <a class="button" href="https://discord.gg/7QV4eaHcHC" target="_blank" rel="noopener">Join Discord for Access</a>
     </div>
   </section>
 
@@ -387,16 +392,16 @@ function toggleMenu() {
 }
 function toggleCommunityDropdown(event) {
   event.stopPropagation();
-  const dropdown = event.currentTarget.closest(".nav-dropdown");
-  const button = dropdown.querySelector(".dropdown-toggle");
-  dropdown.classList.toggle("open");
-  button.setAttribute("aria-expanded", dropdown.classList.contains("open") ? "true" : "false");
+  const wrap = document.getElementById('communityDropdownWrap');
+  const btn  = wrap ? wrap.querySelector('.dropdown-toggle') : null;
+  if (!wrap) return;
+  wrap.classList.toggle('open');
+  if (btn) btn.setAttribute('aria-expanded', wrap.classList.contains('open') ? 'true' : 'false');
 }
 document.addEventListener("click", function(event) {
   const nav = document.getElementById("mobileNav");
   const menuButton = document.querySelector(".menu-toggle");
-  const dropdowns = document.querySelectorAll(".nav-dropdown");
-  dropdowns.forEach(function(dropdown) {
+  document.querySelectorAll(".nav-dropdown").forEach(function(dropdown) {
     if (!dropdown.contains(event.target)) {
       dropdown.classList.remove("open");
       const btn = dropdown.querySelector(".dropdown-toggle");
@@ -409,6 +414,15 @@ document.addEventListener("click", function(event) {
     menuButton.setAttribute("aria-expanded", "false");
   }
 });
+</script>
+<script>
+(function() {
+  if (typeof RSAuth !== 'undefined') {
+    RSAuth.initSession().then(function(session) {
+      RSAuth.renderNavUser(session);
+    });
+  }
+})();
 </script>
 </body>
 </html>
