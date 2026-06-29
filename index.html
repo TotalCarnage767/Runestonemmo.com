@@ -10,25 +10,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <style>
-    /* ── Screenshot Gallery ── */
-    .screenshot-gallery {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      grid-template-rows: auto auto;
-      gap: 10px;
-      margin: 28px 0;
-    }
-    .ss-main { grid-column: 1; grid-row: 1; }
-    .ss-side { grid-column: 2; grid-row: 1; }
-    .ss-bottom { grid-column: 1 / 3; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-    .screenshot-gallery img {
-      width: 100%; height: 220px; object-fit: cover;
-      border-radius: 10px; border: 1px solid rgba(226,193,120,0.18);
-      display: block; transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .ss-main img, .ss-side img { height: 300px; }
-    .screenshot-gallery img:hover { transform: scale(1.02); box-shadow: 0 8px 28px rgba(0,0,0,0.55); }
-
     /* ── Server Status Bar ── */
     .server-status-bar {
       display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
@@ -41,95 +22,129 @@
     }
     .status-dot.online  { background: #4caf50; box-shadow: 0 0 7px #4caf50; }
     .status-dot.offline { background: #e53935; }
-    .status-label { font-family: 'Cinzel', serif; font-size: 0.92rem; color: var(--gold); font-weight: 700; }
+    .status-label  { font-family: 'Cinzel', serif; font-size: 0.92rem; color: var(--gold); font-weight: 700; }
     .status-detail { font-size: 0.88rem; color: rgba(255,255,255,0.6); }
 
-    /* ── Feature Cards ── */
-    .feat-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 18px; margin: 24px 0;
+    /* ── Pillar Cards ── */
+    .pillar-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin: 24px 0;
     }
-    .feat-card {
-      border-radius: 12px; overflow: hidden;
-      background: rgba(0,0,0,0.35); border: 1px solid rgba(226,193,120,0.15);
-      transition: transform 0.2s, box-shadow 0.2s;
+    .pillar-card {
+      background: rgba(20,16,10,0.75);
+      border: 1px solid rgba(226,193,120,0.18);
+      border-radius: 12px;
+      padding: 22px 20px;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
-    .feat-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.5); }
-    .feat-card img { width: 100%; height: 155px; object-fit: cover; display: block; }
-    .feat-card-body { padding: 16px 18px; }
-    .feat-card-body h3 { margin: 0 0 6px; font-size: 1.05rem; color: var(--gold); }
-    .feat-card-body p  { margin: 0; font-size: 0.92rem; color: rgba(255,255,255,0.72); line-height: 1.6; }
-    .feat-badge {
-      display: inline-block; font-size: 0.7rem; font-family: 'Cinzel', serif; font-weight: 700;
-      padding: 2px 9px; border-radius: 20px; margin-bottom: 6px; letter-spacing: 0.4px;
+    .pillar-card:hover {
+      border-color: rgba(201,162,39,0.5);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.45);
     }
-    .feat-badge.live    { background: rgba(76,175,80,0.18);  color: #81c784; border: 1px solid rgba(76,175,80,0.3); }
-    .feat-badge.progress{ background: rgba(255,193,7,0.14);  color: #ffd54f; border: 1px solid rgba(255,193,7,0.28); }
-    .feat-badge.planned { background: rgba(100,181,246,0.14);color: #90caf9; border: 1px solid rgba(100,181,246,0.28); }
+    .pillar-icon {
+      font-size: 1.6rem;
+      margin-bottom: 10px;
+      display: block;
+    }
+    .pillar-card h3 {
+      font-family: 'Cinzel', serif;
+      color: var(--gold);
+      font-size: 1rem;
+      margin: 0 0 8px;
+      letter-spacing: 0.4px;
+    }
+    .pillar-card p {
+      margin: 0;
+      font-size: 0.92rem;
+      color: rgba(240,230,200,0.72);
+      line-height: 1.65;
+    }
 
-    /* ── App Download ── */
-    .app-section {
-      background: linear-gradient(135deg, rgba(20,15,5,0.9) 0%, rgba(40,30,10,0.85) 100%);
-      border: 1px solid rgba(226,193,120,0.3); border-radius: 16px;
-      padding: 32px 28px; margin: 28px 0;
-      display: grid; grid-template-columns: 1fr auto; gap: 28px; align-items: center;
+    /* ── Recruitment Section ── */
+    .recruit-section {
+      background: linear-gradient(135deg, rgba(15,11,5,0.92) 0%, rgba(35,25,8,0.88) 100%);
+      border: 1px solid rgba(201,162,39,0.35);
+      border-radius: 16px;
+      padding: 36px 32px;
+      margin: 0;
     }
-    .app-section h2 { margin-top: 0; }
-    .app-download-buttons { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
-    .app-btn {
-      display: inline-flex; align-items: center; gap: 9px;
-      padding: 12px 20px; border-radius: 10px; font-family: 'Cinzel', serif;
-      font-weight: 700; font-size: 0.92rem; text-decoration: none;
-      transition: all 0.2s; border: 1px solid transparent;
+    .recruit-section h2 {
+      color: var(--gold);
+      margin-top: 0;
     }
-    .app-btn.android { background: rgba(76,175,80,0.18);  border-color: rgba(76,175,80,0.38);  color: #81c784; }
-    .app-btn.android:hover { background: rgba(76,175,80,0.32); }
-    .app-btn.ios     { background: rgba(100,181,246,0.14);border-color: rgba(100,181,246,0.32);color: #90caf9; }
-    .app-btn.ios:hover     { background: rgba(100,181,246,0.26); }
-    .app-qr-block { text-align: center; }
-    .app-qr-block .qr-placeholder {
-      width: 106px; height: 106px; background: rgba(255,255,255,0.05);
-      border: 2px dashed rgba(226,193,120,0.32); border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.72rem; color: rgba(255,255,255,0.38); text-align: center;
-      padding: 10px; font-family: 'Cinzel', serif;
+    .recruit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin: 24px 0;
     }
-    .app-qr-block p { margin: 7px 0 0; font-size: 0.75rem; color: rgba(255,255,255,0.4); }
+    .recruit-card {
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(226,193,120,0.2);
+      border-radius: 10px;
+      padding: 20px 18px;
+      transition: border-color 0.2s;
+    }
+    .recruit-card:hover {
+      border-color: rgba(201,162,39,0.5);
+    }
+    .recruit-card-icon {
+      font-size: 1.5rem;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .recruit-card h3 {
+      font-family: 'Cinzel', serif;
+      color: var(--gold);
+      font-size: 0.95rem;
+      margin: 0 0 8px;
+      letter-spacing: 0.3px;
+    }
+    .recruit-card p {
+      margin: 0;
+      font-size: 0.88rem;
+      color: rgba(240,230,200,0.65);
+      line-height: 1.6;
+    }
+    .recruit-note {
+      font-size: 0.85rem;
+      color: rgba(240,230,200,0.45);
+      font-style: italic;
+      margin: 0 0 20px;
+      line-height: 1.6;
+    }
 
-    /* ── News Feed ── */
-    .news-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-      gap: 18px; margin: 20px 0;
+    /* ── Support / Patreon ── */
+    .support-bar {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      background: rgba(20,14,4,0.8);
+      border: 1px solid rgba(201,162,39,0.25);
+      border-radius: 12px;
+      padding: 20px 24px;
     }
-    .news-card {
-      background: rgba(0,0,0,0.35); border: 1px solid rgba(226,193,120,0.14);
-      border-radius: 12px; padding: 20px;
+    .support-bar-text { flex: 1; min-width: 200px; }
+    .support-bar-text h3 {
+      font-family: 'Cinzel', serif;
+      color: var(--gold);
+      margin: 0 0 4px;
+      font-size: 1rem;
     }
-    .news-card.pinned { border-color: rgba(226,193,120,0.42); }
-    .news-card-meta { display: flex; align-items: center; gap: 9px; margin-bottom: 9px; flex-wrap: wrap; }
-    .news-badge {
-      font-size: 0.68rem; font-family: 'Cinzel', serif; font-weight: 700;
-      padding: 2px 9px; border-radius: 20px; letter-spacing: 0.4px; text-transform: uppercase;
+    .support-bar-text p {
+      margin: 0;
+      font-size: 0.88rem;
+      color: rgba(240,230,200,0.6);
+      line-height: 1.55;
     }
-    .news-badge.update       { background: rgba(76,175,80,0.18);  color: #81c784; border: 1px solid rgba(76,175,80,0.28); }
-    .news-badge.patch        { background: rgba(255,152,0,0.18);  color: #ffb74d; border: 1px solid rgba(255,152,0,0.28); }
-    .news-badge.event        { background: rgba(156,39,176,0.18); color: #ce93d8; border: 1px solid rgba(156,39,176,0.28); }
-    .news-badge.announcement { background: rgba(100,181,246,0.14);color: #90caf9; border: 1px solid rgba(100,181,246,0.28); }
-    .news-badge.hotfix       { background: rgba(229,57,53,0.18);  color: #ef9a9a; border: 1px solid rgba(229,57,53,0.28); }
-    .news-date { font-size: 0.8rem; color: rgba(255,255,255,0.42); }
-    .news-card h3 { margin: 0 0 7px; font-size: 1.02rem; color: var(--gold); }
-    .news-card p  { margin: 0; font-size: 0.9rem; color: rgba(255,255,255,0.7); line-height: 1.6; }
-    .news-loading { text-align: center; color: rgba(255,255,255,0.38); padding: 24px; font-size: 0.88rem; }
 
     /* ── Responsive ── */
     @media (max-width: 768px) {
-      .screenshot-gallery { grid-template-columns: 1fr; }
-      .ss-main, .ss-side { grid-column: 1; grid-row: auto; }
-      .ss-main img, .ss-side img { height: 200px; }
-      .ss-bottom { grid-column: 1; grid-template-columns: 1fr 1fr; }
-      .app-section { grid-template-columns: 1fr; gap: 18px; }
-      .app-qr-block { display: none; }
       .server-status-bar { flex-direction: column; align-items: flex-start; }
+      .recruit-section { padding: 24px 18px; }
     }
   </style>
   <script src="/auth.js"></script>
@@ -168,9 +183,8 @@
   <!-- ── Hero ── -->
   <section class="hero">
     <h1>Runestone Vale</h1>
-    <p class="subtitle">A mountain-forged fantasy MMORPG realm at the heart of RunestoneMMO — where runes are waking, the stone remembers, and the world is still being shaped.</p>
+    <p class="subtitle">A mountain-forged fantasy MMORPG realm — built on custom systems, shaped by its community, and still being carved into something greater.</p>
 
-    <!-- Live Server Status -->
     <div class="server-status-bar" id="serverStatusBar">
       <div class="status-dot" id="statusDot"></div>
       <span class="status-label" id="statusLabel">Checking server…</span>
@@ -178,201 +192,112 @@
     </div>
 
     <p>
-      <strong>Runestone Vale</strong> is a medieval fantasy survival realm shaped by rune-forged stonework,
-      long-term progression, exploration, economy, quests, NPCs, and a world identity built to feel connected.
+      <strong>Runestone Vale</strong> is a Minecraft Java MMORPG realm running on a fully custom plugin suite.
+      It is not a survival server with extras bolted on — it is a purpose-built world with its own identity,
+      progression systems, economy, quests, NPCs, and long-term direction.
     </p>
     <p>
-      The Vale is not just a survival map with plugins added on top. It is being built as a living MMORPG-style realm —
-      where skills, travel, markets, combat, dungeons, towns, and player progress are meant to grow together over time.
-    </p>
-    <p>
-      This world is still being forged. Early players, testers, builders, explorers, and community members are helping shape
-      what Runestone Vale becomes.
+      The realm is in active development. Early players, testers, and community members are part of shaping
+      what the Vale becomes. The foundation is live and playable. The larger vision is still being forged.
     </p>
     <div class="buttons">
-      <a class="button" href="https://discord.gg/D4uBMrzBZN" target="_blank" rel="noopener">Join Through Discord</a>
-      <a class="button secondary" href="/features.html">View Server Features</a>
+      <a class="button" href="https://discord.gg/7QV4eaHcHC" target="_blank" rel="noopener">Join Through Discord</a>
+      <a class="button secondary" href="/features.html">Server Features</a>
       <a class="button secondary" href="/roadmap_development.html">View Roadmap</a>
     </div>
   </section>
 
-  <!-- ── Screenshot Gallery ── -->
+  <!-- ── What Runestone Vale Is ── -->
   <section class="card">
-    <h2>The Realm of the Vale</h2>
+    <h2>The Realm of Runestone Vale</h2>
     <p>
       Beneath mountain shadow and carved stone, Runestone Vale is being shaped into a realm of old halls,
-      frontier paths, rune-marked places, dangerous wilds, settlements, and forgotten depths waiting to be uncovered.
+      frontier paths, rune-marked places, dangerous wilds, and forgotten depths. The tone blends
+      <strong>medieval fantasy</strong>, <strong>dwarven mountain-kingdom identity</strong>, and the ambition
+      of a long-term <strong>MMORPG adventure</strong>.
     </p>
-
     <p>
-      The tone of the world blends <strong>medieval fantasy</strong>, <strong>dwarven mountain-kingdom identity</strong>,
-      and the broader feeling of a long-term <strong>MMORPG adventure</strong>. The goal is a realm that feels grounded,
-      ancient, and alive — not a temporary world built around resets.
+      The goal is a realm that feels grounded, ancient, and alive — not a temporary world built around resets.
+      Every major system is being built toward one idea: making the Vale feel like a place worth returning to.
     </p>
-    <p>Every major system is being built toward one idea: making the Vale feel like a place worth returning to.</p>
-  </section>
 
-  <!-- ── What the Vale Is Becoming ── -->
-  <section class="cta-section">
-    <h2>What Runestone Vale Is Becoming</h2>
-    <p>
-      Runestone Vale is the playable world where the RunestoneMMO vision comes together.
-      This homepage gives the broad picture, while deeper mechanics and exact systems are kept on the Server-Features page.
-    </p>
-    <div class="cta-grid">
-      <article class="cta-card">
-        <h3>Mining Overhaul Live</h3>
-        <p>Phase 11 is here! Prospecting, milestone rewards, and stamina-reduction buffs are now active for all miners in the Vale.</p>
-      </article>
-      <article class="cta-card">
-        <h3>Follower System Incoming</h3>
-        <p>NPC companions like Bjorn are being prepared. Soon you'll be able to summon, gear, and level up your own party of followers.</p>
-      </article>
-      <article class="cta-card">
-        <h3>World Identity</h3>
-        <p>The Vale follows a rune-forged medieval fantasy direction with dwarven, frontier, and mountain-realm influence.</p>
-      </article>
-      <article class="cta-card">
-        <h3>Connected Companion App</h3>
-        <p>Stay connected with live chat, character stats, and server notifications through the official Runestone Vale app.</p>
-      </article>
-    </div>
-  </section>
-
-  <!-- ── Core Experiences with Feature Cards ── -->
-  <section class="card">
-    <h2>Core Experiences</h2>
-    <p>
-      The Vale is being built around major gameplay pillars. These are the broad experiences players can expect
-      as the server continues to grow.
-    </p>
-    <div class="feat-grid">
-      <div class="feat-card">
-
-        <div class="feat-card-body">
-          <span class="feat-badge live">Live</span>
-          <h3>Quests &amp; NPCs</h3>
-          <p>NPC dialogue, quest progress, objectives, turn-ins, shops, and questlines built into a stronger RPG-style experience.</p>
-        </div>
+    <div class="pillar-grid">
+      <div class="pillar-card">
+        <span class="pillar-icon">⚔️</span>
+        <h3>Combat &amp; Survival</h3>
+        <p>Custom damage model, stamina system, combat levels, graves on death, and mob scaling that makes danger feel meaningful at every stage of progression.</p>
       </div>
-      <div class="feat-card">
-
-        <div class="feat-card-body">
-          <span class="feat-badge live">Live</span>
-          <h3>Skills &amp; Professions</h3>
-          <p>13 professions — Mining, Forestry, Fishing, Smithing, Exploration, Farming, Cooking, Foraging, Hunting, Combat and more.</p>
-        </div>
+      <div class="pillar-card">
+        <span class="pillar-icon">⛏️</span>
+        <h3>Skills &amp; Professions</h3>
+        <p>13 active professions — Mining, Forestry, Fishing, Smithing, Exploration, Farming, Cooking, Foraging, Hunting, Combat, and more — each with XP, milestones, and level-locked rewards.</p>
       </div>
-      <div class="feat-card">
-
-        <div class="feat-card-body">
-          <span class="feat-badge live">Live</span>
-          <h3>Combat &amp; Survival</h3>
-          <p>Custom attributes, stamina, mana, combat levels, graves on death, and danger that makes survival feel meaningful.</p>
-        </div>
+      <div class="pillar-card">
+        <span class="pillar-icon">🧙</span>
+        <h3>Quests &amp; NPCs</h3>
+        <p>NPC dialogue, quest packages, objective tracking, turn-ins, shops, and questlines that make the world feel inhabited rather than empty.</p>
       </div>
-      <div class="feat-card">
-
-        <div class="feat-card-body">
-          <span class="feat-badge live">Live</span>
-          <h3>Travel &amp; Hub</h3>
-          <p>Login Hub with compass navigation, warp system, sethome, and world travel. Now featuring an Admin Plot Marketplace.</p>
-        </div>
+      <div class="pillar-card">
+        <span class="pillar-icon">🧭</span>
+        <h3>Travel &amp; Navigation</h3>
+        <p>Login Hub with compass navigation, warp system, sethome, plot marketplace, and world travel — all accessible through clean in-game menus.</p>
       </div>
-      <div class="feat-card">
-
-        <div class="feat-card-body">
-          <span class="feat-badge live">Live</span>
-          <h3>Economy &amp; Community</h3>
-          <p>Banks, markets, auction house, daily rewards, and a live Discord/App chat bridge for a connected realm economy and community.</p>
-        </div>
+      <div class="pillar-card">
+        <span class="pillar-icon">💰</span>
+        <h3>Economy &amp; Community</h3>
+        <p>Banks, markets, auction house, daily rewards, and a Discord-linked community bridge that keeps the realm economy and player base connected.</p>
       </div>
-      <div class="feat-card">
-
-        <div class="feat-card-body">
-          <span class="feat-badge planned">Planned</span>
-          <h3>Dungeons &amp; World Content</h3>
-          <p>Dedicated content spaces being prepared for dungeons, boss arenas, quest rooms, raids, trials, and events.</p>
-        </div>
+      <div class="pillar-card">
+        <span class="pillar-icon">🏰</span>
+        <h3>Dungeons &amp; World Content</h3>
+        <p>Dedicated content spaces are being prepared for dungeons, boss arenas, quest rooms, raids, trials, and world events. <em style="color:rgba(144,202,249,0.8);font-size:0.88em;">Planned</em></p>
       </div>
     </div>
+
     <div class="button-row-left">
       <a class="button secondary" href="/features.html">Explore All Server Features</a>
     </div>
   </section>
 
-  <!-- ── Companion App Download ── -->
-  <section class="app-section">
-    <div>
-      <h2>📱 Runestone Vale Companion App</h2>
-      <p style="color:rgba(255,255,255,0.75);margin-bottom:4px;">
-        Track your character, browse skills and guides, check the live roadmap, and stay connected to the community —
-        all from your phone. Available free for Android and iOS.
-      </p>
-      <div class="app-download-buttons">
-        <a class="app-btn android" href="https://github.com/TotalCarnage767/RunestoneValeApp/releases/latest" target="_blank" rel="noopener">
-          ⬇ Download for Android
-        </a>
-        <a class="app-btn ios" href="https://expo.dev/@runestonemmo/runestone-vale-app" target="_blank" rel="noopener">
-          📲 iOS via Expo Go
-        </a>
-      </div>
-      <p style="font-size:0.8rem;color:rgba(255,255,255,0.38);margin-top:10px;">
-        iOS: Install <strong>Expo Go</strong> from the App Store, then tap the link above or scan the QR code.
-      </p>
-    </div>
-    <div class="app-qr-block">
-      <div class="qr-placeholder">Scan with<br>Expo Go<br>(iOS)</div>
-      <p>Open in Expo Go</p>
-    </div>
-  </section>
-
-  <!-- ── Latest News (live from Supabase) ── -->
-  <section class="card">
-    <h2>Latest News &amp; Updates</h2>
-    <p>Stay up to date with the latest changes, patches, and announcements from the development team.</p>
-    <div id="newsFeed" class="news-grid">
-      <div class="news-loading">Loading latest updates…</div>
-    </div>
-    <div class="button-row-left" style="margin-top:6px;">
-      <a class="button secondary" href="https://discord.gg/D4uBMrzBZN" target="_blank" rel="noopener">All Updates on Discord</a>
-    </div>
-  </section>
-
-  <!-- ── Systems Powering the Realm ── -->
-  <section class="card">
-    <h2>Systems Powering the Realm</h2>
-    <p>
-      Runestone Vale is powered by the custom RunestoneMMO plugin suite, supported by trusted server tools for protection,
-      assets, compatibility, permissions, NPCs, and world building.
+  <!-- ── Staff Recruitment ── -->
+  <section class="recruit-section">
+    <h2>Join the Team</h2>
+    <p class="recruit-note">
+      Runestone Vale is actively looking for dedicated individuals to help build, moderate, and grow the realm.
+      All roles are volunteer-based. We value reliability, creativity, and a genuine interest in the project's direction.
+      Applications and enquiries are handled through Discord.
     </p>
-    <div class="card-grid">
-      <div class="card">
-        <h3>RunestoneMMO Plugins</h3>
-        <ul>
-          <li><strong>RunestoneCore</strong> — shared server foundation, economy, menus, travel, world rules, data, and core systems</li>
-          <li><strong>RunestoneSkills</strong> — 13 professions, skill XP, gathering progression, crafting direction, and long-term advancement</li>
-          <li><strong>RunestoneCombat</strong> — custom combat direction, attributes, scaling, and combat progression</li>
-          <li><strong>RunestoneStamina</strong> — stamina, movement pacing, survival pressure, and future ability-cost support</li>
-          <li><strong>RunestoneHub</strong> — player hub, travel access, market access, bank access, quest info, and server updates</li>
-          <li><strong>RunestoneNPCs</strong> — NPC bindings, dialogue, quests, shops, and world interaction systems</li>
-          <li><strong>RunestoneAdminTool</strong> — staff tools, admin menus, server management, and controlled world access</li>
-        </ul>
+
+    <div class="recruit-grid">
+
+      <div class="recruit-card">
+        <span class="recruit-card-icon">🏗️</span>
+        <h3>Builder</h3>
+        <p>Help shape the physical world of Runestone Vale. We are looking for builders with a strong sense of medieval fantasy atmosphere — towns, dungeons, landmarks, and world detail.</p>
       </div>
-      <div class="card">
-        <h3>Supporting Server Plugins</h3>
-        <ul>
-          <li><strong>Oraxen</strong> — custom items, blocks, models, and resource-pack identity</li>
-          <li><strong>Citizens</strong> — NPC framework for characters, shops, quests, and world interaction</li>
-          <li><strong>WorldGuard</strong> — region protection and controlled areas</li>
-          <li><strong>WorldEdit</strong> — building, shaping, schematic work, and world creation support</li>
-          <li><strong>LuckPerms</strong> — roles, permissions, and staff access control</li>
-          <li><strong>Vault</strong> — economy compatibility layer</li>
-          <li><strong>PlaceholderAPI</strong> — display placeholders for menus, scoreboards, and integrations</li>
-          <li><strong>Geyser &amp; Floodgate</strong> — Bedrock access support</li>
-          <li><strong>ViaVersion suite</strong> — version compatibility support</li>
-        </ul>
+
+      <div class="recruit-card">
+        <span class="recruit-card-icon">🛡️</span>
+        <h3>Moderator</h3>
+        <p>Keep the community fair and welcoming. Moderators handle player reports, enforce server rules, and help maintain a positive environment across Discord and in-game.</p>
       </div>
+
+      <div class="recruit-card">
+        <span class="recruit-card-icon">⚙️</span>
+        <h3>Administrator</h3>
+        <p>Support server operations, assist with testing, help manage systems, and work closely with the development team. Admins are trusted with elevated access and responsibility.</p>
+      </div>
+
+      <div class="recruit-card">
+        <span class="recruit-card-icon">📋</span>
+        <h3>How to Apply</h3>
+        <p>Join the Discord and express your interest in the relevant channel. Include your experience, what role you are applying for, and why you want to be part of the project.</p>
+      </div>
+
+    </div>
+
+    <div class="button-row-left">
+      <a class="button" href="https://discord.gg/7QV4eaHcHC" target="_blank" rel="noopener">Apply via Discord</a>
     </div>
   </section>
 
@@ -386,15 +311,15 @@
     <div class="cta-grid">
       <article class="cta-card">
         <h3>Quest Content &amp; NPC Depth</h3>
-        <p>Expanding real quest content and stronger NPC interaction — repeatable quests, guided progression, and questlines.</p>
+        <p>Expanding real quest content and stronger NPC interaction — repeatable quests, guided progression, and full questlines.</p>
       </article>
       <article class="cta-card">
         <h3>Dungeons &amp; Bosses</h3>
-        <p>Future world content will include handcrafted challenge spaces, boss arenas, trials, and custom encounters.</p>
+        <p>Handcrafted challenge spaces, boss arenas, trials, and custom encounters are major upcoming world content goals.</p>
       </article>
       <article class="cta-card">
         <h3>Towns &amp; Player Identity</h3>
-        <p>Towns, settlements, upgrades, territory value, and community-driven world identity remain major future goals.</p>
+        <p>Towns, settlements, territory value, and community-driven world identity remain major future development goals.</p>
       </article>
       <article class="cta-card">
         <h3>Deeper Economy Loops</h3>
@@ -416,7 +341,7 @@
     <div class="cta-grid">
       <article class="cta-card">
         <h3>Announcements</h3>
-        <p>Follow updates, changes, testing phases, and current project activity.</p>
+        <p>Follow updates, changes, testing phases, and current project activity directly from the development team.</p>
       </article>
       <article class="cta-card">
         <h3>Community</h3>
@@ -424,12 +349,26 @@
       </article>
       <article class="cta-card">
         <h3>Joining the Realm</h3>
-        <p>The current join path is handled through Discord so players get the latest access information.</p>
+        <p>The current join path is handled through Discord so players always get the latest access information.</p>
       </article>
       <article class="cta-card">
         <h3>Project Growth</h3>
         <p>See the server not just as a place to play, but as a growing fantasy MMO project with real direction behind it.</p>
       </article>
+    </div>
+  </section>
+
+  <!-- ── Support the Project ── -->
+  <section class="card">
+    <div class="support-bar">
+      <div class="support-bar-text">
+        <h3>Support the Project</h3>
+        <p>
+          Runestone Vale and the RunestoneMMO plugin suite are independently developed and maintained.
+          Supporting on Patreon helps keep development active and the realm growing.
+        </p>
+      </div>
+      <a class="button secondary" href="https://www.patreon.com/cw/RunestoneMMO" target="_blank" rel="noopener">Support on Patreon</a>
     </div>
   </section>
 
@@ -447,7 +386,7 @@
       Runestone Vale is open to those willing to step into it early.
     </p>
     <div class="button-row-left">
-      <a class="button" href="https://discord.gg/D4uBMrzBZN" target="_blank" rel="noopener">Enter Through Discord</a>
+      <a class="button" href="https://discord.gg/7QV4eaHcHC" target="_blank" rel="noopener">Enter Through Discord</a>
       <a class="button secondary" href="/features.html">View Server Features</a>
       <a class="button secondary" href="/roadmap_development.html">View Roadmap</a>
     </div>
@@ -466,9 +405,7 @@
     <a href="/terms.html">Terms</a>
   </p>
   <p>
-    <a href="https://discord.gg/D4uBMrzBZN" target="_blank" rel="noopener">Discord</a> •
-    <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneMMO" target="_blank" rel="noopener">RunestoneMMO Hangar</a> •
-    <a href="https://hangar.papermc.io/TotalCarnage767/RunestoneSkills" target="_blank" rel="noopener">RunestoneSkills Hangar</a> •
+    <a href="https://discord.gg/7QV4eaHcHC" target="_blank" rel="noopener">Discord</a> •
     <a href="https://www.patreon.com/cw/RunestoneMMO" target="_blank" rel="noopener">Patreon</a>
   </p>
 </footer>
@@ -482,22 +419,31 @@ function toggleMenu() {
   button.setAttribute("aria-expanded", nav.classList.contains("open") ? "true" : "false");
 }
 
+function toggleCommunityDropdown(event) {
+  event.stopPropagation();
+  const wrap = document.getElementById('communityDropdownWrap');
+  const btn  = wrap ? wrap.querySelector('.dropdown-toggle') : null;
+  if (!wrap) return;
+  wrap.classList.toggle('open');
+  if (btn) btn.setAttribute('aria-expanded', wrap.classList.contains('open') ? 'true' : 'false');
+}
+
 document.addEventListener("click", function(event) {
   const nav = document.getElementById("mobileNav");
   const menuButton = document.querySelector(".menu-toggle");
-  const dropdown = document.querySelector(".nav-dropdown");
-  const dropdownButton = document.querySelector(".dropdown-toggle");
-  if (dropdown && !dropdown.contains(event.target)) {
-    dropdown.classList.remove("open");
-    if (dropdownButton) dropdownButton.setAttribute("aria-expanded", "false");
-  }
+  document.querySelectorAll(".nav-dropdown").forEach(function(dropdown) {
+    if (!dropdown.contains(event.target)) {
+      dropdown.classList.remove("open");
+      const btn = dropdown.querySelector(".dropdown-toggle");
+      if (btn) btn.setAttribute("aria-expanded", "false");
+    }
+  });
   if (!nav || !menuButton) return;
   if (!nav.contains(event.target) && !menuButton.contains(event.target)) {
     nav.classList.remove("open");
     menuButton.setAttribute("aria-expanded", "false");
   }
 });
-
 
 /* ── Supabase ── */
 const SUPABASE_URL  = "https://ludkhakegqojxuglisks.supabase.co";
@@ -529,38 +475,7 @@ async function loadStatus() {
   } catch { document.getElementById("statusLabel").textContent = "Status unavailable"; }
 }
 
-/* ── News Feed ── */
-const FALLBACK_NEWS = [
-  { title: "v1.1.6 — Companion App Released", date_label: "May 2025", category: "update",
-    summary: "The Runestone Vale companion app is now available. Download the Android APK from GitHub or open it on iOS via Expo Go." },
-  { title: "v1.1.5 — Guides &amp; Roadmap Rebuilt", date_label: "May 2025", category: "patch",
-    summary: "GuidesScreen rebuilt with Player, Commands, and Staff tabs. Roadmap is now admin-editable with live Supabase data." },
-  { title: "Server Foundation Complete", date_label: "April 2025", category: "announcement",
-    summary: "Core systems are live: 13 skills, combat, economy, quests, NPCs, travel, and the Login Hub. Early access is open through Discord." }
-];
-
-async function loadNews() {
-  const feed = document.getElementById("newsFeed");
-  try {
-    const data = await supa("news_posts", "select=title,summary,date_label,category,pinned&order=pinned.desc,sort_order.asc,created_at.desc&limit=6");
-    renderNews((data && data.length) ? data : FALLBACK_NEWS, feed);
-  } catch { renderNews(FALLBACK_NEWS, feed); }
-}
-
-function renderNews(items, feed) {
-  feed.innerHTML = items.map(n => `
-    <div class="news-card${n.pinned ? " pinned" : ""}">
-      <div class="news-card-meta">
-        <span class="news-badge ${n.category || 'update'}">${n.category || 'update'}</span>
-        <span class="news-date">${n.date_label || ""}</span>
-      </div>
-      <h3>${n.title}</h3>
-      <p>${n.summary}</p>
-    </div>`).join("");
-}
-
 loadStatus();
-loadNews();
 setInterval(loadStatus, 60000);
 </script>
 <script>
@@ -569,24 +484,6 @@ setInterval(loadStatus, 60000);
     RSAuth.renderNavUser(session);
   });
 })();
-
-// ── Community dropdown toggle ──────────────────────────────────────────────
-function toggleCommunityDropdown(event) {
-  event.stopPropagation();
-  const wrap = document.getElementById('communityDropdownWrap');
-  const btn  = wrap ? wrap.querySelector('.dropdown-toggle') : null;
-  if (!wrap) return;
-  wrap.classList.toggle('open');
-  if (btn) btn.setAttribute('aria-expanded', wrap.classList.contains('open') ? 'true' : 'false');
-}
-document.addEventListener('click', function(e) {
-  const wrap = document.getElementById('communityDropdownWrap');
-  if (wrap && !wrap.contains(e.target)) {
-    wrap.classList.remove('open');
-    const btn = wrap.querySelector('.dropdown-toggle');
-    if (btn) btn.setAttribute('aria-expanded', 'false');
-  }
-});
 </script>
 </body>
 </html>
