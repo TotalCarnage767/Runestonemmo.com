@@ -90,24 +90,43 @@
       border-color: var(--gold);
     }
 
-    /* ── MSL embed banner ── */
-    .msl-banner-section {
-      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 12px; padding: 28px 24px; text-align: center; margin-bottom: 32px;
+    /* ── MSL listing card ── */
+    .msl-listing-card {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px; padding: 24px; margin-bottom: 32px;
+      display: flex; align-items: center; gap: 20px;
     }
-    .msl-banner-section h2 {
-      font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 700;
-      color: rgba(255,255,255,0.6); margin: 0 0 16px; text-transform: uppercase; letter-spacing: 1px;
+    .msl-listing-card:hover { border-color: rgba(212,175,55,0.3); }
+    .msl-server-icon {
+      width: 72px; height: 72px; border-radius: 10px; flex-shrink: 0;
+      border: 2px solid rgba(212,175,55,0.25); object-fit: cover;
+      background: rgba(0,0,0,0.4);
     }
-    .msl-banner-section a { display: inline-block; }
-    .msl-banner-section img {
-      border-radius: 6px; max-width: 100%;
-      border: 1px solid rgba(255,255,255,0.1);
-      transition: opacity 0.2s;
+    .msl-listing-info { flex: 1; min-width: 0; }
+    .msl-listing-title {
+      font-family: 'Cinzel', serif; font-size: 1.05rem; font-weight: 700;
+      color: #f0e6c0; margin: 0 0 4px;
     }
-    .msl-banner-section img:hover { opacity: 0.85; }
-    .msl-banner-caption {
-      font-size: 0.8rem; color: rgba(255,255,255,0.3); margin-top: 10px;
+    .msl-listing-sub {
+      font-size: 0.82rem; color: rgba(255,255,255,0.45); margin: 0 0 10px; line-height: 1.5;
+    }
+    .msl-listing-badge {
+      display: inline-block; background: rgba(212,175,55,0.12);
+      border: 1px solid rgba(212,175,55,0.3); border-radius: 4px;
+      padding: 3px 8px; font-size: 0.72rem; font-weight: 700;
+      color: var(--gold); letter-spacing: 0.5px; text-transform: uppercase;
+    }
+    .msl-listing-btn {
+      display: inline-block; text-decoration: none; flex-shrink: 0;
+      background: var(--gold); color: #1a1610; border-radius: 8px;
+      padding: 11px 20px; font-family: 'Cinzel', serif; font-size: 0.85rem;
+      font-weight: 700; letter-spacing: 0.5px; transition: opacity 0.2s;
+      white-space: nowrap;
+    }
+    .msl-listing-btn:hover { opacity: 0.88; }
+    @media (max-width: 520px) {
+      .msl-listing-card { flex-direction: column; align-items: flex-start; }
+      .msl-listing-btn { width: 100%; text-align: center; }
     }
 
     /* ── How to vote steps ── */
@@ -176,7 +195,6 @@
         </div>
       </div>
       <a class="top-link" href="/lore.html">LORE</a>
-      <a class="top-link active" href="/server-voting.html">VOTE</a>
       <a class="top-link" href="/credits.html">CREDITS</a>
       <a class="top-link" href="/terms.html">TERMS</a>
       <div id="navUserSlot" style="display:flex;align-items:center;flex-shrink:0;margin-left:8px;"></div>
@@ -206,14 +224,16 @@
       </p>
     </div>
 
-    <!-- ── MSL Banner ── -->
-    <div class="msl-banner-section">
-      <h2>Runestone Vale on Minecraft Server List</h2>
-      <a href="https://minecraft-server-list.com/server/521383/" target="_blank" rel="noopener noreferrer">
-        <img src="https://minecraft-server-list.com/server/logo/521383.png" alt="Minecraft Server — Runestone Vale" />
-      </a>
-      <p class="msl-banner-caption">Click the banner to view our listing and cast your vote</p>
-    </div>
+    <!-- ── MSL Listing Card ── -->
+    <a class="msl-listing-card" href="https://minecraft-server-list.com/server/521383/" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">
+      <img class="msl-server-icon" src="https://minecraft-server-list.com/server/logo/521383.png" alt="Runestone Vale server icon" onerror="this.style.display='none'" />
+      <div class="msl-listing-info">
+        <p class="msl-listing-title">Runestone Vale</p>
+        <p class="msl-listing-sub">Listed on Minecraft Server List — one of the largest Minecraft server directories. Your vote helps new players discover the realm.</p>
+        <span class="msl-listing-badge">⏰ Resets every 24 hours</span>
+      </div>
+      <span class="msl-listing-btn">VOTE NOW ↗</span>
+    </a>
 
     <!-- ── Voting Sites Grid ── -->
     <div class="vote-grid">
@@ -221,7 +241,7 @@
       <!-- Minecraft Server List -->
       <div class="vote-card">
         <div class="vote-card-top">
-          <img class="vote-site-logo" src="https://minecraft-server-list.com/server/logo/521383.png" alt="Minecraft Server List logo" onerror="this.style.display='none'" />
+          <div class="vote-site-logo-placeholder" style="font-size:1.5rem;">&#127381;</div>
           <div class="vote-site-info">
             <p class="vote-site-name">Minecraft Server List</p>
             <p class="vote-site-desc">One of the largest Minecraft server directories. Vote once every 24 hours.</p>
